@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+  <title>ggy的个人博客</title>
+  
+  <subtitle>hello,world.</subtitle>
+  <link href="/atom.xml" rel="self"/>
+  
+  <link href="https://ggyggy666.github.io/"/>
+  <updated>2020-01-21T12:51:36.845Z</updated>
+  <id>https://ggyggy666.github.io/</id>
+  
+  <author>
+    <name>ggy</name>
+    
+  </author>
+  
+  <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>永久破解pycharm2019-2.3的方法</title>
+    <link href="https://ggyggy666.github.io/2020/01/16/%E6%B0%B8%E4%B9%85%E7%A0%B4%E8%A7%A3pycharm2019-2.3%E7%9A%84%E6%96%B9%E6%B3%95/"/>
+    <id>https://ggyggy666.github.io/2020/01/16/%E6%B0%B8%E4%B9%85%E7%A0%B4%E8%A7%A3pycharm2019-2.3%E7%9A%84%E6%96%B9%E6%B3%95/</id>
+    <published>2020-01-15T16:11:09.000Z</published>
+    <updated>2020-01-21T12:51:36.845Z</updated>
+    
+    <content type="html"><![CDATA[<p><code>朋友们，该学习python了。</code></p><a id="more"></a><p>本人由于想要使用pycharm来学习python，但又苦于没有钱买正版，于是找了几个小时的破解教程。但是网上的教程大多数都是挺久以前的了，使用的激活码等已经不能用了。就在我几欲放弃之时，终于被我找到了真实有效的破解教程啦！ </p><p>直接给出原文链接吧，我就不在此赘述了。<br><a href="https://www.626x.com/2669.html" target="_blank" rel="noopener">樱花庄的小樱</a><br>需要注意的是：最后一步激活时原文是直接等待它自动弹出链接地址，但是我没有等到它弹出来就自己先把那个地址填上去了，再点击激活就OK了。如果出现无法链接的情况，可先尝试关掉再重启pycharm，再按以上步骤重试一遍即可。</p><p>来看看我最终成功的图片：<br><img src="/2020/01/16/%E6%B0%B8%E4%B9%85%E7%A0%B4%E8%A7%A3pycharm2019-2.3%E7%9A%84%E6%96%B9%E6%B3%95/img.jpg" alt><br>哈哈，从此我就走上py之路啦！</p>]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;&lt;code&gt;朋友们，该学习python了。&lt;/code&gt;&lt;/p&gt;
+    
+    </summary>
+    
+    
+      <category term="工具" scheme="https://ggyggy666.github.io/categories/%E5%B7%A5%E5%85%B7/"/>
+    
+    
+      <category term="永久破解pycharm2019-2.3的方法" scheme="https://ggyggy666.github.io/tags/%E6%B0%B8%E4%B9%85%E7%A0%B4%E8%A7%A3pycharm2019-2-3%E7%9A%84%E6%96%B9%E6%B3%95/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>个人博客简述</title>
+    <link href="https://ggyggy666.github.io/2020/01/03/%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2%E7%AE%80%E8%BF%B0/"/>
+    <id>https://ggyggy666.github.io/2020/01/03/%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2%E7%AE%80%E8%BF%B0/</id>
+    <published>2020-01-03T05:26:50.000Z</published>
+    <updated>2020-01-21T12:50:42.345Z</updated>
+    
+    <content type="html"><![CDATA[<h2 id="这是我的第一个博客"><a href="#这是我的第一个博客" class="headerlink" title="这是我的第一个博客"></a><strong>这是我的第一个博客</strong></h2><pre><code>从今天开始就正式上线啦！  </code></pre><a id="more"></a><p>至于为什么会突然想写一些东西，谁知道呢，嘻嘻。<br>好吧，其实是因为在期末写了几篇结课论文后，感觉将从网上所学会的东西用文字记录下来能理解的更深、更透彻，而且由于太久没写文章，感觉自己的写作水平急剧下降，于是产生了写博客的想法。不过搭建博客的路程真是艰辛呐，从前天开始就一直在百度、CSDN、谷歌、必应上畅游。找教程、找问答、然后动手实践。但其实大多数时间都花在了解决遇到的各种问题上，害，真的一言难尽啊。所幸在我的坚持不懈下，终于初步建成了它。包括你现在看到的这篇简述，也是在学会了一点markdown语法后写出的。写得很不成熟，但请不要介意。<br>在未来，可能会偶尔更新一下它，将自己所学的东西记录下来，也算是一个成长过程的见证吧。【暂定内容主要包括python、web安全吧(目前学习方向)】<br>欢迎关注我！<br><code>扫描下方的二维码，精彩文章等你来看哦。</code> </p><hr><img src="/2020/01/03/%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2%E7%AE%80%E8%BF%B0/alipay.jpg" width="280" height="280" style="float:left"><img src="/2020/01/03/%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2%E7%AE%80%E8%BF%B0/wechat.jpg" width="280" height="280" style="float:left">]]></content>
+    
+    <summary type="html">
+    
+      &lt;h2 id=&quot;这是我的第一个博客&quot;&gt;&lt;a href=&quot;#这是我的第一个博客&quot; class=&quot;headerlink&quot; title=&quot;这是我的第一个博客&quot;&gt;&lt;/a&gt;&lt;strong&gt;这是我的第一个博客&lt;/strong&gt;&lt;/h2&gt;&lt;pre&gt;&lt;code&gt;从今天开始就正式上线啦！  &lt;/code&gt;&lt;/pre&gt;
+    
+    </summary>
+    
+    
+      <category term="home" scheme="https://ggyggy666.github.io/categories/home/"/>
+    
+    
+      <category term="简述 2020年" scheme="https://ggyggy666.github.io/tags/%E7%AE%80%E8%BF%B0-2020%E5%B9%B4/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Hello World</title>
+    <link href="https://ggyggy666.github.io/2020/01/03/hello-world/"/>
+    <id>https://ggyggy666.github.io/2020/01/03/hello-world/</id>
+    <published>2020-01-03T03:06:05.756Z</published>
+    <updated>2020-01-21T12:55:12.971Z</updated>
+    
+    <content type="html"><![CDATA[<p>Welcome to <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" target="_blank" rel="noopener">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="noopener">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="noopener">GitHub</a>.</p><a id="more"></a><h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">"My New Post"</span></span><br></pre></td></tr></table></figure><p>More info: <a href="https://hexo.io/docs/writing.html" target="_blank" rel="noopener">Writing</a></p><h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure><p>More info: <a href="https://hexo.io/docs/server.html" target="_blank" rel="noopener">Server</a></p><h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure><p>More info: <a href="https://hexo.io/docs/generating.html" target="_blank" rel="noopener">Generating</a></p><h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure><p>More info: <a href="https://hexo.io/docs/one-command-deployment.html" target="_blank" rel="noopener">Deployment</a></p>]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;Welcome to &lt;a href=&quot;https://hexo.io/&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;Hexo&lt;/a&gt;! This is your very first post. Check &lt;a href=&quot;https://hexo.io/docs/&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;documentation&lt;/a&gt; for more info. If you get any problems when using Hexo, you can find the answer in &lt;a href=&quot;https://hexo.io/docs/troubleshooting.html&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;troubleshooting&lt;/a&gt; or you can ask me on &lt;a href=&quot;https://github.com/hexojs/hexo/issues&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;GitHub&lt;/a&gt;.&lt;/p&gt;
+    
+    </summary>
+    
+    
+      <category term="home" scheme="https://ggyggy666.github.io/categories/home/"/>
+    
+    
+      <category term="博客的使用方法" scheme="https://ggyggy666.github.io/tags/%E5%8D%9A%E5%AE%A2%E7%9A%84%E4%BD%BF%E7%94%A8%E6%96%B9%E6%B3%95/"/>
+    
+  </entry>
+  
+</feed>

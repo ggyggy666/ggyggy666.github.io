@@ -1,4 +1,5 @@
-#ggyggy666.github.io
+ggyggy666.github.io
+----
 
 [我的第一个博客](http://ggy.44pp.vip/2020/01/03/%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2%E7%AE%80%E8%BF%B0/#more)  
 [精灵游戏](https://github.com/ggyggy666/ggyggy666.github.io/releases)  

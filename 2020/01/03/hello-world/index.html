@@ -1,5 +1,5 @@
 <!DOCTYPE HTML>
-<html lang="zh-Hans">
+<html lang="zh-CN">
 
 <head>
     <!--Setting-->
@@ -74,7 +74,7 @@
 <![endif]-->
 <body>
     <header class="main-header"  style="background-image:url(
-    /./img/bg.jfif)"
+    /./img/background.jpg)"
      >
     <div class="main-header-box">
         <a class="header-avatar" href="/" title='ggy'>
@@ -106,17 +106,17 @@
                         
                         <li role="presentation" class="text-center">
                             <a href="/"><i class="fa "></i>
-                                Home</a>
+                                首页</a>
                         </li>
                         
                         <li role="presentation" class="text-center">
-                            <a href="/categories/前端/"><i class="fa "></i>
-                                前端</a>
+                            <a href="/categories/web安全/"><i class="fa "></i>
+                                web安全</a>
                         </li>
                         
                         <li role="presentation" class="text-center">
-                            <a href="/categories/后端/"><i class="fa "></i>
-                                后端</a>
+                            <a href="/categories/python/"><i class="fa "></i>
+                                python</a>
                         </li>
                         
                         <li role="presentation" class="text-center">
@@ -245,7 +245,7 @@ new Valine({
     meta: 'nick,mail'.split(','),
     pageSize: '10',
     path: window.location.pathname,
-    lang: 'zh-Hans'.toLowerCase()
+    lang: 'zh-CN'.toLowerCase()
 })
 </script>
 
@@ -257,7 +257,7 @@ new Valine({
                     <aside id="article-toc" role="navigation" class="col-md-4">
     <div class="widget">
         <h3 class="title">
-            Table of Contents
+            文章目录
         </h3>
         
         <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Quick-Start"><span class="toc-text">Quick Start</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Create-a-new-post"><span class="toc-text">Create a new post</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Run-server"><span class="toc-text">Run server</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Generate-static-files"><span class="toc-text">Generate static files</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Deploy-to-remote-sites"><span class="toc-text">Deploy to remote sites</span></a></li></ol></li></ol>
@@ -283,12 +283,12 @@ new Valine({
             <div class="col-sm-12">
                 <div class="busuanzi">
     
-    Total:
+    访问量:
     <strong id="busuanzi_value_site_pv">
         <i class="fa fa-spinner fa-spin"></i>
     </strong>
     &nbsp; | &nbsp;
-    Visitors:
+    访客数:
     <strong id="busuanzi_value_site_uv">
         <i class="fa fa-spinner fa-spin"></i>
     </strong>
@@ -311,6 +311,30 @@ new Valine({
     </div>
 </div>
 
+
+
+<script src="/assets/tagcanvas.min.js?rev=2.9.js"></script>
+
+<script>
+var tagOption = {
+    textColour: '#444', // 字体颜色
+    outlineMethod: 'block', // 选中模式
+    outlineColour: '#FFDAB9', // 选中模式的颜色
+    interval: 30 || 30, // 动画帧之间的时间间隔，值越大，转动幅度越大
+    textHeight: 13,
+    outlineRadius: 3,
+    freezeActive: true || '', // 选中的标签是否继续滚动
+    frontSelect: true || '', // 不选标签云后部的标签
+    initial: [0.1, -0.1],
+    depth: 0.5,
+    decel: 0.95,
+    maxSpeed: 0.03,
+    reverse: true || '', // 是否反向触发
+    fadeIn: 500, // 进入动画时间
+    wheelZoom: false || '' // 是否启用鼠标滚轮
+}
+TagCanvas.Start('tag-cloud-3d', '', tagOption);
+</script>
 
 
 <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>

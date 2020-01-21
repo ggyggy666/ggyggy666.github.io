@@ -1,5 +1,5 @@
 <!DOCTYPE HTML>
-<html lang="zh-Hans">
+<html lang="zh-CN">
 
 <head>
     <!--Setting-->
@@ -74,7 +74,7 @@
 <![endif]-->
 <body>
     <header class="main-header"  style="background-image:url(
-    /./img/bg.jfif)"
+    /./img/background.jpg)"
      >
     <div class="main-header-box">
         <a class="header-avatar" href="/" title='ggy'>
@@ -106,17 +106,17 @@
                         
                         <li role="presentation" class="text-center">
                             <a href="/"><i class="fa "></i>
-                                Home</a>
+                                首页</a>
                         </li>
                         
                         <li role="presentation" class="text-center">
-                            <a href="/categories/前端/"><i class="fa "></i>
-                                前端</a>
+                            <a href="/categories/web安全/"><i class="fa "></i>
+                                web安全</a>
                         </li>
                         
                         <li role="presentation" class="text-center">
-                            <a href="/categories/后端/"><i class="fa "></i>
-                                后端</a>
+                            <a href="/categories/python/"><i class="fa "></i>
+                                python</a>
                         </li>
                         
                         <li role="presentation" class="text-center">
@@ -162,15 +162,15 @@
     
 <div class="widget">
     <h3 class="title">
-        Search
+        搜索
     </h3>
     <div id="search-form">
         <div id="result-mask" class="hide"></div>
         <div class="search-area">
             
-            <input id="search-key" type="search" autocomplete="off" placeholder="Search What？">
+            <input id="search-key" type="search" autocomplete="off" placeholder="搜点什么呢？">
             <button type="button" class="search-form-submit" id="search-local">
-                localSearch</button>
+                站内搜索</button>
             
             
         </div>
@@ -194,7 +194,7 @@
     
 <div class="widget">
     <h3 class="title">
-        Notification
+        网站公告
     </h3>
     <div class="notification">
         <p>
@@ -212,7 +212,40 @@
     
 <div class="widget">
     <h3 class="title">
-        Social
+        标签云
+    </h3>
+    <div class="content tag-cloud">
+        
+        <canvas width="300" height="300" id="tag-cloud-3d">
+            <a href="/tags/%E6%B0%B8%E4%B9%85%E7%A0%B4%E8%A7%A3pycharm2019-2-3%E7%9A%84%E6%96%B9%E6%B3%95/" style="font-size: 10px;">永久破解pycharm2019-2.3的方法</a> <a href="/tags/%E7%AE%80%E8%BF%B0-2020%E5%B9%B4/" style="font-size: 10px;">简述 2020年</a>
+        </canvas>
+        
+    </div>
+</div>
+
+    
+    
+<div class="widget">
+    <h3 class="title">
+        分类
+    </h3>
+    <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/index/"><i class="fa" aria-hidden="true">index</i></a><span class="category-list-count">1</span></li></ul>
+</div>
+
+    
+    
+<div class="widget">
+    <h3 class="title">
+        归档
+    </h3>
+    <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/01/"><i class="fa" aria-hidden="true">2020年01月</i></a><span class="archive-list-count">3</span></li></ul>
+</div>
+
+    
+    
+<div class="widget">
+    <h3 class="title">
+        社交
     </h3>
     <div class="content social">
         
@@ -247,38 +280,7 @@
     
 <div class="widget">
     <h3 class="title">
-        Categories
-    </h3>
-    <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/index/"><i class="fa" aria-hidden="true">index</i></a><span class="category-list-count">1</span></li></ul>
-</div>
-
-    
-    
-<div class="widget">
-    <h3 class="title">
-        Archives
-    </h3>
-    <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/01/"><i class="fa" aria-hidden="true">2020年01月</i></a><span class="archive-list-count">3</span></li></ul>
-</div>
-
-    
-    
-<div class="widget">
-    <h3 class="title">
-        Tag Cloud
-    </h3>
-    <div class="content tag-cloud">
-        
-        <a href="/tags/%E6%B0%B8%E4%B9%85%E7%A0%B4%E8%A7%A3pycharm2019-2-3%E7%9A%84%E6%96%B9%E6%B3%95/" style="font-size: 10px;">永久破解pycharm2019-2.3的方法</a> <a href="/tags/%E7%AE%80%E8%BF%B0-2020%E5%B9%B4/" style="font-size: 10px;">简述 2020年</a>
-        
-    </div>
-</div>
-
-    
-    
-<div class="widget">
-    <h3 class="title">
-        Friends
+        友链
     </h3>
     <div class="content friends-link">
         
@@ -310,12 +312,12 @@
             <div class="col-sm-12">
                 <div class="busuanzi">
     
-    Total:
+    访问量:
     <strong id="busuanzi_value_site_pv">
         <i class="fa fa-spinner fa-spin"></i>
     </strong>
     &nbsp; | &nbsp;
-    Visitors:
+    访客数:
     <strong id="busuanzi_value_site_uv">
         <i class="fa fa-spinner fa-spin"></i>
     </strong>
@@ -342,6 +344,30 @@
 <script src="/js/search.js?rev=@@hash.js"></script>
 
 
+
+
+<script src="/assets/tagcanvas.min.js?rev=2.9.js"></script>
+
+<script>
+var tagOption = {
+    textColour: '#444', // 字体颜色
+    outlineMethod: 'block', // 选中模式
+    outlineColour: '#FFDAB9', // 选中模式的颜色
+    interval: 30 || 30, // 动画帧之间的时间间隔，值越大，转动幅度越大
+    textHeight: 13,
+    outlineRadius: 3,
+    freezeActive: true || '', // 选中的标签是否继续滚动
+    frontSelect: true || '', // 不选标签云后部的标签
+    initial: [0.1, -0.1],
+    depth: 0.5,
+    decel: 0.95,
+    maxSpeed: 0.03,
+    reverse: true || '', // 是否反向触发
+    fadeIn: 500, // 进入动画时间
+    wheelZoom: false || '' // 是否启用鼠标滚轮
+}
+TagCanvas.Start('tag-cloud-3d', '', tagOption);
+</script>
 
 
 <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>

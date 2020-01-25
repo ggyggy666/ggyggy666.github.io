@@ -217,7 +217,7 @@
 <p><code>client = socket.socket(socket.AF_INET, socket.SOCK_STREAM)</code>   </p>
 <p>将这个函数对象赋给client（客户端），然后使用这个对象进行连接：  </p>
 <p><code>client.connect((target, port))</code>   </p>
-<p>注意connect中的数据类型是元组类型。target即为ipv4地址，port为要扫描的端口。这便是进行了一次扫描，然后将结果打印出来，最后需要用close()关闭。（可以将它想象成对一个文件的操作）<br>封装成一个portscan函数：<br><img src="http://q4hl9av6b.bkt.clouddn.com/portscan.png" alt><br>这里还使用了try-except，以防程序产生异常后就退出。  </p>
+<p>注意connect中的数据类型是元组类型。target即为ipv4地址，port为要扫描的端口。这便是进行了一次扫描，然后将结果打印出来，最后需要用close()关闭。（可以将它想象成对一个文件的操作）<br>封装成一个portscan函数：<br><img src="https://pic.downk.cc/item/5e2b951f2fb38b8c3c701f89.jpg" alt><br>这里还使用了try-except，以防程序产生异常后就退出。  </p>
 <hr>
 <h2 id="使用多线程运行扫描函数"><a href="#使用多线程运行扫描函数" class="headerlink" title="使用多线程运行扫描函数 "></a><strong>使用多线程运行扫描函数</strong> </h2><p>要使用到多线程，就需要用到python库中的Thread库。它的具体用法可以查看<a href="https://www.cnblogs.com/tkqasn/p/5700281.html" target="_blank" rel="noopener">苍松的博客</a>。<br>我们这里用到只是它的最简单的用法。</p>
 <p><code>Thread(group=None, target=None, name=None, args=(), kwargs={})</code>  </p>
@@ -225,9 +225,9 @@
 <p><code>t = Thread(target=portscan, args=(target, port))</code> </p>
 <p>注意target的参数值只需要填函数名，不用()，args的参数值一样需要是元组类型。然后使用：  </p>
 <p><code>t.start()</code>  </p>
-<p>来启动线程。由于我们需要遍历端口观察它是否开放，因此可以将启动多线程这步放到一个遍历端口的循环中。这里只遍历到1024端口。<br><img src="http://q4hl9av6b.bkt.clouddn.com/2.png" alt><br>为了方便扫描，ipv4地址需要自己输入，然后传入main函数中。还可以使用time库计算处运行所需的时间。<br><img src="http://q4hl9av6b.bkt.clouddn.com/3.png" alt><br>不要忘了导入所需要用到的库哦。<br><img src="http://q4hl9av6b.bkt.clouddn.com/4.png" alt>   </p>
+<p>来启动线程。由于我们需要遍历端口观察它是否开放，因此可以将启动多线程这步放到一个遍历端口的循环中。这里只遍历到1024端口。<br><img src="https://pic.downk.cc/item/5e2b95492fb38b8c3c702269.jpg" alt><br>为了方便扫描，ipv4地址需要自己输入，然后传入main函数中。还可以使用time库计算处运行所需的时间。<br><img src="https://pic.downk.cc/item/5e2b955c2fb38b8c3c70239f.jpg" alt><br>不要忘了导入所需要用到的库哦。<br><img src="https://pic.downk.cc/item/5e2b95722fb38b8c3c70252f.jpg" alt>   </p>
 <hr>
-<h2 id="最终效果如下："><a href="#最终效果如下：" class="headerlink" title="最终效果如下："></a><strong>最终效果如下：</strong></h2><p><img src="http://q4hl9av6b.bkt.clouddn.com/6.png" alt><br>端口扫描工具就这样做好啦！虽然看起来简单，代码很少，但是还是需要动手去实现才能体会到其中艰难，才会更有效果。对了，忘记提一句。这里的ipv4地址是我本机的地址，可以通过： </p>
+<h2 id="最终效果如下："><a href="#最终效果如下：" class="headerlink" title="最终效果如下："></a><strong>最终效果如下：</strong></h2><p><img src="https://pic.downk.cc/item/5e2b95932fb38b8c3c7027e2.jpg" alt><br>端口扫描工具就这样做好啦！虽然看起来简单，代码很少，但是还是需要动手去实现才能体会到其中艰难，才会更有效果。对了，忘记提一句。这里的ipv4地址是我本机的地址，可以通过： </p>
 <p><code>win+R -&gt; 输入cmd -&gt; 输入ipconfig -&gt;查看‘无线局域网适配器 WLAN:’的IPv4地址</code>   </p>
 <p>得到。当然，扫描域名也是可以的。打包后的代码放到了<a href="https://github.com/ggyggy666/ggyggy666.github.io/releases/tag/1.1" target="_blank" rel="noopener">我的github</a>上。<br>今天就到这里了，期待下一次能学到更多有趣的东西。  </p>
 <hr>

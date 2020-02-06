@@ -25,13 +25,22 @@
     <link rel="dns-prefetch" href="https://ggyggy666.github.io">
     <!--SEO-->
 
-<meta name="keywords" content="简述 2020年" />
+<meta name="keywords" content="读《白帽子讲web安全》的收获(三)" />
 
 
-<meta name="description" content="这是我的第一个博客从今天开始就正式上线啦！  
+<meta name="description" content="紧接着上次所发的文章
+
+这次带来的是收获（二）。
 
 
-至于为什么会突然想写一些东西，谁知道呢，嘻嘻。好吧，其实是因为在期末写了几篇结课论文后，感觉将从网上所学会的东西用文字记录下来能理解的更深、更..." />
+
+认证与会话管理
+
+
+认证是为了认出用户是谁，授权决定了用户能做什么。
+- 彩虹表
+  收集明文与明文对应的MD5值  
+- Session..." />
 
 
 <meta name="robots" content="all" />
@@ -42,7 +51,7 @@
 
 <title>
     
-    个人博客简述 |
+    读《白帽子讲web安全》的收获(三) |
     
     ggy的个人博客
 </title>
@@ -151,16 +160,16 @@
                     <p id="process"></p>
 <article class="post">
     <div class="post-head">
-        <h1 id="个人博客简述">
+        <h1 id="读《白帽子讲web安全》的收获(三)">
             
-            个人博客简述
+            读《白帽子讲web安全》的收获(三)
             
         </h1>
         <div class="post-meta">
     
     <span class="categories-meta fa-wrap">
         <i class="fa fa-folder-open-o"></i>
-        <a class="category-link" href="/categories/home/">home</a>
+        <a class="category-link" href="/categories/web%E5%AE%89%E5%85%A8/">web安全</a>
     </span>
     
     
@@ -168,7 +177,7 @@
         <i class="fa fa-tags"></i>
         <span class="tags-meta">
             
-            <a class="tag-link" href="/tags/%E7%AE%80%E8%BF%B0-2020%E5%B9%B4/" rel="tag">简述 2020年</a>
+            <a class="tag-link" href="/tags/%E8%AF%BB%E3%80%8A%E7%99%BD%E5%B8%BD%E5%AD%90%E8%AE%B2web%E5%AE%89%E5%85%A8%E3%80%8B%E7%9A%84%E6%94%B6%E8%8E%B7-%E4%B8%89/" rel="tag">读《白帽子讲web安全》的收获(三)</a>
             
         </span>
     </span>
@@ -178,7 +187,7 @@
     <span class="fa-wrap">
         <i class="fa fa-clock-o"></i>
         <span class="date-meta">
-            2020/01/03</span>
+            2020/02/06</span>
     </span>
     
     <span class="fa-wrap">
@@ -193,13 +202,54 @@
     </div>
     
     <div class="post-body post-content">
-        <h2 id="这是我的第一个博客"><a href="#这是我的第一个博客" class="headerlink" title="这是我的第一个博客"></a><strong>这是我的第一个博客</strong></h2><pre><code>从今天开始就正式上线啦！  </code></pre><a id="more"></a>
-
-
-<p>至于为什么会突然想写一些东西，谁知道呢，嘻嘻。<br>好吧，其实是因为在期末写了几篇结课论文后，感觉将从网上所学会的东西用文字记录下来能理解的更深、更透彻，而且由于太久没写文章，感觉自己的写作水平急剧下降，于是产生了写博客的想法。不过搭建博客的路程真是艰辛呐，从前天开始就一直在百度、CSDN、谷歌、必应上畅游。找教程、找问答、然后动手实践。但其实大多数时间都花在了解决遇到的各种问题上，害，真的一言难尽啊。所幸在我的坚持不懈下，终于初步建成了它。包括你现在看到的这篇简述，也是在学会了一点markdown语法后写出的。写得很不成熟，但请不要介意。<br>在未来，可能会偶尔更新一下它，将自己所学的东西记录下来，也算是一个成长过程的见证吧。【暂定内容主要包括python、web安全吧(目前学习方向)】<br>欢迎关注我！ </p>
+        <p>紧接着上次所发的文章</p>
+<a id="more"></a>
+<p>这次带来的是收获（二）。</p>
+<p><img src="https://pic.downk.cc/item/5e3585b22fb38b8c3c404c16.jpg" alt></p>
 <hr>
-<h2 id="扫描下方的二维码，精彩文章等你来看哦。"><a href="#扫描下方的二维码，精彩文章等你来看哦。" class="headerlink" title="扫描下方的二维码，精彩文章等你来看哦。 "></a><code>扫描下方的二维码，精彩文章等你来看哦。</code> </h2><p><img src="https://pic.downk.cc/item/5e2b95c22fb38b8c3c702ad9.jpg" alt="alipay"><br><img src="https://pic.downk.cc/item/5e2b95dc2fb38b8c3c702c9e.jpg" alt="wechat"></p>
-
+<ul>
+<li><strong>认证与会话管理</strong></li>
+</ul>
+<hr>
+<p>认证是为了认出用户是谁，授权决定了用户能做什么。</p>
+<pre><code>- 彩虹表
+  收集明文与明文对应的MD5值  
+- SessionId
+  可能在cookie中也可能在URL中，如果是在URL中，可以通过referer泄露出来。例如：  
+  1. 发送到QQ邮箱的邮件中引用了一张外部网站的图片：  
+  &lt;img src=&quot;https://xxx.com/xxx.jpg&gt;  
+  2. 打开QQ邮箱查看邮件，会解析图片，这个过程相当于发起来一次GET请求，抓包查看Referer，QQ邮箱的sid就泄露了。  
+- Session Fixation  
+  A将某个SessionID放到URL中，B点击了，B就以这个SessionID登录了。如果SessionID没有被重写，那么A可以修改它自己的SessionID为刚才B登录的那个，就能登录进去B的账号。</code></pre><hr>
+<ul>
+<li><strong>访问控制</strong></li>
+</ul>
+<hr>
+<pre><code>- 垂直权限与水平权限
+- OAuth
+  Jane 想将qq的图片分享到朋友圈。那么他在朋友圈中，选择要从qq中获取图片，朋友圈的后台就会创建一个临时凭证，然后去访问QQ。跳转到QQ后，要求登录（是在QQ中登录），登录成功后，QQ询问Jane是否授权，授权成功，QQ将Jane带来的临时凭证标记为已经授权，再跳转回朋友圈。  </code></pre><hr>
+<ul>
+<li><strong>加密算法与随机数</strong></li>
+</ul>
+<hr>
+<pre><code>- 加密算法
+  1. 分组加密
+       分成一些长度不同的组，分别加密。有AES，DES等，为CBC模式
+  2. 流密码加密
+       每次只处理一个字节，密钥独立于消息之外，两者通过异或实现。有RC4、ORYX、SEAL等。
+  3. ECB模式
+       改变分组密文的顺序，明文顺序也会被改变；替换某个密文，某个明文也会被改变，其它都不变。  
+     如：密文对应的明文为：xxx &amp; pay = 10000 ，将1.0对应的密文替换10000对应的密文，就可以一块钱买东西了。
+- 时间不随机
+       密码是通过获取当前系统的时间得到的，如果是调用microtime（）函数，再去MD5加密后的密文，通过遍历microtime()的值就可破解：获取当前系统时间，以此为基数，依次递增。</code></pre><hr>
+<ul>
+<li><strong>web框架安全</strong></li>
+</ul>
+<hr>
+<pre><code>- MVC框架
+    view层：负责用户视图、页面展示等
+    controller层：接收view层传入的用户请求
+    model层：实现模型，完成数据的处理</code></pre>
     </div>
     
     <div class="reward" ontouchstart>
@@ -237,17 +287,11 @@
 </article>
 <div class="article-nav prev-next-wrap clearfix">
     
-    <a href="/2020/01/16/%E6%B0%B8%E4%B9%85%E7%A0%B4%E8%A7%A3pycharm2019-2.3%E7%9A%84%E6%96%B9%E6%B3%95/" class="pre-post btn btn-default" title='永久破解pycharm2019-2.3的方法'>
-        <i class="fa fa-angle-left fa-fw"></i><span class="hidden-lg">上一篇</span>
-        <span class="hidden-xs">
-            永久破解pycharm2019-2.3的方法</span>
-    </a>
     
-    
-    <a href="/2020/01/03/hello-world/" class="next-post btn btn-default" title='Hello World'>
+    <a href="/2020/02/01/%E8%AF%BB%E3%80%8A%E7%99%BD%E5%B8%BD%E5%AD%90%E8%AE%B2web%E5%AE%89%E5%85%A8%E3%80%8B%E7%9A%84%E6%94%B6%E8%8E%B7(%E4%BA%8C)/" class="next-post btn btn-default" title='读《白帽子讲web安全》的收获(二)'>
         <span class="hidden-lg">下一篇</span>
         <span class="hidden-xs">
-            Hello World</span><i class="fa fa-angle-right fa-fw"></i>
+            读《白帽子讲web安全》的收获(二)</span><i class="fa fa-angle-right fa-fw"></i>
     </a>
     
 </div>
@@ -277,7 +321,7 @@
             文章目录
         </h3>
         
-        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#这是我的第一个博客"><span class="toc-text">这是我的第一个博客</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#扫描下方的二维码，精彩文章等你来看哦。"><span class="toc-text">扫描下方的二维码，精彩文章等你来看哦。 </span></a></li></ol>
+        <p>暂无目录</p>
         
     </div>
 </aside>

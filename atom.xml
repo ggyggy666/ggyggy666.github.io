@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://ggyggy666.github.io/"/>
-  <updated>2020-02-01T14:21:25.236Z</updated>
+  <updated>2020-02-06T14:26:47.350Z</updated>
   <id>https://ggyggy666.github.io/</id>
   
   <author>
@@ -15,6 +15,29 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>读《白帽子讲web安全》的收获(三)</title>
+    <link href="https://ggyggy666.github.io/2020/02/06/%E8%AF%BB%E3%80%8A%E7%99%BD%E5%B8%BD%E5%AD%90%E8%AE%B2web%E5%AE%89%E5%85%A8%E3%80%8B%E7%9A%84%E6%94%B6%E8%8E%B7(%E4%B8%89)/"/>
+    <id>https://ggyggy666.github.io/2020/02/06/%E8%AF%BB%E3%80%8A%E7%99%BD%E5%B8%BD%E5%AD%90%E8%AE%B2web%E5%AE%89%E5%85%A8%E3%80%8B%E7%9A%84%E6%94%B6%E8%8E%B7(%E4%B8%89)/</id>
+    <published>2020-02-06T13:34:56.000Z</published>
+    <updated>2020-02-06T14:26:47.350Z</updated>
+    
+    <content type="html"><![CDATA[<p>紧接着上次所发的文章</p><a id="more"></a><p>这次带来的是收获（二）。</p><p><img src="https://pic.downk.cc/item/5e3585b22fb38b8c3c404c16.jpg" alt></p><hr><ul><li><strong>认证与会话管理</strong></li></ul><hr><p>认证是为了认出用户是谁，授权决定了用户能做什么。</p><pre><code>- 彩虹表  收集明文与明文对应的MD5值  - SessionId  可能在cookie中也可能在URL中，如果是在URL中，可以通过referer泄露出来。例如：    1. 发送到QQ邮箱的邮件中引用了一张外部网站的图片：    &lt;img src=&quot;https://xxx.com/xxx.jpg&gt;    2. 打开QQ邮箱查看邮件，会解析图片，这个过程相当于发起来一次GET请求，抓包查看Referer，QQ邮箱的sid就泄露了。  - Session Fixation    A将某个SessionID放到URL中，B点击了，B就以这个SessionID登录了。如果SessionID没有被重写，那么A可以修改它自己的SessionID为刚才B登录的那个，就能登录进去B的账号。</code></pre><hr><ul><li><strong>访问控制</strong></li></ul><hr><pre><code>- 垂直权限与水平权限- OAuth  Jane 想将qq的图片分享到朋友圈。那么他在朋友圈中，选择要从qq中获取图片，朋友圈的后台就会创建一个临时凭证，然后去访问QQ。跳转到QQ后，要求登录（是在QQ中登录），登录成功后，QQ询问Jane是否授权，授权成功，QQ将Jane带来的临时凭证标记为已经授权，再跳转回朋友圈。  </code></pre><hr><ul><li><strong>加密算法与随机数</strong></li></ul><hr><pre><code>- 加密算法  1. 分组加密       分成一些长度不同的组，分别加密。有AES，DES等，为CBC模式  2. 流密码加密       每次只处理一个字节，密钥独立于消息之外，两者通过异或实现。有RC4、ORYX、SEAL等。  3. ECB模式       改变分组密文的顺序，明文顺序也会被改变；替换某个密文，某个明文也会被改变，其它都不变。       如：密文对应的明文为：xxx &amp; pay = 10000 ，将1.0对应的密文替换10000对应的密文，就可以一块钱买东西了。- 时间不随机       密码是通过获取当前系统的时间得到的，如果是调用microtime（）函数，再去MD5加密后的密文，通过遍历microtime()的值就可破解：获取当前系统时间，以此为基数，依次递增。</code></pre><hr><ul><li><strong>web框架安全</strong></li></ul><hr><pre><code>- MVC框架    view层：负责用户视图、页面展示等    controller层：接收view层传入的用户请求    model层：实现模型，完成数据的处理</code></pre>]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;紧接着上次所发的文章&lt;/p&gt;
+    
+    </summary>
+    
+    
+      <category term="web安全" scheme="https://ggyggy666.github.io/categories/web%E5%AE%89%E5%85%A8/"/>
+    
+    
+      <category term="读《白帽子讲web安全》的收获(三)" scheme="https://ggyggy666.github.io/tags/%E8%AF%BB%E3%80%8A%E7%99%BD%E5%B8%BD%E5%AD%90%E8%AE%B2web%E5%AE%89%E5%85%A8%E3%80%8B%E7%9A%84%E6%94%B6%E8%8E%B7-%E4%B8%89/"/>
+    
+  </entry>
   
   <entry>
     <title>读《白帽子讲web安全》的收获(二)</title>

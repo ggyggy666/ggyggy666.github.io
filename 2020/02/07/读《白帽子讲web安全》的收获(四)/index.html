@@ -221,7 +221,7 @@ TCP三次握手：
 <h2 id="DDOS攻击："><a href="#DDOS攻击：" class="headerlink" title="DDOS攻击："></a>DDOS攻击：</h2><blockquote>
 <ol>
 <li>伪造大量的源IP地址，向服务器端发送大量的SYN包。</li>
-<li>服务器端返回SYN+ACK包，但是IP是伪造的，没有应答，它就会重试3<del>5次，并且等待一个SYNTime(30s</del>2min)</li>
+<li>服务器端返回SYN+ACK包，但是IP是伪造的，没有应答，它就会重试3-5次，并且等待一个SYNTime(30s-2min)。</li>
 <li>超时服务器端丢弃这个链接。由于这种请求是大量的，无暇处理正常请求，导致拒绝服务。</li>
 </ol>
 </blockquote>

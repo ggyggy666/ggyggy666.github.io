@@ -255,7 +255,7 @@ document.cookie = &quot;evil2=&quot; + str + &quot;;expires=Thu,18-Apr-2019 08:3
 
 alert(document.cookie)</code></pre><h2 id="正则：ReDos"><a href="#正则：ReDos" class="headerlink" title="正则：ReDos"></a>正则：ReDos</h2><blockquote>
 <ol>
-<li>正则表达式是基于NFA（Nondeterministic Finite Automaton)的。它是一个状态机，对于每个状态和输入符号都可能有许多下一个状态，让会遍历所有状态，不停尝试下一个状态，直到匹配到为止。</li>
+<li>正则表达式是基于NFA（Nondeterministic Finite Automaton)的。它是一个状态机，对于每个状态和输入符号都可能有许多下一个状态，然后遍历所有状态，不停尝试下一个状态，直到匹配到为止。</li>
 <li>比如：<code>^(a+)+$</code> ,当输入aaaaX时，只有16种状态的尝试，很快可以遍历完。但输入的是：aaaaaaaaaaaaaaaaX,共有65536中可能。大大增加了正则引擎解析的消耗。</li>
 </ol>
 </blockquote>
@@ -330,7 +330,7 @@ alert(document.cookie)</code></pre><h2 id="正则：ReDos"><a href="#正则：Re
 <h2 id="代码执行漏洞："><a href="#代码执行漏洞：" class="headerlink" title="代码执行漏洞："></a>代码执行漏洞：</h2><blockquote>
 <p>  危险函数：popen(),system(),passthru(),exec(),eval()等<br>  执行代码方式：</p>
 <blockquote>
-<p> 直接执行代码：eval,assert,system,exec,shell_exec,passthru,escapeshellcmd,pcntl_exec<br> 文件包含：include,include_once,requier,equire_once<br> 本地文件写入：file_put_contents,fwrite,fputs<br> preg_replace(): 需要\e<br> 动态函数执行：create_function<br> Curly Syntax,执行花括号间的代码，并将结果替换回去。<br> 回调函数执行：很多，注意ob_start()<br> unserialize()：能将序列化的数据重新映射为PHP变量  </p>
+<p> 直接执行代码：eval,assert,system,exec,shell_exec,passthru,escapeshellcmd,pcntl_exec<br> 文件包含：include,include_once,requier,equire_once<br> 本地文件写入：file_put_contents,fwrite,fputs<br> preg_replace(): 需要\e<br> 动态函数执行：create_function<br> Curly Syntax：执行花括号间的代码，并将结果替换回去。<br> 回调函数执行：很多，注意ob_start()<br> unserialize()：能将序列化的数据重新映射为PHP变量  </p>
 <blockquote>
 <p> 执行条件：  </p>
 <ol>
@@ -351,7 +351,15 @@ unserialize($_GET[&apos;saved_code&apos;]);
 ?&gt;</code></pre><blockquote>
 <blockquote>
 <blockquote>
-<p> 攻击payload：<br> <code>https://xxx.com/xxx.php?saved_code=0:7:&quot;Example&quot;:1:{s:3:&quot;var&quot;;s:10:&quot;phpinfo();&quot;;}</code><br> 攻击payload可以先模仿目标代码的实现过程，再通过调用serialize()获得。</p>
+<p> 攻击payload：</p>
+</blockquote>
+</blockquote>
+</blockquote>
+<p> <code>https://xxx.com/xxx.php?saved_code=0:7:&quot;Example&quot;:1:{s:3:&quot;var&quot;;s:10:&quot;phpinfo();&quot;;}</code></p>
+<blockquote>
+<blockquote>
+<blockquote>
+<p> 攻击payload可以先模仿目标代码的实现过程，再通过调用serialize()获得。</p>
 </blockquote>
 </blockquote>
 </blockquote>

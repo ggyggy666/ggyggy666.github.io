@@ -1,0 +1,543 @@
+<head>
+<script src="https://cdn.jsdelivr.net/npm/jquery/dist/jquery.min.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome/css/font-awesome.min.css">
+<script src="https://cdn.jsdelivr.net/gh/stevenjoezhang/live2d-widget/autoload.js"></script>
+</head>
+
+<!DOCTYPE HTML>
+<html lang="zh-CN">
+
+<head>
+    <!--Setting-->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+    <meta http-equiv="Cache-Control" content="no-siteapp">
+    <meta http-equiv="Cache-Control" content="no-transform">
+    <meta name="renderer" content="webkit|ie-comp|ie-stand">
+    <meta name="apple-mobile-web-app-capable" content="ggy的个人博客">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="format-detection" content="telephone=no,email=no,adress=no">
+    <meta name="browsermode" content="application">
+    <meta name="screen-orientation" content="portrait">
+    <meta name="theme-version" content="1.2.3">
+    <meta name="root" content="/">
+    <link rel="dns-prefetch" href="https://ggyggy666.github.io">
+    <!--SEO-->
+
+<meta name="keywords" content="Js学习（二）" />
+
+
+<meta name="description" content="今天继续总结。
+
+
+简述JavaScript是一门基于对象的语言，一切皆为对象。分为内置对象（字符串、数字等）与自定义对象（用户自定义）。自定义对象是数据和函数的集合，数据是变量名和变量的值构成..." />
+
+
+<meta name="robots" content="all" />
+<meta name="google" content="all" />
+<meta name="googlebot" content="all" />
+<meta name="verify" content="all" />
+    <!--Title-->
+
+<title>
+    
+    Js学习（二） |
+    
+    ggy的个人博客
+</title>
+
+<link rel="alternate" href="/atom.xml" title="ggy的个人博客" type="application/atom+xml">
+
+
+<link rel="icon" href="/favicon.ico">
+
+    
+
+
+<link rel="stylesheet" href="/css/bootstrap.min.css?rev=3.3.7.css">
+<link rel="stylesheet" href="/css/font-awesome.min.css?rev=4.7.0.css">
+<link rel="stylesheet" href="/css/style.css?rev=@@hash.css">
+
+    
+<div class="hide">
+    <script type="text/javascript">
+    var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+    document.write(unescape("%3Cspan class='cnzz_stat_icon_1263868967 hide' %3E%3Cscript%20src%3D%22https%3A%2F%2Fs95.cnzz.com%2Fz_stat.php%3Fweb_id%3D1272564536%22%3E%3C%2Fscript%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s19.cnzz.com/z_stat.php%3Fid%3D1263868967%26show%3Dpic1' type='text/javascript'%3E%3C/script%3E"));
+    </script>
+</div>
+
+
+
+
+    
+
+<meta name="generator" content="Hexo 4.2.0"></head>
+<!--[if lte IE 8]>
+<style>
+    html{ font-size: 1em }
+</style>
+<![endif]-->
+<!--[if lte IE 9]>
+<div style="ie">你使用的浏览器版本过低，为了你更好的阅读体验，请更新浏览器的版本或者使用其他现代浏览器，比如Chrome、Firefox、Safari等。</div>
+<![endif]-->
+<body>
+    <header class="main-header"  style="background-image:url(
+    https://pic.downk.cc/item/5e3816b82fb38b8c3c8791f9.jpg)"
+     >
+    <div class="main-header-box">
+        <a class="header-avatar" href="/" title='ggy'>
+            <img src="/img/avatar.jpg" alt="logo头像" class="img-responsive center-block">
+        </a>
+        <div class="branding">
+            <!--<h2 class="text-hide">Snippet主题,从未如此简单有趣</h2>-->
+            
+            <h2>
+                欢迎来到ggy的个人网站
+            </h2>
+            
+        </div>
+    </div>
+</header>
+    <nav class="main-navigation">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="navbar-header"><span class="nav-toggle-button collapsed pull-right" data-toggle="collapse" data-target="#main-menu" id="mnav">
+                        <span class="sr-only"></span>
+                        <i class="fa fa-bars"></i>
+                    </span>
+                    <a class="navbar-brand" href="https://ggyggy666.github.io">
+                        ggy的个人博客</a>
+                </div>
+                <div class="collapse navbar-collapse" id="main-menu">
+                    <ul class="menu">
+                        
+                        <li role="presentation" class="text-center">
+                            <a href="/"><i class="fa "></i>
+                                首页</a>
+                        </li>
+                        
+                        <li role="presentation" class="text-center">
+                            <a href="/categories/web安全/"><i class="fa "></i>
+                                web安全</a>
+                        </li>
+                        
+                        <li role="presentation" class="text-center">
+                            <a href="/categories/python工具/"><i class="fa "></i>
+                                python工具</a>
+                        </li>
+                        
+                        <li role="presentation" class="text-center">
+                            <a href="/categories/密码学/"><i class="fa "></i>
+                                密码学</a>
+                        </li>
+                        
+                        <li role="presentation" class="text-center">
+                            <a href="/archives/"><i class="fa "></i>
+                                时间轴</a>
+                        </li>
+                        
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</nav>
+    <section class="content-wrap">
+        <div class="container">
+            <div class="row">
+                <main class="col-md-8 main-content m-post">
+                    <p id="process"></p>
+<article class="post">
+    <div class="post-head">
+        <h1 id="Js学习（二）">
+            
+            Js学习（二）
+            
+        </h1>
+        <div class="post-meta">
+    
+    <span class="categories-meta fa-wrap">
+        <i class="fa fa-folder-open-o"></i>
+        <a class="category-link" href="/categories/%E5%89%8D%E7%AB%AF%E5%AD%A6%E4%B9%A0/">前端学习</a>
+    </span>
+    
+    
+    <span class="fa-wrap">
+        <i class="fa fa-tags"></i>
+        <span class="tags-meta">
+            
+            <a class="tag-link" href="/tags/Js%E5%AD%A6%E4%B9%A0%EF%BC%88%E4%BA%8C%EF%BC%89/" rel="tag">Js学习（二）</a>
+            
+        </span>
+    </span>
+    
+    
+    
+    <span class="fa-wrap">
+        <i class="fa fa-clock-o"></i>
+        <span class="date-meta">
+            2020/04/29</span>
+    </span>
+    
+    <span class="fa-wrap">
+        <i class="fa fa-eye"></i>
+        <span id="busuanzi_value_page_pv"></span>
+    </span>
+    
+    
+</div>
+        
+        
+        <p class="fa fa-exclamation-triangle warning">
+            本文于<strong>
+                317</strong>
+            天之前发表，文中内容可能已经过时。
+        </p>
+        
+    </div>
+    
+    <div class="post-body post-content">
+        <p>今天继续总结。</p>
+<a id="more"></a>
+
+<h1 id="简述"><a href="#简述" class="headerlink" title="简述"></a>简述</h1><p>JavaScript是一门基于对象的语言，一切皆为对象。分为内置对象（字符串、数字等）与自定义对象（用户自定义）。自定义对象是数据和函数的集合，数据是变量名和变量的值构成的组合。</p>
+<h1 id="创建对象"><a href="#创建对象" class="headerlink" title="创建对象"></a>创建对象</h1><h2 id="通过对象字面量创建"><a href="#通过对象字面量创建" class="headerlink" title="通过对象字面量创建"></a>通过对象字面量创建</h2><blockquote>
+<p>其实就是python的字典，用大括号括起来，里面是键值对。如：<br>var song={name:”ggy”, time:”180”};<br>注意，键值对之间用逗号隔开，最后一个没有逗号。因为是定义对象，最后需要分号。</p>
+</blockquote>
+<h2 id="通过new创建"><a href="#通过new创建" class="headerlink" title="通过new创建"></a>通过new创建</h2><blockquote>
+<p>直接new一个对象出来，然后使用对象名.属性名=“属性值”的方式往这个对象里面添加键值对。如：<br>var s = new Object();<br>s.name = “ggy”;<br>s.height = 180;</p>
+</blockquote>
+<h2 id="通过普通函数与new创建"><a href="#通过普通函数与new创建" class="headerlink" title="通过普通函数与new创建"></a>通过普通函数与new创建</h2><blockquote>
+<p>其实就是通过new，只不过将创建的对象放在一个函数里面，然后调用函数时传参数进来, 然后返回创建的对象罢了。如：</p>
+</blockquote>
+<pre><code>function createObject(name, height){
+    var s = new Object();
+    s.name = name;
+    s.height = height;
+    return s;
+}
+var s1 = createObject(&quot;ggy&quot;, 180);</code></pre><h2 id="通过构造函数与new创建"><a href="#通过构造函数与new创建" class="headerlink" title="通过构造函数与new创建"></a>通过构造函数与new创建</h2><blockquote>
+<p>构造函数与普通函数的差别在于它本身就指向一个对象，其函数名就是对象名，因此无需创建对象并返回，而且如果形参名与自身属性名相同，需要使用this。就如c++那样。如： </p>
+</blockquote>
+<pre><code>function Store(name, height){
+    this.name = name;
+    this.height = height;
+}
+var myStore = new Store(&quot;ggy&quot;, 180);</code></pre><h2 id="通过原型-prototype-与构造函数创建"><a href="#通过原型-prototype-与构造函数创建" class="headerlink" title="通过原型(prototype)与构造函数创建"></a>通过原型(prototype)与构造函数创建</h2><blockquote>
+<p>创建一个函数时，自动拥有一个prototype属性，这个属性的值就是一个对象，称为该函数的原型对象。类似于继承，有子类和父类。通过子类prototype就可以追溯到它的父类。如果我们定义了它的父类的属性和值，那么可以拥有多个既有父类属性又具有自己独特属性的子类。这样重复属性只需要父类定义就好，节省内存。</p>
+</blockquote>
+<pre><code>function Store(){
+    Store.prototype.name = &quot;ggy&quot;;
+    Store.prototype.height = 180;
+}
+var myStore1 = new Store();
+var myStore2 = new Store();
+myStore2.name = &quot;ggg&quot; //覆盖父类的name值。</code></pre><h1 id="对象的属性的增删改查"><a href="#对象的属性的增删改查" class="headerlink" title="对象的属性的增删改查"></a>对象的属性的增删改查</h1><h2 id="获取属性"><a href="#获取属性" class="headerlink" title="获取属性"></a>获取属性</h2><blockquote>
+<ol>
+<li>通过使用对象名.属性名  </li>
+<li>通过使用对象名[“属性名”]。<br>注意，如果属性名含有空格，必须使用第二种。</li>
+</ol>
+</blockquote>
+<h2 id="修改属性值"><a href="#修改属性值" class="headerlink" title="修改属性值"></a>修改属性值</h2><blockquote>
+<p>直接通过赋值，即：对象名.属性名 = 新值。<br>这种方式也可以增加键值对。</p>
+</blockquote>
+<h2 id="删除属性"><a href="#删除属性" class="headerlink" title="删除属性"></a>删除属性</h2><blockquote>
+<p>使用delete。只能删除该对象自有属性，不能删除原型属性。如果该对象被其它对象继承，也不要删除被继承的属性。如：  </p>
+</blockquote>
+<pre><code>var s = new Object();
+s.name = &quot;ggy&quot;;
+s.height = 180;
+delete s.name  //删除成功
+delete s.prototype; //删除失败，不是自有属性</code></pre><h1 id="检测对象是否有某个属性以及枚举属性"><a href="#检测对象是否有某个属性以及枚举属性" class="headerlink" title="检测对象是否有某个属性以及枚举属性"></a>检测对象是否有某个属性以及枚举属性</h1><h2 id="检测对象是否有某个属性"><a href="#检测对象是否有某个属性" class="headerlink" title="检测对象是否有某个属性"></a>检测对象是否有某个属性</h2><blockquote>
+<ol>
+<li>使用<code>&quot;属性名&quot; in 对象名</code>。返回true或者false。</li>
+<li>使用hasOwnProperty()方法，如： 对象名.hasOwnProperty(“属性名”). 返回true或者false。</li>
+</ol>
+</blockquote>
+<h2 id="枚举属性"><a href="#枚举属性" class="headerlink" title="枚举属性"></a>枚举属性</h2><blockquote>
+<ol>
+<li>使用for循环。如：<code>for(var att in s)</code> att就是属性名。</li>
+<li>使用Object.getOwnPropertyNames(“对象名”)，以字符串数组形式返回所有自有属性的名字（不考虑能否枚举）。  </li>
+<li>使用Object.keys(“对象名”), 以字符串数组形式返回所有可枚举的自有属性的名字。</li>
+</ol>
+</blockquote>
+<p><img src="https://pic.downk.cc/item/5ea97fd7c2a9a83be5675b82.jpg" alt></p>
+<h1 id="数组"><a href="#数组" class="headerlink" title="数组"></a>数组</h1><blockquote>
+<p>数组内可以是任意类型的数据，获取数组长度可以直接用: 数组名.length。 其它读写与c语言没什么区别。不过这里一维数组不会溢出，因为就算超出了原有空间，还是可以在赋值时动态自己创建空间。比如数组a只有5个长度（0-4），可以a[5]=3这样。</p>
+</blockquote>
+<h2 id="数组元素的增加"><a href="#数组元素的增加" class="headerlink" title="数组元素的增加"></a>数组元素的增加</h2><blockquote>
+<ol>
+<li>直接在尾部赋值增加。`a[a.length]=5;</li>
+<li>使用push往尾部增加。<code>a.push(6)</code>, 返回新的数组长度。</li>
+<li>在头部增加元素。<code>a.unshift(6)</code>, 返回新的数组长度。</li>
+</ol>
+</blockquote>
+<h2 id="数组元素的删除"><a href="#数组元素的删除" class="headerlink" title="数组元素的删除"></a>数组元素的删除</h2><blockquote>
+<ol>
+<li>直接将数组长度变小，就能删除后面的元素。</li>
+<li>使用delete删除，<code>delete a[4];</code>，但是只是删除那个值，会留有一个空占位符，数组长度不变。</li>
+<li>使用pop删除。<code>a.pop()</code>，每次删除后面的一个元素，返回被删除的该元素。</li>
+<li>在头部删除。<code>a.shift();</code>，每次删除头部一个元素，返回被删除的元素。</li>
+</ol>
+</blockquote>
+<h2 id="多维数组的创建"><a href="#多维数组的创建" class="headerlink" title="多维数组的创建"></a>多维数组的创建</h2><p>数组遍历和读写就不提了，与c语言一样。</p>
+<blockquote>
+<ol>
+<li>直接创建。var a = [[1,2],[3,4]];</li>
+<li>只知道数组长度，使用new分配空间。如：<br>var a = new Array(4);<br>for(var i=0; i&lt;4; i++){<br>a[i] = new Array(6);<br>}</li>
+</ol>
+</blockquote>
+<h2 id="数组的常用方法"><a href="#数组的常用方法" class="headerlink" title="数组的常用方法"></a>数组的常用方法</h2><h3 id="查找元素的下标"><a href="#查找元素的下标" class="headerlink" title="查找元素的下标"></a>查找元素的下标</h3><p>使用indexOf()和lastIndexOf(), 前者是从前往后找，后者是从后往前找，找到第一个就返回。如：  </p>
+<pre><code>var a=[1,2,3];
+a.indexOf(&quot;1&quot;);  a.lastIndexOf(&quot;1&quot;);
+a.IndexOf(&quot;1&quot;,-1)</code></pre><p>-1即第二个参数是可选的，代表从哪个位置开始找。如果是负数，就是倒数的位置。</p>
+<h3 id="数组的合并"><a href="#数组的合并" class="headerlink" title="数组的合并"></a>数组的合并</h3><p>使用concat()，格式是<code>数组a.concat(数组b)</code>. 返回的是链接后的新数组。</p>
+<h3 id="数组倒置"><a href="#数组倒置" class="headerlink" title="数组倒置"></a>数组倒置</h3><p>使用reverse(), 格式是<code>数组a.reverse()</code>，注意这是就地倒置，即不会返回新数组，直接在a中倒置元素。</p>
+<h3 id="数组元素连接成字符串"><a href="#数组元素连接成字符串" class="headerlink" title="数组元素连接成字符串"></a>数组元素连接成字符串</h3><p>使用join()。括号内可选择连接的分隔符。如：</p>
+<pre><code>var a = [&quot;ggy&quot;, &quot;ygg&quot;];
+a.join()    //括号内什么都没有，是默认,分隔，即：ggy,ygg
+a.join(&quot;+&quot;);     //返回的就是: ggy+ygg</code></pre><h3 id="元素排序"><a href="#元素排序" class="headerlink" title="元素排序"></a>元素排序</h3><p>使用的是sort()。注意：</p>
+<blockquote>
+<p>如果括号内不带参数，会把数组里的元素（不管是数字还是字符型）都当做字符型来排序。如：1,2,10. 排序后的结果是1,10,2.<br>如果括号内带参数，这个参数得是一个匿名函数。这样排序就是真正按正常的值大小来排序了。如：  </p>
+</blockquote>
+<pre><code>var a = [1,2,10,5];
+a.sort(function(a, b){return a-b;});    //升序排序
+a.sort(function(a, b){return b-a;});    //降序排序</code></pre><h3 id="提取子数组"><a href="#提取子数组" class="headerlink" title="提取子数组"></a>提取子数组</h3><p>使用slice()，返回切割出来的子数组部分，不会影响原来的数组。slice内可以有参数，可选切割的起点和终点。如：</p>
+<pre><code>var a = [1,2,10,5];
+a.slice(0, 3);    //[1,2,10]. 注意，下标范围是：0&lt;=x&lt;3, 即0,1,2</code></pre><p>不加第二个参数就取到数组末尾；负数就从后算起。</p>
+<h1 id="条件语句"><a href="#条件语句" class="headerlink" title="条件语句"></a>条件语句</h1><p>if-else忽略，讲一下switch。</p>
+<pre><code>var a=1;
+switch(表达式如：a){
+    case 值：语句；break;
+    ...
+    default: 语句;
+}</code></pre><p>表达式是一个已经赋有值了的变量。而case后的值的数据类型是可以数字或者字符等。</p>
+<h1 id="循环语句"><a href="#循环语句" class="headerlink" title="循环语句"></a>循环语句</h1><p>while, do while, continue和break忽略，讲一下for in。</p>
+<blockquote>
+<p>for in主要用于枚举对象的可枚举的属性名（包括继承得到的可枚举属性名）。如：  </p>
+</blockquote>
+<pre><code>var s = {name: &quot;ggy&quot;, height: 180};
+for(var att in s){
+    console.log(att)    //输出name, height
+}</code></pre><p>有一点得注意：求素数的时候，会用到Math.sqrt(n)。c语言通常会使用int强制转换成整数，但JS是用parseInt()，要记得！即：parseInt(Math.sqrt(n));</p>
+<h1 id="函数"><a href="#函数" class="headerlink" title="函数"></a>函数</h1><p>正常的function 函数名(参数){}忽略。</p>
+<h2 id="匿名函数"><a href="#匿名函数" class="headerlink" title="匿名函数"></a>匿名函数</h2><p>匿名函数就是在定义一个函数时，除了没有名字外，其它函数组成部分都拥有。而我们要想调用它，得把这个匿名函数赋值给一个变量，这个变量就相当于函数的名字了，然后就可以正常调用。如：</p>
+<pre><code>var s = function(a,b){
+    return a&gt;b?a:b;
+};
+console.log(s(1,2));    //使用变量名作为函数名正常调用。</code></pre><p>这个是匿名函数，但如果函数有名字，又把它赋值给一个变量，那就相当于给函数换一个名字了。如：  </p>
+<pre><code>var s = function max(a, b){
+    return a&gt;b?a:b;
+};
+console.log(s(1,2));    //换一个名字后，只能用s调用，不能用max了。</code></pre><h2 id="调用对象里的函数"><a href="#调用对象里的函数" class="headerlink" title="调用对象里的函数"></a>调用对象里的函数</h2><p>对象里的函数作为值，也是匿名函数，通过键（属性名）来作为函数名调用。如：  </p>
+<pre><code>var s = {
+    name: &quot;ggy&quot;,
+    getMax: function(a, b){return a&gt;b?a:b;}
+};
+console.log(s.getMax(1,2))         //键的值作为函数名调用。
+console.log(s[&quot;getMax&quot;](1,2);    //也可以这样调用。</code></pre><h2 id="实参数小于形参数"><a href="#实参数小于形参数" class="headerlink" title="实参数小于形参数"></a>实参数小于形参数</h2><p>当传进的实参数（如2）小于形参数（如3）时，会默认从左到右匹配，那么第3个没有实参传进来的形参的值就会是undefined。当然，没有值的话实参可以传undefined进去。例如： </p>
+<pre><code>function s(a, b, c){..}
+s(1,2)                //此时c为undefined
+s(undefined, 1, 2)    //此时a为undefined</code></pre><p>这样子不够严谨，需要使用：给被传入undefined的形参设定一个默认值。</p>
+<pre><code>function s(a, b, c){
+    if(c === undefined)        //注意是三个等号
+        c = 0;                //c默认值就是0
+    ...
+}
+s(1,2);                        //a=1, b=2, c=0</code></pre><h2 id="实参对象"><a href="#实参对象" class="headerlink" title="实参对象"></a>实参对象</h2><p>如果不知道形参与实参数是否能匹配，那么就可以用的实参对象arguments。它可以看成一个数组（非真正数组），传进来的实参会一一保留进这个数组中，然后也可以按数组方式正常调用。如：  </p>
+<pre><code>function sum(){                    //没有形参
+    var len = arguments.length;    //获得该对象数组的长度（传进来的实参数目）
+    var sum = 0;
+    for(var i=0; i&lt;len; i++){
+        sum += arguments[i];    //正常访问数组
+    }
+    return sum;
+}
+console.log(sum(1,2,3,4,5));    //传多少个实参都行</code></pre><h2 id="对象作为参数"><a href="#对象作为参数" class="headerlink" title="对象作为参数"></a>对象作为参数</h2><p>传一个对象进去，就可以直接调用里面的属性，注意函数中修改了对象里的值，这个对象的值就真正的是被修改了的。适合属性非常多时，就放在一个对象里。如：</p>
+<pre><code>function myFunction(obj) {
+    console.log(obj.name);
+    obj.number++;
+    return obj.number;
+}
+myObj = {name:&quot;myObj&quot;,number:34};    //定义一个对象
+myFunction(myObj);                    //传对象名进去
+console.log(myObj.number);            //输出35，number值在函数中被加1了。</code></pre><h2 id="一个函数作为另一个函数的参数"><a href="#一个函数作为另一个函数的参数" class="headerlink" title="一个函数作为另一个函数的参数"></a>一个函数作为另一个函数的参数</h2><p>其实就是把一个函数名作为实参传进另一个函数。如： </p>
+<pre><code>function getMin(a,b) {
+    return a&lt;b?a:b;
+}
+function getM(func,num1,num2) {
+    return func(num1,num2);        //就可以根据函数名调用另一个函数了
+}    
+getM(getMin, 1, 2);        //getMin传进去</code></pre>
+    </div>
+    
+    <div class="reward" ontouchstart>
+    <div class="reward-wrap">赏
+        <div class="reward-box">
+            
+            <span class="reward-type">
+                <img class="alipay" src="/img/alipay.jpg"><b>支付宝打赏</b>
+            </span>
+            
+            
+            <span class="reward-type">
+                <img class="wechat" src="/img/wechat.jpg"><b>微信打赏</b>
+            </span>
+            
+        </div>
+    </div>
+    <p class="reward-tip">
+        赞赏是不耍流氓的鼓励
+    </p>
+</div>
+    
+    <div class="post-footer">
+        <div>
+            
+            转载声明：
+            商业转载请联系作者获得授权,非商业转载请注明出处 © <a href="ggy.44pp.vip" target="_blank">ggy</a>
+            
+            
+        </div>
+        <div>
+            
+        </div>
+    </div>
+</article>
+<div class="article-nav prev-next-wrap clearfix">
+    
+    <a href="/2020/05/02/Js%E5%AD%A6%E4%B9%A0%EF%BC%88%E4%B8%89%EF%BC%89/" class="pre-post btn btn-default" title='Js学习（三）'>
+        <i class="fa fa-angle-left fa-fw"></i><span class="hidden-lg">上一篇</span>
+        <span class="hidden-xs">
+            Js学习（三）</span>
+    </a>
+    
+    
+    <a href="/2020/04/29/Js%E5%AD%A6%E4%B9%A0%EF%BC%88%E4%B8%80%EF%BC%89/" class="next-post btn btn-default" title='Js学习（一）'>
+        <span class="hidden-lg">下一篇</span>
+        <span class="hidden-xs">
+            Js学习（一）</span><i class="fa fa-angle-right fa-fw"></i>
+    </a>
+    
+</div>
+
+<div id="comments">
+    
+<div id="lv-container" data-id="city" data-uid="MTAyMC80ODM1Ni8yNDg1MA==">
+    <script type="text/javascript">
+    (function(d, s) {
+        var j, e = d.getElementsByTagName(s)[0];
+        if (typeof LivereTower === 'function') { return; }
+        j = d.createElement(s);
+        j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+        j.async = true;
+        e.parentNode.insertBefore(j, e);
+    })(document, 'script');
+    </script>
+</div>
+
+</div>
+
+                </main>
+                
+                    <aside id="article-toc" role="navigation" class="col-md-4">
+    <div class="widget">
+        <h3 class="title">
+            文章目录
+        </h3>
+        
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#简述"><span class="toc-text">简述</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#创建对象"><span class="toc-text">创建对象</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#通过对象字面量创建"><span class="toc-text">通过对象字面量创建</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#通过new创建"><span class="toc-text">通过new创建</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#通过普通函数与new创建"><span class="toc-text">通过普通函数与new创建</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#通过构造函数与new创建"><span class="toc-text">通过构造函数与new创建</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#通过原型-prototype-与构造函数创建"><span class="toc-text">通过原型(prototype)与构造函数创建</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#对象的属性的增删改查"><span class="toc-text">对象的属性的增删改查</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#获取属性"><span class="toc-text">获取属性</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#修改属性值"><span class="toc-text">修改属性值</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#删除属性"><span class="toc-text">删除属性</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#检测对象是否有某个属性以及枚举属性"><span class="toc-text">检测对象是否有某个属性以及枚举属性</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#检测对象是否有某个属性"><span class="toc-text">检测对象是否有某个属性</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#枚举属性"><span class="toc-text">枚举属性</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#数组"><span class="toc-text">数组</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#数组元素的增加"><span class="toc-text">数组元素的增加</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#数组元素的删除"><span class="toc-text">数组元素的删除</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#多维数组的创建"><span class="toc-text">多维数组的创建</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#数组的常用方法"><span class="toc-text">数组的常用方法</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#查找元素的下标"><span class="toc-text">查找元素的下标</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#数组的合并"><span class="toc-text">数组的合并</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#数组倒置"><span class="toc-text">数组倒置</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#数组元素连接成字符串"><span class="toc-text">数组元素连接成字符串</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#元素排序"><span class="toc-text">元素排序</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#提取子数组"><span class="toc-text">提取子数组</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#条件语句"><span class="toc-text">条件语句</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#循环语句"><span class="toc-text">循环语句</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#函数"><span class="toc-text">函数</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#匿名函数"><span class="toc-text">匿名函数</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#调用对象里的函数"><span class="toc-text">调用对象里的函数</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#实参数小于形参数"><span class="toc-text">实参数小于形参数</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#实参对象"><span class="toc-text">实参对象</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#对象作为参数"><span class="toc-text">对象作为参数</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#一个函数作为另一个函数的参数"><span class="toc-text">一个函数作为另一个函数的参数</span></a></li></ol></li></ol>
+        
+    </div>
+</aside>
+                
+            </div>
+        </div>
+    </section>
+    <footer class="main-footer">
+    <div class="container">
+        <div class="row">
+        </div>
+    </div>
+</footer>
+<a id="back-to-top" class="icon-btn hide">
+    <i class="fa fa-chevron-up"></i>
+</a>
+    <div class="copyright">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="busuanzi">
+    
+    访问量:
+    <strong id="busuanzi_value_site_pv">
+        <i class="fa fa-spinner fa-spin"></i>
+    </strong>
+    &nbsp; | &nbsp;
+    访客数:
+    <strong id="busuanzi_value_site_uv">
+        <i class="fa fa-spinner fa-spin"></i>
+    </strong>
+    
+</div>
+            </div>
+            <div class="col-sm-12">
+                <span>Copyright &copy;
+                    2020
+                    
+                </span> |
+                <span>
+                    Powered by <a href="//hexo.io" class="copyright-links" target="_blank" rel="nofollow">Hexo</a>
+                </span> |
+                <span>
+                    Theme by <a href="//github.com/shenliyang/hexo-theme-snippet.git" class="copyright-links" target="_blank" rel="nofollow">Snippet</a>
+                </span>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<script src="/assets/tagcanvas.min.js?rev=2.9.js"></script>
+
+<script>
+var tagOption = {
+    textColour: '#444', // 字体颜色
+    outlineMethod: 'block', // 选中模式
+    outlineColour: '#FFDAB9', // 选中模式的颜色
+    interval: 30 || 30, // 动画帧之间的时间间隔，值越大，转动幅度越大
+    textHeight: 13,
+    outlineRadius: 3,
+    freezeActive: true || '', // 选中的标签是否继续滚动
+    frontSelect: true || '', // 不选标签云后部的标签
+    initial: [0.1, -0.1],
+    depth: 0.5,
+    decel: 0.95,
+    maxSpeed: 0.03,
+    reverse: true || '', // 是否反向触发
+    fadeIn: 500, // 进入动画时间
+    wheelZoom: false || '' // 是否启用鼠标滚轮
+}
+TagCanvas.Start('tag-cloud-3d', '', tagOption);
+</script>
+
+
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+<script src="/js/app.js?rev=@@hash.js"></script>
+
+
+<!-- 雪花特效 -->
+<script type="text/javascript" src="http://libs.baidu.com/jquery/1.8.3/jquery.js"></script>
+<script type="text/javascript" src="http://libs.baidu.com/jquery/1.8.3/jquery.min.js"></script>
+<script type="text/javascript" src="\js\snow.js"></script>
+
+<canvas class="fireworks" style="position: fixed;left: 0;top: 0;z-index: 1; pointer-events: none;" ></canvas> 
+<script type="text/javascript" src="//cdn.bootcss.com/animejs/2.2.0/anime.min.js"></script> 
+<script type="text/javascript" src="/js/fireworks.js"></script>
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"model":{"jsonPath":"live2d-widget-model-haruto"},"display":{"position":"right","width":150,"height":300},"mobile":{"show":false},"log":false,"pluginJsPath":"lib/","pluginModelPath":"assets/","pluginRootPath":"live2dw/","tagMode":false});</script></body>
+</html>

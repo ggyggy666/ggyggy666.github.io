@@ -1,0 +1,400 @@
+<head>
+<script src="https://cdn.jsdelivr.net/npm/jquery/dist/jquery.min.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome/css/font-awesome.min.css">
+<script src="https://cdn.jsdelivr.net/gh/stevenjoezhang/live2d-widget/autoload.js"></script>
+</head>
+
+<!DOCTYPE HTML>
+<html lang="zh-CN">
+
+<head>
+    <!--Setting-->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+    <meta http-equiv="Cache-Control" content="no-siteapp">
+    <meta http-equiv="Cache-Control" content="no-transform">
+    <meta name="renderer" content="webkit|ie-comp|ie-stand">
+    <meta name="apple-mobile-web-app-capable" content="ggy的个人博客">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="format-detection" content="telephone=no,email=no,adress=no">
+    <meta name="browsermode" content="application">
+    <meta name="screen-orientation" content="portrait">
+    <meta name="theme-version" content="1.2.3">
+    <meta name="root" content="/">
+    <link rel="dns-prefetch" href="https://ggyggy666.github.io">
+    <!--SEO-->
+
+<meta name="keywords" content="密码编码的发展和破译的发展" />
+
+
+<meta name="description" content="一开学就受到2000字暴击…
+
+
+密码编码和破译的发展摘要本文主要以一种时间顺序的方式讲述了从古代到现代的密码编码的发展，接着讲述了密码破译的发展，最后得出了密码学是在攻与防、编码与破译之中不断..." />
+
+
+<meta name="robots" content="all" />
+<meta name="google" content="all" />
+<meta name="googlebot" content="all" />
+<meta name="verify" content="all" />
+    <!--Title-->
+
+<title>
+    
+    密码编码的发展和破译的发展 |
+    
+    ggy的个人博客
+</title>
+
+<link rel="alternate" href="/atom.xml" title="ggy的个人博客" type="application/atom+xml">
+
+
+<link rel="icon" href="/favicon.ico">
+
+    
+
+
+<link rel="stylesheet" href="/css/bootstrap.min.css?rev=3.3.7.css">
+<link rel="stylesheet" href="/css/font-awesome.min.css?rev=4.7.0.css">
+<link rel="stylesheet" href="/css/style.css?rev=@@hash.css">
+
+    
+<div class="hide">
+    <script type="text/javascript">
+    var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+    document.write(unescape("%3Cspan class='cnzz_stat_icon_1263868967 hide' %3E%3Cscript%20src%3D%22https%3A%2F%2Fs95.cnzz.com%2Fz_stat.php%3Fweb_id%3D1272564536%22%3E%3C%2Fscript%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s19.cnzz.com/z_stat.php%3Fid%3D1263868967%26show%3Dpic1' type='text/javascript'%3E%3C/script%3E"));
+    </script>
+</div>
+
+
+
+
+    
+
+<meta name="generator" content="Hexo 4.2.0"></head>
+<!--[if lte IE 8]>
+<style>
+    html{ font-size: 1em }
+</style>
+<![endif]-->
+<!--[if lte IE 9]>
+<div style="ie">你使用的浏览器版本过低，为了你更好的阅读体验，请更新浏览器的版本或者使用其他现代浏览器，比如Chrome、Firefox、Safari等。</div>
+<![endif]-->
+<body>
+    <header class="main-header"  style="background-image:url(
+    https://pic.downk.cc/item/5e3816b82fb38b8c3c8791f9.jpg)"
+     >
+    <div class="main-header-box">
+        <a class="header-avatar" href="/" title='ggy'>
+            <img src="/img/avatar.jpg" alt="logo头像" class="img-responsive center-block">
+        </a>
+        <div class="branding">
+            <!--<h2 class="text-hide">Snippet主题,从未如此简单有趣</h2>-->
+            
+            <h2>
+                欢迎来到ggy的个人网站
+            </h2>
+            
+        </div>
+    </div>
+</header>
+    <nav class="main-navigation">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="navbar-header"><span class="nav-toggle-button collapsed pull-right" data-toggle="collapse" data-target="#main-menu" id="mnav">
+                        <span class="sr-only"></span>
+                        <i class="fa fa-bars"></i>
+                    </span>
+                    <a class="navbar-brand" href="https://ggyggy666.github.io">
+                        ggy的个人博客</a>
+                </div>
+                <div class="collapse navbar-collapse" id="main-menu">
+                    <ul class="menu">
+                        
+                        <li role="presentation" class="text-center">
+                            <a href="/"><i class="fa "></i>
+                                首页</a>
+                        </li>
+                        
+                        <li role="presentation" class="text-center">
+                            <a href="/categories/web安全/"><i class="fa "></i>
+                                web安全</a>
+                        </li>
+                        
+                        <li role="presentation" class="text-center">
+                            <a href="/categories/python工具/"><i class="fa "></i>
+                                python工具</a>
+                        </li>
+                        
+                        <li role="presentation" class="text-center">
+                            <a href="/categories/密码学/"><i class="fa "></i>
+                                密码学</a>
+                        </li>
+                        
+                        <li role="presentation" class="text-center">
+                            <a href="/archives/"><i class="fa "></i>
+                                时间轴</a>
+                        </li>
+                        
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</nav>
+    <section class="content-wrap">
+        <div class="container">
+            <div class="row">
+                <main class="col-md-8 main-content m-post">
+                    <p id="process"></p>
+<article class="post">
+    <div class="post-head">
+        <h1 id="密码编码的发展和破译的发展">
+            
+            密码编码的发展和破译的发展
+            
+        </h1>
+        <div class="post-meta">
+    
+    <span class="categories-meta fa-wrap">
+        <i class="fa fa-folder-open-o"></i>
+        <a class="category-link" href="/categories/%E5%AF%86%E7%A0%81%E5%AD%A6/">密码学</a>
+    </span>
+    
+    
+    <span class="fa-wrap">
+        <i class="fa fa-tags"></i>
+        <span class="tags-meta">
+            
+            <a class="tag-link" href="/tags/%E5%AF%86%E7%A0%81%E7%BC%96%E7%A0%81%E7%9A%84%E5%8F%91%E5%B1%95%E5%92%8C%E7%A0%B4%E8%AF%91%E7%9A%84%E5%8F%91%E5%B1%95/" rel="tag">密码编码的发展和破译的发展</a>
+            
+        </span>
+    </span>
+    
+    
+    
+    <span class="fa-wrap">
+        <i class="fa fa-clock-o"></i>
+        <span class="date-meta">
+            2020/03/01</span>
+    </span>
+    
+    <span class="fa-wrap">
+        <i class="fa fa-eye"></i>
+        <span id="busuanzi_value_page_pv"></span>
+    </span>
+    
+    
+</div>
+        
+        
+        <p class="fa fa-exclamation-triangle warning">
+            本文于<strong>
+                376</strong>
+            天之前发表，文中内容可能已经过时。
+        </p>
+        
+    </div>
+    
+    <div class="post-body post-content">
+        <p>一开学就受到2000字暴击…</p>
+<a id="more"></a>
+
+<h1 id="密码编码和破译的发展"><a href="#密码编码和破译的发展" class="headerlink" title="密码编码和破译的发展"></a>密码编码和破译的发展</h1><h2 id="摘要"><a href="#摘要" class="headerlink" title="摘要"></a>摘要</h2><p>本文主要以一种时间顺序的方式讲述了从古代到现代的密码编码的发展，接着讲述了密码破译的发展，最后得出了密码学是在攻与防、编码与破译之中不断向前发展的结论。  </p>
+<h2 id="关键词"><a href="#关键词" class="headerlink" title="关键词"></a>关键词</h2><p>密码 编码 破译 发展  </p>
+<h2 id="引言"><a href="#引言" class="headerlink" title="引言"></a>引言</h2><p>随着如今互联网的普及，大多数人都能使用网络进行通信。与此同时，信息的安全也显得尤为重要。每个人肯定不希望自己的隐私被人随意就能看到，因此需要将信息加密之后再在互联网上传递。那么，信息的加密是否能够做到足够的安全，将取决于它的加密算法是否足够优秀，是否不容易被破解。因此我们需要首先了解密码的编码算法，但这还不够。所谓有防就有攻，我们还需了解破解的一些方式，才能更好的改进。于是本文就遵循以上的原则，讲述了密码编码及其破译的发展。   </p>
+<h2 id="内容"><a href="#内容" class="headerlink" title="内容"></a>内容</h2><h3 id="1-理论基础"><a href="#1-理论基础" class="headerlink" title="1.    理论基础"></a>1.    理论基础</h3><p>要想了解密码的编码与破译，我们得首先了解一下它的理论基础。首先是密码体制，密码体制实质就是一个五元组（P,C,K,E,D）。它们代表的含义是：  </p>
+<ol>
+<li>P是可能明文的有限集 ： 明文空间</li>
+<li>C是可能密文的有限集 ： 密文空间</li>
+<li>K是可能密钥的有限集 ： 密钥空间</li>
+<li>对于任意k ∈ K，有一个加密算法ek∈E ，使得 ek：PC，即ek(x)=y (这里 x∈P， y∈C) ，称E为 加密变换族 (Ek)  </li>
+<li>相应的解密算法 dk∈D，dk：CP，满足dk(ek(x)) = x，称D为 解密变换族 (Dk)   </li>
+</ol>
+<p>总的说来，一个明文需要从密钥空间中取出一些有限个数的密钥，使用加密算法进行加密，得到密文，然后将密文传输到接收方后，接收方使用密钥空间提供的密钥使用解密算法进行解密，从而得到明文。</p>
+<h3 id="2-密码编码的发展"><a href="#2-密码编码的发展" class="headerlink" title="2. 密码编码的发展"></a>2. 密码编码的发展</h3><h4 id="2-1-古典密码"><a href="#2-1-古典密码" class="headerlink" title="2.1 古典密码"></a>2.1 古典密码</h4><p>古典密码总的可以归结为置换和代换两类。把明文中的字母重新排列，字母本身不变，但其位置改变了，这样编成的密码称为置换密码。最简单的置换密码是把明文中的字母顺序倒过来，然后截成固定长度的字母组作为密文。而代换密码则是将明文中的每一个字符替换成其它字符。</p>
+<h5 id="2-1-1-置换密码"><a href="#2-1-1-置换密码" class="headerlink" title="2.1.1    置换密码"></a>2.1.1    置换密码</h5><p>置换密码分为列置换和周期置换。列置换的加密过程为：将明文按固定长m分组，即每行m个字母，在密钥控制下按某一顺序交换列，最后按列优先的顺序依次读出，即产生了密文。周期置换的加密过程为：<br>很大程度上同列置换，只不过加、解密时，在列交换后是按行优先的顺序向下进行。</p>
+<h5 id="2-1-2-代换密码"><a href="#2-1-2-代换密码" class="headerlink" title="2.1.2    代换密码"></a>2.1.2    代换密码</h5><p>代换密码可以分为单表代换和多表代换。但不管怎么说，都只不过是将明文中的每一个字符替换成其它字符罢了。单表置换有：加法、乘法、密钥词组代替。都是以某一种规律将某个字母替换成另一个字母，因为替换之后的字母可以被穷举到，而且只有一个，安全性不高，因此诞生了多表代换，即构造多个密文字母表，在密钥的控制下用以一系列代换表依次对明文消息的字母序列进行代换。多表代换有Vernam密码、Playfair密码、Hill密码。利用了矩阵，代换的字母的可能性也更多，复杂性有所提升。</p>
+<h4 id="2-2-近现代密码"><a href="#2-2-近现代密码" class="headerlink" title="2.2    近现代密码"></a>2.2    近现代密码</h4><p>到了近现代，密码的复杂性逐步提升了，可破译的难度也越来越高了。常见的有对称密钥密码体系和非对称密钥密码体制。</p>
+<h5 id="2-2-1-对称密钥密码体制"><a href="#2-2-1-对称密钥密码体制" class="headerlink" title="2.2.1 对称密钥密码体制"></a>2.2.1 对称密钥密码体制</h5><p>对称密钥密码体制又分为分组密码和流密码两大类。分组密码是一种将固定长度的二进制输入字符串变成固定长度的二进制输出字符串的算法。就相当于将全部同学平均分成几个小组那样。为我们熟知的分组密码有DES和AES。</p>
+<h6 id="2-2-1-1-DES算法"><a href="#2-2-1-1-DES算法" class="headerlink" title="2.2.1.1 DES算法"></a>2.2.1.1 DES算法</h6><p>DES算法加密时把明文以64bit为单位分成块，采用8个S盒和P置换，经过16轮迭代，最终产生64bit密文。每轮迭代使用的48bit子密钥由原始的56bit产生。DES的加密与解密的密钥和流程完全相同，只是加密与解密使用的子密钥序列的顺序相反。</p>
+<h6 id="2-2-1-2-AES算法"><a href="#2-2-1-2-AES算法" class="headerlink" title="2.2.1.2 AES算法"></a>2.2.1.2 AES算法</h6><p>AES技术是一种对称的分组加密技术，使用128位分组加密数据，提供了比WEP/TKIPS的RC4算法更高的加密强度。由于1个字节有8位，因此有16个字节。也就是说128位的输入明文分组P和输入密钥K都被分成16个字节，每个明文分组会被加密10轮。明文分组用字节为单位的正方形矩阵描述，称为状态矩阵。在算法的每一轮中，状态矩阵的内容不断发生变化，最后的结果作为密文输出。值得注意的是，AES的加密码表和解密码表是分开的，并且支持子密钥加密。</p>
+<h5 id="2-2-2-流密码"><a href="#2-2-2-流密码" class="headerlink" title="2.2.2 流密码"></a>2.2.2 流密码</h5><p>利用密钥产生一个密钥流，然后利用这个密钥流一次对明文进行加密，这样产生的密码就是序列密码，即流密码。常见的流密码有RC4，SEAL等。流密码采用的是一次一密，以一个元素作为基本单位元，随时间而变化。它可被分为同步和自同步两种。</p>
+<h4 id="2-3-非对称加密算法"><a href="#2-3-非对称加密算法" class="headerlink" title="2.3    非对称加密算法"></a>2.3    非对称加密算法</h4><p>我们熟知的非对称加密算法应该就是RSA了。其原理就是利用了超大整数难以被分解这个点。它使用了公钥和私钥机制。每个用户都有公钥和私钥，而公钥顾名思义是共享出来的，所有人都能知道。私钥就是自己私有的，别人不知道。当一个用户想向另一个用户发送消息时，就会使用对方的公钥进行加密，对方收到后，就可以使用自己的私钥进行解密。这样就能保证两个人互相通信的安全可靠性。</p>
+<h4 id="2-4-量子密码"><a href="#2-4-量子密码" class="headerlink" title="2.4    量子密码"></a>2.4    量子密码</h4><p>随着现代技术的发展，出现了量子密码。与RSA依靠大整数难以被分解不同，量子密码主要依赖于物理问题难以被解决。它是一种以现代密码学秘量子力学为基础、利用量子物理举方法实现密码思想和操作的新型密码体制。它具有2个基本特征：对俗道中窃听行为的可检测性和方案的高安全性(可证明安全性和无条件安全性)。到目前为止， 主要有三大类密码实现方寨：一是基于单光子量子信道中测不准原理的；二是基于量子相关信道中Bell原理的：三是基于2个非正交量子态性质的。在计算上更加复杂了。</p>
+<h3 id="3-密码破译的发展"><a href="#3-密码破译的发展" class="headerlink" title="3.    密码破译的发展"></a>3.    密码破译的发展</h3><p>任何密码算法都不是足够安全的，都有其漏洞，都是可被破解的。在我们目前看来不可破解的一些加密算法，其实只是因为技术上尚未达到才导致不可破解，但理论上都是可行的，要想破解，只是时间问题罢了。<br>对于古典密码来说，通常只是字母之间的置换或代换，而字母毕竟只有26个，即使乘上明文的长度，以目前的算力还是可以直接使用穷举法暴力破解的，<br>而对于对称加密算法中的分组密码，它有四种模式，分别是ECB、CBC、CFB、OFB模式。它们本身就存在着缺陷，因此生来就是不安全的。比如ECB使用同一个密钥简单地将每个明文块一个接一个地进行加密；CBC模式对包含某些错误比特的密文进行解密时，第一个分组的全部比特以及后一个分组的相应比特会出错；加密不支持并行计算；无法抵御重放攻击。而流密码的序列由于是伪随机的并不能做到真正的随机，因此也是可被破译的。<br>对于非对称加密算法的RSA来说，如果终有一天人类能达到一个非常大的算力时，届时RSA所依赖的大整数不能被分解的原理将会被打破，导致经过RSA加密的明文可直接被破译出来。<br>对于现代的量子密码等来说也是一样，都只是依赖于目前的技术无法攻克的一些难题。如果日后这些难题都不再是难题，这些加密算法还会安全吗？</p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>不管怎么说，时代在进步，技术在发展。破译的一方面对着加密算法的新挑战也会不断学习，想出破译办法；加密的一方面对着破译者的威胁也会不断努力，改善加密算法。世界就是如此的奇妙，互相敌对的两方同时也在互相的激励。在这样不断的对抗中，我相信我们的技术将会逐渐逐渐的发展起来，最终变的足够强大。</p>
+<p><strong>参考文献：</strong><br>[1]吕兴凤、姜誉的计算机密码学中的加密技术研究进展<br>[2]秦志光的密码算法的现状和发展研究<br>[3]百度百科</p>
+
+    </div>
+    
+    <div class="reward" ontouchstart>
+    <div class="reward-wrap">赏
+        <div class="reward-box">
+            
+            <span class="reward-type">
+                <img class="alipay" src="/img/alipay.jpg"><b>支付宝打赏</b>
+            </span>
+            
+            
+            <span class="reward-type">
+                <img class="wechat" src="/img/wechat.jpg"><b>微信打赏</b>
+            </span>
+            
+        </div>
+    </div>
+    <p class="reward-tip">
+        赞赏是不耍流氓的鼓励
+    </p>
+</div>
+    
+    <div class="post-footer">
+        <div>
+            
+            转载声明：
+            商业转载请联系作者获得授权,非商业转载请注明出处 © <a href="ggy.44pp.vip" target="_blank">ggy</a>
+            
+            
+        </div>
+        <div>
+            
+        </div>
+    </div>
+</article>
+<div class="article-nav prev-next-wrap clearfix">
+    
+    <a href="/2020/03/01/%E6%9C%80%E5%90%8E%E7%9A%84%E6%80%BB%E7%BB%93-%E8%B6%8A%E6%9D%83%E8%AE%BF%E9%97%AE%E3%80%81OAuth2-0%E5%92%8C%E5%9C%A8%E7%BA%BF%E6%94%AF%E4%BB%98%E5%AE%89%E5%85%A8/" class="pre-post btn btn-default" title='最后的总结-越权访问、OAuth2.0和在线支付安全'>
+        <i class="fa fa-angle-left fa-fw"></i><span class="hidden-lg">上一篇</span>
+        <span class="hidden-xs">
+            最后的总结-越权访问、OAuth2.0和在线支付安全</span>
+    </a>
+    
+    
+    <a href="/2020/02/29/%E5%AF%86%E7%A0%81%E6%89%BE%E5%9B%9E%E5%AE%89%E5%85%A8%E6%A1%88%E4%BE%8B%E6%80%BB%E7%BB%93/" class="next-post btn btn-default" title='密码找回安全案例总结'>
+        <span class="hidden-lg">下一篇</span>
+        <span class="hidden-xs">
+            密码找回安全案例总结</span><i class="fa fa-angle-right fa-fw"></i>
+    </a>
+    
+</div>
+
+<div id="comments">
+    
+<div id="lv-container" data-id="city" data-uid="MTAyMC80ODM1Ni8yNDg1MA==">
+    <script type="text/javascript">
+    (function(d, s) {
+        var j, e = d.getElementsByTagName(s)[0];
+        if (typeof LivereTower === 'function') { return; }
+        j = d.createElement(s);
+        j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+        j.async = true;
+        e.parentNode.insertBefore(j, e);
+    })(document, 'script');
+    </script>
+</div>
+
+</div>
+
+                </main>
+                
+                    <aside id="article-toc" role="navigation" class="col-md-4">
+    <div class="widget">
+        <h3 class="title">
+            文章目录
+        </h3>
+        
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#密码编码和破译的发展"><span class="toc-text">密码编码和破译的发展</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#摘要"><span class="toc-text">摘要</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#关键词"><span class="toc-text">关键词</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#引言"><span class="toc-text">引言</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#内容"><span class="toc-text">内容</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-理论基础"><span class="toc-text">1.    理论基础</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-密码编码的发展"><span class="toc-text">2. 密码编码的发展</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#2-1-古典密码"><span class="toc-text">2.1 古典密码</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#2-1-1-置换密码"><span class="toc-text">2.1.1    置换密码</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#2-1-2-代换密码"><span class="toc-text">2.1.2    代换密码</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-2-近现代密码"><span class="toc-text">2.2    近现代密码</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#2-2-1-对称密钥密码体制"><span class="toc-text">2.2.1 对称密钥密码体制</span></a><ol class="toc-child"><li class="toc-item toc-level-6"><a class="toc-link" href="#2-2-1-1-DES算法"><span class="toc-text">2.2.1.1 DES算法</span></a></li><li class="toc-item toc-level-6"><a class="toc-link" href="#2-2-1-2-AES算法"><span class="toc-text">2.2.1.2 AES算法</span></a></li></ol></li><li class="toc-item toc-level-5"><a class="toc-link" href="#2-2-2-流密码"><span class="toc-text">2.2.2 流密码</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-3-非对称加密算法"><span class="toc-text">2.3    非对称加密算法</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-4-量子密码"><span class="toc-text">2.4    量子密码</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-密码破译的发展"><span class="toc-text">3.    密码破译的发展</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#总结"><span class="toc-text">总结</span></a></li></ol></li></ol>
+        
+    </div>
+</aside>
+                
+            </div>
+        </div>
+    </section>
+    <footer class="main-footer">
+    <div class="container">
+        <div class="row">
+        </div>
+    </div>
+</footer>
+<a id="back-to-top" class="icon-btn hide">
+    <i class="fa fa-chevron-up"></i>
+</a>
+    <div class="copyright">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="busuanzi">
+    
+    访问量:
+    <strong id="busuanzi_value_site_pv">
+        <i class="fa fa-spinner fa-spin"></i>
+    </strong>
+    &nbsp; | &nbsp;
+    访客数:
+    <strong id="busuanzi_value_site_uv">
+        <i class="fa fa-spinner fa-spin"></i>
+    </strong>
+    
+</div>
+            </div>
+            <div class="col-sm-12">
+                <span>Copyright &copy;
+                    2020
+                    
+                </span> |
+                <span>
+                    Powered by <a href="//hexo.io" class="copyright-links" target="_blank" rel="nofollow">Hexo</a>
+                </span> |
+                <span>
+                    Theme by <a href="//github.com/shenliyang/hexo-theme-snippet.git" class="copyright-links" target="_blank" rel="nofollow">Snippet</a>
+                </span>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<script src="/assets/tagcanvas.min.js?rev=2.9.js"></script>
+
+<script>
+var tagOption = {
+    textColour: '#444', // 字体颜色
+    outlineMethod: 'block', // 选中模式
+    outlineColour: '#FFDAB9', // 选中模式的颜色
+    interval: 30 || 30, // 动画帧之间的时间间隔，值越大，转动幅度越大
+    textHeight: 13,
+    outlineRadius: 3,
+    freezeActive: true || '', // 选中的标签是否继续滚动
+    frontSelect: true || '', // 不选标签云后部的标签
+    initial: [0.1, -0.1],
+    depth: 0.5,
+    decel: 0.95,
+    maxSpeed: 0.03,
+    reverse: true || '', // 是否反向触发
+    fadeIn: 500, // 进入动画时间
+    wheelZoom: false || '' // 是否启用鼠标滚轮
+}
+TagCanvas.Start('tag-cloud-3d', '', tagOption);
+</script>
+
+
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+<script src="/js/app.js?rev=@@hash.js"></script>
+
+
+<!-- 雪花特效 -->
+<script type="text/javascript" src="http://libs.baidu.com/jquery/1.8.3/jquery.js"></script>
+<script type="text/javascript" src="http://libs.baidu.com/jquery/1.8.3/jquery.min.js"></script>
+<script type="text/javascript" src="\js\snow.js"></script>
+
+<canvas class="fireworks" style="position: fixed;left: 0;top: 0;z-index: 1; pointer-events: none;" ></canvas> 
+<script type="text/javascript" src="//cdn.bootcss.com/animejs/2.2.0/anime.min.js"></script> 
+<script type="text/javascript" src="/js/fireworks.js"></script>
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"model":{"jsonPath":"live2d-widget-model-haruto"},"display":{"position":"right","width":150,"height":300},"mobile":{"show":false},"log":false,"pluginJsPath":"lib/","pluginModelPath":"assets/","pluginRootPath":"live2dw/","tagMode":false});</script></body>
+</html>

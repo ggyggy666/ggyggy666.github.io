@@ -1,0 +1,401 @@
+<head>
+<script src="https://cdn.jsdelivr.net/npm/jquery/dist/jquery.min.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome/css/font-awesome.min.css">
+<script src="https://cdn.jsdelivr.net/gh/stevenjoezhang/live2d-widget/autoload.js"></script>
+</head>
+
+<!DOCTYPE HTML>
+<html lang="zh-CN">
+
+<head>
+    <!--Setting-->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+    <meta http-equiv="Cache-Control" content="no-siteapp">
+    <meta http-equiv="Cache-Control" content="no-transform">
+    <meta name="renderer" content="webkit|ie-comp|ie-stand">
+    <meta name="apple-mobile-web-app-capable" content="ggy的个人博客">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="format-detection" content="telephone=no,email=no,adress=no">
+    <meta name="browsermode" content="application">
+    <meta name="screen-orientation" content="portrait">
+    <meta name="theme-version" content="1.2.3">
+    <meta name="root" content="/">
+    <link rel="dns-prefetch" href="https://ggyggy666.github.io">
+    <!--SEO-->
+
+<meta name="keywords" content="最后的总结-越权访问、OAuth2.0和在线支付安全" />
+
+
+<meta name="description" content="今天是最后一章啦，就合在一块总结完了。
+今天不是很开心。不知道是不是因为今天是3月1号，网络规范开始执行了的原因，一大早发现自己的博客的图片链接全挂了。去图床的历史记录还能看到那些图片，但打开链..." />
+
+
+<meta name="robots" content="all" />
+<meta name="google" content="all" />
+<meta name="googlebot" content="all" />
+<meta name="verify" content="all" />
+    <!--Title-->
+
+<title>
+    
+    最后的总结-越权访问、OAuth2.0和在线支付安全 |
+    
+    ggy的个人博客
+</title>
+
+<link rel="alternate" href="/atom.xml" title="ggy的个人博客" type="application/atom+xml">
+
+
+<link rel="icon" href="/favicon.ico">
+
+    
+
+
+<link rel="stylesheet" href="/css/bootstrap.min.css?rev=3.3.7.css">
+<link rel="stylesheet" href="/css/font-awesome.min.css?rev=4.7.0.css">
+<link rel="stylesheet" href="/css/style.css?rev=@@hash.css">
+
+    
+<div class="hide">
+    <script type="text/javascript">
+    var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+    document.write(unescape("%3Cspan class='cnzz_stat_icon_1263868967 hide' %3E%3Cscript%20src%3D%22https%3A%2F%2Fs95.cnzz.com%2Fz_stat.php%3Fweb_id%3D1272564536%22%3E%3C%2Fscript%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s19.cnzz.com/z_stat.php%3Fid%3D1263868967%26show%3Dpic1' type='text/javascript'%3E%3C/script%3E"));
+    </script>
+</div>
+
+
+
+
+    
+
+<meta name="generator" content="Hexo 4.2.0"></head>
+<!--[if lte IE 8]>
+<style>
+    html{ font-size: 1em }
+</style>
+<![endif]-->
+<!--[if lte IE 9]>
+<div style="ie">你使用的浏览器版本过低，为了你更好的阅读体验，请更新浏览器的版本或者使用其他现代浏览器，比如Chrome、Firefox、Safari等。</div>
+<![endif]-->
+<body>
+    <header class="main-header"  style="background-image:url(
+    https://pic.downk.cc/item/5e3816b82fb38b8c3c8791f9.jpg)"
+     >
+    <div class="main-header-box">
+        <a class="header-avatar" href="/" title='ggy'>
+            <img src="/img/avatar.jpg" alt="logo头像" class="img-responsive center-block">
+        </a>
+        <div class="branding">
+            <!--<h2 class="text-hide">Snippet主题,从未如此简单有趣</h2>-->
+            
+            <h2>
+                欢迎来到ggy的个人网站
+            </h2>
+            
+        </div>
+    </div>
+</header>
+    <nav class="main-navigation">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="navbar-header"><span class="nav-toggle-button collapsed pull-right" data-toggle="collapse" data-target="#main-menu" id="mnav">
+                        <span class="sr-only"></span>
+                        <i class="fa fa-bars"></i>
+                    </span>
+                    <a class="navbar-brand" href="https://ggyggy666.github.io">
+                        ggy的个人博客</a>
+                </div>
+                <div class="collapse navbar-collapse" id="main-menu">
+                    <ul class="menu">
+                        
+                        <li role="presentation" class="text-center">
+                            <a href="/"><i class="fa "></i>
+                                首页</a>
+                        </li>
+                        
+                        <li role="presentation" class="text-center">
+                            <a href="/categories/web安全/"><i class="fa "></i>
+                                web安全</a>
+                        </li>
+                        
+                        <li role="presentation" class="text-center">
+                            <a href="/categories/python工具/"><i class="fa "></i>
+                                python工具</a>
+                        </li>
+                        
+                        <li role="presentation" class="text-center">
+                            <a href="/categories/密码学/"><i class="fa "></i>
+                                密码学</a>
+                        </li>
+                        
+                        <li role="presentation" class="text-center">
+                            <a href="/archives/"><i class="fa "></i>
+                                时间轴</a>
+                        </li>
+                        
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</nav>
+    <section class="content-wrap">
+        <div class="container">
+            <div class="row">
+                <main class="col-md-8 main-content m-post">
+                    <p id="process"></p>
+<article class="post">
+    <div class="post-head">
+        <h1 id="最后的总结-越权访问、OAuth2.0和在线支付安全">
+            
+            最后的总结-越权访问、OAuth2.0和在线支付安全
+            
+        </h1>
+        <div class="post-meta">
+    
+    <span class="categories-meta fa-wrap">
+        <i class="fa fa-folder-open-o"></i>
+        <a class="category-link" href="/categories/web%E5%AE%89%E5%85%A8/">web安全</a>
+    </span>
+    
+    
+    <span class="fa-wrap">
+        <i class="fa fa-tags"></i>
+        <span class="tags-meta">
+            
+            <a class="tag-link" href="/tags/%E6%9C%80%E5%90%8E%E7%9A%84%E6%80%BB%E7%BB%93-%E8%B6%8A%E6%9D%83%E8%AE%BF%E9%97%AE%E3%80%81OAuth2-0%E5%92%8C%E5%9C%A8%E7%BA%BF%E6%94%AF%E4%BB%98%E5%AE%89%E5%85%A8/" rel="tag">最后的总结-越权访问、OAuth2.0和在线支付安全</a>
+            
+        </span>
+    </span>
+    
+    
+    
+    <span class="fa-wrap">
+        <i class="fa fa-clock-o"></i>
+        <span class="date-meta">
+            2020/03/01</span>
+    </span>
+    
+    <span class="fa-wrap">
+        <i class="fa fa-eye"></i>
+        <span id="busuanzi_value_page_pv"></span>
+    </span>
+    
+    
+</div>
+        
+        
+        <p class="fa fa-exclamation-triangle warning">
+            本文于<strong>
+                376</strong>
+            天之前发表，文中内容可能已经过时。
+        </p>
+        
+    </div>
+    
+    <div class="post-body post-content">
+        <p>今天是最后一章啦，就合在一块总结完了。<br><img src="https://s2.ax1x.com/2020/03/01/3caSdH.png" alt></p>
+<p>今天不是很开心。不知道是不是因为今天是3月1号，网络规范开始执行了的原因，一大早发现自己的博客的图片链接全挂了。去图床的历史记录还能看到那些图片，但打开链接就直接502了。于是乎，我傻傻的又去找了个免费图床。然后在之前的图床的历史记录中一张张的截图再上传到新的图床中，再将博客里的图片链接全部替换掉。这真的是个大工程，麻烦。最要紧的是，等我全部都替换好后，原先那个图床的图片又能访问了，我可去nm的。一看URL，发现是换了个阿里云的CDN。我服了，白忙活一早上，真是浪费生命。气！</p>
+<hr>
+<h1 id="越权访问安全"><a href="#越权访问安全" class="headerlink" title="越权访问安全"></a>越权访问安全</h1><h2 id="平行越权"><a href="#平行越权" class="headerlink" title="平行越权"></a>平行越权</h2><ul>
+<li><strong>修改某个参数比如uid，遍历</strong>  </li>
+</ul>
+<h2 id="纵向越权"><a href="#纵向越权" class="headerlink" title="纵向越权"></a>纵向越权</h2><ul>
+<li><strong>修改cookie中表明用户身份的参数为admin</strong></li>
+<li><strong>相互修改权限</strong><br>注册两个账号，各自不能修改自己的权限，但可以修改对方的权限。A账号修改B账号的权限为管理员即可。（现实中估计很难找到这样的案例）</li>
+</ul>
+<h2 id="防范"><a href="#防范" class="headerlink" title="防范"></a>防范</h2><ol>
+<li>对输入参数校验。</li>
+<li>加密ID。</li>
+<li>每一步都要验证用户身份。</li>
+<li>统一权限验证是否有足够权限。</li>
+</ol>
+<h1 id="OAuth2-0"><a href="#OAuth2-0" class="headerlink" title="OAuth2.0"></a>OAuth2.0</h1><p>OAuth是啥在先前文章有讲到。</p>
+<h2 id="CSRF"><a href="#CSRF" class="headerlink" title="CSRF"></a>CSRF</h2><p>在A界面中，可以绑定一个百度账号，那么就需要跳转到百度去授权登录绑定才行。因为绑定的百度账号显然是可以控制的，如果没有什么token验证的话，就可以使用csrf，构造出一个链接，将要绑定的百度账号修改成自己的，引诱其它用户点击，那么它们的账号就会绑定我的百度账号了。</p>
+<h2 id="劫持授权"><a href="#劫持授权" class="headerlink" title="劫持授权"></a>劫持授权</h2><p>自己先尝试登录一个其它域的账号，如上面提到的百度账号。在当前用户界面，点击立即绑定后，发现有oauth_callback=xxx.com。这个就是在绑定之后返回刚才的用户界面。如果跟token没什么联系，就可以修改成自己的某个域。将链接发送给其它用户引诱点击，那么它们在绑定百度账号后就会跳转到我们指定的地址，同时可以在这个地址里编写一段代码获取跳转过来带的oauth_token信息。就可以利用这个自己操作对那个用户绑定任意账号。</p>
+<h2 id="防范-1"><a href="#防范-1" class="headerlink" title="防范"></a>防范</h2><ol>
+<li>使用state参数防范csrf。</li>
+<li>验证回调地址是否与自己的账号信息对应。</li>
+</ol>
+<h1 id="在线支付安全"><a href="#在线支付安全" class="headerlink" title="在线支付安全"></a>在线支付安全</h1><h2 id="F12修改价格再付钱"><a href="#F12修改价格再付钱" class="headerlink" title="F12修改价格再付钱"></a>F12修改价格再付钱</h2><h2 id="修改订单数量"><a href="#修改订单数量" class="headerlink" title="修改订单数量"></a>修改订单数量</h2><p>买两件商品，一件数量是1，一件是-1。付款就是两个计算之后的金额。</p>
+<h2 id="订单请求不停重复尝试0元购买"><a href="#订单请求不停重复尝试0元购买" class="headerlink" title="订单请求不停重复尝试0元购买"></a>订单请求不停重复尝试0元购买</h2><h2 id="价格无法修改，但是可以改运费"><a href="#价格无法修改，但是可以改运费" class="headerlink" title="价格无法修改，但是可以改运费"></a>价格无法修改，但是可以改运费</h2><p>比如价格是1500，将运费改成-1499。看看是否是付1元。</p>
+<h2 id="防范-2"><a href="#防范-2" class="headerlink" title="防范"></a>防范</h2><ol>
+<li>每个商品对应一个价格，服务端验证商品ID。</li>
+<li>校验提交的订单数量。</li>
+<li>订单编号唯一，防止重放攻击。</li>
+<li>运费不能低于0。</li>
+</ol>
+
+    </div>
+    
+    <div class="reward" ontouchstart>
+    <div class="reward-wrap">赏
+        <div class="reward-box">
+            
+            <span class="reward-type">
+                <img class="alipay" src="/img/alipay.jpg"><b>支付宝打赏</b>
+            </span>
+            
+            
+            <span class="reward-type">
+                <img class="wechat" src="/img/wechat.jpg"><b>微信打赏</b>
+            </span>
+            
+        </div>
+    </div>
+    <p class="reward-tip">
+        赞赏是不耍流氓的鼓励
+    </p>
+</div>
+    
+    <div class="post-footer">
+        <div>
+            
+            转载声明：
+            商业转载请联系作者获得授权,非商业转载请注明出处 © <a href="ggy.44pp.vip" target="_blank">ggy</a>
+            
+            
+        </div>
+        <div>
+            
+        </div>
+    </div>
+</article>
+<div class="article-nav prev-next-wrap clearfix">
+    
+    <a href="/2020/03/03/%E6%8B%89%E4%B8%81%E6%96%B9%E9%98%B5/" class="pre-post btn btn-default" title='拉丁方阵'>
+        <i class="fa fa-angle-left fa-fw"></i><span class="hidden-lg">上一篇</span>
+        <span class="hidden-xs">
+            拉丁方阵</span>
+    </a>
+    
+    
+    <a href="/2020/03/01/%E5%AF%86%E7%A0%81%E7%BC%96%E7%A0%81%E7%9A%84%E5%8F%91%E5%B1%95%E5%92%8C%E7%A0%B4%E8%AF%91%E7%9A%84%E5%8F%91%E5%B1%95/" class="next-post btn btn-default" title='密码编码的发展和破译的发展'>
+        <span class="hidden-lg">下一篇</span>
+        <span class="hidden-xs">
+            密码编码的发展和破译的发展</span><i class="fa fa-angle-right fa-fw"></i>
+    </a>
+    
+</div>
+
+<div id="comments">
+    
+<div id="lv-container" data-id="city" data-uid="MTAyMC80ODM1Ni8yNDg1MA==">
+    <script type="text/javascript">
+    (function(d, s) {
+        var j, e = d.getElementsByTagName(s)[0];
+        if (typeof LivereTower === 'function') { return; }
+        j = d.createElement(s);
+        j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+        j.async = true;
+        e.parentNode.insertBefore(j, e);
+    })(document, 'script');
+    </script>
+</div>
+
+</div>
+
+                </main>
+                
+                    <aside id="article-toc" role="navigation" class="col-md-4">
+    <div class="widget">
+        <h3 class="title">
+            文章目录
+        </h3>
+        
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#越权访问安全"><span class="toc-text">越权访问安全</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#平行越权"><span class="toc-text">平行越权</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#纵向越权"><span class="toc-text">纵向越权</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#防范"><span class="toc-text">防范</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#OAuth2-0"><span class="toc-text">OAuth2.0</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#CSRF"><span class="toc-text">CSRF</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#劫持授权"><span class="toc-text">劫持授权</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#防范-1"><span class="toc-text">防范</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#在线支付安全"><span class="toc-text">在线支付安全</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#F12修改价格再付钱"><span class="toc-text">F12修改价格再付钱</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#修改订单数量"><span class="toc-text">修改订单数量</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#订单请求不停重复尝试0元购买"><span class="toc-text">订单请求不停重复尝试0元购买</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#价格无法修改，但是可以改运费"><span class="toc-text">价格无法修改，但是可以改运费</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#防范-2"><span class="toc-text">防范</span></a></li></ol></li></ol>
+        
+    </div>
+</aside>
+                
+            </div>
+        </div>
+    </section>
+    <footer class="main-footer">
+    <div class="container">
+        <div class="row">
+        </div>
+    </div>
+</footer>
+<a id="back-to-top" class="icon-btn hide">
+    <i class="fa fa-chevron-up"></i>
+</a>
+    <div class="copyright">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="busuanzi">
+    
+    访问量:
+    <strong id="busuanzi_value_site_pv">
+        <i class="fa fa-spinner fa-spin"></i>
+    </strong>
+    &nbsp; | &nbsp;
+    访客数:
+    <strong id="busuanzi_value_site_uv">
+        <i class="fa fa-spinner fa-spin"></i>
+    </strong>
+    
+</div>
+            </div>
+            <div class="col-sm-12">
+                <span>Copyright &copy;
+                    2020
+                    
+                </span> |
+                <span>
+                    Powered by <a href="//hexo.io" class="copyright-links" target="_blank" rel="nofollow">Hexo</a>
+                </span> |
+                <span>
+                    Theme by <a href="//github.com/shenliyang/hexo-theme-snippet.git" class="copyright-links" target="_blank" rel="nofollow">Snippet</a>
+                </span>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<script src="/assets/tagcanvas.min.js?rev=2.9.js"></script>
+
+<script>
+var tagOption = {
+    textColour: '#444', // 字体颜色
+    outlineMethod: 'block', // 选中模式
+    outlineColour: '#FFDAB9', // 选中模式的颜色
+    interval: 30 || 30, // 动画帧之间的时间间隔，值越大，转动幅度越大
+    textHeight: 13,
+    outlineRadius: 3,
+    freezeActive: true || '', // 选中的标签是否继续滚动
+    frontSelect: true || '', // 不选标签云后部的标签
+    initial: [0.1, -0.1],
+    depth: 0.5,
+    decel: 0.95,
+    maxSpeed: 0.03,
+    reverse: true || '', // 是否反向触发
+    fadeIn: 500, // 进入动画时间
+    wheelZoom: false || '' // 是否启用鼠标滚轮
+}
+TagCanvas.Start('tag-cloud-3d', '', tagOption);
+</script>
+
+
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+<script src="/js/app.js?rev=@@hash.js"></script>
+
+
+<!-- 雪花特效 -->
+<script type="text/javascript" src="http://libs.baidu.com/jquery/1.8.3/jquery.js"></script>
+<script type="text/javascript" src="http://libs.baidu.com/jquery/1.8.3/jquery.min.js"></script>
+<script type="text/javascript" src="\js\snow.js"></script>
+
+<canvas class="fireworks" style="position: fixed;left: 0;top: 0;z-index: 1; pointer-events: none;" ></canvas> 
+<script type="text/javascript" src="//cdn.bootcss.com/animejs/2.2.0/anime.min.js"></script> 
+<script type="text/javascript" src="/js/fireworks.js"></script>
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"model":{"jsonPath":"live2d-widget-model-haruto"},"display":{"position":"right","width":150,"height":300},"mobile":{"show":false},"log":false,"pluginJsPath":"lib/","pluginModelPath":"assets/","pluginRootPath":"live2dw/","tagMode":false});</script></body>
+</html>

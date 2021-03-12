@@ -1,0 +1,392 @@
+<head>
+<script src="https://cdn.jsdelivr.net/npm/jquery/dist/jquery.min.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome/css/font-awesome.min.css">
+<script src="https://cdn.jsdelivr.net/gh/stevenjoezhang/live2d-widget/autoload.js"></script>
+</head>
+
+<!DOCTYPE HTML>
+<html lang="zh-CN">
+
+<head>
+    <!--Setting-->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+    <meta http-equiv="Cache-Control" content="no-siteapp">
+    <meta http-equiv="Cache-Control" content="no-transform">
+    <meta name="renderer" content="webkit|ie-comp|ie-stand">
+    <meta name="apple-mobile-web-app-capable" content="ggy的个人博客">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="format-detection" content="telephone=no,email=no,adress=no">
+    <meta name="browsermode" content="application">
+    <meta name="screen-orientation" content="portrait">
+    <meta name="theme-version" content="1.2.3">
+    <meta name="root" content="/">
+    <link rel="dns-prefetch" href="https://ggyggy666.github.io">
+    <!--SEO-->
+
+<meta name="keywords" content="python小知识" />
+
+
+<meta name="description" content="今天写了个ASCII码与字符相互转换的小工具，挺多小知识都忘了还得百度，因此在此记录下来，以备将来之用。
+
+字符串转列表
+有一个字符串：ch=”a b c d”，想要把它转为列表，就可以逐个访问..." />
+
+
+<meta name="robots" content="all" />
+<meta name="google" content="all" />
+<meta name="googlebot" content="all" />
+<meta name="verify" content="all" />
+    <!--Title-->
+
+<title>
+    
+    python小知识 |
+    
+    ggy的个人博客
+</title>
+
+<link rel="alternate" href="/atom.xml" title="ggy的个人博客" type="application/atom+xml">
+
+
+<link rel="icon" href="/favicon.ico">
+
+    
+
+
+<link rel="stylesheet" href="/css/bootstrap.min.css?rev=3.3.7.css">
+<link rel="stylesheet" href="/css/font-awesome.min.css?rev=4.7.0.css">
+<link rel="stylesheet" href="/css/style.css?rev=@@hash.css">
+
+    
+<div class="hide">
+    <script type="text/javascript">
+    var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+    document.write(unescape("%3Cspan class='cnzz_stat_icon_1263868967 hide' %3E%3Cscript%20src%3D%22https%3A%2F%2Fs95.cnzz.com%2Fz_stat.php%3Fweb_id%3D1272564536%22%3E%3C%2Fscript%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s19.cnzz.com/z_stat.php%3Fid%3D1263868967%26show%3Dpic1' type='text/javascript'%3E%3C/script%3E"));
+    </script>
+</div>
+
+
+
+
+    
+
+<meta name="generator" content="Hexo 4.2.0"></head>
+<!--[if lte IE 8]>
+<style>
+    html{ font-size: 1em }
+</style>
+<![endif]-->
+<!--[if lte IE 9]>
+<div style="ie">你使用的浏览器版本过低，为了你更好的阅读体验，请更新浏览器的版本或者使用其他现代浏览器，比如Chrome、Firefox、Safari等。</div>
+<![endif]-->
+<body>
+    <header class="main-header"  style="background-image:url(
+    https://pic.downk.cc/item/5e3816b82fb38b8c3c8791f9.jpg)"
+     >
+    <div class="main-header-box">
+        <a class="header-avatar" href="/" title='ggy'>
+            <img src="/img/avatar.jpg" alt="logo头像" class="img-responsive center-block">
+        </a>
+        <div class="branding">
+            <!--<h2 class="text-hide">Snippet主题,从未如此简单有趣</h2>-->
+            
+            <h2>
+                欢迎来到ggy的个人网站
+            </h2>
+            
+        </div>
+    </div>
+</header>
+    <nav class="main-navigation">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="navbar-header"><span class="nav-toggle-button collapsed pull-right" data-toggle="collapse" data-target="#main-menu" id="mnav">
+                        <span class="sr-only"></span>
+                        <i class="fa fa-bars"></i>
+                    </span>
+                    <a class="navbar-brand" href="https://ggyggy666.github.io">
+                        ggy的个人博客</a>
+                </div>
+                <div class="collapse navbar-collapse" id="main-menu">
+                    <ul class="menu">
+                        
+                        <li role="presentation" class="text-center">
+                            <a href="/"><i class="fa "></i>
+                                首页</a>
+                        </li>
+                        
+                        <li role="presentation" class="text-center">
+                            <a href="/categories/web安全/"><i class="fa "></i>
+                                web安全</a>
+                        </li>
+                        
+                        <li role="presentation" class="text-center">
+                            <a href="/categories/python工具/"><i class="fa "></i>
+                                python工具</a>
+                        </li>
+                        
+                        <li role="presentation" class="text-center">
+                            <a href="/categories/密码学/"><i class="fa "></i>
+                                密码学</a>
+                        </li>
+                        
+                        <li role="presentation" class="text-center">
+                            <a href="/archives/"><i class="fa "></i>
+                                时间轴</a>
+                        </li>
+                        
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</nav>
+    <section class="content-wrap">
+        <div class="container">
+            <div class="row">
+                <main class="col-md-8 main-content m-post">
+                    <p id="process"></p>
+<article class="post">
+    <div class="post-head">
+        <h1 id="python小知识">
+            
+            python小知识
+            
+        </h1>
+        <div class="post-meta">
+    
+    <span class="categories-meta fa-wrap">
+        <i class="fa fa-folder-open-o"></i>
+        <a class="category-link" href="/categories/python%E5%B7%A5%E5%85%B7/">python工具</a>
+    </span>
+    
+    
+    <span class="fa-wrap">
+        <i class="fa fa-tags"></i>
+        <span class="tags-meta">
+            
+            <a class="tag-link" href="/tags/python%E5%B0%8F%E7%9F%A5%E8%AF%86/" rel="tag">python小知识</a>
+            
+        </span>
+    </span>
+    
+    
+    
+    <span class="fa-wrap">
+        <i class="fa fa-clock-o"></i>
+        <span class="date-meta">
+            2020/04/06</span>
+    </span>
+    
+    <span class="fa-wrap">
+        <i class="fa fa-eye"></i>
+        <span id="busuanzi_value_page_pv"></span>
+    </span>
+    
+    
+</div>
+        
+        
+        <p class="fa fa-exclamation-triangle warning">
+            本文于<strong>
+                340</strong>
+            天之前发表，文中内容可能已经过时。
+        </p>
+        
+    </div>
+    
+    <div class="post-body post-content">
+        <p>今天写了个ASCII码与字符相互转换的小工具，挺多小知识都忘了还得百度，因此在此记录下来，以备将来之用。</p>
+<a id="more"></a>
+<h1 id="字符串转列表"><a href="#字符串转列表" class="headerlink" title="字符串转列表"></a>字符串转列表</h1><ol>
+<li>有一个字符串：ch=”a b c d”，想要把它转为列表，就可以逐个访问。<br> <code>ch.split(&#39; &#39;)</code><br>使用split根据空格切割，返回一个列表。</li>
+<li>有一个字符串：ch=”abcd”，转为列表。<br><code>list1=list(ch)</code><br>直接使用list将它强制转为列表类型。<h2 id="往列表添加字符"><a href="#往列表添加字符" class="headerlink" title="往列表添加字符"></a>往列表添加字符</h2><code>list1.append(i)</code><h2 id="列表越界问题"><a href="#列表越界问题" class="headerlink" title="列表越界问题"></a>列表越界问题</h2>如果要通过下标访问列表或向列表添加字符，需要考虑该列表是否已经有足够的空间，因为一般都是先定义：list1 = [] 而已，此时通过下标访问是会越界的。</li>
+</ol>
+<h1 id="两个列表可以合并成一个字典"><a href="#两个列表可以合并成一个字典" class="headerlink" title="两个列表可以合并成一个字典"></a>两个列表可以合并成一个字典</h1><p><code>dict1 = dict(zip(list1,list2))</code><br>list1的值为键，list2的值为value。</p>
+<h2 id="字典通过键找到对应的值"><a href="#字典通过键找到对应的值" class="headerlink" title="字典通过键找到对应的值"></a>字典通过键找到对应的值</h2><p>直接像数组一样访问。比如字典dict1中，键是：a, 值是：hb.那么可以通过：<code>dict1[a]</code>得到hb。</p>
+<h2 id="字典通过值找到对应的键"><a href="#字典通过值找到对应的键" class="headerlink" title="字典通过值找到对应的键"></a>字典通过值找到对应的键</h2><p>不用网上的方法，可以使用循环：</p>
+<pre><code>for k, v in dict1.items():
+    if v == &apos;a&apos;:
+        print(k)</code></pre><p>items()可以返回字典所有的键(k遍历）和所有的值（v遍历）。如果已知的值跟字典中某个值v对应，就可以直接返回相应的键k。</p>
+<h2 id="获取字典所有的键并遍历"><a href="#获取字典所有的键并遍历" class="headerlink" title="获取字典所有的键并遍历"></a>获取字典所有的键并遍历</h2><pre><code>for k in dict1.keys():</code></pre><h2 id="获取字典所有的值并遍历"><a href="#获取字典所有的值并遍历" class="headerlink" title="获取字典所有的值并遍历"></a>获取字典所有的值并遍历</h2><pre><code>for v in dict1.values():</code></pre><h1 id="文件操作"><a href="#文件操作" class="headerlink" title="文件操作"></a>文件操作</h1><h2 id="打开文件"><a href="#打开文件" class="headerlink" title="打开文件"></a>打开文件</h2><pre><code>with open(&apos;文件路径&apos;,&apos;r&apos;) as f:
+    f.read() 或 f.readline() 或 f.readlines()</code></pre><p>r是只读，可以是w,a，也可以后面加一个+。<br>f.read()将内容一次读入。f.readline()只能读一行。f.readlines()读取所有行，然后可以：<code>for line in f.readlines():</code>进行遍历。</p>
+<h1 id="多线程"><a href="#多线程" class="headerlink" title="多线程"></a>多线程</h1><p>先导入库。<code>import threading</code>  </p>
+<h2 id="不带参数"><a href="#不带参数" class="headerlink" title="不带参数"></a>不带参数</h2><pre><code>t = threading.Thread(target=Help())</code></pre><p>注意<strong>需要函数名以及()，跟直接使用Help()是一样的，没有t.start()</strong>。</p>
+<h2 id="带参数"><a href="#带参数" class="headerlink" title="带参数"></a>带参数</h2><pre><code>t = threading.Thread(target=Help, args=(a,))
+t.start()</code></pre><p>注意<strong>只有函数名，没有()，必须使用t.start(),这才是真正的多线程。args=(a,)只传了一个参数，但是后面会跟一个逗号</strong>（不知为何）.</p>
+<h1 id="退出"><a href="#退出" class="headerlink" title="退出"></a>退出</h1><p>先导入库, 再直接执行退出程序。</p>
+<pre><code>import sys
+sys.exit(0)</code></pre>
+    </div>
+    
+    <div class="reward" ontouchstart>
+    <div class="reward-wrap">赏
+        <div class="reward-box">
+            
+            <span class="reward-type">
+                <img class="alipay" src="/img/alipay.jpg"><b>支付宝打赏</b>
+            </span>
+            
+            
+            <span class="reward-type">
+                <img class="wechat" src="/img/wechat.jpg"><b>微信打赏</b>
+            </span>
+            
+        </div>
+    </div>
+    <p class="reward-tip">
+        赞赏是不耍流氓的鼓励
+    </p>
+</div>
+    
+    <div class="post-footer">
+        <div>
+            
+            转载声明：
+            商业转载请联系作者获得授权,非商业转载请注明出处 © <a href="ggy.44pp.vip" target="_blank">ggy</a>
+            
+            
+        </div>
+        <div>
+            
+        </div>
+    </div>
+</article>
+<div class="article-nav prev-next-wrap clearfix">
+    
+    <a href="/2020/04/11/%E4%BF%AE%E6%94%B9cookie%E5%8F%82%E6%95%B0%E8%BF%9B%E8%A1%8CSQL%E6%B3%A8%E5%85%A5/" class="pre-post btn btn-default" title='修改cookie参数进行SQL注入'>
+        <i class="fa fa-angle-left fa-fw"></i><span class="hidden-lg">上一篇</span>
+        <span class="hidden-xs">
+            修改cookie参数进行SQL注入</span>
+    </a>
+    
+    
+    <a href="/2020/04/05/%E4%B8%8D%E5%90%8C%E6%95%B0%E6%8D%AE%E5%BA%93%E7%9A%84%E6%B3%A8%E5%85%A5%E6%96%B9%E6%B3%95-Postgre%E3%80%81Db2/" class="next-post btn btn-default" title='不同数据库的注入方法(Postgre、Db2)'>
+        <span class="hidden-lg">下一篇</span>
+        <span class="hidden-xs">
+            不同数据库的注入方法(Postgre、Db2)</span><i class="fa fa-angle-right fa-fw"></i>
+    </a>
+    
+</div>
+
+<div id="comments">
+    
+<div id="lv-container" data-id="city" data-uid="MTAyMC80ODM1Ni8yNDg1MA==">
+    <script type="text/javascript">
+    (function(d, s) {
+        var j, e = d.getElementsByTagName(s)[0];
+        if (typeof LivereTower === 'function') { return; }
+        j = d.createElement(s);
+        j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+        j.async = true;
+        e.parentNode.insertBefore(j, e);
+    })(document, 'script');
+    </script>
+</div>
+
+</div>
+
+                </main>
+                
+                    <aside id="article-toc" role="navigation" class="col-md-4">
+    <div class="widget">
+        <h3 class="title">
+            文章目录
+        </h3>
+        
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#字符串转列表"><span class="toc-text">字符串转列表</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#往列表添加字符"><span class="toc-text">往列表添加字符</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#列表越界问题"><span class="toc-text">列表越界问题</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#两个列表可以合并成一个字典"><span class="toc-text">两个列表可以合并成一个字典</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#字典通过键找到对应的值"><span class="toc-text">字典通过键找到对应的值</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#字典通过值找到对应的键"><span class="toc-text">字典通过值找到对应的键</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#获取字典所有的键并遍历"><span class="toc-text">获取字典所有的键并遍历</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#获取字典所有的值并遍历"><span class="toc-text">获取字典所有的值并遍历</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#文件操作"><span class="toc-text">文件操作</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#打开文件"><span class="toc-text">打开文件</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#多线程"><span class="toc-text">多线程</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#不带参数"><span class="toc-text">不带参数</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#带参数"><span class="toc-text">带参数</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#退出"><span class="toc-text">退出</span></a></li></ol>
+        
+    </div>
+</aside>
+                
+            </div>
+        </div>
+    </section>
+    <footer class="main-footer">
+    <div class="container">
+        <div class="row">
+        </div>
+    </div>
+</footer>
+<a id="back-to-top" class="icon-btn hide">
+    <i class="fa fa-chevron-up"></i>
+</a>
+    <div class="copyright">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="busuanzi">
+    
+    访问量:
+    <strong id="busuanzi_value_site_pv">
+        <i class="fa fa-spinner fa-spin"></i>
+    </strong>
+    &nbsp; | &nbsp;
+    访客数:
+    <strong id="busuanzi_value_site_uv">
+        <i class="fa fa-spinner fa-spin"></i>
+    </strong>
+    
+</div>
+            </div>
+            <div class="col-sm-12">
+                <span>Copyright &copy;
+                    2020
+                    
+                </span> |
+                <span>
+                    Powered by <a href="//hexo.io" class="copyright-links" target="_blank" rel="nofollow">Hexo</a>
+                </span> |
+                <span>
+                    Theme by <a href="//github.com/shenliyang/hexo-theme-snippet.git" class="copyright-links" target="_blank" rel="nofollow">Snippet</a>
+                </span>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<script src="/assets/tagcanvas.min.js?rev=2.9.js"></script>
+
+<script>
+var tagOption = {
+    textColour: '#444', // 字体颜色
+    outlineMethod: 'block', // 选中模式
+    outlineColour: '#FFDAB9', // 选中模式的颜色
+    interval: 30 || 30, // 动画帧之间的时间间隔，值越大，转动幅度越大
+    textHeight: 13,
+    outlineRadius: 3,
+    freezeActive: true || '', // 选中的标签是否继续滚动
+    frontSelect: true || '', // 不选标签云后部的标签
+    initial: [0.1, -0.1],
+    depth: 0.5,
+    decel: 0.95,
+    maxSpeed: 0.03,
+    reverse: true || '', // 是否反向触发
+    fadeIn: 500, // 进入动画时间
+    wheelZoom: false || '' // 是否启用鼠标滚轮
+}
+TagCanvas.Start('tag-cloud-3d', '', tagOption);
+</script>
+
+
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+<script src="/js/app.js?rev=@@hash.js"></script>
+
+
+<!-- 雪花特效 -->
+<script type="text/javascript" src="http://libs.baidu.com/jquery/1.8.3/jquery.js"></script>
+<script type="text/javascript" src="http://libs.baidu.com/jquery/1.8.3/jquery.min.js"></script>
+<script type="text/javascript" src="\js\snow.js"></script>
+
+<canvas class="fireworks" style="position: fixed;left: 0;top: 0;z-index: 1; pointer-events: none;" ></canvas> 
+<script type="text/javascript" src="//cdn.bootcss.com/animejs/2.2.0/anime.min.js"></script> 
+<script type="text/javascript" src="/js/fireworks.js"></script>
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"model":{"jsonPath":"live2d-widget-model-haruto"},"display":{"position":"right","width":150,"height":300},"mobile":{"show":false},"log":false,"pluginJsPath":"lib/","pluginModelPath":"assets/","pluginRootPath":"live2dw/","tagMode":false});</script></body>
+</html>

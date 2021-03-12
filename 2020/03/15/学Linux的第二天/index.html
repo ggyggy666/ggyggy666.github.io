@@ -1,0 +1,400 @@
+<head>
+<script src="https://cdn.jsdelivr.net/npm/jquery/dist/jquery.min.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome/css/font-awesome.min.css">
+<script src="https://cdn.jsdelivr.net/gh/stevenjoezhang/live2d-widget/autoload.js"></script>
+</head>
+
+<!DOCTYPE HTML>
+<html lang="zh-CN">
+
+<head>
+    <!--Setting-->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+    <meta http-equiv="Cache-Control" content="no-siteapp">
+    <meta http-equiv="Cache-Control" content="no-transform">
+    <meta name="renderer" content="webkit|ie-comp|ie-stand">
+    <meta name="apple-mobile-web-app-capable" content="ggy的个人博客">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="format-detection" content="telephone=no,email=no,adress=no">
+    <meta name="browsermode" content="application">
+    <meta name="screen-orientation" content="portrait">
+    <meta name="theme-version" content="1.2.3">
+    <meta name="root" content="/">
+    <link rel="dns-prefetch" href="https://ggyggy666.github.io">
+    <!--SEO-->
+
+<meta name="keywords" content="学Linux的第二天" />
+
+
+<meta name="description" content="最近几天心情不好，导致“第二天”来晚了。
+
+上次已经学了一点对文件及目录进行操作的shell命令，今天继续。
+文件目录管理建立目录：mkdirmkdir test新建一个名字为test的空目录m..." />
+
+
+<meta name="robots" content="all" />
+<meta name="google" content="all" />
+<meta name="googlebot" content="all" />
+<meta name="verify" content="all" />
+    <!--Title-->
+
+<title>
+    
+    学Linux的第二天 |
+    
+    ggy的个人博客
+</title>
+
+<link rel="alternate" href="/atom.xml" title="ggy的个人博客" type="application/atom+xml">
+
+
+<link rel="icon" href="/favicon.ico">
+
+    
+
+
+<link rel="stylesheet" href="/css/bootstrap.min.css?rev=3.3.7.css">
+<link rel="stylesheet" href="/css/font-awesome.min.css?rev=4.7.0.css">
+<link rel="stylesheet" href="/css/style.css?rev=@@hash.css">
+
+    
+<div class="hide">
+    <script type="text/javascript">
+    var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+    document.write(unescape("%3Cspan class='cnzz_stat_icon_1263868967 hide' %3E%3Cscript%20src%3D%22https%3A%2F%2Fs95.cnzz.com%2Fz_stat.php%3Fweb_id%3D1272564536%22%3E%3C%2Fscript%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s19.cnzz.com/z_stat.php%3Fid%3D1263868967%26show%3Dpic1' type='text/javascript'%3E%3C/script%3E"));
+    </script>
+</div>
+
+
+
+
+    
+
+<meta name="generator" content="Hexo 4.2.0"></head>
+<!--[if lte IE 8]>
+<style>
+    html{ font-size: 1em }
+</style>
+<![endif]-->
+<!--[if lte IE 9]>
+<div style="ie">你使用的浏览器版本过低，为了你更好的阅读体验，请更新浏览器的版本或者使用其他现代浏览器，比如Chrome、Firefox、Safari等。</div>
+<![endif]-->
+<body>
+    <header class="main-header"  style="background-image:url(
+    https://pic.downk.cc/item/5e3816b82fb38b8c3c8791f9.jpg)"
+     >
+    <div class="main-header-box">
+        <a class="header-avatar" href="/" title='ggy'>
+            <img src="/img/avatar.jpg" alt="logo头像" class="img-responsive center-block">
+        </a>
+        <div class="branding">
+            <!--<h2 class="text-hide">Snippet主题,从未如此简单有趣</h2>-->
+            
+            <h2>
+                欢迎来到ggy的个人网站
+            </h2>
+            
+        </div>
+    </div>
+</header>
+    <nav class="main-navigation">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="navbar-header"><span class="nav-toggle-button collapsed pull-right" data-toggle="collapse" data-target="#main-menu" id="mnav">
+                        <span class="sr-only"></span>
+                        <i class="fa fa-bars"></i>
+                    </span>
+                    <a class="navbar-brand" href="https://ggyggy666.github.io">
+                        ggy的个人博客</a>
+                </div>
+                <div class="collapse navbar-collapse" id="main-menu">
+                    <ul class="menu">
+                        
+                        <li role="presentation" class="text-center">
+                            <a href="/"><i class="fa "></i>
+                                首页</a>
+                        </li>
+                        
+                        <li role="presentation" class="text-center">
+                            <a href="/categories/web安全/"><i class="fa "></i>
+                                web安全</a>
+                        </li>
+                        
+                        <li role="presentation" class="text-center">
+                            <a href="/categories/python工具/"><i class="fa "></i>
+                                python工具</a>
+                        </li>
+                        
+                        <li role="presentation" class="text-center">
+                            <a href="/categories/密码学/"><i class="fa "></i>
+                                密码学</a>
+                        </li>
+                        
+                        <li role="presentation" class="text-center">
+                            <a href="/archives/"><i class="fa "></i>
+                                时间轴</a>
+                        </li>
+                        
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</nav>
+    <section class="content-wrap">
+        <div class="container">
+            <div class="row">
+                <main class="col-md-8 main-content m-post">
+                    <p id="process"></p>
+<article class="post">
+    <div class="post-head">
+        <h1 id="学Linux的第二天">
+            
+            学Linux的第二天
+            
+        </h1>
+        <div class="post-meta">
+    
+    <span class="categories-meta fa-wrap">
+        <i class="fa fa-folder-open-o"></i>
+        <a class="category-link" href="/categories/Linux/">Linux</a>
+    </span>
+    
+    
+    <span class="fa-wrap">
+        <i class="fa fa-tags"></i>
+        <span class="tags-meta">
+            
+            <a class="tag-link" href="/tags/%E5%AD%A6Linux%E7%9A%84%E7%AC%AC%E4%BA%8C%E5%A4%A9/" rel="tag">学Linux的第二天</a>
+            
+        </span>
+    </span>
+    
+    
+    
+    <span class="fa-wrap">
+        <i class="fa fa-clock-o"></i>
+        <span class="date-meta">
+            2020/03/15</span>
+    </span>
+    
+    <span class="fa-wrap">
+        <i class="fa fa-eye"></i>
+        <span id="busuanzi_value_page_pv"></span>
+    </span>
+    
+    
+</div>
+        
+        
+        <p class="fa fa-exclamation-triangle warning">
+            本文于<strong>
+                362</strong>
+            天之前发表，文中内容可能已经过时。
+        </p>
+        
+    </div>
+    
+    <div class="post-body post-content">
+        <p>最近几天心情不好，导致“第二天”来晚了。</p>
+<a id="more"></a>
+<p>上次已经学了一点对文件及目录进行操作的shell命令，今天继续。</p>
+<h1 id="文件目录管理"><a href="#文件目录管理" class="headerlink" title="文件目录管理"></a>文件目录管理</h1><h2 id="建立目录：mkdir"><a href="#建立目录：mkdir" class="headerlink" title="建立目录：mkdir"></a>建立目录：mkdir</h2><p><code>mkdir test</code><br>新建一个名字为test的空目录<br><code>mkdir /gg/test</code><br>在当前目录的gg目录下新建一个test目录。如果当前目录下并没有gg目录，那么会报错，此时需要使用：<br><code>mkdir -p /gg/test</code><br>先新建一个gg目录，再在gg目录下新建一个test目录。</p>
+<h2 id="建立一个空文件夹：touch"><a href="#建立一个空文件夹：touch" class="headerlink" title="建立一个空文件夹：touch"></a>建立一个空文件夹：touch</h2><p><code>touch hello</code><br>新建一个hello文件。如果hello文件已经存在，使用这个命令就相当于更新这个文件的最后一次修改时间，内容不会被替换。</p>
+<h2 id="移动：mv"><a href="#移动：mv" class="headerlink" title="移动：mv"></a>移动：mv</h2><p><code>mv hello Dekstop</code><br>移动hello文件到桌面下。如果桌面已经存在hello文件了，使用这个命令后是不会询问我们就直接把桌面的hello文件覆盖了。因此需要使用：<br><code>mv -i hello Desktop</code><br>使用-i参数就会询问我们是否覆盖。y:覆盖，n:取消这次文件的移动<br><code>mv -b hello Desktop</code><br>-b参数会在hello后面加个<del>，这样hello和hello</del>就能共存了。相当于文件的重命名。</p>
+<h2 id="复制：cp"><a href="#复制：cp" class="headerlink" title="复制：cp"></a>复制：cp</h2><p><code>cp hello Desktop</code><br>将hello文件复制到Desktop下，跟移动是一样的命令。同样有-i和-b参数。<br><code>cp -r test/ Desktop/</code><br>-r参数将test<strong>目录</strong>复制到Desktop下。</p>
+<h2 id="删除：rmdir、rm"><a href="#删除：rmdir、rm" class="headerlink" title="删除：rmdir、rm"></a>删除：rmdir、rm</h2><p><code>rmdir test</code><br>删除test空目录。注意它只能删除空目录。<br><code>rm test/*.php</code><br>删除test目录下的所有以php为后缀名的文件。<br><code>rm -i hello</code><br>询问是否删除hello文件。<br><code>rm hello_bak</code><br>以_bak结尾的文件是只读文件，不需要使用-i也会询问是否删除它。<br><code>rm -f hello_bak</code><br>-f参数对于询问会自动回答yes。<br><code>rm -r test/</code><br>-r参数会将test目录以及test目录下的所有文件都删除掉。</p>
+<h2 id="改变文件所有权：chown、chgrp"><a href="#改变文件所有权：chown、chgrp" class="headerlink" title="改变文件所有权：chown、chgrp"></a>改变文件所有权：chown、chgrp</h2><p>rwxr-xr-x代表文件权限。3组权限位共9个字符：rwx、r-x、r-x。<br>分别代表：属主、属组和其他人所拥有的权限。r:可读权限、w:可写入权限、x:执行权限。如果某个权限没有，就使用-代替。<br><code>ls -l</code><br>可以查看一个文件的属性。<br><code>ls -ld test/</code><br>ld参数可以查看一个目录的属性。</p>
+<h3 id="chown的用法"><a href="#chown的用法" class="headerlink" title="chown的用法"></a>chown的用法</h3><p><code>chown ggy:root hello</code><br>将hello文件的属主改为ggy,属组改为root。代表这个文件是被root组下的ggy所拥有。如果未更改之前该文件是被root拥有，那么需要在该命令前增加sudo提示权限。<br><code>chown ggy hello</code><br>当然也可以只更改属主为ggy。<br><code>chown :root hello</code><br>只更改属组为root，注意需要：。<br><code>chown -R ggy test/</code><br>将test目录以及该目录下的所有文件的属主都改为ggy。  </p>
+<h3 id="chgrp的用法"><a href="#chgrp的用法" class="headerlink" title="chgrp的用法"></a>chgrp的用法</h3><p>chgrp只用来更改属组，而且不需要提供冒号: 。<br><code>chgrp root hello</code><br>更改hello文件的属组为root。<br><code>chgrp -R root test/</code><br>将test目录以及该目录下的所有文件的属组都改为ggy。 </p>
+<h2 id="改变文件权限：chmod"><a href="#改变文件权限：chmod" class="headerlink" title="改变文件权限：chmod"></a>改变文件权限：chmod</h2><p>文件属主：u, 文件属组：g, 其他人：o, 所有人：a。<br>读取：r, 写入：w, 执行：x。<br><code>chmod u+x hello</code><br>增加属主(u)的执行权限(x)。<br><code>chmod a-x hello</code><br>删除所有人对该文件的执行权限。<br><code>chmod ug=rw,o=x hello</code><br>赋予属主和属组读写权限，其他人只读权限。<br><code>chmod o=u hello</code><br>其他人的权限和属主的权限一样。</p>
+<h3 id="使用八进制表示权限"><a href="#使用八进制表示权限" class="headerlink" title="使用八进制表示权限"></a>使用八进制表示权限</h3><p>八进制：0-7 -》 000-111 。rwx：x-&gt;1, w-&gt;2, r-&gt;4 。<br>每出现对应的权限字母就加上相应的数字。比如：rwx: 4+2+1=7 。<br>r-x: 4+0+1=5 。–x: 0+0+1=1 。<br><code>chmod 711 hello</code><br>三组权限位，因此需要三个数字。711 -&gt; rwx–r–r 。</p>
+<h2 id="文件类型"><a href="#文件类型" class="headerlink" title="文件类型"></a>文件类型</h2><p>使用<code>ls -l</code>查看到的文件属性的第一个字母就是文件类型。  </p>
+<ol>
+<li>普通文件： -  </li>
+<li>目录：d  </li>
+<li>字符设备文件：c  </li>
+<li>块设备文件：b （使用mknod创建）    </li>
+<li>本地域套接口：s  </li>
+<li>有名管道：p  </li>
+<li>符号链接：l</li>
+</ol>
+<h2 id="建立文件间的链接"><a href="#建立文件间的链接" class="headerlink" title="建立文件间的链接"></a>建立文件间的链接</h2><h3 id="建立软链接"><a href="#建立软链接" class="headerlink" title="建立软链接"></a>建立软链接</h3><p><code>ln -s hello baby</code><br>baby文件须是先前未存在的。相当于是给hello换了个别名baby。他们指向的是同一个文件。但是删除baby文件不会影响到hello文件，删除hello文件两个文件就都没了。</p>
+<h3 id="建立硬链接"><a href="#建立硬链接" class="headerlink" title="建立硬链接"></a>建立硬链接</h3><p><code>ln hello baby</code><br>同样baby先前未存在。相当于新建了一个baby文件，baby文件里面的内容就是hello里面的内容。二者是两个独立的文件。但是如果其中一个文件的内容改变了，另一个文件内容也会跟着改变。</p>
+<h2 id="输出重定向"><a href="#输出重定向" class="headerlink" title="输出重定向"></a>输出重定向</h2><p>正常的输出都是直接显示在屏幕上，可以将输出输出到文件中，相当于给文件新增内容。<br><code>ls &gt; hello</code><br>ls本来是列出该目录下的所有可见的文件，本来是显示在屏幕中的，现在显示在文件hello中了。也就是将其保存在了hello文件中。注意：&gt; 会将原本文件内容覆盖掉。<br><code>date &gt;&gt; hello</code><br>将日期保存在hello中。&gt;&gt; 则是在原来文件内容后追加。</p>
+<h2 id="输入重定向"><a href="#输入重定向" class="headerlink" title="输入重定向"></a>输入重定向</h2><p><code>cat &lt; hello</code> 等于 <code>cat hello</code><br>将文件里的内容作为输入。效果就是读取文件内容直接显示在屏幕上。<br><code>cat &lt;&lt; EOF</code><br>自己输入，直到输入一个EOF为止才停止输入，然后将所有刚才输入的东西显示在屏幕上。<br><code>cat &lt;&lt; EOF &gt;&gt; hello</code><br>组合使用。将自己输入的东西存进hello文件中直至输入EOF为止。 </p>
+<h2 id="管道符"><a href="#管道符" class="headerlink" title="管道符|"></a>管道符|</h2><p><code>ls | grep a</code><br>执行两个命令。先执行ls找出该目录下所有文件，然后使用grep a匹配出这些文件名中含有a的文件，再将同时符合这两个条件的文件显示在屏幕上。 </p>
+
+    </div>
+    
+    <div class="reward" ontouchstart>
+    <div class="reward-wrap">赏
+        <div class="reward-box">
+            
+            <span class="reward-type">
+                <img class="alipay" src="/img/alipay.jpg"><b>支付宝打赏</b>
+            </span>
+            
+            
+            <span class="reward-type">
+                <img class="wechat" src="/img/wechat.jpg"><b>微信打赏</b>
+            </span>
+            
+        </div>
+    </div>
+    <p class="reward-tip">
+        赞赏是不耍流氓的鼓励
+    </p>
+</div>
+    
+    <div class="post-footer">
+        <div>
+            
+            转载声明：
+            商业转载请联系作者获得授权,非商业转载请注明出处 © <a href="ggy.44pp.vip" target="_blank">ggy</a>
+            
+            
+        </div>
+        <div>
+            
+        </div>
+    </div>
+</article>
+<div class="article-nav prev-next-wrap clearfix">
+    
+    <a href="/2020/03/16/%E5%AD%A6Linux%E7%9A%84%E7%AC%AC%E4%B8%89%E5%A4%A9/" class="pre-post btn btn-default" title='学Linux的第三天'>
+        <i class="fa fa-angle-left fa-fw"></i><span class="hidden-lg">上一篇</span>
+        <span class="hidden-xs">
+            学Linux的第三天</span>
+    </a>
+    
+    
+    <a href="/2020/03/13/Enigma%E5%8E%9F%E7%90%86%E5%8F%8Apython%E5%AE%9E%E7%8E%B0/" class="next-post btn btn-default" title='Enigma原理及python实现'>
+        <span class="hidden-lg">下一篇</span>
+        <span class="hidden-xs">
+            Enigma原理及python实现</span><i class="fa fa-angle-right fa-fw"></i>
+    </a>
+    
+</div>
+
+<div id="comments">
+    
+<div id="lv-container" data-id="city" data-uid="MTAyMC80ODM1Ni8yNDg1MA==">
+    <script type="text/javascript">
+    (function(d, s) {
+        var j, e = d.getElementsByTagName(s)[0];
+        if (typeof LivereTower === 'function') { return; }
+        j = d.createElement(s);
+        j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+        j.async = true;
+        e.parentNode.insertBefore(j, e);
+    })(document, 'script');
+    </script>
+</div>
+
+</div>
+
+                </main>
+                
+                    <aside id="article-toc" role="navigation" class="col-md-4">
+    <div class="widget">
+        <h3 class="title">
+            文章目录
+        </h3>
+        
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#文件目录管理"><span class="toc-text">文件目录管理</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#建立目录：mkdir"><span class="toc-text">建立目录：mkdir</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#建立一个空文件夹：touch"><span class="toc-text">建立一个空文件夹：touch</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#移动：mv"><span class="toc-text">移动：mv</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#复制：cp"><span class="toc-text">复制：cp</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#删除：rmdir、rm"><span class="toc-text">删除：rmdir、rm</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#改变文件所有权：chown、chgrp"><span class="toc-text">改变文件所有权：chown、chgrp</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#chown的用法"><span class="toc-text">chown的用法</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#chgrp的用法"><span class="toc-text">chgrp的用法</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#改变文件权限：chmod"><span class="toc-text">改变文件权限：chmod</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#使用八进制表示权限"><span class="toc-text">使用八进制表示权限</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#文件类型"><span class="toc-text">文件类型</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#建立文件间的链接"><span class="toc-text">建立文件间的链接</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#建立软链接"><span class="toc-text">建立软链接</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#建立硬链接"><span class="toc-text">建立硬链接</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#输出重定向"><span class="toc-text">输出重定向</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#输入重定向"><span class="toc-text">输入重定向</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#管道符"><span class="toc-text">管道符|</span></a></li></ol></li></ol>
+        
+    </div>
+</aside>
+                
+            </div>
+        </div>
+    </section>
+    <footer class="main-footer">
+    <div class="container">
+        <div class="row">
+        </div>
+    </div>
+</footer>
+<a id="back-to-top" class="icon-btn hide">
+    <i class="fa fa-chevron-up"></i>
+</a>
+    <div class="copyright">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="busuanzi">
+    
+    访问量:
+    <strong id="busuanzi_value_site_pv">
+        <i class="fa fa-spinner fa-spin"></i>
+    </strong>
+    &nbsp; | &nbsp;
+    访客数:
+    <strong id="busuanzi_value_site_uv">
+        <i class="fa fa-spinner fa-spin"></i>
+    </strong>
+    
+</div>
+            </div>
+            <div class="col-sm-12">
+                <span>Copyright &copy;
+                    2020
+                    
+                </span> |
+                <span>
+                    Powered by <a href="//hexo.io" class="copyright-links" target="_blank" rel="nofollow">Hexo</a>
+                </span> |
+                <span>
+                    Theme by <a href="//github.com/shenliyang/hexo-theme-snippet.git" class="copyright-links" target="_blank" rel="nofollow">Snippet</a>
+                </span>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<script src="/assets/tagcanvas.min.js?rev=2.9.js"></script>
+
+<script>
+var tagOption = {
+    textColour: '#444', // 字体颜色
+    outlineMethod: 'block', // 选中模式
+    outlineColour: '#FFDAB9', // 选中模式的颜色
+    interval: 30 || 30, // 动画帧之间的时间间隔，值越大，转动幅度越大
+    textHeight: 13,
+    outlineRadius: 3,
+    freezeActive: true || '', // 选中的标签是否继续滚动
+    frontSelect: true || '', // 不选标签云后部的标签
+    initial: [0.1, -0.1],
+    depth: 0.5,
+    decel: 0.95,
+    maxSpeed: 0.03,
+    reverse: true || '', // 是否反向触发
+    fadeIn: 500, // 进入动画时间
+    wheelZoom: false || '' // 是否启用鼠标滚轮
+}
+TagCanvas.Start('tag-cloud-3d', '', tagOption);
+</script>
+
+
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+<script src="/js/app.js?rev=@@hash.js"></script>
+
+
+<!-- 雪花特效 -->
+<script type="text/javascript" src="http://libs.baidu.com/jquery/1.8.3/jquery.js"></script>
+<script type="text/javascript" src="http://libs.baidu.com/jquery/1.8.3/jquery.min.js"></script>
+<script type="text/javascript" src="\js\snow.js"></script>
+
+<canvas class="fireworks" style="position: fixed;left: 0;top: 0;z-index: 1; pointer-events: none;" ></canvas> 
+<script type="text/javascript" src="//cdn.bootcss.com/animejs/2.2.0/anime.min.js"></script> 
+<script type="text/javascript" src="/js/fireworks.js"></script>
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"model":{"jsonPath":"live2d-widget-model-haruto"},"display":{"position":"right","width":150,"height":300},"mobile":{"show":false},"log":false,"pluginJsPath":"lib/","pluginModelPath":"assets/","pluginRootPath":"live2dw/","tagMode":false});</script></body>
+</html>

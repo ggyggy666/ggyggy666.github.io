@@ -1,0 +1,480 @@
+<head>
+<script src="https://cdn.jsdelivr.net/npm/jquery/dist/jquery.min.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome/css/font-awesome.min.css">
+<script src="https://cdn.jsdelivr.net/gh/stevenjoezhang/live2d-widget/autoload.js"></script>
+</head>
+
+<!DOCTYPE HTML>
+<html lang="zh-CN">
+
+<head>
+    <!--Setting-->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+    <meta http-equiv="Cache-Control" content="no-siteapp">
+    <meta http-equiv="Cache-Control" content="no-transform">
+    <meta name="renderer" content="webkit|ie-comp|ie-stand">
+    <meta name="apple-mobile-web-app-capable" content="ggy的个人博客">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="format-detection" content="telephone=no,email=no,adress=no">
+    <meta name="browsermode" content="application">
+    <meta name="screen-orientation" content="portrait">
+    <meta name="theme-version" content="1.2.3">
+    <meta name="root" content="/">
+    <link rel="dns-prefetch" href="https://ggyggy666.github.io">
+    <!--SEO-->
+
+<meta name="keywords" content="Js学习（三）" />
+
+
+<meta name="description" content="昨天五一浪了一天，都没有时间学习。今天继续学习JS。
+
+字符串的常用操作方法查找字符串的位置
+首先约定一个长的字符串为a, 要查找的短的字符串为b。查找字符串b在a中的位置有两种办法，一个是从前..." />
+
+
+<meta name="robots" content="all" />
+<meta name="google" content="all" />
+<meta name="googlebot" content="all" />
+<meta name="verify" content="all" />
+    <!--Title-->
+
+<title>
+    
+    Js学习（三） |
+    
+    ggy的个人博客
+</title>
+
+<link rel="alternate" href="/atom.xml" title="ggy的个人博客" type="application/atom+xml">
+
+
+<link rel="icon" href="/favicon.ico">
+
+    
+
+
+<link rel="stylesheet" href="/css/bootstrap.min.css?rev=3.3.7.css">
+<link rel="stylesheet" href="/css/font-awesome.min.css?rev=4.7.0.css">
+<link rel="stylesheet" href="/css/style.css?rev=@@hash.css">
+
+    
+<div class="hide">
+    <script type="text/javascript">
+    var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+    document.write(unescape("%3Cspan class='cnzz_stat_icon_1263868967 hide' %3E%3Cscript%20src%3D%22https%3A%2F%2Fs95.cnzz.com%2Fz_stat.php%3Fweb_id%3D1272564536%22%3E%3C%2Fscript%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s19.cnzz.com/z_stat.php%3Fid%3D1263868967%26show%3Dpic1' type='text/javascript'%3E%3C/script%3E"));
+    </script>
+</div>
+
+
+
+
+    
+
+<meta name="generator" content="Hexo 4.2.0"></head>
+<!--[if lte IE 8]>
+<style>
+    html{ font-size: 1em }
+</style>
+<![endif]-->
+<!--[if lte IE 9]>
+<div style="ie">你使用的浏览器版本过低，为了你更好的阅读体验，请更新浏览器的版本或者使用其他现代浏览器，比如Chrome、Firefox、Safari等。</div>
+<![endif]-->
+<body>
+    <header class="main-header"  style="background-image:url(
+    https://pic.downk.cc/item/5e3816b82fb38b8c3c8791f9.jpg)"
+     >
+    <div class="main-header-box">
+        <a class="header-avatar" href="/" title='ggy'>
+            <img src="/img/avatar.jpg" alt="logo头像" class="img-responsive center-block">
+        </a>
+        <div class="branding">
+            <!--<h2 class="text-hide">Snippet主题,从未如此简单有趣</h2>-->
+            
+            <h2>
+                欢迎来到ggy的个人网站
+            </h2>
+            
+        </div>
+    </div>
+</header>
+    <nav class="main-navigation">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="navbar-header"><span class="nav-toggle-button collapsed pull-right" data-toggle="collapse" data-target="#main-menu" id="mnav">
+                        <span class="sr-only"></span>
+                        <i class="fa fa-bars"></i>
+                    </span>
+                    <a class="navbar-brand" href="https://ggyggy666.github.io">
+                        ggy的个人博客</a>
+                </div>
+                <div class="collapse navbar-collapse" id="main-menu">
+                    <ul class="menu">
+                        
+                        <li role="presentation" class="text-center">
+                            <a href="/"><i class="fa "></i>
+                                首页</a>
+                        </li>
+                        
+                        <li role="presentation" class="text-center">
+                            <a href="/categories/web安全/"><i class="fa "></i>
+                                web安全</a>
+                        </li>
+                        
+                        <li role="presentation" class="text-center">
+                            <a href="/categories/python工具/"><i class="fa "></i>
+                                python工具</a>
+                        </li>
+                        
+                        <li role="presentation" class="text-center">
+                            <a href="/categories/密码学/"><i class="fa "></i>
+                                密码学</a>
+                        </li>
+                        
+                        <li role="presentation" class="text-center">
+                            <a href="/archives/"><i class="fa "></i>
+                                时间轴</a>
+                        </li>
+                        
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</nav>
+    <section class="content-wrap">
+        <div class="container">
+            <div class="row">
+                <main class="col-md-8 main-content m-post">
+                    <p id="process"></p>
+<article class="post">
+    <div class="post-head">
+        <h1 id="Js学习（三）">
+            
+            Js学习（三）
+            
+        </h1>
+        <div class="post-meta">
+    
+    <span class="categories-meta fa-wrap">
+        <i class="fa fa-folder-open-o"></i>
+        <a class="category-link" href="/categories/%E5%89%8D%E7%AB%AF%E5%AD%A6%E4%B9%A0/">前端学习</a>
+    </span>
+    
+    
+    <span class="fa-wrap">
+        <i class="fa fa-tags"></i>
+        <span class="tags-meta">
+            
+            <a class="tag-link" href="/tags/Js%E5%AD%A6%E4%B9%A0%EF%BC%88%E4%B8%89%EF%BC%89/" rel="tag">Js学习（三）</a>
+            
+        </span>
+    </span>
+    
+    
+    
+    <span class="fa-wrap">
+        <i class="fa fa-clock-o"></i>
+        <span class="date-meta">
+            2020/05/02</span>
+    </span>
+    
+    <span class="fa-wrap">
+        <i class="fa fa-eye"></i>
+        <span id="busuanzi_value_page_pv"></span>
+    </span>
+    
+    
+</div>
+        
+        
+        <p class="fa fa-exclamation-triangle warning">
+            本文于<strong>
+                314</strong>
+            天之前发表，文中内容可能已经过时。
+        </p>
+        
+    </div>
+    
+    <div class="post-body post-content">
+        <p>昨天五一浪了一天，都没有时间学习。今天继续学习JS。</p>
+<a id="more"></a>
+<h1 id="字符串的常用操作方法"><a href="#字符串的常用操作方法" class="headerlink" title="字符串的常用操作方法"></a>字符串的常用操作方法</h1><h2 id="查找字符串的位置"><a href="#查找字符串的位置" class="headerlink" title="查找字符串的位置"></a>查找字符串的位置</h2><blockquote>
+<p>首先约定一个长的字符串为a, 要查找的短的字符串为b。查找字符串b在a中的位置有两种办法，一个是从前往后找，使用indexOf()，即：<code>a.indexOf(b)</code>，返回b在a中首次出现的位置，如果没有找到，返回-1. 当然可以指定从哪个位置开始查找, 即：<code>a.indexOf(b,4)</code>；另一种就是从后往前找，使用lastIndexOf()，用法跟indexOf一样，只是方向反了而已。</p>
+</blockquote>
+<h2 id="返回字符串指定位置的字符"><a href="#返回字符串指定位置的字符" class="headerlink" title="返回字符串指定位置的字符"></a>返回字符串指定位置的字符</h2><blockquote>
+<p>使用charAt()。若一个字符串为a, 那么可以 <code>a.charAt(0)</code>，返回它的第一个字符。</p>
+</blockquote>
+<h2 id="截取字符串"><a href="#截取字符串" class="headerlink" title="截取字符串"></a>截取字符串</h2><p>截取字符串有三种方法，slice(a,b),substring(a,b),substr(a,b)。</p>
+<blockquote>
+<ol>
+<li>slice(a,b), 截取从a到b-1位置的字符串并返回，注意不是截取到b位置。如果是负数，就从后数位置。</li>
+<li>substring(a,b), 与slice有些差别。如果a或b为负数时，不是从后数，而是直接转为0，而且如果a&gt;b，会自动转换成substring(b,a)，也就是说，只能从前往后截取。</li>
+<li>substr(a,b)。a是开始截取的位置，b是要截取的长度。</li>
+</ol>
+</blockquote>
+<h2 id="大小写转换"><a href="#大小写转换" class="headerlink" title="大小写转换"></a>大小写转换</h2><blockquote>
+<p>假定字符串是a，那么转换成大写：<code>a.toUpperCase()</code>; 转换成小写：<code>a.toLowerCase()</code>。</p>
+</blockquote>
+<h2 id="分割字符串"><a href="#分割字符串" class="headerlink" title="分割字符串"></a>分割字符串</h2><p>之前知道，将数组元素使用join可以连接成一个字符串，而现在使用split()可以将字符串分割，并返回一个数组。</p>
+<blockquote>
+<p>split(a,b), a就是根据字符串中的某些字符来分割，b是返回的数组的最大长度。例如：</p>
+</blockquote>
+<pre><code>var str = &quot;010203&quot;;
+var str.split(&quot;0&quot;) --&gt; [&quot;1&quot;, &quot;2&quot;, &quot;3&quot;]
+var str.split(&quot;0&quot;, 2) --&gt; [&quot;1&quot;, &quot;2&quot;]</code></pre><h1 id="正则表达式"><a href="#正则表达式" class="headerlink" title="正则表达式"></a>正则表达式</h1><p>首先需要创建正则表达式。</p>
+<blockquote>
+<ol>
+<li>创建一个RegExp对象。如：`var pattern = new RegExp(“表达式”)。</li>
+<li>直接使用//创建表达式。如：`var pattern = /表达式/。注意没有双引号。</li>
+</ol>
+</blockquote>
+<p>创建好后，需要使用它进行匹配。此时用到test()方法。如：`pattern.test(“字符串”)。即在字符串中使用pattern的表达式值去匹配。返回true或者false。<br>注意一些特殊符号：<br><img src="https://pic.downk.cc/item/5ead260ac2a9a83be58c0973.jpg" alt></p>
+<h2 id="匹配字符"><a href="#匹配字符" class="headerlink" title="匹配字符"></a>匹配字符</h2><blockquote>
+<ol>
+<li>可以使用[a-z]匹配小写字母，[0-9]匹配数字，当然可以联合起来：[0-9a-zA-Z], 匹配数字或者字母中的一个。注意这样只是匹配一个。在中括号里，范围前加^表示取反。如：[^0-9],匹配不是数字的字符。</li>
+<li>使用特定的表示，如：<br><img src="https://pic.downk.cc/item/5ead2752c2a9a83be58cee11.jpg" alt></li>
+</ol>
+</blockquote>
+<h2 id="匹配多个字符"><a href="#匹配多个字符" class="headerlink" title="匹配多个字符"></a>匹配多个字符</h2><p>上面的只是匹配一个，可以使用{}设置匹配数。 </p>
+<p><img src="https://pic.downk.cc/item/5ead27bec2a9a83be58d466c.jpg" alt></p>
+<p>可以知道，+,?这些都有特定含义，而如果想要匹配+,?这些字符，得用到转义符\。</p>
+<h2 id="选择匹配的表达式"><a href="#选择匹配的表达式" class="headerlink" title="选择匹配的表达式"></a>选择匹配的表达式</h2><p>可以使用|选择匹配。如：<code>[0-9]|[a-z]</code>, 可以选择匹配数字或者小写字母，就是“或”的意思。如果要限定某处才使用|，可以使用（）括起来。如：<code>(0|1)ab</code>, 那么可以匹配0ab或者1ab。</p>
+<h2 id="分组表达式"><a href="#分组表达式" class="headerlink" title="分组表达式"></a>分组表达式</h2><p>使用（）。前面的+,?等都是针对紧邻的那个字符，如果需要对很多字符进行匹配，那么使用（）括起来。如：<code>(hello){2}</code>,匹配重复两次的hello。</p>
+<h2 id="引用"><a href="#引用" class="headerlink" title="引用"></a>引用</h2><p>使用（）分组后，会默认有编号，第一个（）就是编号1，第二个（）就是编号2……然后可以在后面使用\1，\2进行引用前面匹配到的字符。注意，引用匹配的字符是跟前面（）匹配的字符一样的，并不是单单引用表达式。例如：    <code>([0-9])AA\1</code>, （）里匹配一个数字，如果匹配到了1，那么后面\1匹配到的也必须是1. 最终的匹配就是：1AA1。</p>
+<h2 id="匹配位置"><a href="#匹配位置" class="headerlink" title="匹配位置"></a>匹配位置</h2><blockquote>
+<ol>
+<li>^+表达式，表示必须以这个开头。如：^[0-9], 表示以数字开头，注意跟[^0-9]不一样。</li>
+<li>表达式+$, 表示必须以这个结尾。 ggy$, 表示以ggy结尾。</li>
+<li>\bggy\b, \b表示单词边界，匹配到的就是ggy独立单词，而不是aggya这种。如果是大写的\B，就是不是单词边界。匹配到的就是aggya，而不是ggy了。</li>
+</ol>
+</blockquote>
+<h2 id="修饰符"><a href="#修饰符" class="headerlink" title="修饰符"></a>修饰符</h2><p>在//后面使用，有i,g,m三种。</p>
+<blockquote>
+<ol>
+<li>i. 表示不考虑字母大小写。如：<code>/^Edu/i</code>，可以匹配到edu。</li>
+<li>g. 表示匹配所有满足表达式的字符串。将匹配到的字符串整合成一个数组返回。</li>
+<li>m。表示多行模式。当字符串很长，分为很多行时，可以使用m。这样^匹配的就不仅是字符串的开头，而是每一行的开头。如果想同时匹配两行之间的内容，可以加上\n。如：<code>aa\nbb</code>。就可以匹配到一行结尾是aa,下一行的结尾是bb。匹配到返回true，反之。</li>
+</ol>
+</blockquote>
+<h2 id="使用正则表达式"><a href="#使用正则表达式" class="headerlink" title="使用正则表达式"></a>使用正则表达式</h2><p>使用到search(),split(),replace()。</p>
+<blockquote>
+<ol>
+<li>search(a). a是正则表达式，如：<code>str.search(a)</code>。表示使用表达式去匹配str，然后在str中搜索匹配到的字符，并返回出现的第一次位置。没匹配到返回-1.</li>
+<li>split(a), 本来split就是根据里面的字符进行分割，只不过现在使用表达式去匹配到那个字符而已。</li>
+<li>replace(a,b)。使用b替换掉表达式a匹配到的第一个字符串。如果表达式后有g，就是替换所有匹配到的字符串了。</li>
+</ol>
+</blockquote>
+<h1 id="JSON"><a href="#JSON" class="headerlink" title="JSON"></a>JSON</h1><p>JSON是用来传递数据的，常用的数据格式有：JSON对象，JSON数组和JSON字符串。</p>
+<h2 id="JSON对象"><a href="#JSON对象" class="headerlink" title="JSON对象"></a>JSON对象</h2><p>JSON对象用来传输数据，跟JavaScript对象有点相同，也是以键值对存储。只是它的属性名必须得用双引号引起来，而且里面的值不能是一个方法，但可以是很多类型。<code>{&quot;a&quot;:1,&quot;b&quot;:2.12,&quot;c&quot;:true,&quot;d&quot;:&quot;string&quot;,&quot;e&quot;:null};</code>。调用属性方法跟js对象一样。</p>
+<h2 id="JSON数组"><a href="#JSON数组" class="headerlink" title="JSON数组"></a>JSON数组</h2><p>其实就是键值对中的值是一个数组。然后调用时，只能按照对象名.属性名[x]来用。如：</p>
+<pre><code>var myJson = {
+    &quot;country&quot;:&quot;China&quot;,
+    &quot;population&quot;:&quot;1.3billion&quot;,
+    &quot;bigCity&quot;:[&quot;Peking&quot;,&quot;Shanghai&quot;,&quot;ShenZhen&quot;,&quot;HongKong&quot;]
+}
+console.log(myJson.bigCity[1]);//打印出Shanghai
+myJson.bigCity[0] = &quot;GuangZhou&quot;;//第一个元素被赋值为GuangZhou</code></pre><h2 id="JSON字符串"><a href="#JSON字符串" class="headerlink" title="JSON字符串"></a>JSON字符串</h2><p>JSON对象是不能传递的，需要转为字符串才可以传。在对象左右两边加上’就是字符串了。</p>
+<blockquote>
+<ol>
+<li>JSON字符串转为JavaScript对象。使用JSON.parse(a,b)，a就是JSON字符串，b是一个可选函数参数，在转为对象后，可以对对象的所有属性进行遍历然后做一些操作。如：</li>
+</ol>
+</blockquote>
+<pre><code>//对象的每一个属性的值加1
+var text = &apos;{ &quot;key1&quot;:1, &quot;key2&quot;:2, &quot;key3&quot;:2.2}&apos;;
+var obj = JSON.parse(text, function (key, value) {
+    if(key === &apos;&apos;)//当遇到对象本身时，不进行加1操作
+        return value;
+    return value+1;//对属性值加1
+});
+console.log(obj);//输出Object {key1: 2, key2: 3, key3: 3.2}</code></pre><blockquote>
+<ol start="2">
+<li>JSON对象转为字符串。使用JSON.stringify(a,b,c), a是对象，b、c是可选参数。b可以是函数，对对象进行操作，之后才转为字符串；也可以是一个数组，数组里是属性名，表示要转换哪些属性。如：</li>
+</ol>
+</blockquote>
+<pre><code>//转换对象中特定的属性
+var JSONObject = {&quot;k1&quot;:1,&quot;k2&quot;:2.2,&quot;k3&quot;:3};
+var JSONString = JSON.stringify(JSONObject,[&quot;k1&quot;,&quot;k2&quot;]);
+console.log(JSONString);//输出{&quot;k1&quot;:1,&quot;k2&quot;:2.2}，只转换了k1,k2。</code></pre><blockquote>
+<p>而c就是设置转为字符串后的显示格式。如：</p>
+</blockquote>
+<pre><code>var str = {&quot;name&quot;:&quot;Tom&quot;,&quot;age&quot;:16};
+var obj = JSON.stringify(str, null, 4）；
+console.log(obj);</code></pre><p>之后就会输出：</p>
+<pre><code>{
+    &quot;name&quot;: &quot;Tom&quot;,
+    &quot;age&quot;: 16
+}</code></pre><p>c等于4时，缩进了4个空格。有个规则，当c&lt;10时，就会按照设置的c的值缩进相应的空格数，而c&gt;=10时，就只会缩进10个空格了。</p>
+
+    </div>
+    
+    <div class="reward" ontouchstart>
+    <div class="reward-wrap">赏
+        <div class="reward-box">
+            
+            <span class="reward-type">
+                <img class="alipay" src="/img/alipay.jpg"><b>支付宝打赏</b>
+            </span>
+            
+            
+            <span class="reward-type">
+                <img class="wechat" src="/img/wechat.jpg"><b>微信打赏</b>
+            </span>
+            
+        </div>
+    </div>
+    <p class="reward-tip">
+        赞赏是不耍流氓的鼓励
+    </p>
+</div>
+    
+    <div class="post-footer">
+        <div>
+            
+            转载声明：
+            商业转载请联系作者获得授权,非商业转载请注明出处 © <a href="ggy.44pp.vip" target="_blank">ggy</a>
+            
+            
+        </div>
+        <div>
+            
+        </div>
+    </div>
+</article>
+<div class="article-nav prev-next-wrap clearfix">
+    
+    <a href="/2020/05/03/Js%E5%AD%A6%E4%B9%A0%EF%BC%88%E5%9B%9B%EF%BC%89/" class="pre-post btn btn-default" title='Js学习（四）—— 类、错误处理、DOM'>
+        <i class="fa fa-angle-left fa-fw"></i><span class="hidden-lg">上一篇</span>
+        <span class="hidden-xs">
+            Js学习（四）—— 类、错误处理、DOM</span>
+    </a>
+    
+    
+    <a href="/2020/04/29/Js%E5%AD%A6%E4%B9%A0%EF%BC%88%E4%BA%8C%EF%BC%89/" class="next-post btn btn-default" title='Js学习（二）'>
+        <span class="hidden-lg">下一篇</span>
+        <span class="hidden-xs">
+            Js学习（二）</span><i class="fa fa-angle-right fa-fw"></i>
+    </a>
+    
+</div>
+
+<div id="comments">
+    
+<div id="lv-container" data-id="city" data-uid="MTAyMC80ODM1Ni8yNDg1MA==">
+    <script type="text/javascript">
+    (function(d, s) {
+        var j, e = d.getElementsByTagName(s)[0];
+        if (typeof LivereTower === 'function') { return; }
+        j = d.createElement(s);
+        j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+        j.async = true;
+        e.parentNode.insertBefore(j, e);
+    })(document, 'script');
+    </script>
+</div>
+
+</div>
+
+                </main>
+                
+                    <aside id="article-toc" role="navigation" class="col-md-4">
+    <div class="widget">
+        <h3 class="title">
+            文章目录
+        </h3>
+        
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#字符串的常用操作方法"><span class="toc-text">字符串的常用操作方法</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#查找字符串的位置"><span class="toc-text">查找字符串的位置</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#返回字符串指定位置的字符"><span class="toc-text">返回字符串指定位置的字符</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#截取字符串"><span class="toc-text">截取字符串</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#大小写转换"><span class="toc-text">大小写转换</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#分割字符串"><span class="toc-text">分割字符串</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#正则表达式"><span class="toc-text">正则表达式</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#匹配字符"><span class="toc-text">匹配字符</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#匹配多个字符"><span class="toc-text">匹配多个字符</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#选择匹配的表达式"><span class="toc-text">选择匹配的表达式</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#分组表达式"><span class="toc-text">分组表达式</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#引用"><span class="toc-text">引用</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#匹配位置"><span class="toc-text">匹配位置</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#修饰符"><span class="toc-text">修饰符</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#使用正则表达式"><span class="toc-text">使用正则表达式</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#JSON"><span class="toc-text">JSON</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#JSON对象"><span class="toc-text">JSON对象</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#JSON数组"><span class="toc-text">JSON数组</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#JSON字符串"><span class="toc-text">JSON字符串</span></a></li></ol></li></ol>
+        
+    </div>
+</aside>
+                
+            </div>
+        </div>
+    </section>
+    <footer class="main-footer">
+    <div class="container">
+        <div class="row">
+        </div>
+    </div>
+</footer>
+<a id="back-to-top" class="icon-btn hide">
+    <i class="fa fa-chevron-up"></i>
+</a>
+    <div class="copyright">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="busuanzi">
+    
+    访问量:
+    <strong id="busuanzi_value_site_pv">
+        <i class="fa fa-spinner fa-spin"></i>
+    </strong>
+    &nbsp; | &nbsp;
+    访客数:
+    <strong id="busuanzi_value_site_uv">
+        <i class="fa fa-spinner fa-spin"></i>
+    </strong>
+    
+</div>
+            </div>
+            <div class="col-sm-12">
+                <span>Copyright &copy;
+                    2020
+                    
+                </span> |
+                <span>
+                    Powered by <a href="//hexo.io" class="copyright-links" target="_blank" rel="nofollow">Hexo</a>
+                </span> |
+                <span>
+                    Theme by <a href="//github.com/shenliyang/hexo-theme-snippet.git" class="copyright-links" target="_blank" rel="nofollow">Snippet</a>
+                </span>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<script src="/assets/tagcanvas.min.js?rev=2.9.js"></script>
+
+<script>
+var tagOption = {
+    textColour: '#444', // 字体颜色
+    outlineMethod: 'block', // 选中模式
+    outlineColour: '#FFDAB9', // 选中模式的颜色
+    interval: 30 || 30, // 动画帧之间的时间间隔，值越大，转动幅度越大
+    textHeight: 13,
+    outlineRadius: 3,
+    freezeActive: true || '', // 选中的标签是否继续滚动
+    frontSelect: true || '', // 不选标签云后部的标签
+    initial: [0.1, -0.1],
+    depth: 0.5,
+    decel: 0.95,
+    maxSpeed: 0.03,
+    reverse: true || '', // 是否反向触发
+    fadeIn: 500, // 进入动画时间
+    wheelZoom: false || '' // 是否启用鼠标滚轮
+}
+TagCanvas.Start('tag-cloud-3d', '', tagOption);
+</script>
+
+
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+<script src="/js/app.js?rev=@@hash.js"></script>
+
+
+<!-- 雪花特效 -->
+<script type="text/javascript" src="http://libs.baidu.com/jquery/1.8.3/jquery.js"></script>
+<script type="text/javascript" src="http://libs.baidu.com/jquery/1.8.3/jquery.min.js"></script>
+<script type="text/javascript" src="\js\snow.js"></script>
+
+<canvas class="fireworks" style="position: fixed;left: 0;top: 0;z-index: 1; pointer-events: none;" ></canvas> 
+<script type="text/javascript" src="//cdn.bootcss.com/animejs/2.2.0/anime.min.js"></script> 
+<script type="text/javascript" src="/js/fireworks.js"></script>
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"model":{"jsonPath":"live2d-widget-model-haruto"},"display":{"position":"right","width":150,"height":300},"mobile":{"show":false},"log":false,"pluginJsPath":"lib/","pluginModelPath":"assets/","pluginRootPath":"live2dw/","tagMode":false});</script></body>
+</html>

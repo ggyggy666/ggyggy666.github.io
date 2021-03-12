@@ -1,0 +1,464 @@
+<head>
+<script src="https://cdn.jsdelivr.net/npm/jquery/dist/jquery.min.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome/css/font-awesome.min.css">
+<script src="https://cdn.jsdelivr.net/gh/stevenjoezhang/live2d-widget/autoload.js"></script>
+</head>
+
+<!DOCTYPE HTML>
+<html lang="zh-CN">
+
+<head>
+    <!--Setting-->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+    <meta http-equiv="Cache-Control" content="no-siteapp">
+    <meta http-equiv="Cache-Control" content="no-transform">
+    <meta name="renderer" content="webkit|ie-comp|ie-stand">
+    <meta name="apple-mobile-web-app-capable" content="ggy的个人博客">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="format-detection" content="telephone=no,email=no,adress=no">
+    <meta name="browsermode" content="application">
+    <meta name="screen-orientation" content="portrait">
+    <meta name="theme-version" content="1.2.3">
+    <meta name="root" content="/">
+    <link rel="dns-prefetch" href="https://ggyggy666.github.io">
+    <!--SEO-->
+
+<meta name="keywords" content="Js学习（五）" />
+
+
+<meta name="description" content="昨天又顾着玩耍了，今天继续学习。
+
+事件在需要页面做出响应时就需要监测到事件。比如form表单提交时，可以在标签里使用onsubmit属性，然后值就是调用一个函数。也可以form外先获取到for..." />
+
+
+<meta name="robots" content="all" />
+<meta name="google" content="all" />
+<meta name="googlebot" content="all" />
+<meta name="verify" content="all" />
+    <!--Title-->
+
+<title>
+    
+    Js学习（五） |
+    
+    ggy的个人博客
+</title>
+
+<link rel="alternate" href="/atom.xml" title="ggy的个人博客" type="application/atom+xml">
+
+
+<link rel="icon" href="/favicon.ico">
+
+    
+
+
+<link rel="stylesheet" href="/css/bootstrap.min.css?rev=3.3.7.css">
+<link rel="stylesheet" href="/css/font-awesome.min.css?rev=4.7.0.css">
+<link rel="stylesheet" href="/css/style.css?rev=@@hash.css">
+
+    
+<div class="hide">
+    <script type="text/javascript">
+    var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+    document.write(unescape("%3Cspan class='cnzz_stat_icon_1263868967 hide' %3E%3Cscript%20src%3D%22https%3A%2F%2Fs95.cnzz.com%2Fz_stat.php%3Fweb_id%3D1272564536%22%3E%3C%2Fscript%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s19.cnzz.com/z_stat.php%3Fid%3D1263868967%26show%3Dpic1' type='text/javascript'%3E%3C/script%3E"));
+    </script>
+</div>
+
+
+
+
+    
+
+<meta name="generator" content="Hexo 4.2.0"></head>
+<!--[if lte IE 8]>
+<style>
+    html{ font-size: 1em }
+</style>
+<![endif]-->
+<!--[if lte IE 9]>
+<div style="ie">你使用的浏览器版本过低，为了你更好的阅读体验，请更新浏览器的版本或者使用其他现代浏览器，比如Chrome、Firefox、Safari等。</div>
+<![endif]-->
+<body>
+    <header class="main-header"  style="background-image:url(
+    https://pic.downk.cc/item/5e3816b82fb38b8c3c8791f9.jpg)"
+     >
+    <div class="main-header-box">
+        <a class="header-avatar" href="/" title='ggy'>
+            <img src="/img/avatar.jpg" alt="logo头像" class="img-responsive center-block">
+        </a>
+        <div class="branding">
+            <!--<h2 class="text-hide">Snippet主题,从未如此简单有趣</h2>-->
+            
+            <h2>
+                欢迎来到ggy的个人网站
+            </h2>
+            
+        </div>
+    </div>
+</header>
+    <nav class="main-navigation">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="navbar-header"><span class="nav-toggle-button collapsed pull-right" data-toggle="collapse" data-target="#main-menu" id="mnav">
+                        <span class="sr-only"></span>
+                        <i class="fa fa-bars"></i>
+                    </span>
+                    <a class="navbar-brand" href="https://ggyggy666.github.io">
+                        ggy的个人博客</a>
+                </div>
+                <div class="collapse navbar-collapse" id="main-menu">
+                    <ul class="menu">
+                        
+                        <li role="presentation" class="text-center">
+                            <a href="/"><i class="fa "></i>
+                                首页</a>
+                        </li>
+                        
+                        <li role="presentation" class="text-center">
+                            <a href="/categories/web安全/"><i class="fa "></i>
+                                web安全</a>
+                        </li>
+                        
+                        <li role="presentation" class="text-center">
+                            <a href="/categories/python工具/"><i class="fa "></i>
+                                python工具</a>
+                        </li>
+                        
+                        <li role="presentation" class="text-center">
+                            <a href="/categories/密码学/"><i class="fa "></i>
+                                密码学</a>
+                        </li>
+                        
+                        <li role="presentation" class="text-center">
+                            <a href="/archives/"><i class="fa "></i>
+                                时间轴</a>
+                        </li>
+                        
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</nav>
+    <section class="content-wrap">
+        <div class="container">
+            <div class="row">
+                <main class="col-md-8 main-content m-post">
+                    <p id="process"></p>
+<article class="post">
+    <div class="post-head">
+        <h1 id="Js学习（五）">
+            
+            Js学习（五）
+            
+        </h1>
+        <div class="post-meta">
+    
+    <span class="categories-meta fa-wrap">
+        <i class="fa fa-folder-open-o"></i>
+        <a class="category-link" href="/categories/%E5%89%8D%E7%AB%AF%E5%AD%A6%E4%B9%A0/">前端学习</a>
+    </span>
+    
+    
+    <span class="fa-wrap">
+        <i class="fa fa-tags"></i>
+        <span class="tags-meta">
+            
+            <a class="tag-link" href="/tags/Js%E5%AD%A6%E4%B9%A0%EF%BC%88%E4%BA%94%EF%BC%89/" rel="tag">Js学习（五）</a>
+            
+        </span>
+    </span>
+    
+    
+    
+    <span class="fa-wrap">
+        <i class="fa fa-clock-o"></i>
+        <span class="date-meta">
+            2020/05/05</span>
+    </span>
+    
+    <span class="fa-wrap">
+        <i class="fa fa-eye"></i>
+        <span id="busuanzi_value_page_pv"></span>
+    </span>
+    
+    
+</div>
+        
+        
+        <p class="fa fa-exclamation-triangle warning">
+            本文于<strong>
+                311</strong>
+            天之前发表，文中内容可能已经过时。
+        </p>
+        
+    </div>
+    
+    <div class="post-body post-content">
+        <p>昨天又顾着玩耍了，今天继续学习。</p>
+<a id="more"></a>
+<h1 id="事件"><a href="#事件" class="headerlink" title="事件"></a>事件</h1><p>在需要页面做出响应时就需要监测到事件。比如form表单提交时，可以在标签里使用onsubmit属性，然后值就是调用一个函数。也可以form外先获取到form这个元素，再使用xx.onsubmit这样设置一个函数。这样是设置好了提交时候才会触发，而如果是监听事件的话，就可以对每一个事件进行相应响应。</p>
+<h2 id="注册事件addEventListener"><a href="#注册事件addEventListener" class="headerlink" title="注册事件addEventListener"></a>注册事件addEventListener</h2><p>使用到addEventListener()。</p>
+<pre><code>&lt;form id=&quot;myForm&quot;&gt;&lt;/form&gt;
+var myForm = document.getElementById(&quot;myForm&quot;);
+myForm.addEventListener(&quot;submit&quot;,function() {
+    console.log(&quot;表单提交中&quot;);
+});</code></pre><p>这个就是设置submit时触发，可以是其它事件。</p>
+<h2 id="文档加载load"><a href="#文档加载load" class="headerlink" title="文档加载load"></a>文档加载load</h2><p>使用onload，在加载文档时触发。</p>
+<h2 id="鼠标事件"><a href="#鼠标事件" class="headerlink" title="鼠标事件"></a>鼠标事件</h2><p>在使用时前面加个on就行。<br><img src="https://pic.downk.cc/item/5eb16edac2a9a83be50748a0.jpg" alt></p>
+<h2 id="键盘事件"><a href="#键盘事件" class="headerlink" title="键盘事件"></a>键盘事件</h2><blockquote>
+<ol>
+<li>keydown, 按下键盘，如果一直不放会一直触发。</li>
+<li>keyup, 释放键盘。</li>
+<li>keypress, 按下后释放键盘。  </li>
+<li>这三个事件的值是调用一个函数，该函数的参数是一个event，使用event.which，会知道你按下的那个键对应的unicode编码是什么。</li>
+</ol>
+</blockquote>
+<pre><code>&lt;body onkeydown=&quot;downEvent(event)&quot;&gt;
+&lt;/body&gt;
+&lt;script&gt;
+    function downEvent(event) {
+        console.log(&quot;编码是:&quot;+event.which);
+    }
+&lt;/script&gt;</code></pre><h2 id="表单事件"><a href="#表单事件" class="headerlink" title="表单事件"></a>表单事件</h2><blockquote>
+<ol>
+<li>change, 当当前元素失去焦点而且其内容改变了会触发。就是说当在文本框里输入东西后，鼠标点击了其它地方。</li>
+<li>select，这个不是下拉的那个选择框，是使用鼠标滑动选择文本框的什么内容。要想打印选择的内容，可以用window.getSelection().toString()。</li>
+</ol>
+</blockquote>
+<pre><code> &lt;input type=&quot;text&quot; value=&quot;赵钱孙李，周吴郑王&quot; onselect=&quot;selectEve()&quot;/&gt;
+&lt;script&gt;
+    function selectEve() { 
+        console.log(window.getSelection().toString());
+    }
+&lt;/script&gt;</code></pre><h2 id="事件冒泡"><a href="#事件冒泡" class="headerlink" title="事件冒泡"></a>事件冒泡</h2><p>事件冒泡是：当你点击一个标签内容时，触发该标签中的事件，但这个标签又在一个div中，那么也会触发这个div的事件，而这个div又在一个div中…沿着树形结构往父节点上触发事件。如果只想触发点击的那个标签的事件，就得在该标签的事件调用的函数里面的最后一行使用：</p>
+<pre><code>window.event?window.event.cancelBubble=true:event.stopPropagation();  </code></pre><h1 id="浏览器对象"><a href="#浏览器对象" class="headerlink" title="浏览器对象"></a>浏览器对象</h1><p>其实就是使用window.xxx。</p>
+<h2 id="定时器"><a href="#定时器" class="headerlink" title="定时器"></a>定时器</h2><blockquote>
+<ol>
+<li>window.setTimeout(a, b)，指定函数a在b毫秒后执行一次。</li>
+<li>window.clearTimeout(id), 定时器需要一个变量承载，就是id（某个变量名而已，用来标识某个定时任务）。然后可以根据id清除这个计时器，就不会触发定时任务。</li>
+<li>window.setInterval(a, b)，指定每隔b毫秒就执行a函数。</li>
+</ol>
+</blockquote>
+<h2 id="location对象"><a href="#location对象" class="headerlink" title="location对象"></a>location对象</h2><p>window.location记载了浏览器当前所在窗口的信息。比如：window.location.href就能跳转到指定网站。<br><img src="https://pic.downk.cc/item/5eb174c5c2a9a83be50d4873.jpg" alt></p>
+<h2 id="对话框"><a href="#对话框" class="headerlink" title="对话框"></a>对话框</h2><blockquote>
+<ol>
+<li>alert(), 弹出一个警告框，只有“确认”。</li>
+<li>confirm(), 弹出确认框，有“确认”和“取消”，分别根据点击的不同返回true或者false。</li>
+<li>prompt(a, b), 弹出一个输入框，需要用户输入信息后点“确认”或“取消”。a是输入框的提示语，b是输入框默认的内容。</li>
+</ol>
+</blockquote>
+<h2 id="窗口"><a href="#窗口" class="headerlink" title="窗口"></a>窗口</h2><blockquote>
+<ol>
+<li>打开浏览器窗口。window.open(url,name,specs,replace)。URL是打开的网站地址，name确定是以什么方式打开窗口。可选值有：_blank,_self。前者会打开一个新窗口，后者还是在这个窗口打开。spec用来控制窗口的宽高。replace用来控制打开的窗口在历史记录中怎么显示。</li>
+<li>关闭窗口。上面打开窗口会有一个返回值，如：<code>w=window.open(&quot;xx&quot;)</code>, 然后使用w.close()即可关闭。</li>
+</ol>
+</blockquote>
+<h1 id="Ajax"><a href="#Ajax" class="headerlink" title="Ajax"></a>Ajax</h1><p>异步的JavaScript和xml，可以在不重新加载整个页面的前提下刷新页面数据。使用Ajax的步骤：</p>
+<ol>
+<li><p>创建XMLHTTPRequest对象。</p>
+<blockquote>
+<p>需要适配不同浏览器，那么需要创建不同对象。</p>
+</blockquote>
+<p> var xmlhttp;<br> if(window.XMLHttpRequest){</p>
+<pre><code>xmlhttp = new XMLHttpRequest();//XMLHTTPRequest适用于谷歌、火狐、IE7+等浏览器</code></pre><p> }<br> else{</p>
+<pre><code>xmlhttp = new ActiveXObject(&quot;Microsoft XMLHTTP&quot;) //只适用于IE5和IE6</code></pre><p> }</p>
+</li>
+<li><p>向服务器发送请求</p>
+<blockquote>
+<p>GET方式</p>
+</blockquote>
+<p> xmlhttp.open(“GET”,url,true);<br> xmlhttp.send();<br>使用GET方式，后面的true代表允许异步进行，URL可以是一个服务器上的文件路径，而且后面可以跟参数方便接收。如</p>
+<p> xmlhttp.open(“GET”,”./xxx.php?q=”+str, true);<br>后台PHP文件就可以通过q获取值，str可以是自己定义的值。</p>
+<blockquote>
+<p>POST方式</p>
+</blockquote>
+<p> xmlhttp.open(“POST”,”./xxx.php”，true);<br> xmlhttp.setRequestHeader(“Content-type”,”application/x-www-form-urlencoded”);<br> xmlhttp.send(“q=test”);<br>由于是post方式，URL就不能是带参数，转变为send中发送参数。而且可以设置http头，Content-type可以改为其它头部。</p>
+</li>
+<li><p>服务器响应</p>
+<blockquote>
+<p>onreadystatechange事件，当readyState改变时就触发。使用这个可以当检测到readyState=4而且status是200时就返回信息并进行操作。</p>
+</blockquote>
+<p> xmlhttp.onreadystatechange=function(){</p>
+<pre><code>if(xmlhttp.readyState==4 &amp;&amp; xmlhttp.status==200){
+    document.getElementById(&quot;xx&quot;).innerHTML=xmlhttp.responseText;
+}</code></pre><p> }</p>
+</li>
+</ol>
+<blockquote>
+<p>注意，responseText就是返回的信息，格式是字符串，如果是responseXML，就是xml格式的了。而且后台PHP文件必须有echo才能返回信息并接收到。</p>
+</blockquote>
+
+    </div>
+    
+    <div class="reward" ontouchstart>
+    <div class="reward-wrap">赏
+        <div class="reward-box">
+            
+            <span class="reward-type">
+                <img class="alipay" src="/img/alipay.jpg"><b>支付宝打赏</b>
+            </span>
+            
+            
+            <span class="reward-type">
+                <img class="wechat" src="/img/wechat.jpg"><b>微信打赏</b>
+            </span>
+            
+        </div>
+    </div>
+    <p class="reward-tip">
+        赞赏是不耍流氓的鼓励
+    </p>
+</div>
+    
+    <div class="post-footer">
+        <div>
+            
+            转载声明：
+            商业转载请联系作者获得授权,非商业转载请注明出处 © <a href="ggy.44pp.vip" target="_blank">ggy</a>
+            
+            
+        </div>
+        <div>
+            
+        </div>
+    </div>
+</article>
+<div class="article-nav prev-next-wrap clearfix">
+    
+    <a href="/2020/05/18/PHP%E8%BF%9E%E6%8E%A5MySQL%E6%95%B0%E6%8D%AE%E5%BA%93%E6%93%8D%E4%BD%9C--%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1/" class="pre-post btn btn-default" title='PHP连接MySQL数据库操作--面向对象'>
+        <i class="fa fa-angle-left fa-fw"></i><span class="hidden-lg">上一篇</span>
+        <span class="hidden-xs">
+            PHP连接MySQL数据库操作--面向对象</span>
+    </a>
+    
+    
+    <a href="/2020/05/03/Js%E5%AD%A6%E4%B9%A0%EF%BC%88%E5%9B%9B%EF%BC%89/" class="next-post btn btn-default" title='Js学习（四）—— 类、错误处理、DOM'>
+        <span class="hidden-lg">下一篇</span>
+        <span class="hidden-xs">
+            Js学习（四）—— 类、错误处理、DOM</span><i class="fa fa-angle-right fa-fw"></i>
+    </a>
+    
+</div>
+
+<div id="comments">
+    
+<div id="lv-container" data-id="city" data-uid="MTAyMC80ODM1Ni8yNDg1MA==">
+    <script type="text/javascript">
+    (function(d, s) {
+        var j, e = d.getElementsByTagName(s)[0];
+        if (typeof LivereTower === 'function') { return; }
+        j = d.createElement(s);
+        j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+        j.async = true;
+        e.parentNode.insertBefore(j, e);
+    })(document, 'script');
+    </script>
+</div>
+
+</div>
+
+                </main>
+                
+                    <aside id="article-toc" role="navigation" class="col-md-4">
+    <div class="widget">
+        <h3 class="title">
+            文章目录
+        </h3>
+        
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#事件"><span class="toc-text">事件</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#注册事件addEventListener"><span class="toc-text">注册事件addEventListener</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#文档加载load"><span class="toc-text">文档加载load</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#鼠标事件"><span class="toc-text">鼠标事件</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#键盘事件"><span class="toc-text">键盘事件</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#表单事件"><span class="toc-text">表单事件</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#事件冒泡"><span class="toc-text">事件冒泡</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#浏览器对象"><span class="toc-text">浏览器对象</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#定时器"><span class="toc-text">定时器</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#location对象"><span class="toc-text">location对象</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#对话框"><span class="toc-text">对话框</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#窗口"><span class="toc-text">窗口</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Ajax"><span class="toc-text">Ajax</span></a></li></ol>
+        
+    </div>
+</aside>
+                
+            </div>
+        </div>
+    </section>
+    <footer class="main-footer">
+    <div class="container">
+        <div class="row">
+        </div>
+    </div>
+</footer>
+<a id="back-to-top" class="icon-btn hide">
+    <i class="fa fa-chevron-up"></i>
+</a>
+    <div class="copyright">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="busuanzi">
+    
+    访问量:
+    <strong id="busuanzi_value_site_pv">
+        <i class="fa fa-spinner fa-spin"></i>
+    </strong>
+    &nbsp; | &nbsp;
+    访客数:
+    <strong id="busuanzi_value_site_uv">
+        <i class="fa fa-spinner fa-spin"></i>
+    </strong>
+    
+</div>
+            </div>
+            <div class="col-sm-12">
+                <span>Copyright &copy;
+                    2020
+                    
+                </span> |
+                <span>
+                    Powered by <a href="//hexo.io" class="copyright-links" target="_blank" rel="nofollow">Hexo</a>
+                </span> |
+                <span>
+                    Theme by <a href="//github.com/shenliyang/hexo-theme-snippet.git" class="copyright-links" target="_blank" rel="nofollow">Snippet</a>
+                </span>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<script src="/assets/tagcanvas.min.js?rev=2.9.js"></script>
+
+<script>
+var tagOption = {
+    textColour: '#444', // 字体颜色
+    outlineMethod: 'block', // 选中模式
+    outlineColour: '#FFDAB9', // 选中模式的颜色
+    interval: 30 || 30, // 动画帧之间的时间间隔，值越大，转动幅度越大
+    textHeight: 13,
+    outlineRadius: 3,
+    freezeActive: true || '', // 选中的标签是否继续滚动
+    frontSelect: true || '', // 不选标签云后部的标签
+    initial: [0.1, -0.1],
+    depth: 0.5,
+    decel: 0.95,
+    maxSpeed: 0.03,
+    reverse: true || '', // 是否反向触发
+    fadeIn: 500, // 进入动画时间
+    wheelZoom: false || '' // 是否启用鼠标滚轮
+}
+TagCanvas.Start('tag-cloud-3d', '', tagOption);
+</script>
+
+
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+<script src="/js/app.js?rev=@@hash.js"></script>
+
+
+<!-- 雪花特效 -->
+<script type="text/javascript" src="http://libs.baidu.com/jquery/1.8.3/jquery.js"></script>
+<script type="text/javascript" src="http://libs.baidu.com/jquery/1.8.3/jquery.min.js"></script>
+<script type="text/javascript" src="\js\snow.js"></script>
+
+<canvas class="fireworks" style="position: fixed;left: 0;top: 0;z-index: 1; pointer-events: none;" ></canvas> 
+<script type="text/javascript" src="//cdn.bootcss.com/animejs/2.2.0/anime.min.js"></script> 
+<script type="text/javascript" src="/js/fireworks.js"></script>
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"model":{"jsonPath":"live2d-widget-model-haruto"},"display":{"position":"right","width":150,"height":300},"mobile":{"show":false},"log":false,"pluginJsPath":"lib/","pluginModelPath":"assets/","pluginRootPath":"live2dw/","tagMode":false});</script></body>
+</html>

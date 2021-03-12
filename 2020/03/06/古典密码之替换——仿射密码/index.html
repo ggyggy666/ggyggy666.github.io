@@ -1,0 +1,380 @@
+<head>
+<script src="https://cdn.jsdelivr.net/npm/jquery/dist/jquery.min.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome/css/font-awesome.min.css">
+<script src="https://cdn.jsdelivr.net/gh/stevenjoezhang/live2d-widget/autoload.js"></script>
+</head>
+
+<!DOCTYPE HTML>
+<html lang="zh-CN">
+
+<head>
+    <!--Setting-->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+    <meta http-equiv="Cache-Control" content="no-siteapp">
+    <meta http-equiv="Cache-Control" content="no-transform">
+    <meta name="renderer" content="webkit|ie-comp|ie-stand">
+    <meta name="apple-mobile-web-app-capable" content="ggy的个人博客">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="format-detection" content="telephone=no,email=no,adress=no">
+    <meta name="browsermode" content="application">
+    <meta name="screen-orientation" content="portrait">
+    <meta name="theme-version" content="1.2.3">
+    <meta name="root" content="/">
+    <link rel="dns-prefetch" href="https://ggyggy666.github.io">
+    <!--SEO-->
+
+<meta name="keywords" content="古典密码之替换——仿射密码" />
+
+
+<meta name="description" content="今天完成了密码学的编程部分作业-使用仿射密码方式将明文加密。
+
+所谓仿射密码，其实就是将明文的每一个字母通过e=ax+b(mod 26）的运算加密成另一个字母。由于加密前是字母，加密后也是字母，..." />
+
+
+<meta name="robots" content="all" />
+<meta name="google" content="all" />
+<meta name="googlebot" content="all" />
+<meta name="verify" content="all" />
+    <!--Title-->
+
+<title>
+    
+    古典密码之替换——仿射密码 |
+    
+    ggy的个人博客
+</title>
+
+<link rel="alternate" href="/atom.xml" title="ggy的个人博客" type="application/atom+xml">
+
+
+<link rel="icon" href="/favicon.ico">
+
+    
+
+
+<link rel="stylesheet" href="/css/bootstrap.min.css?rev=3.3.7.css">
+<link rel="stylesheet" href="/css/font-awesome.min.css?rev=4.7.0.css">
+<link rel="stylesheet" href="/css/style.css?rev=@@hash.css">
+
+    
+<div class="hide">
+    <script type="text/javascript">
+    var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+    document.write(unescape("%3Cspan class='cnzz_stat_icon_1263868967 hide' %3E%3Cscript%20src%3D%22https%3A%2F%2Fs95.cnzz.com%2Fz_stat.php%3Fweb_id%3D1272564536%22%3E%3C%2Fscript%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s19.cnzz.com/z_stat.php%3Fid%3D1263868967%26show%3Dpic1' type='text/javascript'%3E%3C/script%3E"));
+    </script>
+</div>
+
+
+
+
+    
+
+<meta name="generator" content="Hexo 4.2.0"></head>
+<!--[if lte IE 8]>
+<style>
+    html{ font-size: 1em }
+</style>
+<![endif]-->
+<!--[if lte IE 9]>
+<div style="ie">你使用的浏览器版本过低，为了你更好的阅读体验，请更新浏览器的版本或者使用其他现代浏览器，比如Chrome、Firefox、Safari等。</div>
+<![endif]-->
+<body>
+    <header class="main-header"  style="background-image:url(
+    https://pic.downk.cc/item/5e3816b82fb38b8c3c8791f9.jpg)"
+     >
+    <div class="main-header-box">
+        <a class="header-avatar" href="/" title='ggy'>
+            <img src="/img/avatar.jpg" alt="logo头像" class="img-responsive center-block">
+        </a>
+        <div class="branding">
+            <!--<h2 class="text-hide">Snippet主题,从未如此简单有趣</h2>-->
+            
+            <h2>
+                欢迎来到ggy的个人网站
+            </h2>
+            
+        </div>
+    </div>
+</header>
+    <nav class="main-navigation">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="navbar-header"><span class="nav-toggle-button collapsed pull-right" data-toggle="collapse" data-target="#main-menu" id="mnav">
+                        <span class="sr-only"></span>
+                        <i class="fa fa-bars"></i>
+                    </span>
+                    <a class="navbar-brand" href="https://ggyggy666.github.io">
+                        ggy的个人博客</a>
+                </div>
+                <div class="collapse navbar-collapse" id="main-menu">
+                    <ul class="menu">
+                        
+                        <li role="presentation" class="text-center">
+                            <a href="/"><i class="fa "></i>
+                                首页</a>
+                        </li>
+                        
+                        <li role="presentation" class="text-center">
+                            <a href="/categories/web安全/"><i class="fa "></i>
+                                web安全</a>
+                        </li>
+                        
+                        <li role="presentation" class="text-center">
+                            <a href="/categories/python工具/"><i class="fa "></i>
+                                python工具</a>
+                        </li>
+                        
+                        <li role="presentation" class="text-center">
+                            <a href="/categories/密码学/"><i class="fa "></i>
+                                密码学</a>
+                        </li>
+                        
+                        <li role="presentation" class="text-center">
+                            <a href="/archives/"><i class="fa "></i>
+                                时间轴</a>
+                        </li>
+                        
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</nav>
+    <section class="content-wrap">
+        <div class="container">
+            <div class="row">
+                <main class="col-md-8 main-content m-post">
+                    <p id="process"></p>
+<article class="post">
+    <div class="post-head">
+        <h1 id="古典密码之替换——仿射密码">
+            
+            古典密码之替换——仿射密码
+            
+        </h1>
+        <div class="post-meta">
+    
+    <span class="categories-meta fa-wrap">
+        <i class="fa fa-folder-open-o"></i>
+        <a class="category-link" href="/categories/%E5%AF%86%E7%A0%81%E5%AD%A6/">密码学</a>
+    </span>
+    
+    
+    <span class="fa-wrap">
+        <i class="fa fa-tags"></i>
+        <span class="tags-meta">
+            
+            <a class="tag-link" href="/tags/%E5%8F%A4%E5%85%B8%E5%AF%86%E7%A0%81%E4%B9%8B%E6%9B%BF%E6%8D%A2%E2%80%94%E2%80%94%E4%BB%BF%E5%B0%84%E5%AF%86%E7%A0%81/" rel="tag">古典密码之替换——仿射密码</a>
+            
+        </span>
+    </span>
+    
+    
+    
+    <span class="fa-wrap">
+        <i class="fa fa-clock-o"></i>
+        <span class="date-meta">
+            2020/03/06</span>
+    </span>
+    
+    <span class="fa-wrap">
+        <i class="fa fa-eye"></i>
+        <span id="busuanzi_value_page_pv"></span>
+    </span>
+    
+    
+</div>
+        
+        
+        <p class="fa fa-exclamation-triangle warning">
+            本文于<strong>
+                371</strong>
+            天之前发表，文中内容可能已经过时。
+        </p>
+        
+    </div>
+    
+    <div class="post-body post-content">
+        <p>今天完成了密码学的编程部分作业-使用仿射密码方式将明文加密。</p>
+<a id="more"></a>
+<p>所谓仿射密码，其实就是将明文的每一个字母通过e=ax+b(mod 26）的运算加密成另一个字母。由于加密前是字母，加密后也是字母，就相当于一个字母替换了原有字母。这就是古典密码。</p>
+<h1 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h1><p>使用python写的，很简洁。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br></pre></td><td class="code"><pre><span class="line">import random, math</span><br><span class="line"></span><br><span class="line">#初始化各个值</span><br><span class="line">num &#x3D; [3, 5, 7, 9, 11, 15, 17, 19, 21, 23,25]  #26以内的质数</span><br><span class="line">ch &#x3D; [&#39;a&#39;, &#39;b&#39;, &#39;c&#39;, &#39;d&#39;, &#39;e&#39;, &#39;f&#39;, &#39;g&#39;, &#39;h&#39;, &#39;i&#39;, &#39;j&#39;, &#39;k&#39;, &#39;l&#39;, &#39;m&#39;, &#39;n&#39;, &#39;o&#39;, &#39;p&#39;, \</span><br><span class="line">      &#39;q&#39;, &#39;r&#39;, &#39;s&#39;, &#39;t&#39;, &#39;u&#39;, &#39;v&#39;, &#39;w&#39;, &#39;x&#39;, &#39;y&#39;, &#39;z&#39;</span><br><span class="line">      ]     #26个字母组成的一个列表</span><br><span class="line">dict1 &#x3D; &#123;</span><br><span class="line">		&#39;a&#39;: 0, &#39;b&#39;: 0, &#39;c&#39;: 0, &#39;d&#39;: 0, &#39;e&#39;: 0, &#39;f&#39;: 0, &#39;g&#39;: 0, &#39;h&#39;: 0, &#39;i&#39;: 0, &#39;j&#39;: 0, &#39;k&#39;: 0, &#39;l&#39;: 0, &#39;m&#39;: 0, \</span><br><span class="line">		&#39;n&#39;: 0, &#39;o&#39;: 0, &#39;p&#39;: 0, &#39;q&#39;: 0, &#39;r&#39;: 0, &#39;s&#39;: 0, &#39;t&#39;: 0, &#39;u&#39;: 0, &#39;v&#39;: 0, &#39;w&#39;: 0, &#39;x&#39;: 0, &#39;y&#39;: 0, &#39;z&#39;: 0</span><br><span class="line">	&#125;       #26个字母组成的一个字典。0表示这个字母出现的频率</span><br><span class="line">n &#x3D; 0</span><br><span class="line">a, b, c &#x3D; 0, 0, 0</span><br><span class="line">mingWen &#x3D; input(&quot;请输入明文：&quot;)       #输入明文</span><br><span class="line">with open(&quot;crypt.txt&quot;, &#39;a&#39;) as f:</span><br><span class="line">	f.write(&quot;明文：&quot; + mingWen + &quot;\n&quot;)     #将明文写入一个文件</span><br><span class="line">list1 &#x3D; list(mingWen)       #将明文字符串转为一个列表，方便后面遍历</span><br><span class="line">length &#x3D; len(list1)         #明文长度</span><br><span class="line"></span><br><span class="line">#开始加密循环</span><br><span class="line">while(n&lt;20):</span><br><span class="line">	list2 &#x3D; []              #定义一个空列表，用来存取密文</span><br><span class="line">	dict &#x3D; &#123;</span><br><span class="line">		&#39;a&#39;: 0, &#39;b&#39;: 0, &#39;c&#39;: 0, &#39;d&#39;: 0, &#39;e&#39;: 0, &#39;f&#39;: 0, &#39;g&#39;: 0, &#39;h&#39;: 0, &#39;i&#39;: 0, &#39;j&#39;: 0, &#39;k&#39;: 0, &#39;l&#39;: 0, &#39;m&#39;: 0, \</span><br><span class="line">		&#39;n&#39;: 0, &#39;o&#39;: 0, &#39;p&#39;: 0, &#39;q&#39;: 0, &#39;r&#39;: 0, &#39;s&#39;: 0, &#39;t&#39;: 0, &#39;u&#39;: 0, &#39;v&#39;: 0, &#39;w&#39;: 0, &#39;x&#39;: 0, &#39;y&#39;: 0, &#39;z&#39;: 0</span><br><span class="line">	&#125;                       #定义一个字典，这里的0表示该字母出现的次数</span><br><span class="line"></span><br><span class="line">	#加密运算</span><br><span class="line">	for x in list1:         #遍历明文，将明文中的每一个字母进行加密</span><br><span class="line">		randomNum2 &#x3D; random.randint(0, 10)      #随机产生一个范围在0-10内的整数</span><br><span class="line">		randomNum1 &#x3D; random.randint(0, 25)      #随机产生一个范围在0-25内的整数</span><br><span class="line">		y &#x3D; ch.index(x)                         #找到明文中的每一个字母对应上面的26个字母的列表中的下标</span><br><span class="line">		location &#x3D; (num[randomNum2]*y + randomNum1) % 26        #使用 e&#x3D;ax+b(mod 26)公式计算</span><br><span class="line">		list2.append(ch[location])              #将计算出的值作为下标找到26个字母表中对应的字母作为加密后的密文字符，存进list2</span><br><span class="line">		for k, v in dict.items():</span><br><span class="line">			if k &#x3D;&#x3D; ch[location]:</span><br><span class="line">				v +&#x3D; 1              #在字典中找到跟加密后得到的字符一样的键，然后将它的值加一，代表这个字母又出现了一次。</span><br><span class="line">				dict[k] &#x3D; v</span><br><span class="line"></span><br><span class="line">	#将密文及每个密文字母出现的频率输出到文件中</span><br><span class="line">	with open(&quot;crypt.txt&quot;, &#39;a&#39;) as f:</span><br><span class="line">		f.write(&quot;\n&quot; + &quot;密文：&quot; + &#39;&#39;.join(list2) + &quot;\n&quot;)       #输出密文字符串</span><br><span class="line">		for k, v in dict.items():</span><br><span class="line">			w &#x3D; round((v&#x2F;length)*100, 2)            #计算这一次加密过程中某个字母出现的频率</span><br><span class="line">			dict[k] &#x3D; w</span><br><span class="line">			m &#x3D; round((w + dict1[k])&#x2F;2, 2)          #累计这100次加密过程中每个字母出现的频率，并求平均值</span><br><span class="line">			dict1[k] &#x3D; m                            #保存到字典dict1中</span><br><span class="line">			if v !&#x3D; 0:</span><br><span class="line">				f.write(k + &quot;: &quot; + str(w) + &quot;% &quot;)   #将此次加密过程得到的密文字母及对应的出现频率输出到文件中。</span><br><span class="line">	n &#x3D; n+1</span><br><span class="line"></span><br><span class="line">#将dict1中的代表这100次加密过程得到的最终的每个字母出现频率输出到文件</span><br><span class="line">with open(&quot;crypt.txt&quot;, &#39;a&#39;) as f:</span><br><span class="line">	f.write(&quot;\n\n&quot; + &quot;最终每个字母出现的频率为：\n&quot; + str(dict1))</span><br></pre></td></tr></table></figure>
+
+<h1 id="效果"><a href="#效果" class="headerlink" title="效果"></a>效果</h1><p><img src="https://pic.downk.cc/item/5e6242b498271cb2b831964b.jpg" alt></p>
+<p><img src="https://pic.downk.cc/item/5e6242eb98271cb2b831a947.jpg" alt></p>
+<p>我将加密后的密文、密文中出现的字母所占频率以及最终经过20次加密后得到的每个字母出现频率的平均值都输出来了。</p>
+
+    </div>
+    
+    <div class="reward" ontouchstart>
+    <div class="reward-wrap">赏
+        <div class="reward-box">
+            
+            <span class="reward-type">
+                <img class="alipay" src="/img/alipay.jpg"><b>支付宝打赏</b>
+            </span>
+            
+            
+            <span class="reward-type">
+                <img class="wechat" src="/img/wechat.jpg"><b>微信打赏</b>
+            </span>
+            
+        </div>
+    </div>
+    <p class="reward-tip">
+        赞赏是不耍流氓的鼓励
+    </p>
+</div>
+    
+    <div class="post-footer">
+        <div>
+            
+            转载声明：
+            商业转载请联系作者获得授权,非商业转载请注明出处 © <a href="ggy.44pp.vip" target="_blank">ggy</a>
+            
+            
+        </div>
+        <div>
+            
+        </div>
+    </div>
+</article>
+<div class="article-nav prev-next-wrap clearfix">
+    
+    <a href="/2020/03/11/%E5%AD%A6Linux%E7%9A%84%E7%AC%AC%E4%B8%80%E5%A4%A9/" class="pre-post btn btn-default" title='学Linux的第一天'>
+        <i class="fa fa-angle-left fa-fw"></i><span class="hidden-lg">上一篇</span>
+        <span class="hidden-xs">
+            学Linux的第一天</span>
+    </a>
+    
+    
+    <a href="/2020/03/05/%E5%85%B3%E4%BA%8E%E9%9D%A2%E5%90%91%E8%BF%87%E7%A8%8B%E5%92%8C%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1%E7%9A%84%E6%80%9D%E8%80%83/" class="next-post btn btn-default" title='关于面向过程和面向对象的思考'>
+        <span class="hidden-lg">下一篇</span>
+        <span class="hidden-xs">
+            关于面向过程和面向对象的思考</span><i class="fa fa-angle-right fa-fw"></i>
+    </a>
+    
+</div>
+
+<div id="comments">
+    
+<div id="lv-container" data-id="city" data-uid="MTAyMC80ODM1Ni8yNDg1MA==">
+    <script type="text/javascript">
+    (function(d, s) {
+        var j, e = d.getElementsByTagName(s)[0];
+        if (typeof LivereTower === 'function') { return; }
+        j = d.createElement(s);
+        j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+        j.async = true;
+        e.parentNode.insertBefore(j, e);
+    })(document, 'script');
+    </script>
+</div>
+
+</div>
+
+                </main>
+                
+                    <aside id="article-toc" role="navigation" class="col-md-4">
+    <div class="widget">
+        <h3 class="title">
+            文章目录
+        </h3>
+        
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#代码"><span class="toc-text">代码</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#效果"><span class="toc-text">效果</span></a></li></ol>
+        
+    </div>
+</aside>
+                
+            </div>
+        </div>
+    </section>
+    <footer class="main-footer">
+    <div class="container">
+        <div class="row">
+        </div>
+    </div>
+</footer>
+<a id="back-to-top" class="icon-btn hide">
+    <i class="fa fa-chevron-up"></i>
+</a>
+    <div class="copyright">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="busuanzi">
+    
+    访问量:
+    <strong id="busuanzi_value_site_pv">
+        <i class="fa fa-spinner fa-spin"></i>
+    </strong>
+    &nbsp; | &nbsp;
+    访客数:
+    <strong id="busuanzi_value_site_uv">
+        <i class="fa fa-spinner fa-spin"></i>
+    </strong>
+    
+</div>
+            </div>
+            <div class="col-sm-12">
+                <span>Copyright &copy;
+                    2020
+                    
+                </span> |
+                <span>
+                    Powered by <a href="//hexo.io" class="copyright-links" target="_blank" rel="nofollow">Hexo</a>
+                </span> |
+                <span>
+                    Theme by <a href="//github.com/shenliyang/hexo-theme-snippet.git" class="copyright-links" target="_blank" rel="nofollow">Snippet</a>
+                </span>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<script src="/assets/tagcanvas.min.js?rev=2.9.js"></script>
+
+<script>
+var tagOption = {
+    textColour: '#444', // 字体颜色
+    outlineMethod: 'block', // 选中模式
+    outlineColour: '#FFDAB9', // 选中模式的颜色
+    interval: 30 || 30, // 动画帧之间的时间间隔，值越大，转动幅度越大
+    textHeight: 13,
+    outlineRadius: 3,
+    freezeActive: true || '', // 选中的标签是否继续滚动
+    frontSelect: true || '', // 不选标签云后部的标签
+    initial: [0.1, -0.1],
+    depth: 0.5,
+    decel: 0.95,
+    maxSpeed: 0.03,
+    reverse: true || '', // 是否反向触发
+    fadeIn: 500, // 进入动画时间
+    wheelZoom: false || '' // 是否启用鼠标滚轮
+}
+TagCanvas.Start('tag-cloud-3d', '', tagOption);
+</script>
+
+
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+<script src="/js/app.js?rev=@@hash.js"></script>
+
+
+<!-- 雪花特效 -->
+<script type="text/javascript" src="http://libs.baidu.com/jquery/1.8.3/jquery.js"></script>
+<script type="text/javascript" src="http://libs.baidu.com/jquery/1.8.3/jquery.min.js"></script>
+<script type="text/javascript" src="\js\snow.js"></script>
+
+<canvas class="fireworks" style="position: fixed;left: 0;top: 0;z-index: 1; pointer-events: none;" ></canvas> 
+<script type="text/javascript" src="//cdn.bootcss.com/animejs/2.2.0/anime.min.js"></script> 
+<script type="text/javascript" src="/js/fireworks.js"></script>
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"model":{"jsonPath":"live2d-widget-model-haruto"},"display":{"position":"right","width":150,"height":300},"mobile":{"show":false},"log":false,"pluginJsPath":"lib/","pluginModelPath":"assets/","pluginRootPath":"live2dw/","tagMode":false});</script></body>
+</html>

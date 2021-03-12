@@ -1,0 +1,398 @@
+<head>
+<script src="https://cdn.jsdelivr.net/npm/jquery/dist/jquery.min.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome/css/font-awesome.min.css">
+<script src="https://cdn.jsdelivr.net/gh/stevenjoezhang/live2d-widget/autoload.js"></script>
+</head>
+
+<!DOCTYPE HTML>
+<html lang="zh-CN">
+
+<head>
+    <!--Setting-->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+    <meta http-equiv="Cache-Control" content="no-siteapp">
+    <meta http-equiv="Cache-Control" content="no-transform">
+    <meta name="renderer" content="webkit|ie-comp|ie-stand">
+    <meta name="apple-mobile-web-app-capable" content="ggy的个人博客">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="format-detection" content="telephone=no,email=no,adress=no">
+    <meta name="browsermode" content="application">
+    <meta name="screen-orientation" content="portrait">
+    <meta name="theme-version" content="1.2.3">
+    <meta name="root" content="/">
+    <link rel="dns-prefetch" href="https://ggyggy666.github.io">
+    <!--SEO-->
+
+<meta name="keywords" content="涅普CTF入门-crypt（二）" />
+
+
+<meta name="description" content="今天主要学习RSA。
+简单实现RSA求逆元12from Crypto.Util.number import *d &#x3D; invert(e, (p-1)*(q-1))
+
+判断素数12fro..." />
+
+
+<meta name="robots" content="all" />
+<meta name="google" content="all" />
+<meta name="googlebot" content="all" />
+<meta name="verify" content="all" />
+    <!--Title-->
+
+<title>
+    
+    涅普CTF入门-crypt（二） |
+    
+    ggy的个人博客
+</title>
+
+<link rel="alternate" href="/atom.xml" title="ggy的个人博客" type="application/atom+xml">
+
+
+<link rel="icon" href="/favicon.ico">
+
+    
+
+
+<link rel="stylesheet" href="/css/bootstrap.min.css?rev=3.3.7.css">
+<link rel="stylesheet" href="/css/font-awesome.min.css?rev=4.7.0.css">
+<link rel="stylesheet" href="/css/style.css?rev=@@hash.css">
+
+    
+<div class="hide">
+    <script type="text/javascript">
+    var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+    document.write(unescape("%3Cspan class='cnzz_stat_icon_1263868967 hide' %3E%3Cscript%20src%3D%22https%3A%2F%2Fs95.cnzz.com%2Fz_stat.php%3Fweb_id%3D1272564536%22%3E%3C%2Fscript%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s19.cnzz.com/z_stat.php%3Fid%3D1263868967%26show%3Dpic1' type='text/javascript'%3E%3C/script%3E"));
+    </script>
+</div>
+
+
+
+
+    
+
+<meta name="generator" content="Hexo 4.2.0"></head>
+<!--[if lte IE 8]>
+<style>
+    html{ font-size: 1em }
+</style>
+<![endif]-->
+<!--[if lte IE 9]>
+<div style="ie">你使用的浏览器版本过低，为了你更好的阅读体验，请更新浏览器的版本或者使用其他现代浏览器，比如Chrome、Firefox、Safari等。</div>
+<![endif]-->
+<body>
+    <header class="main-header"  style="background-image:url(
+    https://pic.downk.cc/item/5e3816b82fb38b8c3c8791f9.jpg)"
+     >
+    <div class="main-header-box">
+        <a class="header-avatar" href="/" title='ggy'>
+            <img src="/img/avatar.jpg" alt="logo头像" class="img-responsive center-block">
+        </a>
+        <div class="branding">
+            <!--<h2 class="text-hide">Snippet主题,从未如此简单有趣</h2>-->
+            
+            <h2>
+                欢迎来到ggy的个人网站
+            </h2>
+            
+        </div>
+    </div>
+</header>
+    <nav class="main-navigation">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="navbar-header"><span class="nav-toggle-button collapsed pull-right" data-toggle="collapse" data-target="#main-menu" id="mnav">
+                        <span class="sr-only"></span>
+                        <i class="fa fa-bars"></i>
+                    </span>
+                    <a class="navbar-brand" href="https://ggyggy666.github.io">
+                        ggy的个人博客</a>
+                </div>
+                <div class="collapse navbar-collapse" id="main-menu">
+                    <ul class="menu">
+                        
+                        <li role="presentation" class="text-center">
+                            <a href="/"><i class="fa "></i>
+                                首页</a>
+                        </li>
+                        
+                        <li role="presentation" class="text-center">
+                            <a href="/categories/web安全/"><i class="fa "></i>
+                                web安全</a>
+                        </li>
+                        
+                        <li role="presentation" class="text-center">
+                            <a href="/categories/python工具/"><i class="fa "></i>
+                                python工具</a>
+                        </li>
+                        
+                        <li role="presentation" class="text-center">
+                            <a href="/categories/密码学/"><i class="fa "></i>
+                                密码学</a>
+                        </li>
+                        
+                        <li role="presentation" class="text-center">
+                            <a href="/archives/"><i class="fa "></i>
+                                时间轴</a>
+                        </li>
+                        
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</nav>
+    <section class="content-wrap">
+        <div class="container">
+            <div class="row">
+                <main class="col-md-8 main-content m-post">
+                    <p id="process"></p>
+<article class="post">
+    <div class="post-head">
+        <h1 id="涅普CTF入门-crypt（二）">
+            
+            涅普CTF入门-crypt（二）
+            
+        </h1>
+        <div class="post-meta">
+    
+    <span class="categories-meta fa-wrap">
+        <i class="fa fa-folder-open-o"></i>
+        <a class="category-link" href="/categories/CTF%E5%85%A5%E9%97%A8/">CTF入门</a>
+    </span>
+    
+    
+    <span class="fa-wrap">
+        <i class="fa fa-tags"></i>
+        <span class="tags-meta">
+            
+            <a class="tag-link" href="/tags/%E6%B6%85%E6%99%AECTF%E5%85%A5%E9%97%A8-crypt%EF%BC%88%E4%BA%8C%EF%BC%89/" rel="tag">涅普CTF入门-crypt（二）</a>
+            
+        </span>
+    </span>
+    
+    
+    
+    <span class="fa-wrap">
+        <i class="fa fa-clock-o"></i>
+        <span class="date-meta">
+            2021/02/16</span>
+    </span>
+    
+    <span class="fa-wrap">
+        <i class="fa fa-eye"></i>
+        <span id="busuanzi_value_page_pv"></span>
+    </span>
+    
+    
+</div>
+        
+        
+    </div>
+    
+    <div class="post-body post-content">
+        <p>今天主要学习RSA。</p>
+<h1 id="简单实现RSA"><a href="#简单实现RSA" class="headerlink" title="简单实现RSA"></a>简单实现RSA</h1><h2 id="求逆元"><a href="#求逆元" class="headerlink" title="求逆元"></a>求逆元</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">from Crypto.Util.number import *</span><br><span class="line">d &#x3D; invert(e, (p-1)*(q-1))</span><br></pre></td></tr></table></figure>
+
+<h2 id="判断素数"><a href="#判断素数" class="headerlink" title="判断素数"></a>判断素数</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">from Crypto.Util.number import *</span><br><span class="line">print(isPrime(7))</span><br></pre></td></tr></table></figure>
+
+<h2 id="求最大公因数"><a href="#求最大公因数" class="headerlink" title="求最大公因数"></a>求最大公因数</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">from Crypto.Util.number import *</span><br><span class="line">print(GCD(12, 18))	&#x2F;&#x2F;6</span><br></pre></td></tr></table></figure>
+
+<h2 id="开n次方根"><a href="#开n次方根" class="headerlink" title="开n次方根"></a>开n次方根</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">from gmpy2 import iroot</span><br><span class="line">print(iroot(4, 2))	&#x2F;&#x2F;对4开平方根</span><br></pre></td></tr></table></figure>
+
+<h2 id="RSA加密"><a href="#RSA加密" class="headerlink" title="RSA加密"></a>RSA加密</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">from Crypto.Util.number import *</span><br><span class="line"></span><br><span class="line">m &#x3D; 123456</span><br><span class="line">e &#x3D; 65537</span><br><span class="line">p, q &#x3D; getPrime(128), getPrime(128)</span><br><span class="line">n &#x3D; p*q</span><br><span class="line">c &#x3D; pow(m, e, n)</span><br><span class="line">print(c)</span><br></pre></td></tr></table></figure>
+
+<h2 id="RSA解密"><a href="#RSA解密" class="headerlink" title="RSA解密"></a>RSA解密</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">from Crypto.Util.number import *</span><br><span class="line"></span><br><span class="line">p &#x3D; </span><br><span class="line">q &#x3D; </span><br><span class="line">e &#x3D; 65537</span><br><span class="line">c &#x3D; </span><br><span class="line">d &#x3D; inverse(e, (p-1)*(q-1))</span><br><span class="line">n &#x3D; p*q</span><br><span class="line">m &#x3D; pow(c, d, n)</span><br><span class="line">print(m)</span><br></pre></td></tr></table></figure>
+
+<h1 id="使用RSA通信"><a href="#使用RSA通信" class="headerlink" title="使用RSA通信"></a>使用RSA通信</h1><h2 id="Alice发送公钥给Bob"><a href="#Alice发送公钥给Bob" class="headerlink" title="Alice发送公钥给Bob"></a>Alice发送公钥给Bob</h2><p>首先生成两个素数p和q, 相乘得到n, 然后随机生成一个小于n的素数e, 计算出e关于(p-1)*(q-1)的逆元作为密钥d。将(e, n)作为公钥发送给Bob，私钥d自己保留。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">from Crypto.Util.number import *</span><br><span class="line"></span><br><span class="line">e &#x3D; 65537</span><br><span class="line">p, q &#x3D; getPrime(128), getPrime(128)</span><br><span class="line">n &#x3D; p*q</span><br><span class="line">d &#x3D; inverse(e, (p-1)*(q-1))</span><br><span class="line">print(&quot;n&#x3D;&quot;, n)</span><br><span class="line">print(&quot;d&#x3D;&quot;, d)</span><br></pre></td></tr></table></figure>
+
+<h2 id="Bob使用Alice的公钥加密"><a href="#Bob使用Alice的公钥加密" class="headerlink" title="Bob使用Alice的公钥加密"></a>Bob使用Alice的公钥加密</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">from Crypto.Util.number import *</span><br><span class="line"></span><br><span class="line">e &#x3D; 65537</span><br><span class="line">n &#x3D; </span><br><span class="line">m &#x3D; 123456	&#x2F;&#x2F;明文</span><br><span class="line">c &#x3D; pow(m, e, n)	&#x2F;&#x2F;密文</span><br><span class="line">print(&quot;c&#x3D;&quot;, c)</span><br></pre></td></tr></table></figure>
+
+<h2 id="Alice使用私钥解密"><a href="#Alice使用私钥解密" class="headerlink" title="Alice使用私钥解密"></a>Alice使用私钥解密</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">from Crypto.Util.number import *</span><br><span class="line"></span><br><span class="line">d &#x3D; </span><br><span class="line">n &#x3D; </span><br><span class="line">c &#x3D; </span><br><span class="line">m &#x3D; pow(c, d, n)</span><br><span class="line">print(&quot;m&#x3D;&quot;, m)</span><br></pre></td></tr></table></figure>
+
+<h1 id="攻击加密算法"><a href="#攻击加密算法" class="headerlink" title="攻击加密算法"></a>攻击加密算法</h1><p>第三方窃听通信流程，就只能获取到Alice的公钥(e, n)和Bob发送的密文c。</p>
+<h2 id="分解素因数攻击"><a href="#分解素因数攻击" class="headerlink" title="分解素因数攻击"></a>分解素因数攻击</h2><p>需要知道私钥d, 而d是e关于(p-1)*(q-1)的逆元，因此需要知道φ(n)，也就是得知道n的素因数分解。</p>
+<p>在线分解网站：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">https:&#x2F;&#x2F;www.alpertron.com.ar&#x2F;ECM.HTM</span><br><span class="line">http:&#x2F;&#x2F;www.factordb.com&#x2F;index.php</span><br></pre></td></tr></table></figure>
+
+<h2 id="共模攻击"><a href="#共模攻击" class="headerlink" title="共模攻击"></a>共模攻击</h2><p>使用了相同的n对相同的明文m进行加密。</p>
+<p><img src="https://i.loli.net/2021/02/16/oxm2z8QLadEYU5k.png" alt="image-20210216114535541"></p>
+<h2 id="已知p-q或p-q"><a href="#已知p-q或p-q" class="headerlink" title="已知p+q或p-q"></a>已知p+q或p-q</h2><p>或者其它p,q之间的关系。解方程组：<br>$$<br>p*q = n,</p>
+<p>p+q = a<br>$$<br>使用SageMath解方程组。<br>$$<br>var(‘p q’), </p>
+<p>solve([p*q==n, p+q==a], [p, q])<br>$$</p>
+<h2 id="小公钥指数攻击"><a href="#小公钥指数攻击" class="headerlink" title="小公钥指数攻击"></a>小公钥指数攻击</h2><p>e很小，c就可能被枚举出来。存在一个k, 满足：m<sup>e</sup>=c + k<em>n. 如果e=3, 那么：</em>m<sup>3</sup> = c + k*n, 枚举k并开根，能够刚好开根的就是解。</p>
+<h2 id="已知e-d分解n"><a href="#已知e-d分解n" class="headerlink" title="已知e, d分解n"></a>已知e, d分解n</h2><p><img src="https://i.loli.net/2021/02/16/Epd2OZgnY4S1QWm.png" alt="image-20210216115428443"></p>
+
+    </div>
+    
+    <div class="reward" ontouchstart>
+    <div class="reward-wrap">赏
+        <div class="reward-box">
+            
+            <span class="reward-type">
+                <img class="alipay" src="/img/alipay.jpg"><b>支付宝打赏</b>
+            </span>
+            
+            
+            <span class="reward-type">
+                <img class="wechat" src="/img/wechat.jpg"><b>微信打赏</b>
+            </span>
+            
+        </div>
+    </div>
+    <p class="reward-tip">
+        赞赏是不耍流氓的鼓励
+    </p>
+</div>
+    
+    <div class="post-footer">
+        <div>
+            
+            转载声明：
+            商业转载请联系作者获得授权,非商业转载请注明出处 © <a href="ggy.44pp.vip" target="_blank">ggy</a>
+            
+            
+        </div>
+        <div>
+            
+        </div>
+    </div>
+</article>
+<div class="article-nav prev-next-wrap clearfix">
+    
+    <a href="/2021/02/20/%E6%B6%85%E6%99%AECTF%E5%85%A5%E9%97%A8-%E4%B8%80%E5%8F%A5%E8%AF%9D%E6%9C%A8%E9%A9%AC/" class="pre-post btn btn-default" title='涅普CTF入门-一句话木马'>
+        <i class="fa fa-angle-left fa-fw"></i><span class="hidden-lg">上一篇</span>
+        <span class="hidden-xs">
+            涅普CTF入门-一句话木马</span>
+    </a>
+    
+    
+    <a href="/2021/02/15/%C2%96%E6%B6%85%E6%99%AECTF%E5%85%A5%E9%97%A8-crypto%EF%BC%88%E4%B8%80%EF%BC%89/" class="next-post btn btn-default" title='涅普CTF入门-crypt（一）'>
+        <span class="hidden-lg">下一篇</span>
+        <span class="hidden-xs">
+            涅普CTF入门-crypt（一）</span><i class="fa fa-angle-right fa-fw"></i>
+    </a>
+    
+</div>
+
+<div id="comments">
+    
+<div id="lv-container" data-id="city" data-uid="MTAyMC80ODM1Ni8yNDg1MA==">
+    <script type="text/javascript">
+    (function(d, s) {
+        var j, e = d.getElementsByTagName(s)[0];
+        if (typeof LivereTower === 'function') { return; }
+        j = d.createElement(s);
+        j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+        j.async = true;
+        e.parentNode.insertBefore(j, e);
+    })(document, 'script');
+    </script>
+</div>
+
+</div>
+
+                </main>
+                
+                    <aside id="article-toc" role="navigation" class="col-md-4">
+    <div class="widget">
+        <h3 class="title">
+            文章目录
+        </h3>
+        
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#简单实现RSA"><span class="toc-text">简单实现RSA</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#求逆元"><span class="toc-text">求逆元</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#判断素数"><span class="toc-text">判断素数</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#求最大公因数"><span class="toc-text">求最大公因数</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#开n次方根"><span class="toc-text">开n次方根</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#RSA加密"><span class="toc-text">RSA加密</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#RSA解密"><span class="toc-text">RSA解密</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#使用RSA通信"><span class="toc-text">使用RSA通信</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Alice发送公钥给Bob"><span class="toc-text">Alice发送公钥给Bob</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Bob使用Alice的公钥加密"><span class="toc-text">Bob使用Alice的公钥加密</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Alice使用私钥解密"><span class="toc-text">Alice使用私钥解密</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#攻击加密算法"><span class="toc-text">攻击加密算法</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#分解素因数攻击"><span class="toc-text">分解素因数攻击</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#共模攻击"><span class="toc-text">共模攻击</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#已知p-q或p-q"><span class="toc-text">已知p+q或p-q</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#小公钥指数攻击"><span class="toc-text">小公钥指数攻击</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#已知e-d分解n"><span class="toc-text">已知e, d分解n</span></a></li></ol></li></ol>
+        
+    </div>
+</aside>
+                
+            </div>
+        </div>
+    </section>
+    <footer class="main-footer">
+    <div class="container">
+        <div class="row">
+        </div>
+    </div>
+</footer>
+<a id="back-to-top" class="icon-btn hide">
+    <i class="fa fa-chevron-up"></i>
+</a>
+    <div class="copyright">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="busuanzi">
+    
+    访问量:
+    <strong id="busuanzi_value_site_pv">
+        <i class="fa fa-spinner fa-spin"></i>
+    </strong>
+    &nbsp; | &nbsp;
+    访客数:
+    <strong id="busuanzi_value_site_uv">
+        <i class="fa fa-spinner fa-spin"></i>
+    </strong>
+    
+</div>
+            </div>
+            <div class="col-sm-12">
+                <span>Copyright &copy;
+                    2020
+                    
+                </span> |
+                <span>
+                    Powered by <a href="//hexo.io" class="copyright-links" target="_blank" rel="nofollow">Hexo</a>
+                </span> |
+                <span>
+                    Theme by <a href="//github.com/shenliyang/hexo-theme-snippet.git" class="copyright-links" target="_blank" rel="nofollow">Snippet</a>
+                </span>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<script src="/assets/tagcanvas.min.js?rev=2.9.js"></script>
+
+<script>
+var tagOption = {
+    textColour: '#444', // 字体颜色
+    outlineMethod: 'block', // 选中模式
+    outlineColour: '#FFDAB9', // 选中模式的颜色
+    interval: 30 || 30, // 动画帧之间的时间间隔，值越大，转动幅度越大
+    textHeight: 13,
+    outlineRadius: 3,
+    freezeActive: true || '', // 选中的标签是否继续滚动
+    frontSelect: true || '', // 不选标签云后部的标签
+    initial: [0.1, -0.1],
+    depth: 0.5,
+    decel: 0.95,
+    maxSpeed: 0.03,
+    reverse: true || '', // 是否反向触发
+    fadeIn: 500, // 进入动画时间
+    wheelZoom: false || '' // 是否启用鼠标滚轮
+}
+TagCanvas.Start('tag-cloud-3d', '', tagOption);
+</script>
+
+
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+<script src="/js/app.js?rev=@@hash.js"></script>
+
+
+<!-- 雪花特效 -->
+<script type="text/javascript" src="http://libs.baidu.com/jquery/1.8.3/jquery.js"></script>
+<script type="text/javascript" src="http://libs.baidu.com/jquery/1.8.3/jquery.min.js"></script>
+<script type="text/javascript" src="\js\snow.js"></script>
+
+<canvas class="fireworks" style="position: fixed;left: 0;top: 0;z-index: 1; pointer-events: none;" ></canvas> 
+<script type="text/javascript" src="//cdn.bootcss.com/animejs/2.2.0/anime.min.js"></script> 
+<script type="text/javascript" src="/js/fireworks.js"></script>
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"model":{"jsonPath":"live2d-widget-model-haruto"},"display":{"position":"right","width":150,"height":300},"mobile":{"show":false},"log":false,"pluginJsPath":"lib/","pluginModelPath":"assets/","pluginRootPath":"live2dw/","tagMode":false});</script></body>
+</html>

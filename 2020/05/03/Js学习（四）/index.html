@@ -1,0 +1,452 @@
+<head>
+<script src="https://cdn.jsdelivr.net/npm/jquery/dist/jquery.min.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome/css/font-awesome.min.css">
+<script src="https://cdn.jsdelivr.net/gh/stevenjoezhang/live2d-widget/autoload.js"></script>
+</head>
+
+<!DOCTYPE HTML>
+<html lang="zh-CN">
+
+<head>
+    <!--Setting-->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+    <meta http-equiv="Cache-Control" content="no-siteapp">
+    <meta http-equiv="Cache-Control" content="no-transform">
+    <meta name="renderer" content="webkit|ie-comp|ie-stand">
+    <meta name="apple-mobile-web-app-capable" content="ggy的个人博客">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="format-detection" content="telephone=no,email=no,adress=no">
+    <meta name="browsermode" content="application">
+    <meta name="screen-orientation" content="portrait">
+    <meta name="theme-version" content="1.2.3">
+    <meta name="root" content="/">
+    <link rel="dns-prefetch" href="https://ggyggy666.github.io">
+    <!--SEO-->
+
+<meta name="keywords" content="Js学习（四）" />
+
+
+<meta name="description" content="今天继续学习JS。
+
+Math类JS中也需要用到一些数学方法，通过使用Math类即可。
+
+
+向上取整：Math.ceil(x)
+向下取整：Math.floor(x)
+随机数：Math.rando..." />
+
+
+<meta name="robots" content="all" />
+<meta name="google" content="all" />
+<meta name="googlebot" content="all" />
+<meta name="verify" content="all" />
+    <!--Title-->
+
+<title>
+    
+    Js学习（四）—— 类、错误处理、DOM |
+    
+    ggy的个人博客
+</title>
+
+<link rel="alternate" href="/atom.xml" title="ggy的个人博客" type="application/atom+xml">
+
+
+<link rel="icon" href="/favicon.ico">
+
+    
+
+
+<link rel="stylesheet" href="/css/bootstrap.min.css?rev=3.3.7.css">
+<link rel="stylesheet" href="/css/font-awesome.min.css?rev=4.7.0.css">
+<link rel="stylesheet" href="/css/style.css?rev=@@hash.css">
+
+    
+<div class="hide">
+    <script type="text/javascript">
+    var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+    document.write(unescape("%3Cspan class='cnzz_stat_icon_1263868967 hide' %3E%3Cscript%20src%3D%22https%3A%2F%2Fs95.cnzz.com%2Fz_stat.php%3Fweb_id%3D1272564536%22%3E%3C%2Fscript%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s19.cnzz.com/z_stat.php%3Fid%3D1263868967%26show%3Dpic1' type='text/javascript'%3E%3C/script%3E"));
+    </script>
+</div>
+
+
+
+
+    
+
+<meta name="generator" content="Hexo 4.2.0"></head>
+<!--[if lte IE 8]>
+<style>
+    html{ font-size: 1em }
+</style>
+<![endif]-->
+<!--[if lte IE 9]>
+<div style="ie">你使用的浏览器版本过低，为了你更好的阅读体验，请更新浏览器的版本或者使用其他现代浏览器，比如Chrome、Firefox、Safari等。</div>
+<![endif]-->
+<body>
+    <header class="main-header"  style="background-image:url(
+    https://pic.downk.cc/item/5e3816b82fb38b8c3c8791f9.jpg)"
+     >
+    <div class="main-header-box">
+        <a class="header-avatar" href="/" title='ggy'>
+            <img src="/img/avatar.jpg" alt="logo头像" class="img-responsive center-block">
+        </a>
+        <div class="branding">
+            <!--<h2 class="text-hide">Snippet主题,从未如此简单有趣</h2>-->
+            
+            <h2>
+                欢迎来到ggy的个人网站
+            </h2>
+            
+        </div>
+    </div>
+</header>
+    <nav class="main-navigation">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="navbar-header"><span class="nav-toggle-button collapsed pull-right" data-toggle="collapse" data-target="#main-menu" id="mnav">
+                        <span class="sr-only"></span>
+                        <i class="fa fa-bars"></i>
+                    </span>
+                    <a class="navbar-brand" href="https://ggyggy666.github.io">
+                        ggy的个人博客</a>
+                </div>
+                <div class="collapse navbar-collapse" id="main-menu">
+                    <ul class="menu">
+                        
+                        <li role="presentation" class="text-center">
+                            <a href="/"><i class="fa "></i>
+                                首页</a>
+                        </li>
+                        
+                        <li role="presentation" class="text-center">
+                            <a href="/categories/web安全/"><i class="fa "></i>
+                                web安全</a>
+                        </li>
+                        
+                        <li role="presentation" class="text-center">
+                            <a href="/categories/python工具/"><i class="fa "></i>
+                                python工具</a>
+                        </li>
+                        
+                        <li role="presentation" class="text-center">
+                            <a href="/categories/密码学/"><i class="fa "></i>
+                                密码学</a>
+                        </li>
+                        
+                        <li role="presentation" class="text-center">
+                            <a href="/archives/"><i class="fa "></i>
+                                时间轴</a>
+                        </li>
+                        
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</nav>
+    <section class="content-wrap">
+        <div class="container">
+            <div class="row">
+                <main class="col-md-8 main-content m-post">
+                    <p id="process"></p>
+<article class="post">
+    <div class="post-head">
+        <h1 id="Js学习（四）—— 类、错误处理、DOM">
+            
+            Js学习（四）—— 类、错误处理、DOM
+            
+        </h1>
+        <div class="post-meta">
+    
+    <span class="categories-meta fa-wrap">
+        <i class="fa fa-folder-open-o"></i>
+        <a class="category-link" href="/categories/%E5%89%8D%E7%AB%AF%E5%AD%A6%E4%B9%A0/">前端学习</a>
+    </span>
+    
+    
+    <span class="fa-wrap">
+        <i class="fa fa-tags"></i>
+        <span class="tags-meta">
+            
+            <a class="tag-link" href="/tags/Js%E5%AD%A6%E4%B9%A0%EF%BC%88%E5%9B%9B%EF%BC%89/" rel="tag">Js学习（四）</a>
+            
+        </span>
+    </span>
+    
+    
+    
+    <span class="fa-wrap">
+        <i class="fa fa-clock-o"></i>
+        <span class="date-meta">
+            2020/05/03</span>
+    </span>
+    
+    <span class="fa-wrap">
+        <i class="fa fa-eye"></i>
+        <span id="busuanzi_value_page_pv"></span>
+    </span>
+    
+    
+</div>
+        
+        
+        <p class="fa fa-exclamation-triangle warning">
+            本文于<strong>
+                313</strong>
+            天之前发表，文中内容可能已经过时。
+        </p>
+        
+    </div>
+    
+    <div class="post-body post-content">
+        <p>今天继续学习JS。</p>
+<a id="more"></a>
+<h1 id="Math类"><a href="#Math类" class="headerlink" title="Math类"></a>Math类</h1><p>JS中也需要用到一些数学方法，通过使用Math类即可。</p>
+<blockquote>
+<ol>
+<li>向上取整：Math.ceil(x)</li>
+<li>向下取整：Math.floor(x)</li>
+<li>随机数：Math.random()</li>
+<li>平方根：Math.sqrt(x)</li>
+<li>四舍五入：Math.round(x)</li>
+<li>求最值：Math.max(a,b,c…)和Math.min(a,b,c…),参数不限。</li>
+</ol>
+</blockquote>
+<p><img src="https://pic.downk.cc/item/5eae63f8c2a9a83be57fc1c9.jpg" alt></p>
+<h1 id="Date类"><a href="#Date类" class="headerlink" title="Date类"></a>Date类</h1><p><img src="https://pic.downk.cc/item/5eae647bc2a9a83be58028e3.jpg" alt></p>
+<p>首先定义一个时间：var x=new Date()；</p>
+<blockquote>
+<ol>
+<li>x.getFullYear(), 返回x对应的年份。</li>
+<li>x.setFullYear(year, month, day)，设置年份，month和day可选。</li>
+<li>x.getMonth(), 返回x的月份</li>
+<li>x.setMonth(month, day), 设置月份，day可选。</li>
+<li>x.getDate()，返回x在一个月中的第几天。</li>
+<li>x.getDay(), 返回x在一周的第几天。</li>
+<li>x.setDate(day), 设置一个月的第几天。</li>
+<li>x.toString()，将日期转为字符串。</li>
+</ol>
+</blockquote>
+<p><img src="https://pic.downk.cc/item/5eae65c0c2a9a83be581379f.jpg" alt></p>
+<h1 id="捕获和处理错误"><a href="#捕获和处理错误" class="headerlink" title="捕获和处理错误"></a>捕获和处理错误</h1><p>JS的捕获错误其实跟其他语言类似。也是用try-catch,throw。如：</p>
+<pre><code>try{
+    ...
+}catch(err){
+    console.log(err.message);    //通过使用err.message返回错误信息。
+}</code></pre><p>但是这个错误信息是原本就被定义了的，如果使用自定义的错误，那么需要new Error(“错误信息…”)，而且是使用throw抛出的。如：</p>
+<pre><code>try{
+    ...
+    throw new Error(&quot;错误&quot;);
+}catch(err){
+    console.log(err.message);    //通过使用err.message返回自定义的错误信息。
+}</code></pre><h1 id="DOM"><a href="#DOM" class="headerlink" title="DOM"></a>DOM</h1><p>DOM是一个文档对象模型，组成文档的对象通过树形结构连接在一起，表示层次关系。文档元素就是一个标签以及之间的内容，对应一个对象。所以节点树就是HTML的元素的结构。根节点是html标签，然后是head、body标签…如果要使用js去对文档元素进行操作，首先就得获取到这个文档元素。</p>
+<h2 id="获取文档元素"><a href="#获取文档元素" class="headerlink" title="获取文档元素"></a>获取文档元素</h2><blockquote>
+<ol>
+<li>通过id。document.getElementById(“”). innerText是开始标签与闭合标签之间的内容。</li>
+<li>通过类名。var s = document.getElementsByClassName(“”). 注意同一个类名的标签不唯一。因此返回的是一个数组，需要使用s[0],s[1]…获取到对应的元素。</li>
+<li>通过标签名。var s = docuemnt.getElementsByTagName(“div”). 同样返回的是数组。</li>
+<li>通过document.querySelector(“.类名”), 这个需要满足有类名，而且这个类有css样式，所以才会是.类名。而且只返回第一个元素。需要用querySelectorAll()返回所有匹配的元素。</li>
+</ol>
+</blockquote>
+<h2 id="节点树的操作"><a href="#节点树的操作" class="headerlink" title="节点树的操作"></a>节点树的操作</h2><p>首先获取一个元素节点：var s = document.getElementById(“”);</p>
+<blockquote>
+<ol>
+<li>获取第一个子节点。var s1 = s.firstElementChild; </li>
+<li>获取最后一个子节点：var s2 = s.lastElementChild;</li>
+<li>获取前一个兄弟节点：var s3 = s2.previousElementSibling; 当然第一个节点没有前一个兄弟节点。</li>
+<li>获取后一个兄弟节点：var s4 = s1.nextElementSibling; 当然最后一个节点没有兄弟节点。</li>
+<li>子节点列表：children,是一个数组，需要使用：s.children[0]…获取它的长度：s.children.length;</li>
+</ol>
+</blockquote>
+<h2 id="获取和设置属性"><a href="#获取和设置属性" class="headerlink" title="获取和设置属性"></a>获取和设置属性</h2><p>有两种方法。</p>
+<blockquote>
+<ol>
+<li>通过使用: s.属性名，返回的是这个属性对应的值（数值或者字符串等）。可以用s.属性名=xxx，直接赋值。</li>
+<li>使用getAttribute(), 如：s.getAttribute(“属性名”). 返回的是字符串。相反，可以用s.setAttribute(“属性名”,”属性值”).</li>
+</ol>
+</blockquote>
+<p>需要注意，如果属性名是class等，不能直接用s.class, 用s.className, 而可以直接使用：s.getAttribute(“class”)</p>
+<h2 id="节点的操作"><a href="#节点的操作" class="headerlink" title="节点的操作"></a>节点的操作</h2><p>建立在父节点与子节点的基础上。</p>
+<blockquote>
+<ol>
+<li>创建节点：document.createElement(“a”),a是超链接标签名。</li>
+<li>插入节点：一：插入到最后一个子节点中。node1.appendChild(node)。二：插入到某个节点前面。父节点.insertBefore(node1,node2)，将node1插进父节点的子节点中，并且排在node2前面。  </li>
+<li>删除节点。父节点.removeChild(子节点)。</li>
+<li>替换节点。父节点.replaceChild(a,b)。将a替换掉b节点。</li>
+</ol>
+</blockquote>
+
+    </div>
+    
+    <div class="reward" ontouchstart>
+    <div class="reward-wrap">赏
+        <div class="reward-box">
+            
+            <span class="reward-type">
+                <img class="alipay" src="/img/alipay.jpg"><b>支付宝打赏</b>
+            </span>
+            
+            
+            <span class="reward-type">
+                <img class="wechat" src="/img/wechat.jpg"><b>微信打赏</b>
+            </span>
+            
+        </div>
+    </div>
+    <p class="reward-tip">
+        赞赏是不耍流氓的鼓励
+    </p>
+</div>
+    
+    <div class="post-footer">
+        <div>
+            
+            转载声明：
+            商业转载请联系作者获得授权,非商业转载请注明出处 © <a href="ggy.44pp.vip" target="_blank">ggy</a>
+            
+            
+        </div>
+        <div>
+            
+        </div>
+    </div>
+</article>
+<div class="article-nav prev-next-wrap clearfix">
+    
+    <a href="/2020/05/05/Js%E5%AD%A6%E4%B9%A0%EF%BC%88%E4%BA%94%EF%BC%89/" class="pre-post btn btn-default" title='Js学习（五）'>
+        <i class="fa fa-angle-left fa-fw"></i><span class="hidden-lg">上一篇</span>
+        <span class="hidden-xs">
+            Js学习（五）</span>
+    </a>
+    
+    
+    <a href="/2020/05/02/Js%E5%AD%A6%E4%B9%A0%EF%BC%88%E4%B8%89%EF%BC%89/" class="next-post btn btn-default" title='Js学习（三）'>
+        <span class="hidden-lg">下一篇</span>
+        <span class="hidden-xs">
+            Js学习（三）</span><i class="fa fa-angle-right fa-fw"></i>
+    </a>
+    
+</div>
+
+<div id="comments">
+    
+<div id="lv-container" data-id="city" data-uid="MTAyMC80ODM1Ni8yNDg1MA==">
+    <script type="text/javascript">
+    (function(d, s) {
+        var j, e = d.getElementsByTagName(s)[0];
+        if (typeof LivereTower === 'function') { return; }
+        j = d.createElement(s);
+        j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+        j.async = true;
+        e.parentNode.insertBefore(j, e);
+    })(document, 'script');
+    </script>
+</div>
+
+</div>
+
+                </main>
+                
+                    <aside id="article-toc" role="navigation" class="col-md-4">
+    <div class="widget">
+        <h3 class="title">
+            文章目录
+        </h3>
+        
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Math类"><span class="toc-text">Math类</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Date类"><span class="toc-text">Date类</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#捕获和处理错误"><span class="toc-text">捕获和处理错误</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#DOM"><span class="toc-text">DOM</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#获取文档元素"><span class="toc-text">获取文档元素</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#节点树的操作"><span class="toc-text">节点树的操作</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#获取和设置属性"><span class="toc-text">获取和设置属性</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#节点的操作"><span class="toc-text">节点的操作</span></a></li></ol></li></ol>
+        
+    </div>
+</aside>
+                
+            </div>
+        </div>
+    </section>
+    <footer class="main-footer">
+    <div class="container">
+        <div class="row">
+        </div>
+    </div>
+</footer>
+<a id="back-to-top" class="icon-btn hide">
+    <i class="fa fa-chevron-up"></i>
+</a>
+    <div class="copyright">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="busuanzi">
+    
+    访问量:
+    <strong id="busuanzi_value_site_pv">
+        <i class="fa fa-spinner fa-spin"></i>
+    </strong>
+    &nbsp; | &nbsp;
+    访客数:
+    <strong id="busuanzi_value_site_uv">
+        <i class="fa fa-spinner fa-spin"></i>
+    </strong>
+    
+</div>
+            </div>
+            <div class="col-sm-12">
+                <span>Copyright &copy;
+                    2020
+                    
+                </span> |
+                <span>
+                    Powered by <a href="//hexo.io" class="copyright-links" target="_blank" rel="nofollow">Hexo</a>
+                </span> |
+                <span>
+                    Theme by <a href="//github.com/shenliyang/hexo-theme-snippet.git" class="copyright-links" target="_blank" rel="nofollow">Snippet</a>
+                </span>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<script src="/assets/tagcanvas.min.js?rev=2.9.js"></script>
+
+<script>
+var tagOption = {
+    textColour: '#444', // 字体颜色
+    outlineMethod: 'block', // 选中模式
+    outlineColour: '#FFDAB9', // 选中模式的颜色
+    interval: 30 || 30, // 动画帧之间的时间间隔，值越大，转动幅度越大
+    textHeight: 13,
+    outlineRadius: 3,
+    freezeActive: true || '', // 选中的标签是否继续滚动
+    frontSelect: true || '', // 不选标签云后部的标签
+    initial: [0.1, -0.1],
+    depth: 0.5,
+    decel: 0.95,
+    maxSpeed: 0.03,
+    reverse: true || '', // 是否反向触发
+    fadeIn: 500, // 进入动画时间
+    wheelZoom: false || '' // 是否启用鼠标滚轮
+}
+TagCanvas.Start('tag-cloud-3d', '', tagOption);
+</script>
+
+
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+<script src="/js/app.js?rev=@@hash.js"></script>
+
+
+<!-- 雪花特效 -->
+<script type="text/javascript" src="http://libs.baidu.com/jquery/1.8.3/jquery.js"></script>
+<script type="text/javascript" src="http://libs.baidu.com/jquery/1.8.3/jquery.min.js"></script>
+<script type="text/javascript" src="\js\snow.js"></script>
+
+<canvas class="fireworks" style="position: fixed;left: 0;top: 0;z-index: 1; pointer-events: none;" ></canvas> 
+<script type="text/javascript" src="//cdn.bootcss.com/animejs/2.2.0/anime.min.js"></script> 
+<script type="text/javascript" src="/js/fireworks.js"></script>
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"model":{"jsonPath":"live2d-widget-model-haruto"},"display":{"position":"right","width":150,"height":300},"mobile":{"show":false},"log":false,"pluginJsPath":"lib/","pluginModelPath":"assets/","pluginRootPath":"live2dw/","tagMode":false});</script></body>
+</html>

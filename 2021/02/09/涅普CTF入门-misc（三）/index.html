@@ -1,0 +1,464 @@
+<head>
+<script src="https://cdn.jsdelivr.net/npm/jquery/dist/jquery.min.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome/css/font-awesome.min.css">
+<script src="https://cdn.jsdelivr.net/gh/stevenjoezhang/live2d-widget/autoload.js"></script>
+</head>
+
+<!DOCTYPE HTML>
+<html lang="zh-CN">
+
+<head>
+    <!--Setting-->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+    <meta http-equiv="Cache-Control" content="no-siteapp">
+    <meta http-equiv="Cache-Control" content="no-transform">
+    <meta name="renderer" content="webkit|ie-comp|ie-stand">
+    <meta name="apple-mobile-web-app-capable" content="ggy的个人博客">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="format-detection" content="telephone=no,email=no,adress=no">
+    <meta name="browsermode" content="application">
+    <meta name="screen-orientation" content="portrait">
+    <meta name="theme-version" content="1.2.3">
+    <meta name="root" content="/">
+    <link rel="dns-prefetch" href="https://ggyggy666.github.io">
+    <!--SEO-->
+
+<meta name="keywords" content="涅普CTF入门-misc（三）" />
+
+
+<meta name="description" content="今天学习第三课——流量分析。
+互联网五层模型应用层——传输层——网络层——链路层——物理层。
+WireShark的基本使用
+首先打开Wireshark，会查找本地接口。
+
+
+
+​    选择WL..." />
+
+
+<meta name="robots" content="all" />
+<meta name="google" content="all" />
+<meta name="googlebot" content="all" />
+<meta name="verify" content="all" />
+    <!--Title-->
+
+<title>
+    
+    涅普CTF入门-misc（三） |
+    
+    ggy的个人博客
+</title>
+
+<link rel="alternate" href="/atom.xml" title="ggy的个人博客" type="application/atom+xml">
+
+
+<link rel="icon" href="/favicon.ico">
+
+    
+
+
+<link rel="stylesheet" href="/css/bootstrap.min.css?rev=3.3.7.css">
+<link rel="stylesheet" href="/css/font-awesome.min.css?rev=4.7.0.css">
+<link rel="stylesheet" href="/css/style.css?rev=@@hash.css">
+
+    
+<div class="hide">
+    <script type="text/javascript">
+    var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+    document.write(unescape("%3Cspan class='cnzz_stat_icon_1263868967 hide' %3E%3Cscript%20src%3D%22https%3A%2F%2Fs95.cnzz.com%2Fz_stat.php%3Fweb_id%3D1272564536%22%3E%3C%2Fscript%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s19.cnzz.com/z_stat.php%3Fid%3D1263868967%26show%3Dpic1' type='text/javascript'%3E%3C/script%3E"));
+    </script>
+</div>
+
+
+
+
+    
+
+<meta name="generator" content="Hexo 4.2.0"></head>
+<!--[if lte IE 8]>
+<style>
+    html{ font-size: 1em }
+</style>
+<![endif]-->
+<!--[if lte IE 9]>
+<div style="ie">你使用的浏览器版本过低，为了你更好的阅读体验，请更新浏览器的版本或者使用其他现代浏览器，比如Chrome、Firefox、Safari等。</div>
+<![endif]-->
+<body>
+    <header class="main-header"  style="background-image:url(
+    https://pic.downk.cc/item/5e3816b82fb38b8c3c8791f9.jpg)"
+     >
+    <div class="main-header-box">
+        <a class="header-avatar" href="/" title='ggy'>
+            <img src="/img/avatar.jpg" alt="logo头像" class="img-responsive center-block">
+        </a>
+        <div class="branding">
+            <!--<h2 class="text-hide">Snippet主题,从未如此简单有趣</h2>-->
+            
+            <h2>
+                欢迎来到ggy的个人网站
+            </h2>
+            
+        </div>
+    </div>
+</header>
+    <nav class="main-navigation">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="navbar-header"><span class="nav-toggle-button collapsed pull-right" data-toggle="collapse" data-target="#main-menu" id="mnav">
+                        <span class="sr-only"></span>
+                        <i class="fa fa-bars"></i>
+                    </span>
+                    <a class="navbar-brand" href="https://ggyggy666.github.io">
+                        ggy的个人博客</a>
+                </div>
+                <div class="collapse navbar-collapse" id="main-menu">
+                    <ul class="menu">
+                        
+                        <li role="presentation" class="text-center">
+                            <a href="/"><i class="fa "></i>
+                                首页</a>
+                        </li>
+                        
+                        <li role="presentation" class="text-center">
+                            <a href="/categories/web安全/"><i class="fa "></i>
+                                web安全</a>
+                        </li>
+                        
+                        <li role="presentation" class="text-center">
+                            <a href="/categories/python工具/"><i class="fa "></i>
+                                python工具</a>
+                        </li>
+                        
+                        <li role="presentation" class="text-center">
+                            <a href="/categories/密码学/"><i class="fa "></i>
+                                密码学</a>
+                        </li>
+                        
+                        <li role="presentation" class="text-center">
+                            <a href="/archives/"><i class="fa "></i>
+                                时间轴</a>
+                        </li>
+                        
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</nav>
+    <section class="content-wrap">
+        <div class="container">
+            <div class="row">
+                <main class="col-md-8 main-content m-post">
+                    <p id="process"></p>
+<article class="post">
+    <div class="post-head">
+        <h1 id="涅普CTF入门-misc（三）">
+            
+            涅普CTF入门-misc（三）
+            
+        </h1>
+        <div class="post-meta">
+    
+    <span class="categories-meta fa-wrap">
+        <i class="fa fa-folder-open-o"></i>
+        <a class="category-link" href="/categories/CTF%E5%85%A5%E9%97%A8/">CTF入门</a>
+    </span>
+    
+    
+    <span class="fa-wrap">
+        <i class="fa fa-tags"></i>
+        <span class="tags-meta">
+            
+            <a class="tag-link" href="/tags/%E6%B6%85%E6%99%AECTF%E5%85%A5%E9%97%A8-misc%EF%BC%88%E4%B8%89%EF%BC%89/" rel="tag">涅普CTF入门-misc（三）</a>
+            
+        </span>
+    </span>
+    
+    
+    
+    <span class="fa-wrap">
+        <i class="fa fa-clock-o"></i>
+        <span class="date-meta">
+            2021/02/09</span>
+    </span>
+    
+    <span class="fa-wrap">
+        <i class="fa fa-eye"></i>
+        <span id="busuanzi_value_page_pv"></span>
+    </span>
+    
+    
+</div>
+        
+        
+    </div>
+    
+    <div class="post-body post-content">
+        <p>今天学习第三课——流量分析。</p>
+<h1 id="互联网五层模型"><a href="#互联网五层模型" class="headerlink" title="互联网五层模型"></a>互联网五层模型</h1><p>应用层——传输层——网络层——链路层——物理层。</p>
+<h1 id="WireShark的基本使用"><a href="#WireShark的基本使用" class="headerlink" title="WireShark的基本使用"></a>WireShark的基本使用</h1><ol>
+<li><p>首先打开Wireshark，会查找本地接口。</p>
+<p><img src="https://i.loli.net/2021/02/09/FEQdLJfCP3r2vsX.png" alt="image-20210209185805188"></p>
+</li>
+</ol>
+<p>​    选择WLAN点击，就能收到一堆流量包。</p>
+<ol start="2">
+<li><p>访问一个http网站：<a href="http://zj.gsxt.gov.cn/，可以发现导航栏中会显示不安全。在Wireshark中，过滤器那栏输入http，表示只显示http请求的流量包。" target="_blank" rel="noopener">http://zj.gsxt.gov.cn/，可以发现导航栏中会显示不安全。在Wireshark中，过滤器那栏输入http，表示只显示http请求的流量包。</a></p>
+<p><img src="https://i.loli.net/2021/02/09/67aFXCSvWyPcgqx.png" alt="image-20210209190205889"></p>
+<p>查看text/html的包，这就是返回包。</p>
+<p><img src="https://i.loli.net/2021/02/09/rP51TFqmyBQdn7g.png" alt="image-20210209190623140"></p>
+</li>
+<li><p>访问一个https网站：<a href="https://etax.zhejiang.chinatax.gov.cn/，导航栏显示一把锁。那么http和https有什么区别呢？Wireshark过滤器输入：http" target="_blank" rel="noopener">https://etax.zhejiang.chinatax.gov.cn/，导航栏显示一把锁。那么http和https有什么区别呢？Wireshark过滤器输入：http</a> and http.request.uri contain “index.html”, 再去访问一遍https网站，发现没有index.html访问路径的流量包，访问http网站，显示了流量包。（过滤器是http的当然没有https的咯。。）</p>
+<p><img src="https://i.loli.net/2021/02/09/T9oVfwix3a5UqQp.png" alt="image-20210209191127467"></p>
+</li>
+<li><p>查看https的需要输入tls, 显示出来的是加密过的东西。</p>
+<p><img src="https://i.loli.net/2021/02/09/ugsOiFbyJa3HERl.png" alt="image-20210209191616741"></p>
+</li>
+<li><p>导出对象，过滤器输入http，停止捕获，点击文件——导出对象——选择http，之后保存就可以了。或者选定一个TCP数据包，右键点击追踪流，选择TCP流，之后弹出的框中选择原始数据，另存为文件。使用010打开即可。</p>
+</li>
+<li><p>保存整个流量，结尾是pcapng。</p>
+</li>
+</ol>
+<h1 id="终端互相通信"><a href="#终端互相通信" class="headerlink" title="终端互相通信"></a>终端互相通信</h1><h2 id="两台电脑直接相连"><a href="#两台电脑直接相连" class="headerlink" title="两台电脑直接相连"></a>两台电脑直接相连</h2><p><img src="https://i.loli.net/2021/02/09/LqykD6oUcK75fOb.png" alt="image-20210209191927226"></p>
+<p>给PC0和PC1分配各自的静态IP，然后在PC0的终端中去pingPC1。</p>
+<p><img src="https://i.loli.net/2021/02/09/J97MRunbAQlWmzc.png" alt="image-20210209192128893"></p>
+<p>直接ping通了。</p>
+<h2 id="多台电脑相连"><a href="#多台电脑相连" class="headerlink" title="多台电脑相连"></a>多台电脑相连</h2><p>两台相同的电脑相连，只需要一条虚线连接。但是多台电脑相连就不行了，因为电脑那里端口有限，如果每连接一个终端就需要增加一个端口，这显然不可能。因此需要一个中介。</p>
+<h3 id="集线器"><a href="#集线器" class="headerlink" title="集线器"></a>集线器</h3><p>电脑与集线器相连，由于是不同设备，就需要直实线了。给新增的PC2配置IP：192.168.1.102，在PC0上ping一下：</p>
+<p><img src="https://i.loli.net/2021/02/09/o97SXn4eUgVp6Hb.png" alt="image-20210209192833113"></p>
+<p>但是集线器有一个缺点。PC0向另一个PC发送消息时集线器是向其他所有PC发送的，如果这时有一个黑客连进来了，就会监听到，很不安全。</p>
+<h3 id="交换机"><a href="#交换机" class="headerlink" title="交换机"></a>交换机</h3><p>与集线器类似，都是实线连接。</p>
+<p><img src="https://i.loli.net/2021/02/09/xkDvB4nWCNAafdO.png" alt="image-20210209193158257"></p>
+<p>交换机就比较安全了。因为两个终端通信时，不仅需要IP，还需要一个MAC地址。交换机根据MAC地址发送到对应的目的端口，这样就不会发送给其它人了。而IP-MAC地址表就是ARP表。如果想要发送给多个人，就可以将目的MAC地址修改成00即广播地址。ARP表中没有IP对应的目的MAC地址，需要启动ARP寻址。</p>
+<p><img src="https://i.loli.net/2021/02/09/1gwOjLWFMTq3lEf.png" alt="image-20210209193606167"></p>
+<p>三次握手：SYN——SYN，ACK——ACK</p>
+<p><img src="https://i.loli.net/2021/02/09/aBJzL7GxkQ1XRny.png" alt="image-20210209194333634"></p>
+<h1 id="CTF题目"><a href="#CTF题目" class="headerlink" title="CTF题目"></a>CTF题目</h1><h2 id="上课认真听了吗"><a href="#上课认真听了吗" class="headerlink" title="上课认真听了吗"></a>上课认真听了吗</h2><p>题目显示是三种流量中查找flag。直接按照师傅说的方法来。</p>
+<ol>
+<li><p>下载附件打开，点击查找那个图标。选择“分组字节流”，“字符串”，查找flag{</p>
+<p><img src="https://i.loli.net/2021/02/09/ahflszrxBOYwAXm.png" alt="image-20210209210132208"></p>
+</li>
+<li><p>不停点击右边的查找就能找到几个flag了，拼接即可。</p>
+<p><img src="https://i.loli.net/2021/02/09/JvkuLR2iNtOx4Zc.png" alt="image-20210209210247067"></p>
+</li>
+</ol>
+<h2 id="我是间谍"><a href="#我是间谍" class="headerlink" title="我是间谍"></a>我是间谍</h2><ol>
+<li><p>下载附件imaspy.exe, Wireshark抓包WLAN，然后运行exe文件，即可捕获到流量。</p>
+</li>
+<li><p>按照上面的方法查找flag{即可拿到flag。</p>
+<p><img src="https://i.loli.net/2021/02/09/GkSsCK4Rjr6LEb1.png" alt="image-20210209212609026"></p>
+</li>
+</ol>
+<h2 id="简单流量"><a href="#简单流量" class="headerlink" title="简单流量"></a>简单流量</h2><ol>
+<li><p>下载附件，打开流量包后，Wireshark中导入SSL密钥：编辑——首选项——Protocol中选择TLS，然后导入sslkey.log</p>
+<p><img src="https://i.loli.net/2021/02/09/prEePsDjaVnZ2mH.png" alt="image-20210209214712251"></p>
+</li>
+<li><p>还是搜索字符串，但是要注意，必须是字符分组而不是字符字节流了。</p>
+<p><img src="https://i.loli.net/2021/02/09/tmcEwQCe5ZJB7FI.png" alt="image-20210209214844799"></p>
+</li>
+<li><p>找到之后，将其URL解码就行了。</p>
+<p><img src="https://i.loli.net/2021/02/09/ta4iWHGjTCNrs9Z.png" alt="image-20210209214945700"></p>
+</li>
+</ol>
+<h2 id="监听消息"><a href="#监听消息" class="headerlink" title="监听消息"></a>监听消息</h2><ol>
+<li><p>下载附件，打开，使用Wireshark打开流量包。</p>
+<p><img src="https://i.loli.net/2021/02/09/3UZvuV4dY2zgOM5.png" alt="image-20210209223855539"></p>
+</li>
+<li><p>尝试搜索flag无果。右键追踪流，发现一堆十六进制的字符。</p>
+<p><img src="/2021/02/09/%C2%96%E6%B6%85%E6%99%AECTF%E5%85%A5%E9%97%A8-misc%EF%BC%88%E4%B8%89%EF%BC%89/C:%5CUsers%5CASUS%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5Cimage-20210209224006300.png" alt="image-20210209224006300"></p>
+</li>
+<li><p>将这些字符串复制到010中，发现是PNG格式的</p>
+<p><img src="https://i.loli.net/2021/02/09/IB5xHpNtqjQioO4.png" alt="image-20210209224054086"></p>
+</li>
+<li><p>但是使用PNG模板时报错了，另存为PNG图片也不乏显示。应该是校验和不对，也就是图片的宽高不对导致校验和不对。因此使用脚本爆破高。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">import os</span><br><span class="line">import binascii</span><br><span class="line">import struct</span><br><span class="line">misc &#x3D; open(&quot;listen.png&quot;,&quot;rb&quot;).read()</span><br><span class="line">#print(misc[0x0c:0x0f+1])</span><br><span class="line"># 爆破高</span><br><span class="line"></span><br><span class="line">crc32_bytes &#x3D; misc[0x1d:0x20+1]# 读出bytes</span><br><span class="line">crc32_hex_eval &#x3D; eval(&#39;0x&#39; + crc32_bytes.hex())#bytes串 -&gt; hex串  -&gt;  值</span><br><span class="line">print(crc32_hex_eval)</span><br><span class="line">for i in range(4096):</span><br><span class="line">    data &#x3D; misc[0x0c:0x0f+1] + misc[0x10:0x13+1] + struct.pack(&#39;&gt;i&#39;,i)+ misc[0x18:0x1c+1]  #IHDR数据</span><br><span class="line">    crc32 &#x3D; binascii.crc32(data) &amp; 0xffffffff</span><br><span class="line">    if crc32 &#x3D;&#x3D; crc32_hex_eval : #IHDR块的crc32值</span><br><span class="line">        print(i)</span><br><span class="line">        print(&quot;height_hex:&quot;+ hex(i))</span><br></pre></td></tr></table></figure>
+
+<p>最终得到高是100，十六进制就是64，因此010中修改高为64.</p>
+<p><img src="https://i.loli.net/2021/02/09/WT5szBUQlDuF6ei.png" alt="image-20210209224545192"></p>
+</li>
+<li><p>保存成xxx.png之后，打开文件，发现是一张残缺的二维码。</p>
+<p><img src="https://i.loli.net/2021/02/09/vrcy3HKCUd94bIA.png" alt="image-20210209224626750"></p>
+</li>
+<li><p>打开网站：<a href="https://merricx.github.io/qrazybox/，点击页面的Editor" target="_blank" rel="noopener">https://merricx.github.io/qrazybox/，点击页面的Editor</a> Mode</p>
+<p><img src="https://i.loli.net/2021/02/09/afRBA6w5VNeHpIQ.png" alt="image-20210209224718618"></p>
+<p>将右上角的框框截下来保存成code.png。</p>
+</li>
+<li><p>打开PS，新建文件，加载进来这两张图片(xxx.png和code.png)，按照大小组装好</p>
+<p><img src="https://i.loli.net/2021/02/09/rdUApzielj81m47.png" alt="image-20210209224857923"></p>
+<p>扫一扫即可。</p>
+</li>
+</ol>
+
+    </div>
+    
+    <div class="reward" ontouchstart>
+    <div class="reward-wrap">赏
+        <div class="reward-box">
+            
+            <span class="reward-type">
+                <img class="alipay" src="/img/alipay.jpg"><b>支付宝打赏</b>
+            </span>
+            
+            
+            <span class="reward-type">
+                <img class="wechat" src="/img/wechat.jpg"><b>微信打赏</b>
+            </span>
+            
+        </div>
+    </div>
+    <p class="reward-tip">
+        赞赏是不耍流氓的鼓励
+    </p>
+</div>
+    
+    <div class="post-footer">
+        <div>
+            
+            转载声明：
+            商业转载请联系作者获得授权,非商业转载请注明出处 © <a href="ggy.44pp.vip" target="_blank">ggy</a>
+            
+            
+        </div>
+        <div>
+            
+        </div>
+    </div>
+</article>
+<div class="article-nav prev-next-wrap clearfix">
+    
+    <a href="/2021/02/15/README/" class="pre-post btn btn-default" title='README'>
+        <i class="fa fa-angle-left fa-fw"></i><span class="hidden-lg">上一篇</span>
+        <span class="hidden-xs">
+            README</span>
+    </a>
+    
+    
+    <a href="/2021/02/03/%C2%96%E6%B6%85%E6%99%AECTF%E5%85%A5%E9%97%A8-misc%EF%BC%88%E4%BA%8C%EF%BC%89/" class="next-post btn btn-default" title='涅普CTF入门-misc（二）'>
+        <span class="hidden-lg">下一篇</span>
+        <span class="hidden-xs">
+            涅普CTF入门-misc（二）</span><i class="fa fa-angle-right fa-fw"></i>
+    </a>
+    
+</div>
+
+<div id="comments">
+    
+<div id="lv-container" data-id="city" data-uid="MTAyMC80ODM1Ni8yNDg1MA==">
+    <script type="text/javascript">
+    (function(d, s) {
+        var j, e = d.getElementsByTagName(s)[0];
+        if (typeof LivereTower === 'function') { return; }
+        j = d.createElement(s);
+        j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+        j.async = true;
+        e.parentNode.insertBefore(j, e);
+    })(document, 'script');
+    </script>
+</div>
+
+</div>
+
+                </main>
+                
+                    <aside id="article-toc" role="navigation" class="col-md-4">
+    <div class="widget">
+        <h3 class="title">
+            文章目录
+        </h3>
+        
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#互联网五层模型"><span class="toc-text">互联网五层模型</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#WireShark的基本使用"><span class="toc-text">WireShark的基本使用</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#终端互相通信"><span class="toc-text">终端互相通信</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#两台电脑直接相连"><span class="toc-text">两台电脑直接相连</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#多台电脑相连"><span class="toc-text">多台电脑相连</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#集线器"><span class="toc-text">集线器</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#交换机"><span class="toc-text">交换机</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#CTF题目"><span class="toc-text">CTF题目</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#上课认真听了吗"><span class="toc-text">上课认真听了吗</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#我是间谍"><span class="toc-text">我是间谍</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#简单流量"><span class="toc-text">简单流量</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#监听消息"><span class="toc-text">监听消息</span></a></li></ol></li></ol>
+        
+    </div>
+</aside>
+                
+            </div>
+        </div>
+    </section>
+    <footer class="main-footer">
+    <div class="container">
+        <div class="row">
+        </div>
+    </div>
+</footer>
+<a id="back-to-top" class="icon-btn hide">
+    <i class="fa fa-chevron-up"></i>
+</a>
+    <div class="copyright">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="busuanzi">
+    
+    访问量:
+    <strong id="busuanzi_value_site_pv">
+        <i class="fa fa-spinner fa-spin"></i>
+    </strong>
+    &nbsp; | &nbsp;
+    访客数:
+    <strong id="busuanzi_value_site_uv">
+        <i class="fa fa-spinner fa-spin"></i>
+    </strong>
+    
+</div>
+            </div>
+            <div class="col-sm-12">
+                <span>Copyright &copy;
+                    2020
+                    
+                </span> |
+                <span>
+                    Powered by <a href="//hexo.io" class="copyright-links" target="_blank" rel="nofollow">Hexo</a>
+                </span> |
+                <span>
+                    Theme by <a href="//github.com/shenliyang/hexo-theme-snippet.git" class="copyright-links" target="_blank" rel="nofollow">Snippet</a>
+                </span>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<script src="/assets/tagcanvas.min.js?rev=2.9.js"></script>
+
+<script>
+var tagOption = {
+    textColour: '#444', // 字体颜色
+    outlineMethod: 'block', // 选中模式
+    outlineColour: '#FFDAB9', // 选中模式的颜色
+    interval: 30 || 30, // 动画帧之间的时间间隔，值越大，转动幅度越大
+    textHeight: 13,
+    outlineRadius: 3,
+    freezeActive: true || '', // 选中的标签是否继续滚动
+    frontSelect: true || '', // 不选标签云后部的标签
+    initial: [0.1, -0.1],
+    depth: 0.5,
+    decel: 0.95,
+    maxSpeed: 0.03,
+    reverse: true || '', // 是否反向触发
+    fadeIn: 500, // 进入动画时间
+    wheelZoom: false || '' // 是否启用鼠标滚轮
+}
+TagCanvas.Start('tag-cloud-3d', '', tagOption);
+</script>
+
+
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+<script src="/js/app.js?rev=@@hash.js"></script>
+
+
+<!-- 雪花特效 -->
+<script type="text/javascript" src="http://libs.baidu.com/jquery/1.8.3/jquery.js"></script>
+<script type="text/javascript" src="http://libs.baidu.com/jquery/1.8.3/jquery.min.js"></script>
+<script type="text/javascript" src="\js\snow.js"></script>
+
+<canvas class="fireworks" style="position: fixed;left: 0;top: 0;z-index: 1; pointer-events: none;" ></canvas> 
+<script type="text/javascript" src="//cdn.bootcss.com/animejs/2.2.0/anime.min.js"></script> 
+<script type="text/javascript" src="/js/fireworks.js"></script>
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"model":{"jsonPath":"live2d-widget-model-haruto"},"display":{"position":"right","width":150,"height":300},"mobile":{"show":false},"log":false,"pluginJsPath":"lib/","pluginModelPath":"assets/","pluginRootPath":"live2dw/","tagMode":false});</script></body>
+</html>

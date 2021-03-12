@@ -1,0 +1,440 @@
+<head>
+<script src="https://cdn.jsdelivr.net/npm/jquery/dist/jquery.min.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome/css/font-awesome.min.css">
+<script src="https://cdn.jsdelivr.net/gh/stevenjoezhang/live2d-widget/autoload.js"></script>
+</head>
+
+<!DOCTYPE HTML>
+<html lang="zh-CN">
+
+<head>
+    <!--Setting-->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+    <meta http-equiv="Cache-Control" content="no-siteapp">
+    <meta http-equiv="Cache-Control" content="no-transform">
+    <meta name="renderer" content="webkit|ie-comp|ie-stand">
+    <meta name="apple-mobile-web-app-capable" content="ggy的个人博客">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="format-detection" content="telephone=no,email=no,adress=no">
+    <meta name="browsermode" content="application">
+    <meta name="screen-orientation" content="portrait">
+    <meta name="theme-version" content="1.2.3">
+    <meta name="root" content="/">
+    <link rel="dns-prefetch" href="https://ggyggy666.github.io">
+    <!--SEO-->
+
+<meta name="keywords" content="涅普CTF入门-misc（二）" />
+
+
+<meta name="description" content="今天继续学习misc, 主要是各种编码。
+各种编码集合的文章：https://blog.csdn.net/dyw_666666/article/details/89973048
+常见进制二进制二..." />
+
+
+<meta name="robots" content="all" />
+<meta name="google" content="all" />
+<meta name="googlebot" content="all" />
+<meta name="verify" content="all" />
+    <!--Title-->
+
+<title>
+    
+    涅普CTF入门-misc（二） |
+    
+    ggy的个人博客
+</title>
+
+<link rel="alternate" href="/atom.xml" title="ggy的个人博客" type="application/atom+xml">
+
+
+<link rel="icon" href="/favicon.ico">
+
+    
+
+
+<link rel="stylesheet" href="/css/bootstrap.min.css?rev=3.3.7.css">
+<link rel="stylesheet" href="/css/font-awesome.min.css?rev=4.7.0.css">
+<link rel="stylesheet" href="/css/style.css?rev=@@hash.css">
+
+    
+<div class="hide">
+    <script type="text/javascript">
+    var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+    document.write(unescape("%3Cspan class='cnzz_stat_icon_1263868967 hide' %3E%3Cscript%20src%3D%22https%3A%2F%2Fs95.cnzz.com%2Fz_stat.php%3Fweb_id%3D1272564536%22%3E%3C%2Fscript%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s19.cnzz.com/z_stat.php%3Fid%3D1263868967%26show%3Dpic1' type='text/javascript'%3E%3C/script%3E"));
+    </script>
+</div>
+
+
+
+
+    
+
+<meta name="generator" content="Hexo 4.2.0"></head>
+<!--[if lte IE 8]>
+<style>
+    html{ font-size: 1em }
+</style>
+<![endif]-->
+<!--[if lte IE 9]>
+<div style="ie">你使用的浏览器版本过低，为了你更好的阅读体验，请更新浏览器的版本或者使用其他现代浏览器，比如Chrome、Firefox、Safari等。</div>
+<![endif]-->
+<body>
+    <header class="main-header"  style="background-image:url(
+    https://pic.downk.cc/item/5e3816b82fb38b8c3c8791f9.jpg)"
+     >
+    <div class="main-header-box">
+        <a class="header-avatar" href="/" title='ggy'>
+            <img src="/img/avatar.jpg" alt="logo头像" class="img-responsive center-block">
+        </a>
+        <div class="branding">
+            <!--<h2 class="text-hide">Snippet主题,从未如此简单有趣</h2>-->
+            
+            <h2>
+                欢迎来到ggy的个人网站
+            </h2>
+            
+        </div>
+    </div>
+</header>
+    <nav class="main-navigation">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="navbar-header"><span class="nav-toggle-button collapsed pull-right" data-toggle="collapse" data-target="#main-menu" id="mnav">
+                        <span class="sr-only"></span>
+                        <i class="fa fa-bars"></i>
+                    </span>
+                    <a class="navbar-brand" href="https://ggyggy666.github.io">
+                        ggy的个人博客</a>
+                </div>
+                <div class="collapse navbar-collapse" id="main-menu">
+                    <ul class="menu">
+                        
+                        <li role="presentation" class="text-center">
+                            <a href="/"><i class="fa "></i>
+                                首页</a>
+                        </li>
+                        
+                        <li role="presentation" class="text-center">
+                            <a href="/categories/web安全/"><i class="fa "></i>
+                                web安全</a>
+                        </li>
+                        
+                        <li role="presentation" class="text-center">
+                            <a href="/categories/python工具/"><i class="fa "></i>
+                                python工具</a>
+                        </li>
+                        
+                        <li role="presentation" class="text-center">
+                            <a href="/categories/密码学/"><i class="fa "></i>
+                                密码学</a>
+                        </li>
+                        
+                        <li role="presentation" class="text-center">
+                            <a href="/archives/"><i class="fa "></i>
+                                时间轴</a>
+                        </li>
+                        
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</nav>
+    <section class="content-wrap">
+        <div class="container">
+            <div class="row">
+                <main class="col-md-8 main-content m-post">
+                    <p id="process"></p>
+<article class="post">
+    <div class="post-head">
+        <h1 id="涅普CTF入门-misc（二）">
+            
+            涅普CTF入门-misc（二）
+            
+        </h1>
+        <div class="post-meta">
+    
+    <span class="categories-meta fa-wrap">
+        <i class="fa fa-folder-open-o"></i>
+        <a class="category-link" href="/categories/CTF%E5%85%A5%E9%97%A8/">CTF入门</a>
+    </span>
+    
+    
+    <span class="fa-wrap">
+        <i class="fa fa-tags"></i>
+        <span class="tags-meta">
+            
+            <a class="tag-link" href="/tags/%E6%B6%85%E6%99%AECTF%E5%85%A5%E9%97%A8-misc%EF%BC%88%E4%BA%8C%EF%BC%89/" rel="tag">涅普CTF入门-misc（二）</a>
+            
+        </span>
+    </span>
+    
+    
+    
+    <span class="fa-wrap">
+        <i class="fa fa-clock-o"></i>
+        <span class="date-meta">
+            2021/02/03</span>
+    </span>
+    
+    <span class="fa-wrap">
+        <i class="fa fa-eye"></i>
+        <span id="busuanzi_value_page_pv"></span>
+    </span>
+    
+    
+</div>
+        
+        
+    </div>
+    
+    <div class="post-body post-content">
+        <p>今天继续学习misc, 主要是各种编码。</p>
+<p>各种编码集合的文章：<a href="https://blog.csdn.net/dyw_666666/article/details/89973048" target="_blank" rel="noopener">https://blog.csdn.net/dyw_666666/article/details/89973048</a></p>
+<h1 id="常见进制"><a href="#常见进制" class="headerlink" title="常见进制"></a>常见进制</h1><h2 id="二进制"><a href="#二进制" class="headerlink" title="二进制"></a>二进制</h2><p><strong>二进制转ASCII码</strong></p>
+<p>01101110 01100101 01110000</p>
+<p>对应的ASCII码：nep</p>
+<p><strong>二进制转Morse码</strong></p>
+<p>二进制先转成ASCII码，得到.或者-, 就可以组合成Morse码</p>
+<p><img src="https://i.loli.net/2021/02/03/5wHgA7cQDYjbXp3.png" alt="image-20210203160344540"></p>
+<p>还可以直接使用CyberChef。</p>
+<p><strong>二进制转成二维码</strong></p>
+<p><img src="https://i.loli.net/2021/02/03/H2C8lWqG9RdsEok.png" alt="image-20210203160733605"></p>
+<p>将二进制字符串放到str中。然后根据这个字符串长度进行开方，放到MAX中。比如上图，625个数字，开方得到25，因此MAX=25.</p>
+<h2 id="二进制转hex十六进制"><a href="#二进制转hex十六进制" class="headerlink" title="二进制转hex十六进制"></a>二进制转hex十六进制</h2><ol>
+<li><p>下载bin.txt, 写一个python脚本</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">with open(&quot;bin.txt&quot;, &#39;r&#39;) as f:</span><br><span class="line">    for line in f.readlines():</span><br><span class="line">        print(hex(int(line, 2)))</span><br></pre></td></tr></table></figure>
+
+<p>就可以得到十六进制的字符串。</p>
+</li>
+<li><p>复制字符串，打开010，新建一个文件，选择hex, 然后使用Ctrl+Shift+V粘贴（必须要shift！），之后按F5，模板选择JPG，run，然后另存为图片bin.jfif</p>
+<p><img src="https://i.loli.net/2021/02/08/bx187BQSs9JnzOY.png" alt="image-20210208202750898"></p>
+</li>
+</ol>
+<h1 id="常见编码"><a href="#常见编码" class="headerlink" title="常见编码"></a>常见编码</h1><p><img src="https://i.loli.net/2021/02/03/ZGUwgASqCLoQIiX.png" alt="image-20210203161145334"></p>
+<h2 id="base编码"><a href="#base编码" class="headerlink" title="base编码"></a>base编码</h2><p>base64: 把3个8位的字节转化为4个6位的字节，之后在每6位字节前加上2个0，构成4个8位的。=是填充字符。</p>
+<p>base32：使用32个字符（A-Z和2-7）。末尾最多6个=</p>
+<p>base16：使用0-9和A-F。不会出现=。</p>
+<p>base36: 0-9和26个字母，不区分大小写。要么全大写，要么全小写。加密仅支持数字，解密仅支持字符串。</p>
+<p>base58：数字和字母，去掉了0和O，I和l（大写i和小写l）。58个</p>
+<p>base62: 26个字母大小写和0-9</p>
+<p>base91、base92等</p>
+<h3 id="base64还原成图片"><a href="#base64还原成图片" class="headerlink" title="base64还原成图片"></a>base64还原成图片</h3><p>将base64.txt里的东西复制下来，然后访问：<code>http://tool.chinaz.com/tools/imgtobase/</code>, 粘贴，还原即可得到一个二维码。扫一扫就能得到图片。</p>
+<h3 id="base编码转换"><a href="#base编码转换" class="headerlink" title="base编码转换"></a>base编码转换</h3><p>密文：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">LJWXQ2C2GN2EGTSIJZWFQ6SGPJMHUTTIMMZWW2DGKE6T2&#x3D;&#x3D;&#x3D;</span><br></pre></td></tr></table></figure>
+
+<p>打开网站：<code>https://www.qtool.net/baseencode</code></p>
+<p>将密文复制进去，先使用base32解码，得到：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ZmxhZ3tCNHNlXzFzXzNhc3khfQ&#x3D;&#x3D;</span><br></pre></td></tr></table></figure>
+
+<p>然后使用base64解码得到：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">flag&#123;B4se_1s_3asy!&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="Morse编码"><a href="#Morse编码" class="headerlink" title="Morse编码"></a>Morse编码</h2><p><img src="https://i.loli.net/2021/02/03/Qqruti1sXbd2Rzg.png" alt="image-20210203165953459"></p>
+<p><a href="https://www.bejson.com/enc/morse/" target="_blank" rel="noopener">https://www.bejson.com/enc/morse/</a></p>
+<h2 id="敲击码"><a href="#敲击码" class="headerlink" title="敲击码"></a>敲击码</h2><p><img src="https://i.loli.net/2021/02/03/UopVyCM7wqaL1Yl.png" alt></p>
+<h2 id="二维码"><a href="#二维码" class="headerlink" title="二维码"></a>二维码</h2><p><img src="https://i.loli.net/2021/02/03/FltawBEDbR7I5eC.png" alt="image-20210203163127799"></p>
+<p>补二维码可以用qrazybox</p>
+<p><a href="https://github.com/Merricx/qrazybox" target="_blank" rel="noopener">https://github.com/Merricx/qrazybox</a></p>
+<p>多张图片合成一张二维码可以使用PS：新建一个画布，将图片一个个拖进来。</p>
+<h2 id="Unicode编码"><a href="#Unicode编码" class="headerlink" title="Unicode编码"></a>Unicode编码</h2><p>密文：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">\u66\u6c\u61\u67\u7b\u57\u33\u6c\u63\u30\u6d\u65\u21\u7d</span><br></pre></td></tr></table></figure>
+
+<p>这是Unicode编码，\u后面的数字是ASCII码，是十六进制的，转换成十进制后对照ASCII码表即可得到flag。</p>
+<h2 id="encode"><a href="#encode" class="headerlink" title="encode"></a>encode</h2><p>明文都是：alert(1)</p>
+<p>aaencode: <a href="http://www.atoolbox.net/Tool.php?Id=703" target="_blank" rel="noopener">http://www.atoolbox.net/Tool.php?Id=703</a></p>
+<p><img src="https://i.loli.net/2021/02/03/MrHGDx3pJ6lAXTm.png" alt="image-20210203163932622"></p>
+<p>JS代码转成常用的网络表情，即颜文字js加密。</p>
+<p>jjencode: <a href="http://www.atoolbox.net/Tool.php?Id=704" target="_blank" rel="noopener">http://www.atoolbox.net/Tool.php?Id=704</a></p>
+<p><img src="https://i.loli.net/2021/02/03/8yrAnb7jZsEQ94K.png" alt="image-20210203164044945"></p>
+<p>uuencode: <a href="http://www.atoolbox.net/Tool.php?Id=731" target="_blank" rel="noopener">http://www.atoolbox.net/Tool.php?Id=731</a></p>
+<p><img src="https://i.loli.net/2021/02/03/TfA6IB81zojlEXM.png" alt="image-20210203164146108"></p>
+<p>jsfuck: 只有6个字符。<a href="https://www.sojson.com/jsfuck.html" target="_blank" rel="noopener">https://www.sojson.com/jsfuck.html</a></p>
+<p><img src="https://i.loli.net/2021/02/03/J3TYGL1RwISoupc.png" alt="image-20210203164238256"></p>
+<p>brainfuck 和 okk：<a href="https://www.splitbrain.org/services/ook" target="_blank" rel="noopener">https://www.splitbrain.org/services/ook</a></p>
+<p><img src="https://i.loli.net/2021/02/03/JYW3xPDy75BrKF1.png" alt="image-20210203164556965"></p>
+<p><img src="https://i.loli.net/2021/02/03/r24zbtDomXAIMTn.png" alt="image-20210203164608265"></p>
+<h1 id="zip伪加密"><a href="#zip伪加密" class="headerlink" title="zip伪加密"></a>zip伪加密</h1><p>参考这篇文章：<code>https://www.cnblogs.com/xishaonian/p/7713657.html</code></p>
+<p>将压缩文件zip1.zip下载下来，使用bandzip打开，发现里面有个flag.txt, 但是解压打开提示需要密码。将整个zip1.zip拖到010中打开。</p>
+<p><img src="https://i.loli.net/2021/02/08/j1RJaryDnF8IuGz.png" alt="image-20210208205607436"></p>
+<p>将09修改为00，保存后，解压打开flag.txt即可。</p>
+<p><img src="https://i.loli.net/2021/02/08/8qFRUZPT3pmJwOz.png" alt="image-20210208205736768"></p>
+<h1 id="古怪的编码"><a href="#古怪的编码" class="headerlink" title="古怪的编码"></a>古怪的编码</h1><h2 id="社会主义核心价值观"><a href="#社会主义核心价值观" class="headerlink" title="社会主义核心价值观"></a>社会主义核心价值观</h2><p><a href="http://www.atoolbox.net/Tool.php?Id=850" target="_blank" rel="noopener">http://www.atoolbox.net/Tool.php?Id=850</a></p>
+<h2 id="与佛论禅"><a href="#与佛论禅" class="headerlink" title="与佛论禅"></a>与佛论禅</h2><p><a href="http://www.keyfc.net/bbs/tools/tudoucode.aspx" target="_blank" rel="noopener">http://www.keyfc.net/bbs/tools/tudoucode.aspx</a></p>
+<h2 id="熊曰"><a href="#熊曰" class="headerlink" title="熊曰"></a>熊曰</h2><p><a href="http://hi.pcmoe.net/" target="_blank" rel="noopener">http://hi.pcmoe.net/</a></p>
+
+    </div>
+    
+    <div class="reward" ontouchstart>
+    <div class="reward-wrap">赏
+        <div class="reward-box">
+            
+            <span class="reward-type">
+                <img class="alipay" src="/img/alipay.jpg"><b>支付宝打赏</b>
+            </span>
+            
+            
+            <span class="reward-type">
+                <img class="wechat" src="/img/wechat.jpg"><b>微信打赏</b>
+            </span>
+            
+        </div>
+    </div>
+    <p class="reward-tip">
+        赞赏是不耍流氓的鼓励
+    </p>
+</div>
+    
+    <div class="post-footer">
+        <div>
+            
+            转载声明：
+            商业转载请联系作者获得授权,非商业转载请注明出处 © <a href="ggy.44pp.vip" target="_blank">ggy</a>
+            
+            
+        </div>
+        <div>
+            
+        </div>
+    </div>
+</article>
+<div class="article-nav prev-next-wrap clearfix">
+    
+    <a href="/2021/02/09/%C2%96%E6%B6%85%E6%99%AECTF%E5%85%A5%E9%97%A8-misc%EF%BC%88%E4%B8%89%EF%BC%89/" class="pre-post btn btn-default" title='涅普CTF入门-misc（三）'>
+        <i class="fa fa-angle-left fa-fw"></i><span class="hidden-lg">上一篇</span>
+        <span class="hidden-xs">
+            涅普CTF入门-misc（三）</span>
+    </a>
+    
+    
+    <a href="/2021/02/02/%E6%B6%85%E6%99%AECTF%E5%85%A5%E9%97%A8-misc/" class="next-post btn btn-default" title='涅普CTF入门-misc（一）'>
+        <span class="hidden-lg">下一篇</span>
+        <span class="hidden-xs">
+            涅普CTF入门-misc（一）</span><i class="fa fa-angle-right fa-fw"></i>
+    </a>
+    
+</div>
+
+<div id="comments">
+    
+<div id="lv-container" data-id="city" data-uid="MTAyMC80ODM1Ni8yNDg1MA==">
+    <script type="text/javascript">
+    (function(d, s) {
+        var j, e = d.getElementsByTagName(s)[0];
+        if (typeof LivereTower === 'function') { return; }
+        j = d.createElement(s);
+        j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+        j.async = true;
+        e.parentNode.insertBefore(j, e);
+    })(document, 'script');
+    </script>
+</div>
+
+</div>
+
+                </main>
+                
+                    <aside id="article-toc" role="navigation" class="col-md-4">
+    <div class="widget">
+        <h3 class="title">
+            文章目录
+        </h3>
+        
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#常见进制"><span class="toc-text">常见进制</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#二进制"><span class="toc-text">二进制</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#二进制转hex十六进制"><span class="toc-text">二进制转hex十六进制</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#常见编码"><span class="toc-text">常见编码</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#base编码"><span class="toc-text">base编码</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#base64还原成图片"><span class="toc-text">base64还原成图片</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#base编码转换"><span class="toc-text">base编码转换</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Morse编码"><span class="toc-text">Morse编码</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#敲击码"><span class="toc-text">敲击码</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#二维码"><span class="toc-text">二维码</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Unicode编码"><span class="toc-text">Unicode编码</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#encode"><span class="toc-text">encode</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#zip伪加密"><span class="toc-text">zip伪加密</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#古怪的编码"><span class="toc-text">古怪的编码</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#社会主义核心价值观"><span class="toc-text">社会主义核心价值观</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#与佛论禅"><span class="toc-text">与佛论禅</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#熊曰"><span class="toc-text">熊曰</span></a></li></ol></li></ol>
+        
+    </div>
+</aside>
+                
+            </div>
+        </div>
+    </section>
+    <footer class="main-footer">
+    <div class="container">
+        <div class="row">
+        </div>
+    </div>
+</footer>
+<a id="back-to-top" class="icon-btn hide">
+    <i class="fa fa-chevron-up"></i>
+</a>
+    <div class="copyright">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="busuanzi">
+    
+    访问量:
+    <strong id="busuanzi_value_site_pv">
+        <i class="fa fa-spinner fa-spin"></i>
+    </strong>
+    &nbsp; | &nbsp;
+    访客数:
+    <strong id="busuanzi_value_site_uv">
+        <i class="fa fa-spinner fa-spin"></i>
+    </strong>
+    
+</div>
+            </div>
+            <div class="col-sm-12">
+                <span>Copyright &copy;
+                    2020
+                    
+                </span> |
+                <span>
+                    Powered by <a href="//hexo.io" class="copyright-links" target="_blank" rel="nofollow">Hexo</a>
+                </span> |
+                <span>
+                    Theme by <a href="//github.com/shenliyang/hexo-theme-snippet.git" class="copyright-links" target="_blank" rel="nofollow">Snippet</a>
+                </span>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<script src="/assets/tagcanvas.min.js?rev=2.9.js"></script>
+
+<script>
+var tagOption = {
+    textColour: '#444', // 字体颜色
+    outlineMethod: 'block', // 选中模式
+    outlineColour: '#FFDAB9', // 选中模式的颜色
+    interval: 30 || 30, // 动画帧之间的时间间隔，值越大，转动幅度越大
+    textHeight: 13,
+    outlineRadius: 3,
+    freezeActive: true || '', // 选中的标签是否继续滚动
+    frontSelect: true || '', // 不选标签云后部的标签
+    initial: [0.1, -0.1],
+    depth: 0.5,
+    decel: 0.95,
+    maxSpeed: 0.03,
+    reverse: true || '', // 是否反向触发
+    fadeIn: 500, // 进入动画时间
+    wheelZoom: false || '' // 是否启用鼠标滚轮
+}
+TagCanvas.Start('tag-cloud-3d', '', tagOption);
+</script>
+
+
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+<script src="/js/app.js?rev=@@hash.js"></script>
+
+
+<!-- 雪花特效 -->
+<script type="text/javascript" src="http://libs.baidu.com/jquery/1.8.3/jquery.js"></script>
+<script type="text/javascript" src="http://libs.baidu.com/jquery/1.8.3/jquery.min.js"></script>
+<script type="text/javascript" src="\js\snow.js"></script>
+
+<canvas class="fireworks" style="position: fixed;left: 0;top: 0;z-index: 1; pointer-events: none;" ></canvas> 
+<script type="text/javascript" src="//cdn.bootcss.com/animejs/2.2.0/anime.min.js"></script> 
+<script type="text/javascript" src="/js/fireworks.js"></script>
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"model":{"jsonPath":"live2d-widget-model-haruto"},"display":{"position":"right","width":150,"height":300},"mobile":{"show":false},"log":false,"pluginJsPath":"lib/","pluginModelPath":"assets/","pluginRootPath":"live2dw/","tagMode":false});</script></body>
+</html>

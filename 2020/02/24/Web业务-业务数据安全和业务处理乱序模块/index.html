@@ -1,0 +1,428 @@
+<head>
+<script src="https://cdn.jsdelivr.net/npm/jquery/dist/jquery.min.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome/css/font-awesome.min.css">
+<script src="https://cdn.jsdelivr.net/gh/stevenjoezhang/live2d-widget/autoload.js"></script>
+</head>
+
+<!DOCTYPE HTML>
+<html lang="zh-CN">
+
+<head>
+    <!--Setting-->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+    <meta http-equiv="Cache-Control" content="no-siteapp">
+    <meta http-equiv="Cache-Control" content="no-transform">
+    <meta name="renderer" content="webkit|ie-comp|ie-stand">
+    <meta name="apple-mobile-web-app-capable" content="ggy的个人博客">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="format-detection" content="telephone=no,email=no,adress=no">
+    <meta name="browsermode" content="application">
+    <meta name="screen-orientation" content="portrait">
+    <meta name="theme-version" content="1.2.3">
+    <meta name="root" content="/">
+    <link rel="dns-prefetch" href="https://ggyggy666.github.io">
+    <!--SEO-->
+
+<meta name="keywords" content="Web业务-业务数据安全和业务处理乱序模块测试" />
+
+
+<meta name="description" content="今天是上课的第一天，趁着晚上没有课，又学习了两个模块-业务数据安全模块和业务处理乱序模块。
+
+
+由于业务处理乱序模块内容少，就合在一块总结了。
+
+业务数据安全商品支付金额篡改
+原理：  没有对用..." />
+
+
+<meta name="robots" content="all" />
+<meta name="google" content="all" />
+<meta name="googlebot" content="all" />
+<meta name="verify" content="all" />
+    <!--Title-->
+
+<title>
+    
+    Web业务-业务数据安全和业务处理乱序模块测试 |
+    
+    ggy的个人博客
+</title>
+
+<link rel="alternate" href="/atom.xml" title="ggy的个人博客" type="application/atom+xml">
+
+
+<link rel="icon" href="/favicon.ico">
+
+    
+
+
+<link rel="stylesheet" href="/css/bootstrap.min.css?rev=3.3.7.css">
+<link rel="stylesheet" href="/css/font-awesome.min.css?rev=4.7.0.css">
+<link rel="stylesheet" href="/css/style.css?rev=@@hash.css">
+
+    
+<div class="hide">
+    <script type="text/javascript">
+    var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+    document.write(unescape("%3Cspan class='cnzz_stat_icon_1263868967 hide' %3E%3Cscript%20src%3D%22https%3A%2F%2Fs95.cnzz.com%2Fz_stat.php%3Fweb_id%3D1272564536%22%3E%3C%2Fscript%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s19.cnzz.com/z_stat.php%3Fid%3D1263868967%26show%3Dpic1' type='text/javascript'%3E%3C/script%3E"));
+    </script>
+</div>
+
+
+
+
+    
+
+<meta name="generator" content="Hexo 4.2.0"></head>
+<!--[if lte IE 8]>
+<style>
+    html{ font-size: 1em }
+</style>
+<![endif]-->
+<!--[if lte IE 9]>
+<div style="ie">你使用的浏览器版本过低，为了你更好的阅读体验，请更新浏览器的版本或者使用其他现代浏览器，比如Chrome、Firefox、Safari等。</div>
+<![endif]-->
+<body>
+    <header class="main-header"  style="background-image:url(
+    https://pic.downk.cc/item/5e3816b82fb38b8c3c8791f9.jpg)"
+     >
+    <div class="main-header-box">
+        <a class="header-avatar" href="/" title='ggy'>
+            <img src="/img/avatar.jpg" alt="logo头像" class="img-responsive center-block">
+        </a>
+        <div class="branding">
+            <!--<h2 class="text-hide">Snippet主题,从未如此简单有趣</h2>-->
+            
+            <h2>
+                欢迎来到ggy的个人网站
+            </h2>
+            
+        </div>
+    </div>
+</header>
+    <nav class="main-navigation">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="navbar-header"><span class="nav-toggle-button collapsed pull-right" data-toggle="collapse" data-target="#main-menu" id="mnav">
+                        <span class="sr-only"></span>
+                        <i class="fa fa-bars"></i>
+                    </span>
+                    <a class="navbar-brand" href="https://ggyggy666.github.io">
+                        ggy的个人博客</a>
+                </div>
+                <div class="collapse navbar-collapse" id="main-menu">
+                    <ul class="menu">
+                        
+                        <li role="presentation" class="text-center">
+                            <a href="/"><i class="fa "></i>
+                                首页</a>
+                        </li>
+                        
+                        <li role="presentation" class="text-center">
+                            <a href="/categories/web安全/"><i class="fa "></i>
+                                web安全</a>
+                        </li>
+                        
+                        <li role="presentation" class="text-center">
+                            <a href="/categories/python工具/"><i class="fa "></i>
+                                python工具</a>
+                        </li>
+                        
+                        <li role="presentation" class="text-center">
+                            <a href="/categories/密码学/"><i class="fa "></i>
+                                密码学</a>
+                        </li>
+                        
+                        <li role="presentation" class="text-center">
+                            <a href="/archives/"><i class="fa "></i>
+                                时间轴</a>
+                        </li>
+                        
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</nav>
+    <section class="content-wrap">
+        <div class="container">
+            <div class="row">
+                <main class="col-md-8 main-content m-post">
+                    <p id="process"></p>
+<article class="post">
+    <div class="post-head">
+        <h1 id="Web业务-业务数据安全和业务处理乱序模块测试">
+            
+            Web业务-业务数据安全和业务处理乱序模块测试
+            
+        </h1>
+        <div class="post-meta">
+    
+    <span class="categories-meta fa-wrap">
+        <i class="fa fa-folder-open-o"></i>
+        <a class="category-link" href="/categories/web%E5%AE%89%E5%85%A8/">web安全</a>
+    </span>
+    
+    
+    <span class="fa-wrap">
+        <i class="fa fa-tags"></i>
+        <span class="tags-meta">
+            
+            <a class="tag-link" href="/tags/Web%E4%B8%9A%E5%8A%A1-%E4%B8%9A%E5%8A%A1%E6%95%B0%E6%8D%AE%E5%AE%89%E5%85%A8%E5%92%8C%E4%B8%9A%E5%8A%A1%E5%A4%84%E7%90%86%E4%B9%B1%E5%BA%8F%E6%A8%A1%E5%9D%97%E6%B5%8B%E8%AF%95/" rel="tag">Web业务-业务数据安全和业务处理乱序模块测试</a>
+            
+        </span>
+    </span>
+    
+    
+    
+    <span class="fa-wrap">
+        <i class="fa fa-clock-o"></i>
+        <span class="date-meta">
+            2020/02/24</span>
+    </span>
+    
+    <span class="fa-wrap">
+        <i class="fa fa-eye"></i>
+        <span id="busuanzi_value_page_pv"></span>
+    </span>
+    
+    
+</div>
+        
+        
+        <p class="fa fa-exclamation-triangle warning">
+            本文于<strong>
+                382</strong>
+            天之前发表，文中内容可能已经过时。
+        </p>
+        
+    </div>
+    
+    <div class="post-body post-content">
+        <p>今天是上课的第一天，趁着晚上没有课，又学习了两个模块-业务数据安全模块和业务处理乱序模块。</p>
+<a id="more"></a>
+<p><img src="https://s2.ax1x.com/2020/03/01/3caSdH.png" alt></p>
+<p>由于业务处理乱序模块内容少，就合在一块总结了。</p>
+<hr>
+<h1 id="业务数据安全"><a href="#业务数据安全" class="headerlink" title="业务数据安全"></a>业务数据安全</h1><h2 id="商品支付金额篡改"><a href="#商品支付金额篡改" class="headerlink" title="商品支付金额篡改"></a>商品支付金额篡改</h2><ul>
+<li><strong>原理：</strong><br>  没有对用户提交的业务数据进行验证，没有对订单的金额进行校验。</li>
+<li><strong>方法：</strong><br>  购买商品生成订单后，点击支付，抓包，修改商品金额，发包。</li>
+<li><strong>修复：</strong><br>  不能接受从客户端传递过来的金额值，应该在服务器端校验。</li>
+</ul>
+<h2 id="商品订购数量篡改"><a href="#商品订购数量篡改" class="headerlink" title="商品订购数量篡改"></a>商品订购数量篡改</h2><ul>
+<li><strong>原理：</strong><br>  对订购中的商品数量、价格没有校验。</li>
+<li><strong>方法：</strong><br>  使用积分兑换商品时，准备生成订单提交同时抓包，修改商品的数量为负数，使得相应支付的积分也变为负数，发包，支付成功后观察是否实际支付的积分也是负数。</li>
+<li><strong>修复：</strong><br>  服务端探测到商品数量、金额等异常时，应立即中断交易。</li>
+</ul>
+<h2 id="前端JS绕过"><a href="#前端JS绕过" class="headerlink" title="前端JS绕过"></a>前端JS绕过</h2><ul>
+<li><strong>原理：</strong><br>  限制用户购买的数量时，仅仅在前端进行JS限制。</li>
+<li><strong>方法：</strong>  <ol>
+<li>在源码中查看是否有限制购买的数量的参数，修改即可。</li>
+<li>抓包，修改限制的购买数量值，发包。</li>
+</ol>
+</li>
+<li><strong>修复：</strong><br>  对商品金额、折扣、数量等都应该交由服务端处理校验。</li>
+</ul>
+<h2 id="请求重复"><a href="#请求重复" class="headerlink" title="请求重复"></a>请求重复</h2><ul>
+<li><strong>原理：</strong><br>  在用户购买一次后，没有对相应验证的token等进行失效处理。</li>
+<li><strong>方法：</strong><br>  生成订单时抓包，观察每次订购相同商品时是否存在验证的随机Token、可变参数等。如果有，检测它们是不是只在本次订购时有效，在下一次订购时又变化了。如果Token等都没有变，那么就可以生成订单支付后，抓包，发送到repeater中，一直go。观察是否购买了多个商品。</li>
+<li><strong>修复：</strong><br>  每次订单生成的Token不能重复提交。服务端应该对订单Token中的订购信息进行验证。</li>
+</ul>
+<h2 id="业务上限"><a href="#业务上限" class="headerlink" title="业务上限"></a>业务上限</h2><ul>
+<li><strong>原理：</strong><br>  用户本来只能查询到一定范围内的信息，但通过抓包修改后，可能可以查询到超出预期的信息。</li>
+<li><strong>方法：</strong><br>  在查询记录中，本来只能查询6个月信息，抓包，修改成6个月以上，发包后如果返回超过6个月的信息，就表明服务端没有限制用户的查询。可以联想到类似例子：普通用户只能看不是VIP的视频，修改某个VIP特定标识后就可以观看VIP视频了。</li>
+<li><strong>修复：</strong><br>  服务端都应对用户提交的信息进行验证。</li>
+</ul>
+<h1 id="业务流程乱序"><a href="#业务流程乱序" class="headerlink" title="业务流程乱序"></a>业务流程乱序</h1><h2 id="业务流程绕过"><a href="#业务流程绕过" class="headerlink" title="业务流程绕过"></a>业务流程绕过</h2><ul>
+<li><p><strong>原理：</strong><br>  本来是正常的流程，在进行到某一步后，可以直接修改信息跳过了前面的步骤。</p>
+</li>
+<li><p><strong>方法：</strong>  </p>
+<ol>
+<li><p>注册流程中：</p>
+<blockquote>
+<pre><code>第一步，填写注册信息，发送验证码。
+第二步，填写收到的验证码。
+第三步，注册成功。   
+在第三步时，抓包，修改手机号码，如果成功注册，那么对于这个新的手机号码来说，就绕过了前面两步。</code></pre></blockquote>
+</li>
+<li><p>先购买一个商品，到最后的一步时，查看链接是否可以通过修改商品单号就能成功购买。然后记录下这个链接。再次购买一个商品，生成订单之后，支付的时候抓包，将商品单号记录下来。再将之前记录的链接：<code>http://xxx.com/xxx.php?xxx=商品订单号</code>，将订单后替换进去，访问，观察是否支付成功。美中不足的是，它需要先购买一个商品才能看到最终支付成功的链接。如果源码有什么信息的话，也可以不用购买，自己构造出一个成功的链接。当然，这比较困难。</p>
+</li>
+</ol>
+</li>
+<li><p><strong>修复：</strong><br>  对敏感信息如身份ID、商品订单号、金额等进行加密。还应对订单号对应的商品、金额等进行校验。</p>
+</li>
+</ul>
+
+    </div>
+    
+    <div class="reward" ontouchstart>
+    <div class="reward-wrap">赏
+        <div class="reward-box">
+            
+            <span class="reward-type">
+                <img class="alipay" src="/img/alipay.jpg"><b>支付宝打赏</b>
+            </span>
+            
+            
+            <span class="reward-type">
+                <img class="wechat" src="/img/wechat.jpg"><b>微信打赏</b>
+            </span>
+            
+        </div>
+    </div>
+    <p class="reward-tip">
+        赞赏是不耍流氓的鼓励
+    </p>
+</div>
+    
+    <div class="post-footer">
+        <div>
+            
+            转载声明：
+            商业转载请联系作者获得授权,非商业转载请注明出处 © <a href="ggy.44pp.vip" target="_blank">ggy</a>
+            
+            
+        </div>
+        <div>
+            
+        </div>
+    </div>
+</article>
+<div class="article-nav prev-next-wrap clearfix">
+    
+    <a href="/2020/02/25/Web%E4%B8%9A%E5%8A%A1-%E5%AF%86%E7%A0%81%E6%89%BE%E5%9B%9E%E6%A8%A1%E5%9D%97%E6%B5%8B%E8%AF%95/" class="pre-post btn btn-default" title='Web业务-密码找回模块测试'>
+        <i class="fa fa-angle-left fa-fw"></i><span class="hidden-lg">上一篇</span>
+        <span class="hidden-xs">
+            Web业务-密码找回模块测试</span>
+    </a>
+    
+    
+    <a href="/2020/02/23/Web%E4%B8%9A%E5%8A%A1-%E9%AA%8C%E8%AF%81%E7%A0%81%E6%9C%BA%E5%88%B6%E6%B5%8B%E8%AF%95/" class="next-post btn btn-default" title='Web业务-验证码机制测试'>
+        <span class="hidden-lg">下一篇</span>
+        <span class="hidden-xs">
+            Web业务-验证码机制测试</span><i class="fa fa-angle-right fa-fw"></i>
+    </a>
+    
+</div>
+
+<div id="comments">
+    
+<div id="lv-container" data-id="city" data-uid="MTAyMC80ODM1Ni8yNDg1MA==">
+    <script type="text/javascript">
+    (function(d, s) {
+        var j, e = d.getElementsByTagName(s)[0];
+        if (typeof LivereTower === 'function') { return; }
+        j = d.createElement(s);
+        j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+        j.async = true;
+        e.parentNode.insertBefore(j, e);
+    })(document, 'script');
+    </script>
+</div>
+
+</div>
+
+                </main>
+                
+                    <aside id="article-toc" role="navigation" class="col-md-4">
+    <div class="widget">
+        <h3 class="title">
+            文章目录
+        </h3>
+        
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#业务数据安全"><span class="toc-text">业务数据安全</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#商品支付金额篡改"><span class="toc-text">商品支付金额篡改</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#商品订购数量篡改"><span class="toc-text">商品订购数量篡改</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#前端JS绕过"><span class="toc-text">前端JS绕过</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#请求重复"><span class="toc-text">请求重复</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#业务上限"><span class="toc-text">业务上限</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#业务流程乱序"><span class="toc-text">业务流程乱序</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#业务流程绕过"><span class="toc-text">业务流程绕过</span></a></li></ol></li></ol>
+        
+    </div>
+</aside>
+                
+            </div>
+        </div>
+    </section>
+    <footer class="main-footer">
+    <div class="container">
+        <div class="row">
+        </div>
+    </div>
+</footer>
+<a id="back-to-top" class="icon-btn hide">
+    <i class="fa fa-chevron-up"></i>
+</a>
+    <div class="copyright">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="busuanzi">
+    
+    访问量:
+    <strong id="busuanzi_value_site_pv">
+        <i class="fa fa-spinner fa-spin"></i>
+    </strong>
+    &nbsp; | &nbsp;
+    访客数:
+    <strong id="busuanzi_value_site_uv">
+        <i class="fa fa-spinner fa-spin"></i>
+    </strong>
+    
+</div>
+            </div>
+            <div class="col-sm-12">
+                <span>Copyright &copy;
+                    2020
+                    
+                </span> |
+                <span>
+                    Powered by <a href="//hexo.io" class="copyright-links" target="_blank" rel="nofollow">Hexo</a>
+                </span> |
+                <span>
+                    Theme by <a href="//github.com/shenliyang/hexo-theme-snippet.git" class="copyright-links" target="_blank" rel="nofollow">Snippet</a>
+                </span>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<script src="/assets/tagcanvas.min.js?rev=2.9.js"></script>
+
+<script>
+var tagOption = {
+    textColour: '#444', // 字体颜色
+    outlineMethod: 'block', // 选中模式
+    outlineColour: '#FFDAB9', // 选中模式的颜色
+    interval: 30 || 30, // 动画帧之间的时间间隔，值越大，转动幅度越大
+    textHeight: 13,
+    outlineRadius: 3,
+    freezeActive: true || '', // 选中的标签是否继续滚动
+    frontSelect: true || '', // 不选标签云后部的标签
+    initial: [0.1, -0.1],
+    depth: 0.5,
+    decel: 0.95,
+    maxSpeed: 0.03,
+    reverse: true || '', // 是否反向触发
+    fadeIn: 500, // 进入动画时间
+    wheelZoom: false || '' // 是否启用鼠标滚轮
+}
+TagCanvas.Start('tag-cloud-3d', '', tagOption);
+</script>
+
+
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+<script src="/js/app.js?rev=@@hash.js"></script>
+
+
+<!-- 雪花特效 -->
+<script type="text/javascript" src="http://libs.baidu.com/jquery/1.8.3/jquery.js"></script>
+<script type="text/javascript" src="http://libs.baidu.com/jquery/1.8.3/jquery.min.js"></script>
+<script type="text/javascript" src="\js\snow.js"></script>
+
+<canvas class="fireworks" style="position: fixed;left: 0;top: 0;z-index: 1; pointer-events: none;" ></canvas> 
+<script type="text/javascript" src="//cdn.bootcss.com/animejs/2.2.0/anime.min.js"></script> 
+<script type="text/javascript" src="/js/fireworks.js"></script>
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"model":{"jsonPath":"live2d-widget-model-haruto"},"display":{"position":"right","width":150,"height":300},"mobile":{"show":false},"log":false,"pluginJsPath":"lib/","pluginModelPath":"assets/","pluginRootPath":"live2dw/","tagMode":false});</script></body>
+</html>

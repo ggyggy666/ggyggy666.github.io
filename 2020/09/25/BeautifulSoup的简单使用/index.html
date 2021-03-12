@@ -1,0 +1,430 @@
+<head>
+<script src="https://cdn.jsdelivr.net/npm/jquery/dist/jquery.min.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome/css/font-awesome.min.css">
+<script src="https://cdn.jsdelivr.net/gh/stevenjoezhang/live2d-widget/autoload.js"></script>
+</head>
+
+<!DOCTYPE HTML>
+<html lang="zh-CN">
+
+<head>
+    <!--Setting-->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+    <meta http-equiv="Cache-Control" content="no-siteapp">
+    <meta http-equiv="Cache-Control" content="no-transform">
+    <meta name="renderer" content="webkit|ie-comp|ie-stand">
+    <meta name="apple-mobile-web-app-capable" content="ggy的个人博客">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="format-detection" content="telephone=no,email=no,adress=no">
+    <meta name="browsermode" content="application">
+    <meta name="screen-orientation" content="portrait">
+    <meta name="theme-version" content="1.2.3">
+    <meta name="root" content="/">
+    <link rel="dns-prefetch" href="https://ggyggy666.github.io">
+    <!--SEO-->
+
+<meta name="keywords" content="BeautifulSoup的简单使用" />
+
+
+<meta name="description" content="创建对象soup = BeautifulSoup(str)
+str是字符串。
+解析器默认是html.parser, 可以下载lxml, html5lib。
+使用：soup = Beautiful..." />
+
+
+<meta name="robots" content="all" />
+<meta name="google" content="all" />
+<meta name="googlebot" content="all" />
+<meta name="verify" content="all" />
+    <!--Title-->
+
+<title>
+    
+    BeautifulSoup的简单使用 |
+    
+    ggy的个人博客
+</title>
+
+<link rel="alternate" href="/atom.xml" title="ggy的个人博客" type="application/atom+xml">
+
+
+<link rel="icon" href="/favicon.ico">
+
+    
+
+
+<link rel="stylesheet" href="/css/bootstrap.min.css?rev=3.3.7.css">
+<link rel="stylesheet" href="/css/font-awesome.min.css?rev=4.7.0.css">
+<link rel="stylesheet" href="/css/style.css?rev=@@hash.css">
+
+    
+<div class="hide">
+    <script type="text/javascript">
+    var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+    document.write(unescape("%3Cspan class='cnzz_stat_icon_1263868967 hide' %3E%3Cscript%20src%3D%22https%3A%2F%2Fs95.cnzz.com%2Fz_stat.php%3Fweb_id%3D1272564536%22%3E%3C%2Fscript%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s19.cnzz.com/z_stat.php%3Fid%3D1263868967%26show%3Dpic1' type='text/javascript'%3E%3C/script%3E"));
+    </script>
+</div>
+
+
+
+
+    
+
+<meta name="generator" content="Hexo 4.2.0"></head>
+<!--[if lte IE 8]>
+<style>
+    html{ font-size: 1em }
+</style>
+<![endif]-->
+<!--[if lte IE 9]>
+<div style="ie">你使用的浏览器版本过低，为了你更好的阅读体验，请更新浏览器的版本或者使用其他现代浏览器，比如Chrome、Firefox、Safari等。</div>
+<![endif]-->
+<body>
+    <header class="main-header"  style="background-image:url(
+    https://pic.downk.cc/item/5e3816b82fb38b8c3c8791f9.jpg)"
+     >
+    <div class="main-header-box">
+        <a class="header-avatar" href="/" title='ggy'>
+            <img src="/img/avatar.jpg" alt="logo头像" class="img-responsive center-block">
+        </a>
+        <div class="branding">
+            <!--<h2 class="text-hide">Snippet主题,从未如此简单有趣</h2>-->
+            
+            <h2>
+                欢迎来到ggy的个人网站
+            </h2>
+            
+        </div>
+    </div>
+</header>
+    <nav class="main-navigation">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="navbar-header"><span class="nav-toggle-button collapsed pull-right" data-toggle="collapse" data-target="#main-menu" id="mnav">
+                        <span class="sr-only"></span>
+                        <i class="fa fa-bars"></i>
+                    </span>
+                    <a class="navbar-brand" href="https://ggyggy666.github.io">
+                        ggy的个人博客</a>
+                </div>
+                <div class="collapse navbar-collapse" id="main-menu">
+                    <ul class="menu">
+                        
+                        <li role="presentation" class="text-center">
+                            <a href="/"><i class="fa "></i>
+                                首页</a>
+                        </li>
+                        
+                        <li role="presentation" class="text-center">
+                            <a href="/categories/web安全/"><i class="fa "></i>
+                                web安全</a>
+                        </li>
+                        
+                        <li role="presentation" class="text-center">
+                            <a href="/categories/python工具/"><i class="fa "></i>
+                                python工具</a>
+                        </li>
+                        
+                        <li role="presentation" class="text-center">
+                            <a href="/categories/密码学/"><i class="fa "></i>
+                                密码学</a>
+                        </li>
+                        
+                        <li role="presentation" class="text-center">
+                            <a href="/archives/"><i class="fa "></i>
+                                时间轴</a>
+                        </li>
+                        
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</nav>
+    <section class="content-wrap">
+        <div class="container">
+            <div class="row">
+                <main class="col-md-8 main-content m-post">
+                    <p id="process"></p>
+<article class="post">
+    <div class="post-head">
+        <h1 id="BeautifulSoup的简单使用">
+            
+            BeautifulSoup的简单使用
+            
+        </h1>
+        <div class="post-meta">
+    
+    <span class="categories-meta fa-wrap">
+        <i class="fa fa-folder-open-o"></i>
+        <a class="category-link" href="/categories/web%E5%AE%89%E5%85%A8/">web安全</a>
+    </span>
+    
+    
+    <span class="fa-wrap">
+        <i class="fa fa-tags"></i>
+        <span class="tags-meta">
+            
+            <a class="tag-link" href="/tags/BeautifulSoup%E7%9A%84%E7%AE%80%E5%8D%95%E4%BD%BF%E7%94%A8/" rel="tag">BeautifulSoup的简单使用</a>
+            
+        </span>
+    </span>
+    
+    
+    
+    <span class="fa-wrap">
+        <i class="fa fa-clock-o"></i>
+        <span class="date-meta">
+            2020/09/25</span>
+    </span>
+    
+    <span class="fa-wrap">
+        <i class="fa fa-eye"></i>
+        <span id="busuanzi_value_page_pv"></span>
+    </span>
+    
+    
+</div>
+        
+        
+    </div>
+    
+    <div class="post-body post-content">
+        <h2 id="创建对象"><a href="#创建对象" class="headerlink" title="创建对象"></a>创建对象</h2><p><code>soup = BeautifulSoup(str)</code></p>
+<p>str是字符串。</p>
+<h2 id="解析器"><a href="#解析器" class="headerlink" title="解析器"></a>解析器</h2><p>默认是html.parser, 可以下载lxml, html5lib。</p>
+<p>使用：<code>soup = BeautifulSoup(str, &#39;html.parser&#39;);</code></p>
+<p>将html.parser替换成其它即可。</p>
+<h2 id="定位标签"><a href="#定位标签" class="headerlink" title="定位标签"></a>定位标签</h2><ol>
+<li><p><code>soup.title</code></p>
+<p>返回值：<code>&lt;title&gt;ggy&lt;/title&gt;</code></p>
+<p>会将标签和里面的字符串一起输出。</p>
+</li>
+<li><p><code>soup.title.name</code></p>
+<p>返回值：title</p>
+<p>返回的是标签名。</p>
+</li>
+<li><p><code>soup.p[&#39;class&#39;]</code></p>
+<p>class是p标签的class属性，这句返回class属性的值。</p>
+</li>
+<li><p><code>soup.a</code></p>
+<p>有多个a标签时只返回第一个。</p>
+</li>
+</ol>
+<h2 id="取标签里的字符串"><a href="#取标签里的字符串" class="headerlink" title="取标签里的字符串"></a>取标签里的字符串</h2><p><code>soup.title.string</code></p>
+<p>返回标签的字符串。可以用Unicode将它直接转换成Unicode字符。</p>
+<h2 id="替换标签里的字符串"><a href="#替换标签里的字符串" class="headerlink" title="替换标签里的字符串"></a>替换标签里的字符串</h2><p><code>soup.title.string.replace_with(&quot;hello&quot;)</code></p>
+<p>返回就是：<code>&lt;title&gt;hello&lt;/title&gt;</code></p>
+<h2 id="prettify美化输出"><a href="#prettify美化输出" class="headerlink" title="prettify美化输出"></a>prettify美化输出</h2><p><code>soup.title.prettify</code></p>
+<p>输出成正常HTML格式</p>
+<h2 id="查找find-all和find"><a href="#查找find-all和find" class="headerlink" title="查找find_all和find"></a>查找find_all和find</h2><p><code>soup.find_all(&#39;b&#39;)</code></p>
+<p>查找所有的<code>&lt;b&gt;</code>标签，括号里内容为查找条件。可以用正则表达式。</p>
+<p><code>soup.find_all(re.compile(&quot;b&quot;))</code></p>
+<p>可以用limit限制返回的个数</p>
+<p><code>soup.find_all(&quot;b&quot;, limit=2)</code></p>
+<p>直接根据属性定位：</p>
+<p><code>soup.find_all(&quot;a&quot;)</code></p>
+<p><code>soup.find_all(id=&quot;test&quot;)</code></p>
+<p><code>soup.find_all(id=re.compile(&quot;test&quot;))</code></p>
+<p><code>soup.find_all(id=&quot;test&quot;, href=&quot;www.baidu.com&quot;)</code></p>
+<p>如果属性是data-foo，不能这么做，需要传字典</p>
+<p><code>soup.find_all(attrs={&quot;data-foo&quot;: &quot;value&quot;})</code></p>
+<p>按类class查找，用class_</p>
+<p><code>soup.find_all(class_=&quot;test&quot;)</code></p>
+<p>根据string内容定位</p>
+<p><code>soup.find_all(string=&quot;hello&quot;)</code></p>
+<p>find只返回一个匹配结果, 其它与find_all类似</p>
+<p><code>soup.find(&quot;title&quot;)</code></p>
+<h2 id="select选择器"><a href="#select选择器" class="headerlink" title="select选择器"></a>select选择器</h2><p><code>soup.select(&quot;title&quot;)</code></p>
+<p>通过标签逐层查找</p>
+<p><code>soup.select(&quot;html head title&quot;)</code></p>
+<p>返回的是title那一行</p>
+<p><code>soup.select(&quot;p &gt; a&quot;)</code></p>
+<p>返回的是在p标签下的所有a标签</p>
+<p><code>soup.select(&quot;.sister&quot;)</code></p>
+<p>通过类名的值寻找。即需要：<code>class=sister</code></p>
+<p><code>soup.select(&quot;#link1&quot;)</code> 或者 <code>soup.select(&quot;a#link1&quot;)</code></p>
+<p>通过id的值进行查找。需要：<code>id=link1</code></p>
+<p><code>soup.select(&#39;a[href^=&quot;http://www.bai&quot;]&#39;)</code></p>
+<p>通过属性值查找,找href的值是以<a href="http://www.bai开头的。^可以换成$,*，当然直接等号的话要写完整值。" target="_blank" rel="noopener">http://www.bai开头的。^可以换成$,*，当然直接等号的话要写完整值。</a></p>
+<h2 id="爬取小说"><a href="#爬取小说" class="headerlink" title="爬取小说"></a>爬取小说</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br></pre></td><td class="code"><pre><span class="line">from bs4 import BeautifulSoup</span><br><span class="line">import re, threading</span><br><span class="line">import requests</span><br><span class="line">import sys</span><br><span class="line">reload(sys)</span><br><span class="line">sys.setdefaultencoding(&#39;utf-8&#39;)		&#x2F;&#x2F;防止出现一些编码错误</span><br><span class="line"></span><br><span class="line">list &#x3D; []</span><br><span class="line">agent &#x3D; &#123;&quot;User-Agent&quot;:&quot;firefox 5.0&quot;&#125;</span><br><span class="line">count &#x3D; 0</span><br><span class="line"></span><br><span class="line">def get_content(url):				&#x2F;&#x2F;返回URL的页面内容</span><br><span class="line">    r &#x3D; requests.get(url, headers&#x3D;agent);</span><br><span class="line">    r.encoding &#x3D; &#39;utf-8&#39;</span><br><span class="line">    return r.text</span><br><span class="line"></span><br><span class="line">def get_url(url, add, start):			&#x2F;&#x2F;取页面每个章节的URL</span><br><span class="line">    r &#x3D; get_content(url)</span><br><span class="line">    soup &#x3D; BeautifulSoup(r, &quot;lxml&quot;)</span><br><span class="line">    s &#x3D; soup.dl.find_all(&quot;a&quot;)</span><br><span class="line">    for i in range(0, add+start):</span><br><span class="line">       l &#x3D; s[i][&#39;href&#39;]</span><br><span class="line">       furl &#x3D; url + l</span><br><span class="line">       list.append(furl)			&#x2F;&#x2F;将URL放到一个列表中</span><br><span class="line">    print(&quot;the &quot;+s[i-1].string+&quot; chapters is the end you wang to download&quot;)</span><br><span class="line"></span><br><span class="line">def download(url, name):		&#x2F;&#x2F;访问URL，将页面的文本写入文件</span><br><span class="line">        r &#x3D; get_content(url);</span><br><span class="line">        soup &#x3D; BeautifulSoup(r, &quot;lxml&quot;);</span><br><span class="line">        s &#x3D; soup.find(&quot;h1&quot;)</span><br><span class="line">        title &#x3D; s.string</span><br><span class="line">        content &#x3D; soup.find(id&#x3D;&quot;content&quot;)</span><br><span class="line">        content &#x3D; str(content)</span><br><span class="line">        content &#x3D; content.replace(&#39;&lt;div id&#x3D;&quot;content&quot;&gt;&lt;!--go--&gt;&#39;,&quot;\n&quot;) </span><br><span class="line">        content &#x3D; content.replace(&quot;&lt;&#x2F;div&gt;&quot;,&quot;\n&quot;)</span><br><span class="line">        content &#x3D; content.replace(&quot;&lt;!--over--&gt;&quot;,&quot; &quot;) </span><br><span class="line">        content &#x3D; content.replace(&quot;&lt;br&#x2F;&gt;&quot;,&quot;\n&quot;)</span><br><span class="line">        with open(name+&quot;.txt&quot;,&quot;a&quot;) as f:</span><br><span class="line">            content &#x3D; title + &quot;\n\n&quot; + content</span><br><span class="line">            f.write(content)</span><br><span class="line">        if((count+1)%50&#x3D;&#x3D;0):</span><br><span class="line">            print(&quot;you have downloaded 50 chapters&quot;)</span><br><span class="line"></span><br><span class="line">if __name__ &#x3D;&#x3D; &#39;__main__&#39;:</span><br><span class="line">    name &#x3D; raw_input(&quot;input the name you wang to download: &quot;)		&#x2F;&#x2F;下载的小说名字，以便生成该名字的文件</span><br><span class="line">    url &#x3D; raw_input(&quot;Please enter fiction&#39;s url$  &quot;)&#x2F;&#x2F;输入小说的主页面URL</span><br><span class="line">    start &#x3D; input(&quot;start chapter: &quot;)&#x2F;&#x2F;输入要从哪一章开始下载</span><br><span class="line">    add &#x3D; input(&quot;add chapter count: &quot;)&#x2F;&#x2F;输入要下载多少章</span><br><span class="line">    get_url(url, add, start)</span><br><span class="line">    count &#x3D; start</span><br><span class="line">    for j in range(start, add+start+1):&#x2F;&#x2F;遍历URL进行下载</span><br><span class="line">        download(list[j], name)</span><br><span class="line">        count +&#x3D; 1</span><br></pre></td></tr></table></figure>
+
+<p>神武仙踪：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br></pre></td><td class="code"><pre><span class="line">from bs4 import BeautifulSoup</span><br><span class="line">import re, threading</span><br><span class="line">import requests</span><br><span class="line">import sys</span><br><span class="line">reload(sys)</span><br><span class="line">sys.setdefaultencoding(&#39;utf-8&#39;)</span><br><span class="line"></span><br><span class="line">list &#x3D; []</span><br><span class="line">agent &#x3D; &#123;&quot;User-Agent&quot;:&quot;firefox 5.0&quot;&#125;</span><br><span class="line">count &#x3D; 0</span><br><span class="line"></span><br><span class="line">def get_content(url):</span><br><span class="line">    r &#x3D; requests.get(url, headers&#x3D;agent);</span><br><span class="line">    r.encoding &#x3D; &#39;utf-8&#39;</span><br><span class="line">    return r.text</span><br><span class="line"></span><br><span class="line">def get_url(url, add, start):</span><br><span class="line">    r &#x3D; get_content(url)</span><br><span class="line">    soup &#x3D; BeautifulSoup(r, &quot;lxml&quot;)</span><br><span class="line">    s &#x3D; soup.dl.find_all(&quot;a&quot;)</span><br><span class="line">    for i in range(0, add+start):</span><br><span class="line">       l &#x3D; s[i][&#39;href&#39;]</span><br><span class="line">       furl &#x3D; url + l</span><br><span class="line">       list.append(furl)</span><br><span class="line">    print(&quot;the &quot;+s[i-1].string+&quot; chapters is the end you wang to download&quot;)</span><br><span class="line"></span><br><span class="line">def download(url, name):</span><br><span class="line">        r &#x3D; get_content(url);</span><br><span class="line">        soup &#x3D; BeautifulSoup(r, &quot;lxml&quot;);</span><br><span class="line">        s &#x3D; soup.find(&quot;h1&quot;)</span><br><span class="line">        title &#x3D; s.string</span><br><span class="line">        content &#x3D; soup.find(id&#x3D;&quot;content&quot;)</span><br><span class="line">        content &#x3D; str(content)</span><br><span class="line">        content &#x3D; content.replace(&#39;&lt;div id&#x3D;&quot;content&quot;&gt;&lt;!--go--&gt;&#39;,&quot;\n&quot;) </span><br><span class="line">        content &#x3D; content.replace(&quot;&lt;&#x2F;div&gt;&quot;,&quot;\n&quot;)</span><br><span class="line">        content &#x3D; content.replace(&quot;&lt;!--over--&gt;&quot;,&quot; &quot;) </span><br><span class="line">        content &#x3D; content.replace(&quot;&lt;br&#x2F;&gt;&quot;,&quot;\n&quot;)</span><br><span class="line">        with open(name+&quot;.txt&quot;,&quot;a&quot;) as f:</span><br><span class="line">            content &#x3D; title + &quot;\n\n&quot; + content</span><br><span class="line">            f.write(content)</span><br><span class="line">        if((count+1)%50&#x3D;&#x3D;0):</span><br><span class="line">            print(&quot;you have downloaded 50 chapters&quot;)</span><br><span class="line"></span><br><span class="line">if __name__ &#x3D;&#x3D; &#39;__main__&#39;:</span><br><span class="line">    name &#x3D; raw_input(&quot;input the name you wang to download: &quot;)</span><br><span class="line">    url &#x3D; raw_input(&quot;Please enter fiction&#39;s url$  &quot;)</span><br><span class="line">    start &#x3D; input(&quot;start chapter: &quot;)</span><br><span class="line">    add &#x3D; input(&quot;add chapter count: &quot;)</span><br><span class="line">    get_url(url, add, start)</span><br><span class="line">    count &#x3D; start</span><br><span class="line">    for j in range(start, add+start+1):</span><br><span class="line">        download(list[j], name)</span><br><span class="line">        count +&#x3D; 1</span><br></pre></td></tr></table></figure>
+
+
+
+
+    </div>
+    
+    <div class="reward" ontouchstart>
+    <div class="reward-wrap">赏
+        <div class="reward-box">
+            
+            <span class="reward-type">
+                <img class="alipay" src="/img/alipay.jpg"><b>支付宝打赏</b>
+            </span>
+            
+            
+            <span class="reward-type">
+                <img class="wechat" src="/img/wechat.jpg"><b>微信打赏</b>
+            </span>
+            
+        </div>
+    </div>
+    <p class="reward-tip">
+        赞赏是不耍流氓的鼓励
+    </p>
+</div>
+    
+    <div class="post-footer">
+        <div>
+            
+            转载声明：
+            商业转载请联系作者获得授权,非商业转载请注明出处 © <a href="ggy.44pp.vip" target="_blank">ggy</a>
+            
+            
+        </div>
+        <div>
+            
+        </div>
+    </div>
+</article>
+<div class="article-nav prev-next-wrap clearfix">
+    
+    <a href="/2020/09/30/msf%E5%90%8E%E6%B8%97%E9%80%8F%E8%BF%87%E7%A8%8B/" class="pre-post btn btn-default" title='msf后渗透过程'>
+        <i class="fa fa-angle-left fa-fw"></i><span class="hidden-lg">上一篇</span>
+        <span class="hidden-xs">
+            msf后渗透过程</span>
+    </a>
+    
+    
+    <a href="/2020/08/02/msf%E7%9A%84%E4%BD%BF%E7%94%A8-%E5%B7%A5%E4%BD%9C%E5%8C%BA%E3%80%81%E4%BF%A1%E6%81%AF%E6%94%B6%E9%9B%86/" class="next-post btn btn-default" title='msf的使用-工作区、信息收集'>
+        <span class="hidden-lg">下一篇</span>
+        <span class="hidden-xs">
+            msf的使用-工作区、信息收集</span><i class="fa fa-angle-right fa-fw"></i>
+    </a>
+    
+</div>
+
+<div id="comments">
+    
+<div id="lv-container" data-id="city" data-uid="MTAyMC80ODM1Ni8yNDg1MA==">
+    <script type="text/javascript">
+    (function(d, s) {
+        var j, e = d.getElementsByTagName(s)[0];
+        if (typeof LivereTower === 'function') { return; }
+        j = d.createElement(s);
+        j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+        j.async = true;
+        e.parentNode.insertBefore(j, e);
+    })(document, 'script');
+    </script>
+</div>
+
+</div>
+
+                </main>
+                
+                    <aside id="article-toc" role="navigation" class="col-md-4">
+    <div class="widget">
+        <h3 class="title">
+            文章目录
+        </h3>
+        
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#创建对象"><span class="toc-text">创建对象</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#解析器"><span class="toc-text">解析器</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#定位标签"><span class="toc-text">定位标签</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#取标签里的字符串"><span class="toc-text">取标签里的字符串</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#替换标签里的字符串"><span class="toc-text">替换标签里的字符串</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#prettify美化输出"><span class="toc-text">prettify美化输出</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#查找find-all和find"><span class="toc-text">查找find_all和find</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#select选择器"><span class="toc-text">select选择器</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#爬取小说"><span class="toc-text">爬取小说</span></a></li></ol>
+        
+    </div>
+</aside>
+                
+            </div>
+        </div>
+    </section>
+    <footer class="main-footer">
+    <div class="container">
+        <div class="row">
+        </div>
+    </div>
+</footer>
+<a id="back-to-top" class="icon-btn hide">
+    <i class="fa fa-chevron-up"></i>
+</a>
+    <div class="copyright">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="busuanzi">
+    
+    访问量:
+    <strong id="busuanzi_value_site_pv">
+        <i class="fa fa-spinner fa-spin"></i>
+    </strong>
+    &nbsp; | &nbsp;
+    访客数:
+    <strong id="busuanzi_value_site_uv">
+        <i class="fa fa-spinner fa-spin"></i>
+    </strong>
+    
+</div>
+            </div>
+            <div class="col-sm-12">
+                <span>Copyright &copy;
+                    2020
+                    
+                </span> |
+                <span>
+                    Powered by <a href="//hexo.io" class="copyright-links" target="_blank" rel="nofollow">Hexo</a>
+                </span> |
+                <span>
+                    Theme by <a href="//github.com/shenliyang/hexo-theme-snippet.git" class="copyright-links" target="_blank" rel="nofollow">Snippet</a>
+                </span>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<script src="/assets/tagcanvas.min.js?rev=2.9.js"></script>
+
+<script>
+var tagOption = {
+    textColour: '#444', // 字体颜色
+    outlineMethod: 'block', // 选中模式
+    outlineColour: '#FFDAB9', // 选中模式的颜色
+    interval: 30 || 30, // 动画帧之间的时间间隔，值越大，转动幅度越大
+    textHeight: 13,
+    outlineRadius: 3,
+    freezeActive: true || '', // 选中的标签是否继续滚动
+    frontSelect: true || '', // 不选标签云后部的标签
+    initial: [0.1, -0.1],
+    depth: 0.5,
+    decel: 0.95,
+    maxSpeed: 0.03,
+    reverse: true || '', // 是否反向触发
+    fadeIn: 500, // 进入动画时间
+    wheelZoom: false || '' // 是否启用鼠标滚轮
+}
+TagCanvas.Start('tag-cloud-3d', '', tagOption);
+</script>
+
+
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+<script src="/js/app.js?rev=@@hash.js"></script>
+
+
+<!-- 雪花特效 -->
+<script type="text/javascript" src="http://libs.baidu.com/jquery/1.8.3/jquery.js"></script>
+<script type="text/javascript" src="http://libs.baidu.com/jquery/1.8.3/jquery.min.js"></script>
+<script type="text/javascript" src="\js\snow.js"></script>
+
+<canvas class="fireworks" style="position: fixed;left: 0;top: 0;z-index: 1; pointer-events: none;" ></canvas> 
+<script type="text/javascript" src="//cdn.bootcss.com/animejs/2.2.0/anime.min.js"></script> 
+<script type="text/javascript" src="/js/fireworks.js"></script>
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"model":{"jsonPath":"live2d-widget-model-haruto"},"display":{"position":"right","width":150,"height":300},"mobile":{"show":false},"log":false,"pluginJsPath":"lib/","pluginModelPath":"assets/","pluginRootPath":"live2dw/","tagMode":false});</script></body>
+</html>

@@ -1,0 +1,394 @@
+<head>
+<script src="https://cdn.jsdelivr.net/npm/jquery/dist/jquery.min.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome/css/font-awesome.min.css">
+<script src="https://cdn.jsdelivr.net/gh/stevenjoezhang/live2d-widget/autoload.js"></script>
+</head>
+
+<!DOCTYPE HTML>
+<html lang="zh-CN">
+
+<head>
+    <!--Setting-->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+    <meta http-equiv="Cache-Control" content="no-siteapp">
+    <meta http-equiv="Cache-Control" content="no-transform">
+    <meta name="renderer" content="webkit|ie-comp|ie-stand">
+    <meta name="apple-mobile-web-app-capable" content="ggy的个人博客">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="format-detection" content="telephone=no,email=no,adress=no">
+    <meta name="browsermode" content="application">
+    <meta name="screen-orientation" content="portrait">
+    <meta name="theme-version" content="1.2.3">
+    <meta name="root" content="/">
+    <link rel="dns-prefetch" href="https://ggyggy666.github.io">
+    <!--SEO-->
+
+<meta name="keywords" content="学Linux的第三天" />
+
+
+<meta name="description" content="今天是第三天啦。今天学习软件包的管理。
+
+软件包管理管理.deb软件包：dpkg适用于Ubuntu和Debian。
+安装软件sudo dpkg --install 完整的软件包名字 或者 sud..." />
+
+
+<meta name="robots" content="all" />
+<meta name="google" content="all" />
+<meta name="googlebot" content="all" />
+<meta name="verify" content="all" />
+    <!--Title-->
+
+<title>
+    
+    学Linux的第三天 |
+    
+    ggy的个人博客
+</title>
+
+<link rel="alternate" href="/atom.xml" title="ggy的个人博客" type="application/atom+xml">
+
+
+<link rel="icon" href="/favicon.ico">
+
+    
+
+
+<link rel="stylesheet" href="/css/bootstrap.min.css?rev=3.3.7.css">
+<link rel="stylesheet" href="/css/font-awesome.min.css?rev=4.7.0.css">
+<link rel="stylesheet" href="/css/style.css?rev=@@hash.css">
+
+    
+<div class="hide">
+    <script type="text/javascript">
+    var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+    document.write(unescape("%3Cspan class='cnzz_stat_icon_1263868967 hide' %3E%3Cscript%20src%3D%22https%3A%2F%2Fs95.cnzz.com%2Fz_stat.php%3Fweb_id%3D1272564536%22%3E%3C%2Fscript%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s19.cnzz.com/z_stat.php%3Fid%3D1263868967%26show%3Dpic1' type='text/javascript'%3E%3C/script%3E"));
+    </script>
+</div>
+
+
+
+
+    
+
+<meta name="generator" content="Hexo 4.2.0"></head>
+<!--[if lte IE 8]>
+<style>
+    html{ font-size: 1em }
+</style>
+<![endif]-->
+<!--[if lte IE 9]>
+<div style="ie">你使用的浏览器版本过低，为了你更好的阅读体验，请更新浏览器的版本或者使用其他现代浏览器，比如Chrome、Firefox、Safari等。</div>
+<![endif]-->
+<body>
+    <header class="main-header"  style="background-image:url(
+    https://pic.downk.cc/item/5e3816b82fb38b8c3c8791f9.jpg)"
+     >
+    <div class="main-header-box">
+        <a class="header-avatar" href="/" title='ggy'>
+            <img src="/img/avatar.jpg" alt="logo头像" class="img-responsive center-block">
+        </a>
+        <div class="branding">
+            <!--<h2 class="text-hide">Snippet主题,从未如此简单有趣</h2>-->
+            
+            <h2>
+                欢迎来到ggy的个人网站
+            </h2>
+            
+        </div>
+    </div>
+</header>
+    <nav class="main-navigation">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="navbar-header"><span class="nav-toggle-button collapsed pull-right" data-toggle="collapse" data-target="#main-menu" id="mnav">
+                        <span class="sr-only"></span>
+                        <i class="fa fa-bars"></i>
+                    </span>
+                    <a class="navbar-brand" href="https://ggyggy666.github.io">
+                        ggy的个人博客</a>
+                </div>
+                <div class="collapse navbar-collapse" id="main-menu">
+                    <ul class="menu">
+                        
+                        <li role="presentation" class="text-center">
+                            <a href="/"><i class="fa "></i>
+                                首页</a>
+                        </li>
+                        
+                        <li role="presentation" class="text-center">
+                            <a href="/categories/web安全/"><i class="fa "></i>
+                                web安全</a>
+                        </li>
+                        
+                        <li role="presentation" class="text-center">
+                            <a href="/categories/python工具/"><i class="fa "></i>
+                                python工具</a>
+                        </li>
+                        
+                        <li role="presentation" class="text-center">
+                            <a href="/categories/密码学/"><i class="fa "></i>
+                                密码学</a>
+                        </li>
+                        
+                        <li role="presentation" class="text-center">
+                            <a href="/archives/"><i class="fa "></i>
+                                时间轴</a>
+                        </li>
+                        
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</nav>
+    <section class="content-wrap">
+        <div class="container">
+            <div class="row">
+                <main class="col-md-8 main-content m-post">
+                    <p id="process"></p>
+<article class="post">
+    <div class="post-head">
+        <h1 id="学Linux的第三天">
+            
+            学Linux的第三天
+            
+        </h1>
+        <div class="post-meta">
+    
+    <span class="categories-meta fa-wrap">
+        <i class="fa fa-folder-open-o"></i>
+        <a class="category-link" href="/categories/Linux/">Linux</a>
+    </span>
+    
+    
+    <span class="fa-wrap">
+        <i class="fa fa-tags"></i>
+        <span class="tags-meta">
+            
+            <a class="tag-link" href="/tags/%E5%AD%A6Linux%E7%9A%84%E7%AC%AC%E4%B8%89%E5%A4%A9/" rel="tag">学Linux的第三天</a>
+            
+        </span>
+    </span>
+    
+    
+    
+    <span class="fa-wrap">
+        <i class="fa fa-clock-o"></i>
+        <span class="date-meta">
+            2020/03/16</span>
+    </span>
+    
+    <span class="fa-wrap">
+        <i class="fa fa-eye"></i>
+        <span id="busuanzi_value_page_pv"></span>
+    </span>
+    
+    
+</div>
+        
+        
+        <p class="fa fa-exclamation-triangle warning">
+            本文于<strong>
+                361</strong>
+            天之前发表，文中内容可能已经过时。
+        </p>
+        
+    </div>
+    
+    <div class="post-body post-content">
+        <p>今天是第三天啦。今天学习软件包的管理。</p>
+<a id="more"></a>
+<h1 id="软件包管理"><a href="#软件包管理" class="headerlink" title="软件包管理"></a>软件包管理</h1><h2 id="管理-deb软件包：dpkg"><a href="#管理-deb软件包：dpkg" class="headerlink" title="管理.deb软件包：dpkg"></a>管理.deb软件包：dpkg</h2><p>适用于Ubuntu和Debian。</p>
+<h3 id="安装软件"><a href="#安装软件" class="headerlink" title="安装软件"></a>安装软件</h3><p><code>sudo dpkg --install 完整的软件包名字</code> 或者 <code>sudo dpkg -i 完整的软件包名字</code><br>安装软件<br><code>dpkg -l | grep openssh</code><br>查看已安装的某个软件信息。<br><code>dpkg -S openssh</code><br>搜索跟openssh这个软件相关的文件。  </p>
+<h3 id="卸载软件"><a href="#卸载软件" class="headerlink" title="卸载软件"></a>卸载软件</h3><p><code>sudo dpkg --remove opera</code> 或者 <code>sudo dpkg -r opera</code><br>卸载opera这个软件。-r是–remove的简写。  </p>
+<h2 id="管理RPM软件包：rpm"><a href="#管理RPM软件包：rpm" class="headerlink" title="管理RPM软件包：rpm"></a>管理RPM软件包：rpm</h2><p>适用于Red Hat、openSUSE。</p>
+<h3 id="安装软件-1"><a href="#安装软件-1" class="headerlink" title="安装软件"></a>安装软件</h3><p><code>sudo rpm -ivh 完整的软件包名字</code><br>-i是安装，-v是显示rpm当前正在执行的工作，-h通过一系列的#显示安装进度。 </p>
+<h3 id="更新软件"><a href="#更新软件" class="headerlink" title="更新软件"></a>更新软件</h3><p><code>sudo rpm -Uvh 完整的软件包名字</code><br>-U更新一个软件。  </p>
+<h3 id="查看已安装的软件包"><a href="#查看已安装的软件包" class="headerlink" title="查看已安装的软件包"></a>查看已安装的软件包</h3><p><code>rpm -q 某个软件包名字</code><br>查看某个软件的版本信息。<br><code>rpm -qa | grep xorg</code><br>如果不记得软件包名字，可以用-a显示已安装的所有软件包，并且使用grep匹配软件包中名字含有xorg的。  </p>
+<h3 id="卸载软件包"><a href="#卸载软件包" class="headerlink" title="卸载软件包"></a>卸载软件包</h3><p><code>sudo rpm -e 某个软件包名字</code><br>卸载某个软件。<br><code>sudo rpm -e -vv --test 某个软件包名字</code><br>–test模拟删除软件过程（并没有真的删除）。-vv输出完整的调试信息。</p>
+<h2 id="高级软件包工具：apt"><a href="#高级软件包工具：apt" class="headerlink" title="高级软件包工具：apt"></a>高级软件包工具：apt</h2><ol>
+<li>apt-get update: 更新apt-get缓存中的软件包信息。</li>
+<li>apt-get install: 下载安装软件。</li>
+<li>apt-get upgrade: 下载安装已安装的软件的最新版本。</li>
+<li>apt-get remove: 卸载某个软件。</li>
+<li>apt-get source：下载某个软件的源代码。</li>
+<li>apt-get clean: 删除所有已下载的文件。</li>
+<li>apt-get -h: 获取apt-get的完整用法。</li>
+</ol>
+<h3 id="查询软件包信息：apt-cache"><a href="#查询软件包信息：apt-cache" class="headerlink" title="查询软件包信息：apt-cache"></a>查询软件包信息：apt-cache</h3><p><code>apt-cache search hello</code><br>搜索带“hello”的软件包。<br><code>apt-cache depends helloworld</code><br>搜索“helloworld”软件的所有依赖文件。</p>
+<h2 id="从源代码编译软件"><a href="#从源代码编译软件" class="headerlink" title="从源代码编译软件"></a>从源代码编译软件</h2><p>下载源文件，解压。<br><code>tar zxvf xxx.tar.gz</code><br>解压tar.gz文件。<br><code>tar jxvf xxx.tar.bz2</code><br>解压tar.bz2文件。<br><code>./configure --enable-gui</code><br>配置图形界面。然后可能需要安装gcc等一堆东西，根据报错百度查找方法。<br><code>make</code><br>编译。<br><code>make install</code><br>安装。  </p>
+<p>反正我最后是没成功…还是百度吧。</p>
+
+    </div>
+    
+    <div class="reward" ontouchstart>
+    <div class="reward-wrap">赏
+        <div class="reward-box">
+            
+            <span class="reward-type">
+                <img class="alipay" src="/img/alipay.jpg"><b>支付宝打赏</b>
+            </span>
+            
+            
+            <span class="reward-type">
+                <img class="wechat" src="/img/wechat.jpg"><b>微信打赏</b>
+            </span>
+            
+        </div>
+    </div>
+    <p class="reward-tip">
+        赞赏是不耍流氓的鼓励
+    </p>
+</div>
+    
+    <div class="post-footer">
+        <div>
+            
+            转载声明：
+            商业转载请联系作者获得授权,非商业转载请注明出处 © <a href="ggy.44pp.vip" target="_blank">ggy</a>
+            
+            
+        </div>
+        <div>
+            
+        </div>
+    </div>
+</article>
+<div class="article-nav prev-next-wrap clearfix">
+    
+    <a href="/2020/03/22/SQL%E6%B3%A8%E5%85%A5%E6%80%BB%E7%BB%93/" class="pre-post btn btn-default" title='SQL注入总结'>
+        <i class="fa fa-angle-left fa-fw"></i><span class="hidden-lg">上一篇</span>
+        <span class="hidden-xs">
+            SQL注入总结</span>
+    </a>
+    
+    
+    <a href="/2020/03/15/%E5%AD%A6Linux%E7%9A%84%E7%AC%AC%E4%BA%8C%E5%A4%A9/" class="next-post btn btn-default" title='学Linux的第二天'>
+        <span class="hidden-lg">下一篇</span>
+        <span class="hidden-xs">
+            学Linux的第二天</span><i class="fa fa-angle-right fa-fw"></i>
+    </a>
+    
+</div>
+
+<div id="comments">
+    
+<div id="lv-container" data-id="city" data-uid="MTAyMC80ODM1Ni8yNDg1MA==">
+    <script type="text/javascript">
+    (function(d, s) {
+        var j, e = d.getElementsByTagName(s)[0];
+        if (typeof LivereTower === 'function') { return; }
+        j = d.createElement(s);
+        j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+        j.async = true;
+        e.parentNode.insertBefore(j, e);
+    })(document, 'script');
+    </script>
+</div>
+
+</div>
+
+                </main>
+                
+                    <aside id="article-toc" role="navigation" class="col-md-4">
+    <div class="widget">
+        <h3 class="title">
+            文章目录
+        </h3>
+        
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#软件包管理"><span class="toc-text">软件包管理</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#管理-deb软件包：dpkg"><span class="toc-text">管理.deb软件包：dpkg</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#安装软件"><span class="toc-text">安装软件</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#卸载软件"><span class="toc-text">卸载软件</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#管理RPM软件包：rpm"><span class="toc-text">管理RPM软件包：rpm</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#安装软件-1"><span class="toc-text">安装软件</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#更新软件"><span class="toc-text">更新软件</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#查看已安装的软件包"><span class="toc-text">查看已安装的软件包</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#卸载软件包"><span class="toc-text">卸载软件包</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#高级软件包工具：apt"><span class="toc-text">高级软件包工具：apt</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#查询软件包信息：apt-cache"><span class="toc-text">查询软件包信息：apt-cache</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#从源代码编译软件"><span class="toc-text">从源代码编译软件</span></a></li></ol></li></ol>
+        
+    </div>
+</aside>
+                
+            </div>
+        </div>
+    </section>
+    <footer class="main-footer">
+    <div class="container">
+        <div class="row">
+        </div>
+    </div>
+</footer>
+<a id="back-to-top" class="icon-btn hide">
+    <i class="fa fa-chevron-up"></i>
+</a>
+    <div class="copyright">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="busuanzi">
+    
+    访问量:
+    <strong id="busuanzi_value_site_pv">
+        <i class="fa fa-spinner fa-spin"></i>
+    </strong>
+    &nbsp; | &nbsp;
+    访客数:
+    <strong id="busuanzi_value_site_uv">
+        <i class="fa fa-spinner fa-spin"></i>
+    </strong>
+    
+</div>
+            </div>
+            <div class="col-sm-12">
+                <span>Copyright &copy;
+                    2020
+                    
+                </span> |
+                <span>
+                    Powered by <a href="//hexo.io" class="copyright-links" target="_blank" rel="nofollow">Hexo</a>
+                </span> |
+                <span>
+                    Theme by <a href="//github.com/shenliyang/hexo-theme-snippet.git" class="copyright-links" target="_blank" rel="nofollow">Snippet</a>
+                </span>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<script src="/assets/tagcanvas.min.js?rev=2.9.js"></script>
+
+<script>
+var tagOption = {
+    textColour: '#444', // 字体颜色
+    outlineMethod: 'block', // 选中模式
+    outlineColour: '#FFDAB9', // 选中模式的颜色
+    interval: 30 || 30, // 动画帧之间的时间间隔，值越大，转动幅度越大
+    textHeight: 13,
+    outlineRadius: 3,
+    freezeActive: true || '', // 选中的标签是否继续滚动
+    frontSelect: true || '', // 不选标签云后部的标签
+    initial: [0.1, -0.1],
+    depth: 0.5,
+    decel: 0.95,
+    maxSpeed: 0.03,
+    reverse: true || '', // 是否反向触发
+    fadeIn: 500, // 进入动画时间
+    wheelZoom: false || '' // 是否启用鼠标滚轮
+}
+TagCanvas.Start('tag-cloud-3d', '', tagOption);
+</script>
+
+
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+<script src="/js/app.js?rev=@@hash.js"></script>
+
+
+<!-- 雪花特效 -->
+<script type="text/javascript" src="http://libs.baidu.com/jquery/1.8.3/jquery.js"></script>
+<script type="text/javascript" src="http://libs.baidu.com/jquery/1.8.3/jquery.min.js"></script>
+<script type="text/javascript" src="\js\snow.js"></script>
+
+<canvas class="fireworks" style="position: fixed;left: 0;top: 0;z-index: 1; pointer-events: none;" ></canvas> 
+<script type="text/javascript" src="//cdn.bootcss.com/animejs/2.2.0/anime.min.js"></script> 
+<script type="text/javascript" src="/js/fireworks.js"></script>
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"model":{"jsonPath":"live2d-widget-model-haruto"},"display":{"position":"right","width":150,"height":300},"mobile":{"show":false},"log":false,"pluginJsPath":"lib/","pluginModelPath":"assets/","pluginRootPath":"live2dw/","tagMode":false});</script></body>
+</html>

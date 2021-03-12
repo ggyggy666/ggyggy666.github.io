@@ -1,0 +1,399 @@
+<head>
+<script src="https://cdn.jsdelivr.net/npm/jquery/dist/jquery.min.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome/css/font-awesome.min.css">
+<script src="https://cdn.jsdelivr.net/gh/stevenjoezhang/live2d-widget/autoload.js"></script>
+</head>
+
+<!DOCTYPE HTML>
+<html lang="zh-CN">
+
+<head>
+    <!--Setting-->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+    <meta http-equiv="Cache-Control" content="no-siteapp">
+    <meta http-equiv="Cache-Control" content="no-transform">
+    <meta name="renderer" content="webkit|ie-comp|ie-stand">
+    <meta name="apple-mobile-web-app-capable" content="ggy的个人博客">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="format-detection" content="telephone=no,email=no,adress=no">
+    <meta name="browsermode" content="application">
+    <meta name="screen-orientation" content="portrait">
+    <meta name="theme-version" content="1.2.3">
+    <meta name="root" content="/">
+    <link rel="dns-prefetch" href="https://ggyggy666.github.io">
+    <!--SEO-->
+
+<meta name="keywords" content="密码找回安全案例总结" />
+
+
+<meta name="description" content="今天开始进入–密码找回安全案例。
+
+
+密码找回是一个重要的业务，它的安全性也很重要。
+
+验证码可被暴力破解密码找回凭证直接返回在客户端
+直接暴露在URL中F12-&gt;查看请求链接
+加密验证字..." />
+
+
+<meta name="robots" content="all" />
+<meta name="google" content="all" />
+<meta name="googlebot" content="all" />
+<meta name="verify" content="all" />
+    <!--Title-->
+
+<title>
+    
+    密码找回安全案例总结 |
+    
+    ggy的个人博客
+</title>
+
+<link rel="alternate" href="/atom.xml" title="ggy的个人博客" type="application/atom+xml">
+
+
+<link rel="icon" href="/favicon.ico">
+
+    
+
+
+<link rel="stylesheet" href="/css/bootstrap.min.css?rev=3.3.7.css">
+<link rel="stylesheet" href="/css/font-awesome.min.css?rev=4.7.0.css">
+<link rel="stylesheet" href="/css/style.css?rev=@@hash.css">
+
+    
+<div class="hide">
+    <script type="text/javascript">
+    var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+    document.write(unescape("%3Cspan class='cnzz_stat_icon_1263868967 hide' %3E%3Cscript%20src%3D%22https%3A%2F%2Fs95.cnzz.com%2Fz_stat.php%3Fweb_id%3D1272564536%22%3E%3C%2Fscript%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s19.cnzz.com/z_stat.php%3Fid%3D1263868967%26show%3Dpic1' type='text/javascript'%3E%3C/script%3E"));
+    </script>
+</div>
+
+
+
+
+    
+
+<meta name="generator" content="Hexo 4.2.0"></head>
+<!--[if lte IE 8]>
+<style>
+    html{ font-size: 1em }
+</style>
+<![endif]-->
+<!--[if lte IE 9]>
+<div style="ie">你使用的浏览器版本过低，为了你更好的阅读体验，请更新浏览器的版本或者使用其他现代浏览器，比如Chrome、Firefox、Safari等。</div>
+<![endif]-->
+<body>
+    <header class="main-header"  style="background-image:url(
+    https://pic.downk.cc/item/5e3816b82fb38b8c3c8791f9.jpg)"
+     >
+    <div class="main-header-box">
+        <a class="header-avatar" href="/" title='ggy'>
+            <img src="/img/avatar.jpg" alt="logo头像" class="img-responsive center-block">
+        </a>
+        <div class="branding">
+            <!--<h2 class="text-hide">Snippet主题,从未如此简单有趣</h2>-->
+            
+            <h2>
+                欢迎来到ggy的个人网站
+            </h2>
+            
+        </div>
+    </div>
+</header>
+    <nav class="main-navigation">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="navbar-header"><span class="nav-toggle-button collapsed pull-right" data-toggle="collapse" data-target="#main-menu" id="mnav">
+                        <span class="sr-only"></span>
+                        <i class="fa fa-bars"></i>
+                    </span>
+                    <a class="navbar-brand" href="https://ggyggy666.github.io">
+                        ggy的个人博客</a>
+                </div>
+                <div class="collapse navbar-collapse" id="main-menu">
+                    <ul class="menu">
+                        
+                        <li role="presentation" class="text-center">
+                            <a href="/"><i class="fa "></i>
+                                首页</a>
+                        </li>
+                        
+                        <li role="presentation" class="text-center">
+                            <a href="/categories/web安全/"><i class="fa "></i>
+                                web安全</a>
+                        </li>
+                        
+                        <li role="presentation" class="text-center">
+                            <a href="/categories/python工具/"><i class="fa "></i>
+                                python工具</a>
+                        </li>
+                        
+                        <li role="presentation" class="text-center">
+                            <a href="/categories/密码学/"><i class="fa "></i>
+                                密码学</a>
+                        </li>
+                        
+                        <li role="presentation" class="text-center">
+                            <a href="/archives/"><i class="fa "></i>
+                                时间轴</a>
+                        </li>
+                        
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</nav>
+    <section class="content-wrap">
+        <div class="container">
+            <div class="row">
+                <main class="col-md-8 main-content m-post">
+                    <p id="process"></p>
+<article class="post">
+    <div class="post-head">
+        <h1 id="密码找回安全案例总结">
+            
+            密码找回安全案例总结
+            
+        </h1>
+        <div class="post-meta">
+    
+    <span class="categories-meta fa-wrap">
+        <i class="fa fa-folder-open-o"></i>
+        <a class="category-link" href="/categories/web%E5%AE%89%E5%85%A8/">web安全</a>
+    </span>
+    
+    
+    <span class="fa-wrap">
+        <i class="fa fa-tags"></i>
+        <span class="tags-meta">
+            
+            <a class="tag-link" href="/tags/%E5%AF%86%E7%A0%81%E6%89%BE%E5%9B%9E%E5%AE%89%E5%85%A8%E6%A1%88%E4%BE%8B%E6%80%BB%E7%BB%93/" rel="tag">密码找回安全案例总结</a>
+            
+        </span>
+    </span>
+    
+    
+    
+    <span class="fa-wrap">
+        <i class="fa fa-clock-o"></i>
+        <span class="date-meta">
+            2020/02/29</span>
+    </span>
+    
+    <span class="fa-wrap">
+        <i class="fa fa-eye"></i>
+        <span id="busuanzi_value_page_pv"></span>
+    </span>
+    
+    
+</div>
+        
+        
+        <p class="fa fa-exclamation-triangle warning">
+            本文于<strong>
+                377</strong>
+            天之前发表，文中内容可能已经过时。
+        </p>
+        
+    </div>
+    
+    <div class="post-body post-content">
+        <p>今天开始进入–密码找回安全案例。</p>
+<a id="more"></a>
+<p><img src="https://s2.ax1x.com/2020/03/01/3caSdH.png" alt></p>
+<p>密码找回是一个重要的业务，它的安全性也很重要。</p>
+<hr>
+<h2 id="验证码可被暴力破解"><a href="#验证码可被暴力破解" class="headerlink" title="验证码可被暴力破解"></a>验证码可被暴力破解</h2><h2 id="密码找回凭证直接返回在客户端"><a href="#密码找回凭证直接返回在客户端" class="headerlink" title="密码找回凭证直接返回在客户端"></a>密码找回凭证直接返回在客户端</h2><ul>
+<li><strong>直接暴露在URL中</strong><br>F12-&gt;查看请求链接</li>
+<li><strong>加密验证字符串返回给客户端</strong><br>发送邮箱验证码后，查看返回的数据包，发现包含有加密字符串。在邮箱中得到验证码后，输入，进入重置密码界面，可以发现链接中的验证码被加密后跟刚才发现的加密字符串是一样的。因此可以不用得到验证码，直接在URL加上客户端返回的加密字符串即可。</li>
+<li><strong>网页源代码的hidden属性的标签中隐藏有密保答案</strong></li>
+<li><strong>短信验证码返回给客户端</strong><h2 id="密码重置链接存在弱token"><a href="#密码重置链接存在弱token" class="headerlink" title="密码重置链接存在弱token"></a>密码重置链接存在弱token</h2><ol>
+<li>利用服务器时间作为token。<br>使用两个账号，几乎同时发生邮箱，对比其中差异，判断是服务器时间作为token。</li>
+<li>使用系统时间<br>将token值MD5解密，得到一串长的数字，可能就是UNIX时间戳格式，可以用UNIX时间戳转换工具转换。<h2 id="使用短信验证码找回"><a href="#使用短信验证码找回" class="headerlink" title="使用短信验证码找回"></a>使用短信验证码找回</h2>填入收到的验证码后提交，抓包修改username。<h2 id="token未与ID绑定，修改发送到邮箱的用户ID"><a href="#token未与ID绑定，修改发送到邮箱的用户ID" class="headerlink" title="token未与ID绑定，修改发送到邮箱的用户ID"></a>token未与ID绑定，修改发送到邮箱的用户ID</h2><h2 id="重新绑定用户手机"><a href="#重新绑定用户手机" class="headerlink" title="重新绑定用户手机"></a>重新绑定用户手机</h2>注册账号，进入一个绑定手机号的页面，输入自己的手机号，提交抓包，修改uid或者用户名等成其它用户。这样其它用户可能就会绑定了我自己的手机。找回密码时就可输入那个用户的信息，发送验证码到我手机。<h2 id="重新绑定用户邮箱"><a href="#重新绑定用户邮箱" class="headerlink" title="重新绑定用户邮箱"></a>重新绑定用户邮箱</h2>登录后，可以查看其它用户的信息（跳转到对应用户的信息界面）。如果该页面提供了绑定邮箱的功能，就可以尝试绑定自己的邮箱。<h2 id="服务端逻辑验证缺陷"><a href="#服务端逻辑验证缺陷" class="headerlink" title="服务端逻辑验证缺陷"></a>服务端逻辑验证缺陷</h2>抓包，删除相应的参数。<h2 id="邮箱地址可被抓包修改"><a href="#邮箱地址可被抓包修改" class="headerlink" title="邮箱地址可被抓包修改"></a>邮箱地址可被抓包修改</h2><h2 id="身份验证页面直接输入最后重置密码页面的链接进行跳过"><a href="#身份验证页面直接输入最后重置密码页面的链接进行跳过" class="headerlink" title="身份验证页面直接输入最后重置密码页面的链接进行跳过"></a>身份验证页面直接输入最后重置密码页面的链接进行跳过</h2><h2 id="抓包修改返回包的状态码"><a href="#抓包修改返回包的状态码" class="headerlink" title="抓包修改返回包的状态码"></a>抓包修改返回包的状态码</h2><h2 id="注册覆盖"><a href="#注册覆盖" class="headerlink" title="注册覆盖"></a>注册覆盖</h2>注册时，输入一个用户名，显示已被注册。输入一个没被注册的用户名，抓包，修改成之前被注册的那个用户名。<h2 id="Session覆盖"><a href="#Session覆盖" class="headerlink" title="Session覆盖"></a>Session覆盖</h2>前面讲过了。一个账号发送了邮箱验证后，先不要点击邮箱中的链接。同一浏览器下开一个新标签，登录另一个账号，同样发送邮箱验证，然后点击之前第一个账号收到的邮箱链接，就能使第二个账号直接进入重置密码界面。</li>
+</ol>
+</li>
+</ul>
+<h2 id="防范"><a href="#防范" class="headerlink" title="防范"></a>防范</h2><ol>
+<li>对验证码次数和失效时间进行限制。</li>
+<li>密码找回各个流程严格控制好，防止直接跳转步骤。</li>
+<li>Token不能太弱。</li>
+<li>密码重置凭证应与账号的信息严格绑定。</li>
+<li>对客户端传入的数据进行校验。</li>
+<li>防止重复注册，注册覆盖。</li>
+</ol>
+
+    </div>
+    
+    <div class="reward" ontouchstart>
+    <div class="reward-wrap">赏
+        <div class="reward-box">
+            
+            <span class="reward-type">
+                <img class="alipay" src="/img/alipay.jpg"><b>支付宝打赏</b>
+            </span>
+            
+            
+            <span class="reward-type">
+                <img class="wechat" src="/img/wechat.jpg"><b>微信打赏</b>
+            </span>
+            
+        </div>
+    </div>
+    <p class="reward-tip">
+        赞赏是不耍流氓的鼓励
+    </p>
+</div>
+    
+    <div class="post-footer">
+        <div>
+            
+            转载声明：
+            商业转载请联系作者获得授权,非商业转载请注明出处 © <a href="ggy.44pp.vip" target="_blank">ggy</a>
+            
+            
+        </div>
+        <div>
+            
+        </div>
+    </div>
+</article>
+<div class="article-nav prev-next-wrap clearfix">
+    
+    <a href="/2020/03/01/%E5%AF%86%E7%A0%81%E7%BC%96%E7%A0%81%E7%9A%84%E5%8F%91%E5%B1%95%E5%92%8C%E7%A0%B4%E8%AF%91%E7%9A%84%E5%8F%91%E5%B1%95/" class="pre-post btn btn-default" title='密码编码的发展和破译的发展'>
+        <i class="fa fa-angle-left fa-fw"></i><span class="hidden-lg">上一篇</span>
+        <span class="hidden-xs">
+            密码编码的发展和破译的发展</span>
+    </a>
+    
+    
+    <a href="/2020/02/28/%E8%B4%A6%E5%8F%B7%E5%AE%89%E5%85%A8%E6%A1%88%E4%BE%8B%E6%80%BB%E7%BB%93/" class="next-post btn btn-default" title='账号安全案例总结'>
+        <span class="hidden-lg">下一篇</span>
+        <span class="hidden-xs">
+            账号安全案例总结</span><i class="fa fa-angle-right fa-fw"></i>
+    </a>
+    
+</div>
+
+<div id="comments">
+    
+<div id="lv-container" data-id="city" data-uid="MTAyMC80ODM1Ni8yNDg1MA==">
+    <script type="text/javascript">
+    (function(d, s) {
+        var j, e = d.getElementsByTagName(s)[0];
+        if (typeof LivereTower === 'function') { return; }
+        j = d.createElement(s);
+        j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+        j.async = true;
+        e.parentNode.insertBefore(j, e);
+    })(document, 'script');
+    </script>
+</div>
+
+</div>
+
+                </main>
+                
+                    <aside id="article-toc" role="navigation" class="col-md-4">
+    <div class="widget">
+        <h3 class="title">
+            文章目录
+        </h3>
+        
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#验证码可被暴力破解"><span class="toc-text">验证码可被暴力破解</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#密码找回凭证直接返回在客户端"><span class="toc-text">密码找回凭证直接返回在客户端</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#密码重置链接存在弱token"><span class="toc-text">密码重置链接存在弱token</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#使用短信验证码找回"><span class="toc-text">使用短信验证码找回</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#token未与ID绑定，修改发送到邮箱的用户ID"><span class="toc-text">token未与ID绑定，修改发送到邮箱的用户ID</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#重新绑定用户手机"><span class="toc-text">重新绑定用户手机</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#重新绑定用户邮箱"><span class="toc-text">重新绑定用户邮箱</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#服务端逻辑验证缺陷"><span class="toc-text">服务端逻辑验证缺陷</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#邮箱地址可被抓包修改"><span class="toc-text">邮箱地址可被抓包修改</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#身份验证页面直接输入最后重置密码页面的链接进行跳过"><span class="toc-text">身份验证页面直接输入最后重置密码页面的链接进行跳过</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#抓包修改返回包的状态码"><span class="toc-text">抓包修改返回包的状态码</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#注册覆盖"><span class="toc-text">注册覆盖</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Session覆盖"><span class="toc-text">Session覆盖</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#防范"><span class="toc-text">防范</span></a></li></ol>
+        
+    </div>
+</aside>
+                
+            </div>
+        </div>
+    </section>
+    <footer class="main-footer">
+    <div class="container">
+        <div class="row">
+        </div>
+    </div>
+</footer>
+<a id="back-to-top" class="icon-btn hide">
+    <i class="fa fa-chevron-up"></i>
+</a>
+    <div class="copyright">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="busuanzi">
+    
+    访问量:
+    <strong id="busuanzi_value_site_pv">
+        <i class="fa fa-spinner fa-spin"></i>
+    </strong>
+    &nbsp; | &nbsp;
+    访客数:
+    <strong id="busuanzi_value_site_uv">
+        <i class="fa fa-spinner fa-spin"></i>
+    </strong>
+    
+</div>
+            </div>
+            <div class="col-sm-12">
+                <span>Copyright &copy;
+                    2020
+                    
+                </span> |
+                <span>
+                    Powered by <a href="//hexo.io" class="copyright-links" target="_blank" rel="nofollow">Hexo</a>
+                </span> |
+                <span>
+                    Theme by <a href="//github.com/shenliyang/hexo-theme-snippet.git" class="copyright-links" target="_blank" rel="nofollow">Snippet</a>
+                </span>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<script src="/assets/tagcanvas.min.js?rev=2.9.js"></script>
+
+<script>
+var tagOption = {
+    textColour: '#444', // 字体颜色
+    outlineMethod: 'block', // 选中模式
+    outlineColour: '#FFDAB9', // 选中模式的颜色
+    interval: 30 || 30, // 动画帧之间的时间间隔，值越大，转动幅度越大
+    textHeight: 13,
+    outlineRadius: 3,
+    freezeActive: true || '', // 选中的标签是否继续滚动
+    frontSelect: true || '', // 不选标签云后部的标签
+    initial: [0.1, -0.1],
+    depth: 0.5,
+    decel: 0.95,
+    maxSpeed: 0.03,
+    reverse: true || '', // 是否反向触发
+    fadeIn: 500, // 进入动画时间
+    wheelZoom: false || '' // 是否启用鼠标滚轮
+}
+TagCanvas.Start('tag-cloud-3d', '', tagOption);
+</script>
+
+
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+<script src="/js/app.js?rev=@@hash.js"></script>
+
+
+<!-- 雪花特效 -->
+<script type="text/javascript" src="http://libs.baidu.com/jquery/1.8.3/jquery.js"></script>
+<script type="text/javascript" src="http://libs.baidu.com/jquery/1.8.3/jquery.min.js"></script>
+<script type="text/javascript" src="\js\snow.js"></script>
+
+<canvas class="fireworks" style="position: fixed;left: 0;top: 0;z-index: 1; pointer-events: none;" ></canvas> 
+<script type="text/javascript" src="//cdn.bootcss.com/animejs/2.2.0/anime.min.js"></script> 
+<script type="text/javascript" src="/js/fireworks.js"></script>
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"model":{"jsonPath":"live2d-widget-model-haruto"},"display":{"position":"right","width":150,"height":300},"mobile":{"show":false},"log":false,"pluginJsPath":"lib/","pluginModelPath":"assets/","pluginRootPath":"live2dw/","tagMode":false});</script></body>
+</html>

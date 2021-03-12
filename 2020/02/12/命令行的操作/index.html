@@ -1,0 +1,469 @@
+<head>
+<script src="https://cdn.jsdelivr.net/npm/jquery/dist/jquery.min.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome/css/font-awesome.min.css">
+<script src="https://cdn.jsdelivr.net/gh/stevenjoezhang/live2d-widget/autoload.js"></script>
+</head>
+
+<!DOCTYPE HTML>
+<html lang="zh-CN">
+
+<head>
+    <!--Setting-->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+    <meta http-equiv="Cache-Control" content="no-siteapp">
+    <meta http-equiv="Cache-Control" content="no-transform">
+    <meta name="renderer" content="webkit|ie-comp|ie-stand">
+    <meta name="apple-mobile-web-app-capable" content="ggy的个人博客">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="format-detection" content="telephone=no,email=no,adress=no">
+    <meta name="browsermode" content="application">
+    <meta name="screen-orientation" content="portrait">
+    <meta name="theme-version" content="1.2.3">
+    <meta name="root" content="/">
+    <link rel="dns-prefetch" href="https://ggyggy666.github.io">
+    <!--SEO-->
+
+<meta name="keywords" content="命令行的操作" />
+
+
+<meta name="description" content="今天学习了命令行的IP、端口、ping、netstat等命令。
+
+
+IP
+Internet Protocol,32位，一个字节8位，所以有4位。每一位用十进制表示，其范围为：0-255。如：19..." />
+
+
+<meta name="robots" content="all" />
+<meta name="google" content="all" />
+<meta name="googlebot" content="all" />
+<meta name="verify" content="all" />
+    <!--Title-->
+
+<title>
+    
+    命令行的操作 |
+    
+    ggy的个人博客
+</title>
+
+<link rel="alternate" href="/atom.xml" title="ggy的个人博客" type="application/atom+xml">
+
+
+<link rel="icon" href="/favicon.ico">
+
+    
+
+
+<link rel="stylesheet" href="/css/bootstrap.min.css?rev=3.3.7.css">
+<link rel="stylesheet" href="/css/font-awesome.min.css?rev=4.7.0.css">
+<link rel="stylesheet" href="/css/style.css?rev=@@hash.css">
+
+    
+<div class="hide">
+    <script type="text/javascript">
+    var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+    document.write(unescape("%3Cspan class='cnzz_stat_icon_1263868967 hide' %3E%3Cscript%20src%3D%22https%3A%2F%2Fs95.cnzz.com%2Fz_stat.php%3Fweb_id%3D1272564536%22%3E%3C%2Fscript%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s19.cnzz.com/z_stat.php%3Fid%3D1263868967%26show%3Dpic1' type='text/javascript'%3E%3C/script%3E"));
+    </script>
+</div>
+
+
+
+
+    
+
+<meta name="generator" content="Hexo 4.2.0"></head>
+<!--[if lte IE 8]>
+<style>
+    html{ font-size: 1em }
+</style>
+<![endif]-->
+<!--[if lte IE 9]>
+<div style="ie">你使用的浏览器版本过低，为了你更好的阅读体验，请更新浏览器的版本或者使用其他现代浏览器，比如Chrome、Firefox、Safari等。</div>
+<![endif]-->
+<body>
+    <header class="main-header"  style="background-image:url(
+    https://pic.downk.cc/item/5e3816b82fb38b8c3c8791f9.jpg)"
+     >
+    <div class="main-header-box">
+        <a class="header-avatar" href="/" title='ggy'>
+            <img src="/img/avatar.jpg" alt="logo头像" class="img-responsive center-block">
+        </a>
+        <div class="branding">
+            <!--<h2 class="text-hide">Snippet主题,从未如此简单有趣</h2>-->
+            
+            <h2>
+                欢迎来到ggy的个人网站
+            </h2>
+            
+        </div>
+    </div>
+</header>
+    <nav class="main-navigation">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="navbar-header"><span class="nav-toggle-button collapsed pull-right" data-toggle="collapse" data-target="#main-menu" id="mnav">
+                        <span class="sr-only"></span>
+                        <i class="fa fa-bars"></i>
+                    </span>
+                    <a class="navbar-brand" href="https://ggyggy666.github.io">
+                        ggy的个人博客</a>
+                </div>
+                <div class="collapse navbar-collapse" id="main-menu">
+                    <ul class="menu">
+                        
+                        <li role="presentation" class="text-center">
+                            <a href="/"><i class="fa "></i>
+                                首页</a>
+                        </li>
+                        
+                        <li role="presentation" class="text-center">
+                            <a href="/categories/web安全/"><i class="fa "></i>
+                                web安全</a>
+                        </li>
+                        
+                        <li role="presentation" class="text-center">
+                            <a href="/categories/python工具/"><i class="fa "></i>
+                                python工具</a>
+                        </li>
+                        
+                        <li role="presentation" class="text-center">
+                            <a href="/categories/密码学/"><i class="fa "></i>
+                                密码学</a>
+                        </li>
+                        
+                        <li role="presentation" class="text-center">
+                            <a href="/archives/"><i class="fa "></i>
+                                时间轴</a>
+                        </li>
+                        
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</nav>
+    <section class="content-wrap">
+        <div class="container">
+            <div class="row">
+                <main class="col-md-8 main-content m-post">
+                    <p id="process"></p>
+<article class="post">
+    <div class="post-head">
+        <h1 id="命令行的操作">
+            
+            命令行的操作
+            
+        </h1>
+        <div class="post-meta">
+    
+    <span class="categories-meta fa-wrap">
+        <i class="fa fa-folder-open-o"></i>
+        <a class="category-link" href="/categories/web%E5%AE%89%E5%85%A8/">web安全</a>
+    </span>
+    
+    
+    <span class="fa-wrap">
+        <i class="fa fa-tags"></i>
+        <span class="tags-meta">
+            
+            <a class="tag-link" href="/tags/%E5%91%BD%E4%BB%A4%E8%A1%8C%E7%9A%84%E6%93%8D%E4%BD%9C/" rel="tag">命令行的操作</a>
+            
+        </span>
+    </span>
+    
+    
+    
+    <span class="fa-wrap">
+        <i class="fa fa-clock-o"></i>
+        <span class="date-meta">
+            2020/02/12</span>
+    </span>
+    
+    <span class="fa-wrap">
+        <i class="fa fa-eye"></i>
+        <span id="busuanzi_value_page_pv"></span>
+    </span>
+    
+    
+</div>
+        
+        
+        <p class="fa fa-exclamation-triangle warning">
+            本文于<strong>
+                394</strong>
+            天之前发表，文中内容可能已经过时。
+        </p>
+        
+    </div>
+    
+    <div class="post-body post-content">
+        <p>今天学习了命令行的IP、端口、ping、netstat等命令。</p>
+<a id="more"></a>
+<hr>
+<h1 id="IP"><a href="#IP" class="headerlink" title="IP"></a>IP</h1><hr>
+<p>Internet Protocol,32位，一个字节8位，所以有4位。每一位用十进制表示，其范围为：0-255。如：192.168.1.1 </p>
+<h3 id="IP地址"><a href="#IP地址" class="headerlink" title="IP地址"></a>IP地址</h3><p>分类（对于第一位）：A（1-126）；B（128-191）；C（192-223）；D（224-239）；E（240-255）；</p>
+<h3 id="子网掩码"><a href="#子网掩码" class="headerlink" title="子网掩码"></a>子网掩码</h3><p>作用：</p>
+<ul>
+<li>确定地址中的网络号和主机号；  </li>
+<li>将大的IP网络划分为若干小网络。</li>
+</ul>
+<h3 id="DNS"><a href="#DNS" class="headerlink" title="DNS"></a>DNS</h3><p>将域名请求转为IP地址。</p>
+<hr>
+<h1 id="端口"><a href="#端口" class="headerlink" title="端口"></a>端口</h1><hr>
+<h3 id="按端口号分布划分"><a href="#按端口号分布划分" class="headerlink" title="按端口号分布划分"></a>按端口号分布划分</h3><ul>
+<li>公认端口：0-1023；</li>
+<li>注册端口：1024-49151；</li>
+<li>动态和/或私有端口：49152-65535</li>
+</ul>
+<h3 id="按协议类型划分"><a href="#按协议类型划分" class="headerlink" title="按协议类型划分"></a>按协议类型划分</h3><p>TCP端口  </p>
+<ul>
+<li>FTP（21端口，文件传输协议）  </li>
+<li>Telnet（23端口，远程登录）</li>
+<li>SMTP（25端口，邮件传输协议）  </li>
+<li>POP3（110端口，邮件接收）</li>
+</ul>
+<p>UDP端口</p>
+<ul>
+<li>HTTP（80端口，超文本传输协议）</li>
+<li>DNS协议（53端口，域名解析成IP地址）</li>
+<li>SNMP（161端口，简单网络管理协议）</li>
+<li>QQ协议（8000端口监听，4000端口发送信息）</li>
+</ul>
+<p>服务器常见应用端口</p>
+<p><img src="https://s2.ax1x.com/2020/03/01/3cNZ1f.png" alt></p>
+<hr>
+<h1 id="ping命令"><a href="#ping命令" class="headerlink" title="ping命令"></a>ping命令</h1><hr>
+<p><code>ping /?</code>查看使用方法。</p>
+<p><img src="https://s2.ax1x.com/2020/03/01/3cNM7j.png" alt></p>
+<ul>
+<li>-t：不断发送请求到目的地</li>
+<li>-a：对IP反向名称解析 -》成功，显示主机名</li>
+<li>-n：发送回响请求消息的次数，默认为4.</li>
+<li>-l size：发送的“数据”字段长度。默认：32字节，最大是65527.</li>
+</ul>
+<h3 id="示例"><a href="#示例" class="headerlink" title="示例"></a>示例</h3><p>查看网卡及TCP/IP是否正常：<br><code>ping 192.168.1.1</code><br>不断发包，解析主机名：<br><code>ping -a -t 192.168.1.1</code>  </p>
+<p><img src="https://s2.ax1x.com/2020/03/01/3cUlrD.png" alt><br>注意后面的TTL=64。TTL-&gt; Time To Live，数据包在网络的存活时间。可用来判断目标计算机使用的操作系统类型。因为：<br>TTL值：</p>
+<ul>
+<li>win10与win7: 64</li>
+<li>Linux：64或255</li>
+<li>Windows NT/2000/XP：128</li>
+<li>Windows：98</li>
+<li>UNIX: 255</li>
+</ul>
+<hr>
+<h1 id="netstat"><a href="#netstat" class="headerlink" title="netstat"></a>netstat</h1><hr>
+<p>用于查看网络连接。<code>netstat /?</code>查看使用方法。</p>
+<p><img src="https://s2.ax1x.com/2020/03/01/3cNhEd.png" alt></p>
+<ul>
+<li>-a：显示所有活动的TCP连接及TCP和UDP端口</li>
+<li>-e：显示以太网统计信息</li>
+<li>-n：显示活动的TCP连接。数字形式表现地址和端口号</li>
+<li>-o：显示活动TCP连接和进程ID</li>
+<li>-p：显示指定的协议的链接</li>
+<li>-r：显示路由表的内容</li>
+<li>-s：按协议显示统计信息</li>
+</ul>
+<h3 id="示例-1"><a href="#示例-1" class="headerlink" title="示例"></a>示例</h3><ul>
+<li>显示TCP连接和端口：<code>netstat -a</code></li>
+<li>显示活动的TCP/IP连接：<code>netstat -n</code> 或 <code>netstat</code></li>
+<li>显示以太网统计信息和所有协议统计信息：<code>netstat -se</code></li>
+<li>检测路由表情况：<code>netstat -rn</code></li>
+</ul>
+<hr>
+<h1 id="net"><a href="#net" class="headerlink" title="net"></a>net</h1><hr>
+<h3 id="net-view"><a href="#net-view" class="headerlink" title="net view"></a>net view</h3><p>显示域列表，计算机列表或指定计算机的共享资源列表。<br>格式：net view [\computername | dp, aom[omainname]]</p>
+<h3 id="net-user"><a href="#net-user" class="headerlink" title="net user"></a>net user</h3><p>添加或更改用户账号或显示用户账号信息。<br>格式：<br>net user [username[password | *] [options]] [/domain]<br>net user [username[password | *] /add [options][/domain]</p>
+<h3 id="net-use"><a href="#net-use" class="headerlink" title="net use"></a>net use</h3><p>连接计算机或断开计算机与共享资源的连接。<br>略</p>
+<h3 id="net-start"><a href="#net-start" class="headerlink" title="net start"></a>net start</h3><p>启动服务或显示已启动服务的列表</p>
+<h3 id="net-stop"><a href="#net-stop" class="headerlink" title="net stop"></a>net stop</h3><p>停止Windows网络服务</p>
+<h3 id="net-share"><a href="#net-share" class="headerlink" title="net share"></a>net share</h3><p>创建、删除、显示共享资源</p>
+<hr>
+<h1 id="23端口的远程登录"><a href="#23端口的远程登录" class="headerlink" title="23端口的远程登录"></a>23端口的远程登录</h1><hr>
+<p><code>telnet 192.168.1.102 80</code></p>
+<hr>
+<h1 id="ftp传输协议"><a href="#ftp传输协议" class="headerlink" title="ftp传输协议"></a>ftp传输协议</h1><hr>
+<p>将文件传送到正在运行FTP服务的远程计算机，或从远程计算机下载文件。按 ftp 进入环境。</p>
+<ul>
+<li>-v：显示远程服务器的所有响应信息</li>
+<li>-n：限制FTP的自动登录</li>
+<li>-d：使用调试方式</li>
+<li>-g：取消全局文件名</li>
+</ul>
+<hr>
+<h1 id="查看网络配置"><a href="#查看网络配置" class="headerlink" title="查看网络配置"></a>查看网络配置</h1><hr>
+<p><code>ipconfig</code><br><code>ipconfig/all</code></p>
+
+    </div>
+    
+    <div class="reward" ontouchstart>
+    <div class="reward-wrap">赏
+        <div class="reward-box">
+            
+            <span class="reward-type">
+                <img class="alipay" src="/img/alipay.jpg"><b>支付宝打赏</b>
+            </span>
+            
+            
+            <span class="reward-type">
+                <img class="wechat" src="/img/wechat.jpg"><b>微信打赏</b>
+            </span>
+            
+        </div>
+    </div>
+    <p class="reward-tip">
+        赞赏是不耍流氓的鼓励
+    </p>
+</div>
+    
+    <div class="post-footer">
+        <div>
+            
+            转载声明：
+            商业转载请联系作者获得授权,非商业转载请注明出处 © <a href="ggy.44pp.vip" target="_blank">ggy</a>
+            
+            
+        </div>
+        <div>
+            
+        </div>
+    </div>
+</article>
+<div class="article-nav prev-next-wrap clearfix">
+    
+    <a href="/2020/02/14/VBS%E8%84%9A%E6%9C%AC%E7%97%85%E6%AF%92%E5%88%B7QQ%E8%81%8A%E5%A4%A9%E5%B1%8F/" class="pre-post btn btn-default" title='VBS脚本病毒刷QQ聊天屏'>
+        <i class="fa fa-angle-left fa-fw"></i><span class="hidden-lg">上一篇</span>
+        <span class="hidden-xs">
+            VBS脚本病毒刷QQ聊天屏</span>
+    </a>
+    
+    
+    <a href="/2020/02/07/%E8%AF%BB%E3%80%8A%E7%99%BD%E5%B8%BD%E5%AD%90%E8%AE%B2web%E5%AE%89%E5%85%A8%E3%80%8B%E7%9A%84%E6%94%B6%E8%8E%B7(%E5%9B%9B)/" class="next-post btn btn-default" title='读《白帽子讲web安全》的收获(四)'>
+        <span class="hidden-lg">下一篇</span>
+        <span class="hidden-xs">
+            读《白帽子讲web安全》的收获(四)</span><i class="fa fa-angle-right fa-fw"></i>
+    </a>
+    
+</div>
+
+<div id="comments">
+    
+<div id="lv-container" data-id="city" data-uid="MTAyMC80ODM1Ni8yNDg1MA==">
+    <script type="text/javascript">
+    (function(d, s) {
+        var j, e = d.getElementsByTagName(s)[0];
+        if (typeof LivereTower === 'function') { return; }
+        j = d.createElement(s);
+        j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+        j.async = true;
+        e.parentNode.insertBefore(j, e);
+    })(document, 'script');
+    </script>
+</div>
+
+</div>
+
+                </main>
+                
+                    <aside id="article-toc" role="navigation" class="col-md-4">
+    <div class="widget">
+        <h3 class="title">
+            文章目录
+        </h3>
+        
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#IP"><span class="toc-text">IP</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#IP地址"><span class="toc-text">IP地址</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#子网掩码"><span class="toc-text">子网掩码</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#DNS"><span class="toc-text">DNS</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#端口"><span class="toc-text">端口</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#按端口号分布划分"><span class="toc-text">按端口号分布划分</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#按协议类型划分"><span class="toc-text">按协议类型划分</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#ping命令"><span class="toc-text">ping命令</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#示例"><span class="toc-text">示例</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#netstat"><span class="toc-text">netstat</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#示例-1"><span class="toc-text">示例</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#net"><span class="toc-text">net</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#net-view"><span class="toc-text">net view</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#net-user"><span class="toc-text">net user</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#net-use"><span class="toc-text">net use</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#net-start"><span class="toc-text">net start</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#net-stop"><span class="toc-text">net stop</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#net-share"><span class="toc-text">net share</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#23端口的远程登录"><span class="toc-text">23端口的远程登录</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#ftp传输协议"><span class="toc-text">ftp传输协议</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#查看网络配置"><span class="toc-text">查看网络配置</span></a></li></ol>
+        
+    </div>
+</aside>
+                
+            </div>
+        </div>
+    </section>
+    <footer class="main-footer">
+    <div class="container">
+        <div class="row">
+        </div>
+    </div>
+</footer>
+<a id="back-to-top" class="icon-btn hide">
+    <i class="fa fa-chevron-up"></i>
+</a>
+    <div class="copyright">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="busuanzi">
+    
+    访问量:
+    <strong id="busuanzi_value_site_pv">
+        <i class="fa fa-spinner fa-spin"></i>
+    </strong>
+    &nbsp; | &nbsp;
+    访客数:
+    <strong id="busuanzi_value_site_uv">
+        <i class="fa fa-spinner fa-spin"></i>
+    </strong>
+    
+</div>
+            </div>
+            <div class="col-sm-12">
+                <span>Copyright &copy;
+                    2020
+                    
+                </span> |
+                <span>
+                    Powered by <a href="//hexo.io" class="copyright-links" target="_blank" rel="nofollow">Hexo</a>
+                </span> |
+                <span>
+                    Theme by <a href="//github.com/shenliyang/hexo-theme-snippet.git" class="copyright-links" target="_blank" rel="nofollow">Snippet</a>
+                </span>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<script src="/assets/tagcanvas.min.js?rev=2.9.js"></script>
+
+<script>
+var tagOption = {
+    textColour: '#444', // 字体颜色
+    outlineMethod: 'block', // 选中模式
+    outlineColour: '#FFDAB9', // 选中模式的颜色
+    interval: 30 || 30, // 动画帧之间的时间间隔，值越大，转动幅度越大
+    textHeight: 13,
+    outlineRadius: 3,
+    freezeActive: true || '', // 选中的标签是否继续滚动
+    frontSelect: true || '', // 不选标签云后部的标签
+    initial: [0.1, -0.1],
+    depth: 0.5,
+    decel: 0.95,
+    maxSpeed: 0.03,
+    reverse: true || '', // 是否反向触发
+    fadeIn: 500, // 进入动画时间
+    wheelZoom: false || '' // 是否启用鼠标滚轮
+}
+TagCanvas.Start('tag-cloud-3d', '', tagOption);
+</script>
+
+
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+<script src="/js/app.js?rev=@@hash.js"></script>
+
+
+<!-- 雪花特效 -->
+<script type="text/javascript" src="http://libs.baidu.com/jquery/1.8.3/jquery.js"></script>
+<script type="text/javascript" src="http://libs.baidu.com/jquery/1.8.3/jquery.min.js"></script>
+<script type="text/javascript" src="\js\snow.js"></script>
+
+<canvas class="fireworks" style="position: fixed;left: 0;top: 0;z-index: 1; pointer-events: none;" ></canvas> 
+<script type="text/javascript" src="//cdn.bootcss.com/animejs/2.2.0/anime.min.js"></script> 
+<script type="text/javascript" src="/js/fireworks.js"></script>
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"model":{"jsonPath":"live2d-widget-model-haruto"},"display":{"position":"right","width":150,"height":300},"mobile":{"show":false},"log":false,"pluginJsPath":"lib/","pluginModelPath":"assets/","pluginRootPath":"live2dw/","tagMode":false});</script></body>
+</html>

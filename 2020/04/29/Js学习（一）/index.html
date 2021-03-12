@@ -1,0 +1,470 @@
+<head>
+<script src="https://cdn.jsdelivr.net/npm/jquery/dist/jquery.min.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome/css/font-awesome.min.css">
+<script src="https://cdn.jsdelivr.net/gh/stevenjoezhang/live2d-widget/autoload.js"></script>
+</head>
+
+<!DOCTYPE HTML>
+<html lang="zh-CN">
+
+<head>
+    <!--Setting-->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+    <meta http-equiv="Cache-Control" content="no-siteapp">
+    <meta http-equiv="Cache-Control" content="no-transform">
+    <meta name="renderer" content="webkit|ie-comp|ie-stand">
+    <meta name="apple-mobile-web-app-capable" content="ggy的个人博客">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="format-detection" content="telephone=no,email=no,adress=no">
+    <meta name="browsermode" content="application">
+    <meta name="screen-orientation" content="portrait">
+    <meta name="theme-version" content="1.2.3">
+    <meta name="root" content="/">
+    <link rel="dns-prefetch" href="https://ggyggy666.github.io">
+    <!--SEO-->
+
+<meta name="keywords" content="Js学习（一）" />
+
+
+<meta name="description" content="在写完登录界面后，这几天一直在学习JS。现已初步学完基础，特此总结。
+
+简述JavaScript是一门动态语言，包含三部分：ECMAScript、浏览器对象模型（BOM）和文档对象模型（DOM）..." />
+
+
+<meta name="robots" content="all" />
+<meta name="google" content="all" />
+<meta name="googlebot" content="all" />
+<meta name="verify" content="all" />
+    <!--Title-->
+
+<title>
+    
+    Js学习（一） |
+    
+    ggy的个人博客
+</title>
+
+<link rel="alternate" href="/atom.xml" title="ggy的个人博客" type="application/atom+xml">
+
+
+<link rel="icon" href="/favicon.ico">
+
+    
+
+
+<link rel="stylesheet" href="/css/bootstrap.min.css?rev=3.3.7.css">
+<link rel="stylesheet" href="/css/font-awesome.min.css?rev=4.7.0.css">
+<link rel="stylesheet" href="/css/style.css?rev=@@hash.css">
+
+    
+<div class="hide">
+    <script type="text/javascript">
+    var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+    document.write(unescape("%3Cspan class='cnzz_stat_icon_1263868967 hide' %3E%3Cscript%20src%3D%22https%3A%2F%2Fs95.cnzz.com%2Fz_stat.php%3Fweb_id%3D1272564536%22%3E%3C%2Fscript%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s19.cnzz.com/z_stat.php%3Fid%3D1263868967%26show%3Dpic1' type='text/javascript'%3E%3C/script%3E"));
+    </script>
+</div>
+
+
+
+
+    
+
+<meta name="generator" content="Hexo 4.2.0"></head>
+<!--[if lte IE 8]>
+<style>
+    html{ font-size: 1em }
+</style>
+<![endif]-->
+<!--[if lte IE 9]>
+<div style="ie">你使用的浏览器版本过低，为了你更好的阅读体验，请更新浏览器的版本或者使用其他现代浏览器，比如Chrome、Firefox、Safari等。</div>
+<![endif]-->
+<body>
+    <header class="main-header"  style="background-image:url(
+    https://pic.downk.cc/item/5e3816b82fb38b8c3c8791f9.jpg)"
+     >
+    <div class="main-header-box">
+        <a class="header-avatar" href="/" title='ggy'>
+            <img src="/img/avatar.jpg" alt="logo头像" class="img-responsive center-block">
+        </a>
+        <div class="branding">
+            <!--<h2 class="text-hide">Snippet主题,从未如此简单有趣</h2>-->
+            
+            <h2>
+                欢迎来到ggy的个人网站
+            </h2>
+            
+        </div>
+    </div>
+</header>
+    <nav class="main-navigation">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="navbar-header"><span class="nav-toggle-button collapsed pull-right" data-toggle="collapse" data-target="#main-menu" id="mnav">
+                        <span class="sr-only"></span>
+                        <i class="fa fa-bars"></i>
+                    </span>
+                    <a class="navbar-brand" href="https://ggyggy666.github.io">
+                        ggy的个人博客</a>
+                </div>
+                <div class="collapse navbar-collapse" id="main-menu">
+                    <ul class="menu">
+                        
+                        <li role="presentation" class="text-center">
+                            <a href="/"><i class="fa "></i>
+                                首页</a>
+                        </li>
+                        
+                        <li role="presentation" class="text-center">
+                            <a href="/categories/web安全/"><i class="fa "></i>
+                                web安全</a>
+                        </li>
+                        
+                        <li role="presentation" class="text-center">
+                            <a href="/categories/python工具/"><i class="fa "></i>
+                                python工具</a>
+                        </li>
+                        
+                        <li role="presentation" class="text-center">
+                            <a href="/categories/密码学/"><i class="fa "></i>
+                                密码学</a>
+                        </li>
+                        
+                        <li role="presentation" class="text-center">
+                            <a href="/archives/"><i class="fa "></i>
+                                时间轴</a>
+                        </li>
+                        
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</nav>
+    <section class="content-wrap">
+        <div class="container">
+            <div class="row">
+                <main class="col-md-8 main-content m-post">
+                    <p id="process"></p>
+<article class="post">
+    <div class="post-head">
+        <h1 id="Js学习（一）">
+            
+            Js学习（一）
+            
+        </h1>
+        <div class="post-meta">
+    
+    <span class="categories-meta fa-wrap">
+        <i class="fa fa-folder-open-o"></i>
+        <a class="category-link" href="/categories/%E5%89%8D%E7%AB%AF%E5%AD%A6%E4%B9%A0/">前端学习</a>
+    </span>
+    
+    
+    <span class="fa-wrap">
+        <i class="fa fa-tags"></i>
+        <span class="tags-meta">
+            
+            <a class="tag-link" href="/tags/Js%E5%AD%A6%E4%B9%A0%EF%BC%88%E4%B8%80%EF%BC%89/" rel="tag">Js学习（一）</a>
+            
+        </span>
+    </span>
+    
+    
+    
+    <span class="fa-wrap">
+        <i class="fa fa-clock-o"></i>
+        <span class="date-meta">
+            2020/04/29</span>
+    </span>
+    
+    <span class="fa-wrap">
+        <i class="fa fa-eye"></i>
+        <span id="busuanzi_value_page_pv"></span>
+    </span>
+    
+    
+</div>
+        
+        
+        <p class="fa fa-exclamation-triangle warning">
+            本文于<strong>
+                317</strong>
+            天之前发表，文中内容可能已经过时。
+        </p>
+        
+    </div>
+    
+    <div class="post-body post-content">
+        <p>在写完登录界面后，这几天一直在学习JS。现已初步学完基础，特此总结。</p>
+<a id="more"></a>
+<h1 id="简述"><a href="#简述" class="headerlink" title="简述"></a>简述</h1><p>JavaScript是一门动态语言，包含三部分：ECMAScript、浏览器对象模型（BOM）和文档对象模型（DOM）。ECMAScript是一种脚本语言的标准，比如定义了声明变量、操作数组等语法。BOM可直接操作浏览器，通常就是使用window.xxx操控。DOM就是网页文档的结构，为树形结构，HTML中的各个标签就是这棵树上的节点。</p>
+<h1 id="嵌入JS代码"><a href="#嵌入JS代码" class="headerlink" title="嵌入JS代码"></a>嵌入JS代码</h1><blockquote>
+<p>放在<code>&lt;script&gt;  &lt;/script&gt;</code>中, 这个标签有可以放在head或者body中。<br>通过<code>&lt;script src=&quot;xxx.js&quot;&gt; &lt;/script&gt;</code>导入一个外部的js文件。</p>
+</blockquote>
+<h1 id="注释"><a href="#注释" class="headerlink" title="注释"></a>注释</h1><blockquote>
+<p>单行注释：//<br>多行注释：/* */</p>
+</blockquote>
+<h1 id="输出模式"><a href="#输出模式" class="headerlink" title="输出模式"></a>输出模式</h1><blockquote>
+<p>弹出对话框模式： alert()  //弹出一个框<br>控制台模式： console.log()  //F12-&gt;console 可看到输出<br>页面输出模式：document.write()  //直接写在页面</p>
+</blockquote>
+<h1 id="变量声明"><a href="#变量声明" class="headerlink" title="变量声明"></a>变量声明</h1><blockquote>
+<p>使用var来声明变量。没有C语言那种int,char类型。JS会自动根据值来转换成相应的类型。<br>变量有全局和局部的。局部的会覆盖全局的。但是有一点需要注意，就是申明提前。例子：</p>
+</blockquote>
+<blockquote>
+<p>var s = 1;           //全局<br>function test(){<br>    console.log(s);    //不会输出1，会输出undefined;<br>    var s = 2;         //声明局部变量；<br>    console.log(s);    //输出2.<br>}  </p>
+</blockquote>
+<blockquote>
+<p>为什么不是输出1呢，这是因为，虽然s是后面才声明的，但会被提前声明，即<code>var s;</code>。此时这个局部变量会覆盖掉全局变量，但是又没有赋值，因此输出undefined。但是后面的<code>var s=2</code>就赋值了，因此输出了2.</p>
+</blockquote>
+<h1 id="数据类型"><a href="#数据类型" class="headerlink" title="数据类型"></a>数据类型</h1><h2 id="数字型"><a href="#数字型" class="headerlink" title="数字型"></a>数字型</h2><blockquote>
+<p>整数和浮点数不区分。<br>支持16进制的整数，在数字前面加上0x或者0X即可。<br>支持科学计数法：2e3 -&gt; 2000</p>
+</blockquote>
+<h2 id="字符串"><a href="#字符串" class="headerlink" title="字符串"></a>字符串</h2><blockquote>
+<p>内容使用’’或者””引起来的。<br>如果内容中带有’或者”需要直接显示，得使用\转义。</p>
+</blockquote>
+<h2 id="布尔型"><a href="#布尔型" class="headerlink" title="布尔型"></a>布尔型</h2><blockquote>
+<p>true 或 false</p>
+</blockquote>
+<h2 id="数组"><a href="#数组" class="headerlink" title="数组"></a>数组</h2><blockquote>
+<p>由于var定义变量时不用考虑类型，因此数组也不分整型和字符型。数组里面的内容的类型可以是任意的。比如：<br>var array = [1, “ggy”, true];</p>
+</blockquote>
+<h2 id="null和undefined"><a href="#null和undefined" class="headerlink" title="null和undefined"></a>null和undefined</h2><blockquote>
+<p>null是一个空对象的引用，没有声明一个变量就调用它就会出现错误。<br>undefined是在声明了一个变量后，没有给它赋值，而后面又调用了它导致的。</p>
+</blockquote>
+<h2 id="对象类型"><a href="#对象类型" class="headerlink" title="对象类型"></a>对象类型</h2><blockquote>
+<p>类似python中的字典，有键有值，一一对应。如:  </p>
+</blockquote>
+<pre><code>var student = {  
+    name: &quot;Peter&quot;,
+    age: 23,
+    gender: male
+};</code></pre><p>注意，键值对后面跟的是逗号，最后一个键值对不用。因为是定义一个对象，最后需要分号。要调用对象了的值，有两种方式：  </p>
+<blockquote>
+<ol>
+<li>通过对象名.键名调用，如：student.name,返回的就是Peter。</li>
+<li>通过对象名[“键名”]调用，如：student[“name”];</li>
+</ol>
+</blockquote>
+<h1 id="数据类型转换"><a href="#数据类型转换" class="headerlink" title="数据类型转换"></a>数据类型转换</h1><h2 id="字符串转整数"><a href="#字符串转整数" class="headerlink" title="字符串转整数"></a>字符串转整数</h2><blockquote>
+<p>使用parseInt(a, b)来进行转换，a是待转换的字符串，要转成整数，a必须是以数字开头的字符串，在转换成整数时，只转前面数字的部分，转到后面第一个非数字的字符时会立即停止转换。b是待转换字符的进制，是可选的。如果是16进制，前面就会有0x，那么前面说的就该变成遇到0x之后的第一个非数字字符就停止。比如：  </p>
+</blockquote>
+<blockquote>
+<p>parseInt(“12”)  –&gt; 12<br>parseInt(“12.2”) –&gt; 12<br>parseInt(“C”, 16) –&gt; 12<br>parseInt(“12a2”) –&gt; 12<br>parseInt(“0xC”) –&gt; 12<br>parseInt(“a12”) –&gt; 失败<br>parseInt(“”) –&gt; 0</p>
+</blockquote>
+<blockquote>
+<p>使用Number()进行转换, 必须是纯数字的字符串，不能含有其他字符（可以是布尔型的true)。如：    </p>
+</blockquote>
+<blockquote>
+<p>Number(“12”) –&gt; 12<br>Number(“12a2”) –&gt; NaN （不是一个数字）</p>
+</blockquote>
+<h2 id="字符串转小数"><a href="#字符串转小数" class="headerlink" title="字符串转小数"></a>字符串转小数</h2><blockquote>
+<p>同样有parseFloat()和Number()两种。<br>parseFloat()只转换字符中的以数字开头的整数或者浮点数，后面跟着的字符忽略（比如第二个.）。如：  </p>
+</blockquote>
+<blockquote>
+<p>parseFloat(“12”)  –&gt; 12<br>parseFloat(“12.2a”) –&gt; 12.2<br>parseFloat(“12.2.2”) –&gt; 12.2<br>parseFloat(null) –&gt; 0</p>
+</blockquote>
+<h2 id="数字转成字符串"><a href="#数字转成字符串" class="headerlink" title="数字转成字符串"></a>数字转成字符串</h2><blockquote>
+<p>用toString(a)和String()。a是可选的，代表该数字的进制。如：    </p>
+</blockquote>
+<blockquote>
+<p>var s = 15;<br>s.toString();  –&gt; “15”<br>s.toString(16); –&gt;”F”  (s是16进制的了。）<br>String(s) –&gt; “15”</p>
+</blockquote>
+<h2 id="布尔型转为其他类型"><a href="#布尔型转为其他类型" class="headerlink" title="布尔型转为其他类型"></a>布尔型转为其他类型</h2><blockquote>
+<p>转为字符型：”true” 或 “false”<br>转为数字型：0,1<br>其他类型转为布尔型：<br>使用Boolean()。 0,null,undefined,空字符串 –&gt; false ， 其它的都是true。如：<br>Boolean(“”) –&gt; false<br>Boolean(“ggy”) –&gt; true</p>
+</blockquote>
+<h2 id="隐式转换"><a href="#隐式转换" class="headerlink" title="隐式转换"></a>隐式转换</h2><blockquote>
+<p>数字+字符串，数字转为字符串<br>数字+布尔型，布尔型转为数字<br>字符串+布尔型，布尔型转为字符串<br>其它运算会将其它类型转为数字</p>
+</blockquote>
+<h1 id="运算符"><a href="#运算符" class="headerlink" title="运算符"></a>运算符</h1><h2 id="算术运算符"><a href="#算术运算符" class="headerlink" title="算术运算符"></a>算术运算符</h2><blockquote>
+<p><code>+</code>可以将数字相加，也可以对字符串进行连接。<code>- * / %</code>只用于数字间的计算。  </p>
+</blockquote>
+<blockquote>
+<p>var s = “1”+”1” –&gt; “11”<br>var s = 1 + “2” –&gt; “12”</p>
+</blockquote>
+<blockquote>
+<p><code>++、--</code>自增和自减。<br>var s = a++ –&gt; 先s=a, 再a=a+1;<br>var s = ++a –&gt; 先a=a+1, 再s=a;</p>
+</blockquote>
+<h2 id="比较运算符"><a href="#比较运算符" class="headerlink" title="比较运算符"></a>比较运算符</h2><blockquote>
+<p><code>== &gt; &lt; != &gt;= ===</code><br>== 是值相等，===要求值与类型都相等。</p>
+</blockquote>
+<h2 id="逻辑运算符"><a href="#逻辑运算符" class="headerlink" title="逻辑运算符"></a>逻辑运算符</h2><blockquote>
+<p>逻辑运算符必须有布尔型，如果一个是布尔型，另一个不是，会将它转为布尔型。<br>逻辑与&amp;&amp;，两个都是true，结果是true。如果一个不是布尔型，当左边为真，返回右边的值；左边为假，返回左边的值。<br>逻辑或||，至少一个是true，结果为true。如果一个不是布尔型，当左边为真，返回左边的值；左边为假，返回右边的值。<br>逻辑非！，将操作数取反。如果不是布尔型，先转换再取反。</p>
+</blockquote>
+<h2 id="条件和赋值运算符"><a href="#条件和赋值运算符" class="headerlink" title="条件和赋值运算符"></a>条件和赋值运算符</h2><blockquote>
+<p>条件运算符,?与:构成。其实就是三目运算符。<br>var s = a&gt;b?a:b;<br>赋值运算符，=构成。<br>var s = 1; s += 1；</p>
+</blockquote>
+<h2 id="运算符优先级"><a href="#运算符优先级" class="headerlink" title="运算符优先级"></a>运算符优先级</h2><p><img src="https://pic.downk.cc/item/5ea93d01c2a9a83be5215696.jpg" alt></p>
+
+    </div>
+    
+    <div class="reward" ontouchstart>
+    <div class="reward-wrap">赏
+        <div class="reward-box">
+            
+            <span class="reward-type">
+                <img class="alipay" src="/img/alipay.jpg"><b>支付宝打赏</b>
+            </span>
+            
+            
+            <span class="reward-type">
+                <img class="wechat" src="/img/wechat.jpg"><b>微信打赏</b>
+            </span>
+            
+        </div>
+    </div>
+    <p class="reward-tip">
+        赞赏是不耍流氓的鼓励
+    </p>
+</div>
+    
+    <div class="post-footer">
+        <div>
+            
+            转载声明：
+            商业转载请联系作者获得授权,非商业转载请注明出处 © <a href="ggy.44pp.vip" target="_blank">ggy</a>
+            
+            
+        </div>
+        <div>
+            
+        </div>
+    </div>
+</article>
+<div class="article-nav prev-next-wrap clearfix">
+    
+    <a href="/2020/04/29/Js%E5%AD%A6%E4%B9%A0%EF%BC%88%E4%BA%8C%EF%BC%89/" class="pre-post btn btn-default" title='Js学习（二）'>
+        <i class="fa fa-angle-left fa-fw"></i><span class="hidden-lg">上一篇</span>
+        <span class="hidden-xs">
+            Js学习（二）</span>
+    </a>
+    
+    
+    <a href="/2020/04/25/%E7%BB%BC%E5%90%88%E8%AF%BE%E7%A8%8B%E8%AE%BE%E8%AE%A1-%E7%99%BB%E5%BD%95%E9%A1%B5%E9%9D%A2/" class="next-post btn btn-default" title='综合课程设计--登录页面'>
+        <span class="hidden-lg">下一篇</span>
+        <span class="hidden-xs">
+            综合课程设计--登录页面</span><i class="fa fa-angle-right fa-fw"></i>
+    </a>
+    
+</div>
+
+<div id="comments">
+    
+<div id="lv-container" data-id="city" data-uid="MTAyMC80ODM1Ni8yNDg1MA==">
+    <script type="text/javascript">
+    (function(d, s) {
+        var j, e = d.getElementsByTagName(s)[0];
+        if (typeof LivereTower === 'function') { return; }
+        j = d.createElement(s);
+        j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+        j.async = true;
+        e.parentNode.insertBefore(j, e);
+    })(document, 'script');
+    </script>
+</div>
+
+</div>
+
+                </main>
+                
+                    <aside id="article-toc" role="navigation" class="col-md-4">
+    <div class="widget">
+        <h3 class="title">
+            文章目录
+        </h3>
+        
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#简述"><span class="toc-text">简述</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#嵌入JS代码"><span class="toc-text">嵌入JS代码</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#注释"><span class="toc-text">注释</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#输出模式"><span class="toc-text">输出模式</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#变量声明"><span class="toc-text">变量声明</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#数据类型"><span class="toc-text">数据类型</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#数字型"><span class="toc-text">数字型</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#字符串"><span class="toc-text">字符串</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#布尔型"><span class="toc-text">布尔型</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#数组"><span class="toc-text">数组</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#null和undefined"><span class="toc-text">null和undefined</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#对象类型"><span class="toc-text">对象类型</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#数据类型转换"><span class="toc-text">数据类型转换</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#字符串转整数"><span class="toc-text">字符串转整数</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#字符串转小数"><span class="toc-text">字符串转小数</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#数字转成字符串"><span class="toc-text">数字转成字符串</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#布尔型转为其他类型"><span class="toc-text">布尔型转为其他类型</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#隐式转换"><span class="toc-text">隐式转换</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#运算符"><span class="toc-text">运算符</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#算术运算符"><span class="toc-text">算术运算符</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#比较运算符"><span class="toc-text">比较运算符</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#逻辑运算符"><span class="toc-text">逻辑运算符</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#条件和赋值运算符"><span class="toc-text">条件和赋值运算符</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#运算符优先级"><span class="toc-text">运算符优先级</span></a></li></ol></li></ol>
+        
+    </div>
+</aside>
+                
+            </div>
+        </div>
+    </section>
+    <footer class="main-footer">
+    <div class="container">
+        <div class="row">
+        </div>
+    </div>
+</footer>
+<a id="back-to-top" class="icon-btn hide">
+    <i class="fa fa-chevron-up"></i>
+</a>
+    <div class="copyright">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="busuanzi">
+    
+    访问量:
+    <strong id="busuanzi_value_site_pv">
+        <i class="fa fa-spinner fa-spin"></i>
+    </strong>
+    &nbsp; | &nbsp;
+    访客数:
+    <strong id="busuanzi_value_site_uv">
+        <i class="fa fa-spinner fa-spin"></i>
+    </strong>
+    
+</div>
+            </div>
+            <div class="col-sm-12">
+                <span>Copyright &copy;
+                    2020
+                    
+                </span> |
+                <span>
+                    Powered by <a href="//hexo.io" class="copyright-links" target="_blank" rel="nofollow">Hexo</a>
+                </span> |
+                <span>
+                    Theme by <a href="//github.com/shenliyang/hexo-theme-snippet.git" class="copyright-links" target="_blank" rel="nofollow">Snippet</a>
+                </span>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<script src="/assets/tagcanvas.min.js?rev=2.9.js"></script>
+
+<script>
+var tagOption = {
+    textColour: '#444', // 字体颜色
+    outlineMethod: 'block', // 选中模式
+    outlineColour: '#FFDAB9', // 选中模式的颜色
+    interval: 30 || 30, // 动画帧之间的时间间隔，值越大，转动幅度越大
+    textHeight: 13,
+    outlineRadius: 3,
+    freezeActive: true || '', // 选中的标签是否继续滚动
+    frontSelect: true || '', // 不选标签云后部的标签
+    initial: [0.1, -0.1],
+    depth: 0.5,
+    decel: 0.95,
+    maxSpeed: 0.03,
+    reverse: true || '', // 是否反向触发
+    fadeIn: 500, // 进入动画时间
+    wheelZoom: false || '' // 是否启用鼠标滚轮
+}
+TagCanvas.Start('tag-cloud-3d', '', tagOption);
+</script>
+
+
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+<script src="/js/app.js?rev=@@hash.js"></script>
+
+
+<!-- 雪花特效 -->
+<script type="text/javascript" src="http://libs.baidu.com/jquery/1.8.3/jquery.js"></script>
+<script type="text/javascript" src="http://libs.baidu.com/jquery/1.8.3/jquery.min.js"></script>
+<script type="text/javascript" src="\js\snow.js"></script>
+
+<canvas class="fireworks" style="position: fixed;left: 0;top: 0;z-index: 1; pointer-events: none;" ></canvas> 
+<script type="text/javascript" src="//cdn.bootcss.com/animejs/2.2.0/anime.min.js"></script> 
+<script type="text/javascript" src="/js/fireworks.js"></script>
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"model":{"jsonPath":"live2d-widget-model-haruto"},"display":{"position":"right","width":150,"height":300},"mobile":{"show":false},"log":false,"pluginJsPath":"lib/","pluginModelPath":"assets/","pluginRootPath":"live2dw/","tagMode":false});</script></body>
+</html>

@@ -1,0 +1,410 @@
+<head>
+<script src="https://cdn.jsdelivr.net/npm/jquery/dist/jquery.min.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome/css/font-awesome.min.css">
+<script src="https://cdn.jsdelivr.net/gh/stevenjoezhang/live2d-widget/autoload.js"></script>
+</head>
+
+<!DOCTYPE HTML>
+<html lang="zh-CN">
+
+<head>
+    <!--Setting-->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+    <meta http-equiv="Cache-Control" content="no-siteapp">
+    <meta http-equiv="Cache-Control" content="no-transform">
+    <meta name="renderer" content="webkit|ie-comp|ie-stand">
+    <meta name="apple-mobile-web-app-capable" content="ggy的个人博客">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="format-detection" content="telephone=no,email=no,adress=no">
+    <meta name="browsermode" content="application">
+    <meta name="screen-orientation" content="portrait">
+    <meta name="theme-version" content="1.2.3">
+    <meta name="root" content="/">
+    <link rel="dns-prefetch" href="https://ggyggy666.github.io">
+    <!--SEO-->
+
+<meta name="keywords" content="使用pycharm编写简单的端口扫描工具" />
+
+
+<meta name="description" content="新的一年就要到来了，我的博客也该更新了。  
+
+今天又是一个大好的日子。我学会了如何使用python编写一个简单的端口扫描工具，收获颇多，特来分享。所谓“万事开头难”，因此在开始进行编写之前，我..." />
+
+
+<meta name="robots" content="all" />
+<meta name="google" content="all" />
+<meta name="googlebot" content="all" />
+<meta name="verify" content="all" />
+    <!--Title-->
+
+<title>
+    
+    端口扫描工具的编写 |
+    
+    ggy的个人博客
+</title>
+
+<link rel="alternate" href="/atom.xml" title="ggy的个人博客" type="application/atom+xml">
+
+
+<link rel="icon" href="/favicon.ico">
+
+    
+
+
+<link rel="stylesheet" href="/css/bootstrap.min.css?rev=3.3.7.css">
+<link rel="stylesheet" href="/css/font-awesome.min.css?rev=4.7.0.css">
+<link rel="stylesheet" href="/css/style.css?rev=@@hash.css">
+
+    
+<div class="hide">
+    <script type="text/javascript">
+    var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+    document.write(unescape("%3Cspan class='cnzz_stat_icon_1263868967 hide' %3E%3Cscript%20src%3D%22https%3A%2F%2Fs95.cnzz.com%2Fz_stat.php%3Fweb_id%3D1272564536%22%3E%3C%2Fscript%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s19.cnzz.com/z_stat.php%3Fid%3D1263868967%26show%3Dpic1' type='text/javascript'%3E%3C/script%3E"));
+    </script>
+</div>
+
+
+
+
+    
+
+<meta name="generator" content="Hexo 4.2.0"></head>
+<!--[if lte IE 8]>
+<style>
+    html{ font-size: 1em }
+</style>
+<![endif]-->
+<!--[if lte IE 9]>
+<div style="ie">你使用的浏览器版本过低，为了你更好的阅读体验，请更新浏览器的版本或者使用其他现代浏览器，比如Chrome、Firefox、Safari等。</div>
+<![endif]-->
+<body>
+    <header class="main-header"  style="background-image:url(
+    https://pic.downk.cc/item/5e3816b82fb38b8c3c8791f9.jpg)"
+     >
+    <div class="main-header-box">
+        <a class="header-avatar" href="/" title='ggy'>
+            <img src="/img/avatar.jpg" alt="logo头像" class="img-responsive center-block">
+        </a>
+        <div class="branding">
+            <!--<h2 class="text-hide">Snippet主题,从未如此简单有趣</h2>-->
+            
+            <h2>
+                欢迎来到ggy的个人网站
+            </h2>
+            
+        </div>
+    </div>
+</header>
+    <nav class="main-navigation">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="navbar-header"><span class="nav-toggle-button collapsed pull-right" data-toggle="collapse" data-target="#main-menu" id="mnav">
+                        <span class="sr-only"></span>
+                        <i class="fa fa-bars"></i>
+                    </span>
+                    <a class="navbar-brand" href="https://ggyggy666.github.io">
+                        ggy的个人博客</a>
+                </div>
+                <div class="collapse navbar-collapse" id="main-menu">
+                    <ul class="menu">
+                        
+                        <li role="presentation" class="text-center">
+                            <a href="/"><i class="fa "></i>
+                                首页</a>
+                        </li>
+                        
+                        <li role="presentation" class="text-center">
+                            <a href="/categories/web安全/"><i class="fa "></i>
+                                web安全</a>
+                        </li>
+                        
+                        <li role="presentation" class="text-center">
+                            <a href="/categories/python工具/"><i class="fa "></i>
+                                python工具</a>
+                        </li>
+                        
+                        <li role="presentation" class="text-center">
+                            <a href="/categories/密码学/"><i class="fa "></i>
+                                密码学</a>
+                        </li>
+                        
+                        <li role="presentation" class="text-center">
+                            <a href="/archives/"><i class="fa "></i>
+                                时间轴</a>
+                        </li>
+                        
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</nav>
+    <section class="content-wrap">
+        <div class="container">
+            <div class="row">
+                <main class="col-md-8 main-content m-post">
+                    <p id="process"></p>
+<article class="post">
+    <div class="post-head">
+        <h1 id="端口扫描工具的编写">
+            
+            端口扫描工具的编写
+            
+        </h1>
+        <div class="post-meta">
+    
+    <span class="categories-meta fa-wrap">
+        <i class="fa fa-folder-open-o"></i>
+        <a class="category-link" href="/categories/python%E5%B7%A5%E5%85%B7/">python工具</a>
+    </span>
+    
+    
+    <span class="fa-wrap">
+        <i class="fa fa-tags"></i>
+        <span class="tags-meta">
+            
+            <a class="tag-link" href="/tags/%E4%BD%BF%E7%94%A8pycharm%E7%BC%96%E5%86%99%E7%AE%80%E5%8D%95%E7%9A%84%E7%AB%AF%E5%8F%A3%E6%89%AB%E6%8F%8F%E5%B7%A5%E5%85%B7/" rel="tag">使用pycharm编写简单的端口扫描工具</a>
+            
+        </span>
+    </span>
+    
+    
+    
+    <span class="fa-wrap">
+        <i class="fa fa-clock-o"></i>
+        <span class="date-meta">
+            2020/01/22</span>
+    </span>
+    
+    <span class="fa-wrap">
+        <i class="fa fa-eye"></i>
+        <span id="busuanzi_value_page_pv"></span>
+    </span>
+    
+    
+</div>
+        
+        
+        <p class="fa fa-exclamation-triangle warning">
+            本文于<strong>
+                415</strong>
+            天之前发表，文中内容可能已经过时。
+        </p>
+        
+    </div>
+    
+    <div class="post-body post-content">
+        <p>新的一年就要到来了，我的博客也该更新了。  </p>
+<a id="more"></a>
+<p>今天又是一个大好的日子。我学会了如何使用python编写一个简单的端口扫描工具，收获颇多，特来分享。<br>所谓“万事开头难”，因此在开始进行编写之前，我们首先得理清一下编写这样一个工具需要的流程是什么。   </p>
+<blockquote>
+<ol>
+<li>根据工具名便可以判断出，我们需要使用一些python自带的库来进行端口的扫描。  </li>
+<li>一个机器的端口有很多，我们需要循环去判断它是否开放。如果一个一个的去扫，势必要花费很多时间，因此需要使用多线程来达到减少运行时间的目的。   </li>
+</ol>
+</blockquote>
+<p>理清了这样一条思路，我们便可以一步步地去实现它。  </p>
+<hr>
+<h2 id="利用socket库实现TCP端口扫描"><a href="#利用socket库实现TCP端口扫描" class="headerlink" title="利用socket库实现TCP端口扫描  "></a><strong>利用socket库实现TCP端口扫描</strong>  </h2><p>要想利用socket库，首先得了解一下它的用法。<a href="https://www.runoob.com/python/python-socket.html" target="_blank" rel="noopener">菜鸟教程</a>里有它的完整使用方法，可自行了解。讲一下我们将要用到的socket函数。首先是： </p>
+<p><code>socket.socket([family[, type[, proto]]])</code>  </p>
+<p>socket又称“套接字”，从上面便可以看出。但其实上面那行代码并不好理解，因此可以换成另一种形式： </p>
+<p><code>socket(int domain, int type, int protocol)</code>   </p>
+<p>看看它们各自都代表了什么：   </p>
+<ul>
+<li>domain：协议域，又称协议族（family），可以是AF_UNIX或AF_INET（使用32位的ipv4地址和16位的端口号组合）或AF_INET6等。  </li>
+<li>type：知道socket类型。常用的有面向连接的SOCK_STREAM和面向非连接的SOCK_DGRAM。  </li>
+<li>protocol，一般不填默认为0。</li>
+</ul>
+<p>具体信息可以看<a href="https://www.cnblogs.com/wangcq/p/3520400.html" target="_blank" rel="noopener">这篇文章</a>,我们要用到面向连接的ipv4地址进行扫描，因此socket函数就可以是：  </p>
+<p><code>client = socket.socket(socket.AF_INET, socket.SOCK_STREAM)</code>   </p>
+<p>将这个函数对象赋给client（客户端），然后使用这个对象进行连接：  </p>
+<p><code>client.connect((target, port))</code>   </p>
+<p>注意connect中的数据类型是元组类型。target即为ipv4地址，port为要扫描的端口。这便是进行了一次扫描，然后将结果打印出来，最后需要用close()关闭。（可以将它想象成对一个文件的操作）<br>封装成一个portscan函数：<br><img src="https://s2.ax1x.com/2020/03/01/3cJ3h6.png" alt="3cJ3h6.png"><br>这里还使用了try-except，以防程序产生异常后就退出。  </p>
+<hr>
+<h2 id="使用多线程运行扫描函数"><a href="#使用多线程运行扫描函数" class="headerlink" title="使用多线程运行扫描函数 "></a><strong>使用多线程运行扫描函数</strong> </h2><p>要使用到多线程，就需要用到python库中的Thread库。它的具体用法可以查看<a href="https://www.cnblogs.com/tkqasn/p/5700281.html" target="_blank" rel="noopener">苍松的博客</a>。<br>我们这里用到只是它的最简单的用法。</p>
+<p><code>Thread(group=None, target=None, name=None, args=(), kwargs={})</code>  </p>
+<p>上面的是完整的函数参数，只关注我们需要的即可。这里的target不是上文中提到的需要扫描的ipv4地址，而是要执行的方法（函数），可以填入我们的portscan。然后后面的args参数值就填传入的参数，即ipv4地址和端口。 </p>
+<p><code>t = Thread(target=portscan, args=(target, port))</code> </p>
+<p>注意target的参数值只需要填函数名，不用()，args的参数值一样需要是元组类型。然后使用：  </p>
+<p><code>t.start()</code>  </p>
+<p>来启动线程。由于我们需要遍历端口观察它是否开放，因此可以将启动多线程这步放到一个遍历端口的循环中。这里只遍历到1024端口。<br><img src="https://s2.ax1x.com/2020/03/01/3cYVUI.png" alt><br>为了方便扫描，ipv4地址需要自己输入，然后传入main函数中。还可以使用time库计算处运行所需的时间。<br><img src="https://s2.ax1x.com/2020/03/01/3cYJ5q.png" alt><br>不要忘了导入所需要用到的库哦。<br><img src="https://s2.ax1x.com/2020/03/01/3cYU2T.png" alt>   </p>
+<hr>
+<h2 id="最终效果如下："><a href="#最终效果如下：" class="headerlink" title="最终效果如下："></a><strong>最终效果如下：</strong></h2><p><img src="https://s2.ax1x.com/2020/03/01/3cYwMF.png" alt><br>端口扫描工具就这样做好啦！虽然看起来简单，代码很少，但是还是需要动手去实现才能体会到其中艰难，才会更有效果。对了，忘记提一句。这里的ipv4地址是我本机的地址，可以通过： </p>
+<p><code>win+R -&gt; 输入cmd -&gt; 输入ipconfig -&gt;查看‘无线局域网适配器 WLAN:’的IPv4地址</code>   </p>
+<p>得到。当然，扫描域名也是可以的。打包后的代码放到了<a href="https://github.com/ggyggy666/ggyggy666.github.io/releases/tag/1.1" target="_blank" rel="noopener">我的github</a>上。<br>今天就到这里了，期待下一次能学到更多有趣的东西。  </p>
+<hr>
+<h2 id="扫描下方的二维码，更多精彩文章等你来看哦。"><a href="#扫描下方的二维码，更多精彩文章等你来看哦。" class="headerlink" title="扫描下方的二维码，更多精彩文章等你来看哦。 "></a><code>扫描下方的二维码，更多精彩文章等你来看哦。</code> </h2>
+    </div>
+    
+    <div class="reward" ontouchstart>
+    <div class="reward-wrap">赏
+        <div class="reward-box">
+            
+            <span class="reward-type">
+                <img class="alipay" src="/img/alipay.jpg"><b>支付宝打赏</b>
+            </span>
+            
+            
+            <span class="reward-type">
+                <img class="wechat" src="/img/wechat.jpg"><b>微信打赏</b>
+            </span>
+            
+        </div>
+    </div>
+    <p class="reward-tip">
+        赞赏是不耍流氓的鼓励
+    </p>
+</div>
+    
+    <div class="post-footer">
+        <div>
+            
+            转载声明：
+            商业转载请联系作者获得授权,非商业转载请注明出处 © <a href="ggy.44pp.vip" target="_blank">ggy</a>
+            
+            
+        </div>
+        <div>
+            
+        </div>
+    </div>
+</article>
+<div class="article-nav prev-next-wrap clearfix">
+    
+    <a href="/2020/01/30/%E8%AF%BB%E3%80%8A%E7%99%BD%E5%B8%BD%E5%AD%90%E8%AE%B2web%E5%AE%89%E5%85%A8%E3%80%8B%E7%9A%84%E6%94%B6%E8%8E%B7(%E4%B8%80)/" class="pre-post btn btn-default" title='读《白帽子讲web安全》的收获(一)'>
+        <i class="fa fa-angle-left fa-fw"></i><span class="hidden-lg">上一篇</span>
+        <span class="hidden-xs">
+            读《白帽子讲web安全》的收获(一)</span>
+    </a>
+    
+    
+    <a href="/2020/01/16/%E6%B0%B8%E4%B9%85%E7%A0%B4%E8%A7%A3pycharm2019-2.3%E7%9A%84%E6%96%B9%E6%B3%95/" class="next-post btn btn-default" title='永久破解pycharm2019-2.3的方法'>
+        <span class="hidden-lg">下一篇</span>
+        <span class="hidden-xs">
+            永久破解pycharm2019-2.3的方法</span><i class="fa fa-angle-right fa-fw"></i>
+    </a>
+    
+</div>
+
+<div id="comments">
+    
+<div id="lv-container" data-id="city" data-uid="MTAyMC80ODM1Ni8yNDg1MA==">
+    <script type="text/javascript">
+    (function(d, s) {
+        var j, e = d.getElementsByTagName(s)[0];
+        if (typeof LivereTower === 'function') { return; }
+        j = d.createElement(s);
+        j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+        j.async = true;
+        e.parentNode.insertBefore(j, e);
+    })(document, 'script');
+    </script>
+</div>
+
+</div>
+
+                </main>
+                
+                    <aside id="article-toc" role="navigation" class="col-md-4">
+    <div class="widget">
+        <h3 class="title">
+            文章目录
+        </h3>
+        
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#利用socket库实现TCP端口扫描"><span class="toc-text">利用socket库实现TCP端口扫描  </span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#使用多线程运行扫描函数"><span class="toc-text">使用多线程运行扫描函数 </span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#最终效果如下："><span class="toc-text">最终效果如下：</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#扫描下方的二维码，更多精彩文章等你来看哦。"><span class="toc-text">扫描下方的二维码，更多精彩文章等你来看哦。 </span></a></li></ol>
+        
+    </div>
+</aside>
+                
+            </div>
+        </div>
+    </section>
+    <footer class="main-footer">
+    <div class="container">
+        <div class="row">
+        </div>
+    </div>
+</footer>
+<a id="back-to-top" class="icon-btn hide">
+    <i class="fa fa-chevron-up"></i>
+</a>
+    <div class="copyright">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="busuanzi">
+    
+    访问量:
+    <strong id="busuanzi_value_site_pv">
+        <i class="fa fa-spinner fa-spin"></i>
+    </strong>
+    &nbsp; | &nbsp;
+    访客数:
+    <strong id="busuanzi_value_site_uv">
+        <i class="fa fa-spinner fa-spin"></i>
+    </strong>
+    
+</div>
+            </div>
+            <div class="col-sm-12">
+                <span>Copyright &copy;
+                    2020
+                    
+                </span> |
+                <span>
+                    Powered by <a href="//hexo.io" class="copyright-links" target="_blank" rel="nofollow">Hexo</a>
+                </span> |
+                <span>
+                    Theme by <a href="//github.com/shenliyang/hexo-theme-snippet.git" class="copyright-links" target="_blank" rel="nofollow">Snippet</a>
+                </span>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<script src="/assets/tagcanvas.min.js?rev=2.9.js"></script>
+
+<script>
+var tagOption = {
+    textColour: '#444', // 字体颜色
+    outlineMethod: 'block', // 选中模式
+    outlineColour: '#FFDAB9', // 选中模式的颜色
+    interval: 30 || 30, // 动画帧之间的时间间隔，值越大，转动幅度越大
+    textHeight: 13,
+    outlineRadius: 3,
+    freezeActive: true || '', // 选中的标签是否继续滚动
+    frontSelect: true || '', // 不选标签云后部的标签
+    initial: [0.1, -0.1],
+    depth: 0.5,
+    decel: 0.95,
+    maxSpeed: 0.03,
+    reverse: true || '', // 是否反向触发
+    fadeIn: 500, // 进入动画时间
+    wheelZoom: false || '' // 是否启用鼠标滚轮
+}
+TagCanvas.Start('tag-cloud-3d', '', tagOption);
+</script>
+
+
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+<script src="/js/app.js?rev=@@hash.js"></script>
+
+
+<!-- 雪花特效 -->
+<script type="text/javascript" src="http://libs.baidu.com/jquery/1.8.3/jquery.js"></script>
+<script type="text/javascript" src="http://libs.baidu.com/jquery/1.8.3/jquery.min.js"></script>
+<script type="text/javascript" src="\js\snow.js"></script>
+
+<canvas class="fireworks" style="position: fixed;left: 0;top: 0;z-index: 1; pointer-events: none;" ></canvas> 
+<script type="text/javascript" src="//cdn.bootcss.com/animejs/2.2.0/anime.min.js"></script> 
+<script type="text/javascript" src="/js/fireworks.js"></script>
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"model":{"jsonPath":"live2d-widget-model-haruto"},"display":{"position":"right","width":150,"height":300},"mobile":{"show":false},"log":false,"pluginJsPath":"lib/","pluginModelPath":"assets/","pluginRootPath":"live2dw/","tagMode":false});</script></body>
+</html>

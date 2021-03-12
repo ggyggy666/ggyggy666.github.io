@@ -1,0 +1,400 @@
+<head>
+<script src="https://cdn.jsdelivr.net/npm/jquery/dist/jquery.min.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome/css/font-awesome.min.css">
+<script src="https://cdn.jsdelivr.net/gh/stevenjoezhang/live2d-widget/autoload.js"></script>
+</head>
+
+<!DOCTYPE HTML>
+<html lang="zh-CN">
+
+<head>
+    <!--Setting-->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+    <meta http-equiv="Cache-Control" content="no-siteapp">
+    <meta http-equiv="Cache-Control" content="no-transform">
+    <meta name="renderer" content="webkit|ie-comp|ie-stand">
+    <meta name="apple-mobile-web-app-capable" content="ggy的个人博客">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="format-detection" content="telephone=no,email=no,adress=no">
+    <meta name="browsermode" content="application">
+    <meta name="screen-orientation" content="portrait">
+    <meta name="theme-version" content="1.2.3">
+    <meta name="root" content="/">
+    <link rel="dns-prefetch" href="https://ggyggy666.github.io">
+    <!--SEO-->
+
+<meta name="keywords" content="信息收集" />
+
+
+<meta name="description" content="为了更熟悉信息收集流程以及保存好收集所需要用到的网站，特在此总结一下。
+
+信息收集目标
+应该再加上一个子域名爆破。
+子域名收集
+工具：sublist3r、layer子域名挖掘机在线子域名爆破：h..." />
+
+
+<meta name="robots" content="all" />
+<meta name="google" content="all" />
+<meta name="googlebot" content="all" />
+<meta name="verify" content="all" />
+    <!--Title-->
+
+<title>
+    
+    信息收集 |
+    
+    ggy的个人博客
+</title>
+
+<link rel="alternate" href="/atom.xml" title="ggy的个人博客" type="application/atom+xml">
+
+
+<link rel="icon" href="/favicon.ico">
+
+    
+
+
+<link rel="stylesheet" href="/css/bootstrap.min.css?rev=3.3.7.css">
+<link rel="stylesheet" href="/css/font-awesome.min.css?rev=4.7.0.css">
+<link rel="stylesheet" href="/css/style.css?rev=@@hash.css">
+
+    
+<div class="hide">
+    <script type="text/javascript">
+    var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+    document.write(unescape("%3Cspan class='cnzz_stat_icon_1263868967 hide' %3E%3Cscript%20src%3D%22https%3A%2F%2Fs95.cnzz.com%2Fz_stat.php%3Fweb_id%3D1272564536%22%3E%3C%2Fscript%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s19.cnzz.com/z_stat.php%3Fid%3D1263868967%26show%3Dpic1' type='text/javascript'%3E%3C/script%3E"));
+    </script>
+</div>
+
+
+
+
+    
+
+<meta name="generator" content="Hexo 4.2.0"></head>
+<!--[if lte IE 8]>
+<style>
+    html{ font-size: 1em }
+</style>
+<![endif]-->
+<!--[if lte IE 9]>
+<div style="ie">你使用的浏览器版本过低，为了你更好的阅读体验，请更新浏览器的版本或者使用其他现代浏览器，比如Chrome、Firefox、Safari等。</div>
+<![endif]-->
+<body>
+    <header class="main-header"  style="background-image:url(
+    https://pic.downk.cc/item/5e3816b82fb38b8c3c8791f9.jpg)"
+     >
+    <div class="main-header-box">
+        <a class="header-avatar" href="/" title='ggy'>
+            <img src="/img/avatar.jpg" alt="logo头像" class="img-responsive center-block">
+        </a>
+        <div class="branding">
+            <!--<h2 class="text-hide">Snippet主题,从未如此简单有趣</h2>-->
+            
+            <h2>
+                欢迎来到ggy的个人网站
+            </h2>
+            
+        </div>
+    </div>
+</header>
+    <nav class="main-navigation">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="navbar-header"><span class="nav-toggle-button collapsed pull-right" data-toggle="collapse" data-target="#main-menu" id="mnav">
+                        <span class="sr-only"></span>
+                        <i class="fa fa-bars"></i>
+                    </span>
+                    <a class="navbar-brand" href="https://ggyggy666.github.io">
+                        ggy的个人博客</a>
+                </div>
+                <div class="collapse navbar-collapse" id="main-menu">
+                    <ul class="menu">
+                        
+                        <li role="presentation" class="text-center">
+                            <a href="/"><i class="fa "></i>
+                                首页</a>
+                        </li>
+                        
+                        <li role="presentation" class="text-center">
+                            <a href="/categories/web安全/"><i class="fa "></i>
+                                web安全</a>
+                        </li>
+                        
+                        <li role="presentation" class="text-center">
+                            <a href="/categories/python工具/"><i class="fa "></i>
+                                python工具</a>
+                        </li>
+                        
+                        <li role="presentation" class="text-center">
+                            <a href="/categories/密码学/"><i class="fa "></i>
+                                密码学</a>
+                        </li>
+                        
+                        <li role="presentation" class="text-center">
+                            <a href="/archives/"><i class="fa "></i>
+                                时间轴</a>
+                        </li>
+                        
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</nav>
+    <section class="content-wrap">
+        <div class="container">
+            <div class="row">
+                <main class="col-md-8 main-content m-post">
+                    <p id="process"></p>
+<article class="post">
+    <div class="post-head">
+        <h1 id="信息收集">
+            
+            信息收集
+            
+        </h1>
+        <div class="post-meta">
+    
+    <span class="categories-meta fa-wrap">
+        <i class="fa fa-folder-open-o"></i>
+        <a class="category-link" href="/categories/web%E5%AE%89%E5%85%A8/">web安全</a>
+    </span>
+    
+    
+    <span class="fa-wrap">
+        <i class="fa fa-tags"></i>
+        <span class="tags-meta">
+            
+            <a class="tag-link" href="/tags/%E4%BF%A1%E6%81%AF%E6%94%B6%E9%9B%86/" rel="tag">信息收集</a>
+            
+        </span>
+    </span>
+    
+    
+    
+    <span class="fa-wrap">
+        <i class="fa fa-clock-o"></i>
+        <span class="date-meta">
+            2020/02/22</span>
+    </span>
+    
+    <span class="fa-wrap">
+        <i class="fa fa-eye"></i>
+        <span id="busuanzi_value_page_pv"></span>
+    </span>
+    
+    
+</div>
+        
+        
+        <p class="fa fa-exclamation-triangle warning">
+            本文于<strong>
+                384</strong>
+            天之前发表，文中内容可能已经过时。
+        </p>
+        
+    </div>
+    
+    <div class="post-body post-content">
+        <p>为了更熟悉信息收集流程以及保存好收集所需要用到的网站，特在此总结一下。</p>
+<a id="more"></a>
+<h1 id="信息收集目标"><a href="#信息收集目标" class="headerlink" title="信息收集目标"></a>信息收集目标</h1><p><img src="https://s2.ax1x.com/2020/03/01/3ca7nS.png" alt></p>
+<p>应该再加上一个子域名爆破。</p>
+<h2 id="子域名收集"><a href="#子域名收集" class="headerlink" title="子域名收集"></a>子域名收集</h2><p><img src="https://s2.ax1x.com/2020/03/01/3cdP74.png" alt></p>
+<p>工具：sublist3r、layer子域名挖掘机<br>在线子域名爆破：<br><a href="https://phpinfo.me/domain" target="_blank" rel="noopener">https://phpinfo.me/domain</a><br><a href="http://dns.aizhan.com" target="_blank" rel="noopener">http://dns.aizhan.com</a><br>Google hack语法<br>云悉资产、FOFA</p>
+<h2 id="whois信息"><a href="#whois信息" class="headerlink" title="whois信息"></a>whois信息</h2><p><img src="https://s2.ax1x.com/2020/03/01/3cddHg.png" alt></p>
+<p>常用的查询whois信息的网站：<br><a href="http://whois.chinaz.com" target="_blank" rel="noopener">http://whois.chinaz.com</a><br><a href="http://www.aizhan.com/" target="_blank" rel="noopener">http://www.aizhan.com/</a><br><a href="https://whois.aliyun.com/whois/domain" target="_blank" rel="noopener">https://whois.aliyun.com/whois/domain</a><br><a href="https://www.tianyancha.com/search?key=bilibili.com" target="_blank" rel="noopener">https://www.tianyancha.com/search?key=bilibili.com</a></p>
+<h2 id="IP信息"><a href="#IP信息" class="headerlink" title="IP信息"></a>IP信息</h2><p><img src="https://s2.ax1x.com/2020/03/01/3cdBNj.png" alt></p>
+<p>端口收集扫描工具：<br>Nmap、Masscan  </p>
+<p><img src="https://s2.ax1x.com/2020/03/01/3cd2uT.png" alt></p>
+<p><img src="https://pic.downk.cc/item/5e5113b7bb8bdc23de2bb92e.jpg" alt></p>
+<p><img src="https://pic.downk.cc/item/5e5113c8bb8bdc23de2bbf98.jpg" alt></p>
+<p><a href="http://ping.chinaz.com/" target="_blank" rel="noopener">http://ping.chinaz.com/</a><br><a href="https://www.17ce.com/" target="_blank" rel="noopener">https://www.17ce.com/</a></p>
+<p><img src="https://pic.downk.cc/item/5e5113d7bb8bdc23de2bc50c.jpg" alt></p>
+<p>微步在线：<a href="https://x.threatbook.cn/" target="_blank" rel="noopener">https://x.threatbook.cn/</a><br><a href="https://sitereport.netcraft.com/" target="_blank" rel="noopener">https://sitereport.netcraft.com/</a><br><a href="https://www.netcraft.com/search/?q=bilibili.com&amp;sort_field=score&amp;sort_direction=desc" target="_blank" rel="noopener">https://www.netcraft.com/search/?q=bilibili.com&amp;sort_field=score&amp;sort_direction=desc</a><br><a href="https://dns.aizhan.com/" target="_blank" rel="noopener">https://dns.aizhan.com/</a><br><a href="http://ping.chinaz.com/" target="_blank" rel="noopener">http://ping.chinaz.com/</a> </p>
+<p><img src="https://pic.downk.cc/item/5e5113e6bb8bdc23de2bca9d.jpg" alt></p>
+<h2 id="在线旁站查询"><a href="#在线旁站查询" class="headerlink" title="在线旁站查询"></a>在线旁站查询</h2><p><a href="https://phpinfo.me/bing.php" target="_blank" rel="noopener">https://phpinfo.me/bing.php</a><br><a href="http://www.webscan.cc" target="_blank" rel="noopener">www.webscan.cc</a><br><a href="http://www.5kik.com" target="_blank" rel="noopener">www.5kik.com</a></p>
+<h2 id="目录信息"><a href="#目录信息" class="headerlink" title="目录信息"></a>目录信息</h2><p><img src="https://pic.downk.cc/item/5e511409bb8bdc23de2bdb41.jpg" alt></p>
+<p>工具：<br>dirsearch dirbuster</p>
+<h2 id="Web服务信息"><a href="#Web服务信息" class="headerlink" title="Web服务信息"></a>Web服务信息</h2><p><img src="https://pic.downk.cc/item/5e51142dbb8bdc23de2bed50.jpg" alt></p>
+<h2 id="框架信息"><a href="#框架信息" class="headerlink" title="框架信息"></a>框架信息</h2><p><img src="https://pic.downk.cc/item/5e51144ebb8bdc23de2bfb1a.jpg" alt></p>
+<h2 id="指纹识别信息"><a href="#指纹识别信息" class="headerlink" title="指纹识别信息"></a>指纹识别信息</h2><p><img src="https://pic.downk.cc/item/5e511468bb8bdc23de2c05d6.jpg" alt></p>
+<p><a href="http://www.yunsee.cn" target="_blank" rel="noopener">http://www.yunsee.cn</a>(云悉）<br><a href="http://finger.tidesec.net/（潮汐）" target="_blank" rel="noopener">http://finger.tidesec.net/（潮汐）</a></p>
+<h2 id="敏感信息"><a href="#敏感信息" class="headerlink" title="敏感信息"></a>敏感信息</h2><p><img src="https://pic.downk.cc/item/5e511482bb8bdc23de2c13a3.jpg" alt></p>
+<p>①parent directory site:<a href="http://www.example.com" target="_blank" rel="noopener">www.example.com</a><br><a href="https://www.exploit-db.com/google-hacking-database（谷歌语法）" target="_blank" rel="noopener">https://www.exploit-db.com/google-hacking-database（谷歌语法）</a></p>
+
+    </div>
+    
+    <div class="reward" ontouchstart>
+    <div class="reward-wrap">赏
+        <div class="reward-box">
+            
+            <span class="reward-type">
+                <img class="alipay" src="/img/alipay.jpg"><b>支付宝打赏</b>
+            </span>
+            
+            
+            <span class="reward-type">
+                <img class="wechat" src="/img/wechat.jpg"><b>微信打赏</b>
+            </span>
+            
+        </div>
+    </div>
+    <p class="reward-tip">
+        赞赏是不耍流氓的鼓励
+    </p>
+</div>
+    
+    <div class="post-footer">
+        <div>
+            
+            转载声明：
+            商业转载请联系作者获得授权,非商业转载请注明出处 © <a href="ggy.44pp.vip" target="_blank">ggy</a>
+            
+            
+        </div>
+        <div>
+            
+        </div>
+    </div>
+</article>
+<div class="article-nav prev-next-wrap clearfix">
+    
+    <a href="/2020/02/23/Web%E4%B8%9A%E5%8A%A1-%E9%AA%8C%E8%AF%81%E7%A0%81%E6%9C%BA%E5%88%B6%E6%B5%8B%E8%AF%95/" class="pre-post btn btn-default" title='Web业务-验证码机制测试'>
+        <i class="fa fa-angle-left fa-fw"></i><span class="hidden-lg">上一篇</span>
+        <span class="hidden-xs">
+            Web业务-验证码机制测试</span>
+    </a>
+    
+    
+    <a href="/2020/02/21/Web%E4%B8%9A%E5%8A%A1-%E4%B8%9A%E5%8A%A1%E5%8A%9E%E7%90%86%E5%92%8C%E6%8E%88%E6%9D%83%E8%AE%BF%E9%97%AE%E6%A8%A1%E5%9D%97%E6%B5%8B%E8%AF%95/" class="next-post btn btn-default" title='Web业务-业务办理和授权访问模块测试'>
+        <span class="hidden-lg">下一篇</span>
+        <span class="hidden-xs">
+            Web业务-业务办理和授权访问模块测试</span><i class="fa fa-angle-right fa-fw"></i>
+    </a>
+    
+</div>
+
+<div id="comments">
+    
+<div id="lv-container" data-id="city" data-uid="MTAyMC80ODM1Ni8yNDg1MA==">
+    <script type="text/javascript">
+    (function(d, s) {
+        var j, e = d.getElementsByTagName(s)[0];
+        if (typeof LivereTower === 'function') { return; }
+        j = d.createElement(s);
+        j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+        j.async = true;
+        e.parentNode.insertBefore(j, e);
+    })(document, 'script');
+    </script>
+</div>
+
+</div>
+
+                </main>
+                
+                    <aside id="article-toc" role="navigation" class="col-md-4">
+    <div class="widget">
+        <h3 class="title">
+            文章目录
+        </h3>
+        
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#信息收集目标"><span class="toc-text">信息收集目标</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#子域名收集"><span class="toc-text">子域名收集</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#whois信息"><span class="toc-text">whois信息</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#IP信息"><span class="toc-text">IP信息</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#在线旁站查询"><span class="toc-text">在线旁站查询</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#目录信息"><span class="toc-text">目录信息</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Web服务信息"><span class="toc-text">Web服务信息</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#框架信息"><span class="toc-text">框架信息</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#指纹识别信息"><span class="toc-text">指纹识别信息</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#敏感信息"><span class="toc-text">敏感信息</span></a></li></ol></li></ol>
+        
+    </div>
+</aside>
+                
+            </div>
+        </div>
+    </section>
+    <footer class="main-footer">
+    <div class="container">
+        <div class="row">
+        </div>
+    </div>
+</footer>
+<a id="back-to-top" class="icon-btn hide">
+    <i class="fa fa-chevron-up"></i>
+</a>
+    <div class="copyright">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="busuanzi">
+    
+    访问量:
+    <strong id="busuanzi_value_site_pv">
+        <i class="fa fa-spinner fa-spin"></i>
+    </strong>
+    &nbsp; | &nbsp;
+    访客数:
+    <strong id="busuanzi_value_site_uv">
+        <i class="fa fa-spinner fa-spin"></i>
+    </strong>
+    
+</div>
+            </div>
+            <div class="col-sm-12">
+                <span>Copyright &copy;
+                    2020
+                    
+                </span> |
+                <span>
+                    Powered by <a href="//hexo.io" class="copyright-links" target="_blank" rel="nofollow">Hexo</a>
+                </span> |
+                <span>
+                    Theme by <a href="//github.com/shenliyang/hexo-theme-snippet.git" class="copyright-links" target="_blank" rel="nofollow">Snippet</a>
+                </span>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<script src="/assets/tagcanvas.min.js?rev=2.9.js"></script>
+
+<script>
+var tagOption = {
+    textColour: '#444', // 字体颜色
+    outlineMethod: 'block', // 选中模式
+    outlineColour: '#FFDAB9', // 选中模式的颜色
+    interval: 30 || 30, // 动画帧之间的时间间隔，值越大，转动幅度越大
+    textHeight: 13,
+    outlineRadius: 3,
+    freezeActive: true || '', // 选中的标签是否继续滚动
+    frontSelect: true || '', // 不选标签云后部的标签
+    initial: [0.1, -0.1],
+    depth: 0.5,
+    decel: 0.95,
+    maxSpeed: 0.03,
+    reverse: true || '', // 是否反向触发
+    fadeIn: 500, // 进入动画时间
+    wheelZoom: false || '' // 是否启用鼠标滚轮
+}
+TagCanvas.Start('tag-cloud-3d', '', tagOption);
+</script>
+
+
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+<script src="/js/app.js?rev=@@hash.js"></script>
+
+
+<!-- 雪花特效 -->
+<script type="text/javascript" src="http://libs.baidu.com/jquery/1.8.3/jquery.js"></script>
+<script type="text/javascript" src="http://libs.baidu.com/jquery/1.8.3/jquery.min.js"></script>
+<script type="text/javascript" src="\js\snow.js"></script>
+
+<canvas class="fireworks" style="position: fixed;left: 0;top: 0;z-index: 1; pointer-events: none;" ></canvas> 
+<script type="text/javascript" src="//cdn.bootcss.com/animejs/2.2.0/anime.min.js"></script> 
+<script type="text/javascript" src="/js/fireworks.js"></script>
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"model":{"jsonPath":"live2d-widget-model-haruto"},"display":{"position":"right","width":150,"height":300},"mobile":{"show":false},"log":false,"pluginJsPath":"lib/","pluginModelPath":"assets/","pluginRootPath":"live2dw/","tagMode":false});</script></body>
+</html>

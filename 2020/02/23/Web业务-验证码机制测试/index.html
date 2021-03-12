@@ -1,0 +1,433 @@
+<head>
+<script src="https://cdn.jsdelivr.net/npm/jquery/dist/jquery.min.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome/css/font-awesome.min.css">
+<script src="https://cdn.jsdelivr.net/gh/stevenjoezhang/live2d-widget/autoload.js"></script>
+</head>
+
+<!DOCTYPE HTML>
+<html lang="zh-CN">
+
+<head>
+    <!--Setting-->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+    <meta http-equiv="Cache-Control" content="no-siteapp">
+    <meta http-equiv="Cache-Control" content="no-transform">
+    <meta name="renderer" content="webkit|ie-comp|ie-stand">
+    <meta name="apple-mobile-web-app-capable" content="ggy的个人博客">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="format-detection" content="telephone=no,email=no,adress=no">
+    <meta name="browsermode" content="application">
+    <meta name="screen-orientation" content="portrait">
+    <meta name="theme-version" content="1.2.3">
+    <meta name="root" content="/">
+    <link rel="dns-prefetch" href="https://ggyggy666.github.io">
+    <!--SEO-->
+
+<meta name="keywords" content="Web业务-验证码机制测试" />
+
+
+<meta name="description" content="明天就要上课了，抓紧时间玩吧。
+
+
+今天有点懒，就只看了一章–验证码机制，不过还是学到了一种新姿势哈。
+
+验证码暴力破解
+原理：  短信验证码基本是4-6位数字，如果没有对验证码失效时间以及尝试..." />
+
+
+<meta name="robots" content="all" />
+<meta name="google" content="all" />
+<meta name="googlebot" content="all" />
+<meta name="verify" content="all" />
+    <!--Title-->
+
+<title>
+    
+    Web业务-验证码机制测试 |
+    
+    ggy的个人博客
+</title>
+
+<link rel="alternate" href="/atom.xml" title="ggy的个人博客" type="application/atom+xml">
+
+
+<link rel="icon" href="/favicon.ico">
+
+    
+
+
+<link rel="stylesheet" href="/css/bootstrap.min.css?rev=3.3.7.css">
+<link rel="stylesheet" href="/css/font-awesome.min.css?rev=4.7.0.css">
+<link rel="stylesheet" href="/css/style.css?rev=@@hash.css">
+
+    
+<div class="hide">
+    <script type="text/javascript">
+    var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+    document.write(unescape("%3Cspan class='cnzz_stat_icon_1263868967 hide' %3E%3Cscript%20src%3D%22https%3A%2F%2Fs95.cnzz.com%2Fz_stat.php%3Fweb_id%3D1272564536%22%3E%3C%2Fscript%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s19.cnzz.com/z_stat.php%3Fid%3D1263868967%26show%3Dpic1' type='text/javascript'%3E%3C/script%3E"));
+    </script>
+</div>
+
+
+
+
+    
+
+<meta name="generator" content="Hexo 4.2.0"></head>
+<!--[if lte IE 8]>
+<style>
+    html{ font-size: 1em }
+</style>
+<![endif]-->
+<!--[if lte IE 9]>
+<div style="ie">你使用的浏览器版本过低，为了你更好的阅读体验，请更新浏览器的版本或者使用其他现代浏览器，比如Chrome、Firefox、Safari等。</div>
+<![endif]-->
+<body>
+    <header class="main-header"  style="background-image:url(
+    https://pic.downk.cc/item/5e3816b82fb38b8c3c8791f9.jpg)"
+     >
+    <div class="main-header-box">
+        <a class="header-avatar" href="/" title='ggy'>
+            <img src="/img/avatar.jpg" alt="logo头像" class="img-responsive center-block">
+        </a>
+        <div class="branding">
+            <!--<h2 class="text-hide">Snippet主题,从未如此简单有趣</h2>-->
+            
+            <h2>
+                欢迎来到ggy的个人网站
+            </h2>
+            
+        </div>
+    </div>
+</header>
+    <nav class="main-navigation">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="navbar-header"><span class="nav-toggle-button collapsed pull-right" data-toggle="collapse" data-target="#main-menu" id="mnav">
+                        <span class="sr-only"></span>
+                        <i class="fa fa-bars"></i>
+                    </span>
+                    <a class="navbar-brand" href="https://ggyggy666.github.io">
+                        ggy的个人博客</a>
+                </div>
+                <div class="collapse navbar-collapse" id="main-menu">
+                    <ul class="menu">
+                        
+                        <li role="presentation" class="text-center">
+                            <a href="/"><i class="fa "></i>
+                                首页</a>
+                        </li>
+                        
+                        <li role="presentation" class="text-center">
+                            <a href="/categories/web安全/"><i class="fa "></i>
+                                web安全</a>
+                        </li>
+                        
+                        <li role="presentation" class="text-center">
+                            <a href="/categories/python工具/"><i class="fa "></i>
+                                python工具</a>
+                        </li>
+                        
+                        <li role="presentation" class="text-center">
+                            <a href="/categories/密码学/"><i class="fa "></i>
+                                密码学</a>
+                        </li>
+                        
+                        <li role="presentation" class="text-center">
+                            <a href="/archives/"><i class="fa "></i>
+                                时间轴</a>
+                        </li>
+                        
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</nav>
+    <section class="content-wrap">
+        <div class="container">
+            <div class="row">
+                <main class="col-md-8 main-content m-post">
+                    <p id="process"></p>
+<article class="post">
+    <div class="post-head">
+        <h1 id="Web业务-验证码机制测试">
+            
+            Web业务-验证码机制测试
+            
+        </h1>
+        <div class="post-meta">
+    
+    <span class="categories-meta fa-wrap">
+        <i class="fa fa-folder-open-o"></i>
+        <a class="category-link" href="/categories/web%E5%AE%89%E5%85%A8/">web安全</a>
+    </span>
+    
+    
+    <span class="fa-wrap">
+        <i class="fa fa-tags"></i>
+        <span class="tags-meta">
+            
+            <a class="tag-link" href="/tags/Web%E4%B8%9A%E5%8A%A1-%E9%AA%8C%E8%AF%81%E7%A0%81%E6%9C%BA%E5%88%B6%E6%B5%8B%E8%AF%95/" rel="tag">Web业务-验证码机制测试</a>
+            
+        </span>
+    </span>
+    
+    
+    
+    <span class="fa-wrap">
+        <i class="fa fa-clock-o"></i>
+        <span class="date-meta">
+            2020/02/23</span>
+    </span>
+    
+    <span class="fa-wrap">
+        <i class="fa fa-eye"></i>
+        <span id="busuanzi_value_page_pv"></span>
+    </span>
+    
+    
+</div>
+        
+        
+        <p class="fa fa-exclamation-triangle warning">
+            本文于<strong>
+                383</strong>
+            天之前发表，文中内容可能已经过时。
+        </p>
+        
+    </div>
+    
+    <div class="post-body post-content">
+        <p>明天就要上课了，抓紧时间玩吧。</p>
+<a id="more"></a>
+<p><img src="https://s2.ax1x.com/2020/03/01/3caSdH.png" alt></p>
+<p>今天有点懒，就只看了一章–验证码机制，不过还是学到了一种新姿势哈。</p>
+<hr>
+<h2 id="验证码暴力破解"><a href="#验证码暴力破解" class="headerlink" title="验证码暴力破解"></a>验证码暴力破解</h2><ul>
+<li><strong>原理：</strong><br>  短信验证码基本是4-6位数字，如果没有对验证码失效时间以及尝试失败的次数进行限制，那么可以被暴力破解。</li>
+<li><strong>方法：</strong><br>  发送验证码后，先随便输入一个验证码，然后提交抓包，转到burp的intrude模块，利用payload中的number，根据验证码的位数设置范围（如：4位：设定1000-9999），进行爆破即可。</li>
+<li><strong>修复：</strong>  <ol>
+<li>设置验证码失效时间。</li>
+<li>限制一定时间内达到失败次数就禁止尝试。</li>
+</ol>
+</li>
+</ul>
+<h2 id="验证码重复使用"><a href="#验证码重复使用" class="headerlink" title="验证码重复使用"></a>验证码重复使用</h2><ul>
+<li><strong>原理：</strong><br>  验证码验证成功后没有及时清空session，导致验证码可被重复使用。</li>
+<li><strong>方法：</strong><br>  填入内容，输入验证码，提交同时抓包，发送到repeater中，点击几次go都能正常响应。</li>
+<li><strong>修复：</strong><br>  服务端在第一次验证成功后，将验证码的session清空。</li>
+</ul>
+<h2 id="验证码客户端回显"><a href="#验证码客户端回显" class="headerlink" title="验证码客户端回显"></a>验证码客户端回显</h2><ul>
+<li><strong>原理：</strong><br>  验证码在客户端生成并且直接显示在返回包中。</li>
+<li><strong>方法：</strong><br>  发送验证码后，按F12-&gt;Network-&gt;response。看看是否显示有验证码。注意，不是burp的返回包数据。因为在network中查看到的可以是客户端生成最终返回到客户端的数据，而burp的返回包只能是从服务端返回的数据。（比如下一个类型的例子）</li>
+<li><strong>修复：</strong>  <ol>
+<li>禁止验证码在本地生成。</li>
+<li>设置验证码的时效性。</li>
+<li>随机生成，一次就失效。</li>
+</ol>
+</li>
+</ul>
+<h2 id="验证码绕过"><a href="#验证码绕过" class="headerlink" title="验证码绕过"></a>验证码绕过</h2><ul>
+<li><strong>原理：</strong><br>  通过修改服务端返回的数据包，实现绕过验证码。</li>
+<li><strong>方法：</strong><br>  发送验证码后，随便填入一个验证码，提交抓包，burp中按鼠标右键-&gt;Do Intercept-&gt;Response to this request-&gt;点击Forward。就可查看到返回的数据包。如果出现了“code:1”等这样的提示，说明我们提交的验证码是错误的返回了1，那么尝试修改成0，可能就可以成功绕过了。</li>
+<li><strong>修复：</strong><br>  服务端进行二次校验验证码。</li>
+</ul>
+<h2 id="验证码自动识别"><a href="#验证码自动识别" class="headerlink" title="验证码自动识别"></a>验证码自动识别</h2><ul>
+<li><strong>原理：</strong><br>  使用了图形验证码，但不是太复杂，可以用工具自动识别出来，适用于有验证码的爆破。识别流程为：<ol>
+<li>图像二值化：将图像上像素点的灰度值设置为0或255（即黑白效果）。</li>
+<li>去干扰：将图片上的点、线、色彩等去除。</li>
+<li>字符分割：从验证码图像中分割出字符区域。</li>
+<li>字符识别：吧字符区域上的字符识别出来。</li>
+</ol>
+</li>
+<li><strong>方法：</strong>  <ol>
+<li>多处刷新验证码，知道验证码都是由数字和大小写字母组成。</li>
+<li>通过PKAV HTTP Fuzzer工具设定验证码包含的字符范围，即将数字和大小写字母输入。</li>
+<li>使用第三方识别工具对验证码进行上述原理中的四个步骤处理。得到的验证码经人工验证看是否一致。不断完善识别的准确率。</li>
+<li>准确率达到后（如90%以上），使用burp对登录页面进行抓包，将抓到的包数据放到PKAV HTTP Fuzzer的请求包内，设置验证码标志位、用户名和密码标志位。</li>
+<li>开始爆破。</li>
+</ol>
+</li>
+<li><strong>修复：</strong>  <ol>
+<li>增加图片验证码的背景元素干扰。</li>
+<li>字符的字体进行扭曲、粘连。</li>
+<li>使用公式进行运算或者逻辑验证（问答题）。</li>
+<li>选择和使用者相关的信息来做图像验证码。</li>
+</ol>
+</li>
+</ul>
+
+    </div>
+    
+    <div class="reward" ontouchstart>
+    <div class="reward-wrap">赏
+        <div class="reward-box">
+            
+            <span class="reward-type">
+                <img class="alipay" src="/img/alipay.jpg"><b>支付宝打赏</b>
+            </span>
+            
+            
+            <span class="reward-type">
+                <img class="wechat" src="/img/wechat.jpg"><b>微信打赏</b>
+            </span>
+            
+        </div>
+    </div>
+    <p class="reward-tip">
+        赞赏是不耍流氓的鼓励
+    </p>
+</div>
+    
+    <div class="post-footer">
+        <div>
+            
+            转载声明：
+            商业转载请联系作者获得授权,非商业转载请注明出处 © <a href="ggy.44pp.vip" target="_blank">ggy</a>
+            
+            
+        </div>
+        <div>
+            
+        </div>
+    </div>
+</article>
+<div class="article-nav prev-next-wrap clearfix">
+    
+    <a href="/2020/02/24/Web%E4%B8%9A%E5%8A%A1-%E4%B8%9A%E5%8A%A1%E6%95%B0%E6%8D%AE%E5%AE%89%E5%85%A8%E5%92%8C%E4%B8%9A%E5%8A%A1%E5%A4%84%E7%90%86%E4%B9%B1%E5%BA%8F%E6%A8%A1%E5%9D%97/" class="pre-post btn btn-default" title='Web业务-业务数据安全和业务处理乱序模块测试'>
+        <i class="fa fa-angle-left fa-fw"></i><span class="hidden-lg">上一篇</span>
+        <span class="hidden-xs">
+            Web业务-业务数据安全和业务处理乱序模块测试</span>
+    </a>
+    
+    
+    <a href="/2020/02/22/%E4%BF%A1%E6%81%AF%E6%94%B6%E9%9B%86/" class="next-post btn btn-default" title='信息收集'>
+        <span class="hidden-lg">下一篇</span>
+        <span class="hidden-xs">
+            信息收集</span><i class="fa fa-angle-right fa-fw"></i>
+    </a>
+    
+</div>
+
+<div id="comments">
+    
+<div id="lv-container" data-id="city" data-uid="MTAyMC80ODM1Ni8yNDg1MA==">
+    <script type="text/javascript">
+    (function(d, s) {
+        var j, e = d.getElementsByTagName(s)[0];
+        if (typeof LivereTower === 'function') { return; }
+        j = d.createElement(s);
+        j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+        j.async = true;
+        e.parentNode.insertBefore(j, e);
+    })(document, 'script');
+    </script>
+</div>
+
+</div>
+
+                </main>
+                
+                    <aside id="article-toc" role="navigation" class="col-md-4">
+    <div class="widget">
+        <h3 class="title">
+            文章目录
+        </h3>
+        
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#验证码暴力破解"><span class="toc-text">验证码暴力破解</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#验证码重复使用"><span class="toc-text">验证码重复使用</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#验证码客户端回显"><span class="toc-text">验证码客户端回显</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#验证码绕过"><span class="toc-text">验证码绕过</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#验证码自动识别"><span class="toc-text">验证码自动识别</span></a></li></ol>
+        
+    </div>
+</aside>
+                
+            </div>
+        </div>
+    </section>
+    <footer class="main-footer">
+    <div class="container">
+        <div class="row">
+        </div>
+    </div>
+</footer>
+<a id="back-to-top" class="icon-btn hide">
+    <i class="fa fa-chevron-up"></i>
+</a>
+    <div class="copyright">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="busuanzi">
+    
+    访问量:
+    <strong id="busuanzi_value_site_pv">
+        <i class="fa fa-spinner fa-spin"></i>
+    </strong>
+    &nbsp; | &nbsp;
+    访客数:
+    <strong id="busuanzi_value_site_uv">
+        <i class="fa fa-spinner fa-spin"></i>
+    </strong>
+    
+</div>
+            </div>
+            <div class="col-sm-12">
+                <span>Copyright &copy;
+                    2020
+                    
+                </span> |
+                <span>
+                    Powered by <a href="//hexo.io" class="copyright-links" target="_blank" rel="nofollow">Hexo</a>
+                </span> |
+                <span>
+                    Theme by <a href="//github.com/shenliyang/hexo-theme-snippet.git" class="copyright-links" target="_blank" rel="nofollow">Snippet</a>
+                </span>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<script src="/assets/tagcanvas.min.js?rev=2.9.js"></script>
+
+<script>
+var tagOption = {
+    textColour: '#444', // 字体颜色
+    outlineMethod: 'block', // 选中模式
+    outlineColour: '#FFDAB9', // 选中模式的颜色
+    interval: 30 || 30, // 动画帧之间的时间间隔，值越大，转动幅度越大
+    textHeight: 13,
+    outlineRadius: 3,
+    freezeActive: true || '', // 选中的标签是否继续滚动
+    frontSelect: true || '', // 不选标签云后部的标签
+    initial: [0.1, -0.1],
+    depth: 0.5,
+    decel: 0.95,
+    maxSpeed: 0.03,
+    reverse: true || '', // 是否反向触发
+    fadeIn: 500, // 进入动画时间
+    wheelZoom: false || '' // 是否启用鼠标滚轮
+}
+TagCanvas.Start('tag-cloud-3d', '', tagOption);
+</script>
+
+
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+<script src="/js/app.js?rev=@@hash.js"></script>
+
+
+<!-- 雪花特效 -->
+<script type="text/javascript" src="http://libs.baidu.com/jquery/1.8.3/jquery.js"></script>
+<script type="text/javascript" src="http://libs.baidu.com/jquery/1.8.3/jquery.min.js"></script>
+<script type="text/javascript" src="\js\snow.js"></script>
+
+<canvas class="fireworks" style="position: fixed;left: 0;top: 0;z-index: 1; pointer-events: none;" ></canvas> 
+<script type="text/javascript" src="//cdn.bootcss.com/animejs/2.2.0/anime.min.js"></script> 
+<script type="text/javascript" src="/js/fireworks.js"></script>
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"model":{"jsonPath":"live2d-widget-model-haruto"},"display":{"position":"right","width":150,"height":300},"mobile":{"show":false},"log":false,"pluginJsPath":"lib/","pluginModelPath":"assets/","pluginRootPath":"live2dw/","tagMode":false});</script></body>
+</html>

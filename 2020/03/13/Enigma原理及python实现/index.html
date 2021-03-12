@@ -1,0 +1,396 @@
+<head>
+<script src="https://cdn.jsdelivr.net/npm/jquery/dist/jquery.min.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome/css/font-awesome.min.css">
+<script src="https://cdn.jsdelivr.net/gh/stevenjoezhang/live2d-widget/autoload.js"></script>
+</head>
+
+<!DOCTYPE HTML>
+<html lang="zh-CN">
+
+<head>
+    <!--Setting-->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+    <meta http-equiv="Cache-Control" content="no-siteapp">
+    <meta http-equiv="Cache-Control" content="no-transform">
+    <meta name="renderer" content="webkit|ie-comp|ie-stand">
+    <meta name="apple-mobile-web-app-capable" content="ggy的个人博客">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="format-detection" content="telephone=no,email=no,adress=no">
+    <meta name="browsermode" content="application">
+    <meta name="screen-orientation" content="portrait">
+    <meta name="theme-version" content="1.2.3">
+    <meta name="root" content="/">
+    <link rel="dns-prefetch" href="https://ggyggy666.github.io">
+    <!--SEO-->
+
+<meta name="keywords" content="Enigma原理及python实现" />
+
+
+<meta name="description" content="这周的作业是编程实现Enigma加密。
+
+由于上课不听课，加上老师讲得不清不楚的，导致刚看到这题目时我是一脸懵逼的。Enigma到底是啥玩意啊？
+原理
+键盘上有26个字母，当按下某个字母比如A时..." />
+
+
+<meta name="robots" content="all" />
+<meta name="google" content="all" />
+<meta name="googlebot" content="all" />
+<meta name="verify" content="all" />
+    <!--Title-->
+
+<title>
+    
+    Enigma原理及python实现 |
+    
+    ggy的个人博客
+</title>
+
+<link rel="alternate" href="/atom.xml" title="ggy的个人博客" type="application/atom+xml">
+
+
+<link rel="icon" href="/favicon.ico">
+
+    
+
+
+<link rel="stylesheet" href="/css/bootstrap.min.css?rev=3.3.7.css">
+<link rel="stylesheet" href="/css/font-awesome.min.css?rev=4.7.0.css">
+<link rel="stylesheet" href="/css/style.css?rev=@@hash.css">
+
+    
+<div class="hide">
+    <script type="text/javascript">
+    var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+    document.write(unescape("%3Cspan class='cnzz_stat_icon_1263868967 hide' %3E%3Cscript%20src%3D%22https%3A%2F%2Fs95.cnzz.com%2Fz_stat.php%3Fweb_id%3D1272564536%22%3E%3C%2Fscript%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s19.cnzz.com/z_stat.php%3Fid%3D1263868967%26show%3Dpic1' type='text/javascript'%3E%3C/script%3E"));
+    </script>
+</div>
+
+
+
+
+    
+
+<meta name="generator" content="Hexo 4.2.0"></head>
+<!--[if lte IE 8]>
+<style>
+    html{ font-size: 1em }
+</style>
+<![endif]-->
+<!--[if lte IE 9]>
+<div style="ie">你使用的浏览器版本过低，为了你更好的阅读体验，请更新浏览器的版本或者使用其他现代浏览器，比如Chrome、Firefox、Safari等。</div>
+<![endif]-->
+<body>
+    <header class="main-header"  style="background-image:url(
+    https://pic.downk.cc/item/5e3816b82fb38b8c3c8791f9.jpg)"
+     >
+    <div class="main-header-box">
+        <a class="header-avatar" href="/" title='ggy'>
+            <img src="/img/avatar.jpg" alt="logo头像" class="img-responsive center-block">
+        </a>
+        <div class="branding">
+            <!--<h2 class="text-hide">Snippet主题,从未如此简单有趣</h2>-->
+            
+            <h2>
+                欢迎来到ggy的个人网站
+            </h2>
+            
+        </div>
+    </div>
+</header>
+    <nav class="main-navigation">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="navbar-header"><span class="nav-toggle-button collapsed pull-right" data-toggle="collapse" data-target="#main-menu" id="mnav">
+                        <span class="sr-only"></span>
+                        <i class="fa fa-bars"></i>
+                    </span>
+                    <a class="navbar-brand" href="https://ggyggy666.github.io">
+                        ggy的个人博客</a>
+                </div>
+                <div class="collapse navbar-collapse" id="main-menu">
+                    <ul class="menu">
+                        
+                        <li role="presentation" class="text-center">
+                            <a href="/"><i class="fa "></i>
+                                首页</a>
+                        </li>
+                        
+                        <li role="presentation" class="text-center">
+                            <a href="/categories/web安全/"><i class="fa "></i>
+                                web安全</a>
+                        </li>
+                        
+                        <li role="presentation" class="text-center">
+                            <a href="/categories/python工具/"><i class="fa "></i>
+                                python工具</a>
+                        </li>
+                        
+                        <li role="presentation" class="text-center">
+                            <a href="/categories/密码学/"><i class="fa "></i>
+                                密码学</a>
+                        </li>
+                        
+                        <li role="presentation" class="text-center">
+                            <a href="/archives/"><i class="fa "></i>
+                                时间轴</a>
+                        </li>
+                        
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</nav>
+    <section class="content-wrap">
+        <div class="container">
+            <div class="row">
+                <main class="col-md-8 main-content m-post">
+                    <p id="process"></p>
+<article class="post">
+    <div class="post-head">
+        <h1 id="Enigma原理及python实现">
+            
+            Enigma原理及python实现
+            
+        </h1>
+        <div class="post-meta">
+    
+    <span class="categories-meta fa-wrap">
+        <i class="fa fa-folder-open-o"></i>
+        <a class="category-link" href="/categories/%E5%AF%86%E7%A0%81%E5%AD%A6/">密码学</a>
+    </span>
+    
+    
+    <span class="fa-wrap">
+        <i class="fa fa-tags"></i>
+        <span class="tags-meta">
+            
+            <a class="tag-link" href="/tags/Enigma%E5%8E%9F%E7%90%86%E5%8F%8Apython%E5%AE%9E%E7%8E%B0/" rel="tag">Enigma原理及python实现</a>
+            
+        </span>
+    </span>
+    
+    
+    
+    <span class="fa-wrap">
+        <i class="fa fa-clock-o"></i>
+        <span class="date-meta">
+            2020/03/13</span>
+    </span>
+    
+    <span class="fa-wrap">
+        <i class="fa fa-eye"></i>
+        <span id="busuanzi_value_page_pv"></span>
+    </span>
+    
+    
+</div>
+        
+        
+        <p class="fa fa-exclamation-triangle warning">
+            本文于<strong>
+                364</strong>
+            天之前发表，文中内容可能已经过时。
+        </p>
+        
+    </div>
+    
+    <div class="post-body post-content">
+        <p>这周的作业是编程实现Enigma加密。</p>
+<a id="more"></a>
+<p>由于上课不听课，加上老师讲得不清不楚的，导致刚看到这题目时我是一脸懵逼的。Enigma到底是啥玩意啊？<br><img src="https://pic.downk.cc/item/5e6b6df3e83c3a1e3aa1ca78.jpg" alt></p>
+<h1 id="原理"><a href="#原理" class="headerlink" title="原理"></a>原理</h1><ol>
+<li>键盘上有26个字母，当按下某个字母比如A时，第一个转子会转一次，导致线路改变，对应的灯泡就会亮起，那个亮的灯泡代表的字母就是加密后得到的字母比如T。因此A就加密成了T。相当于一种代替密码，不过这个复杂得多。  </li>
+<li>一般Enigma机器会有3个转子，加密之前需要将转子设定好某个固定的位置（0-25数字范围）。比如第一个转子初始位置为5，第二个为16，第三个为0。然后在加密之时，按下了一个字母后，第一个转子会首先转动一转，这时位置就变成了6。其它转子不动，电路接通对应某个灯泡亮起，成功加密一次。持续操作后，如果第一个转子位置到26了，因为没有26，它的位置就变为0了，这时代表转子已经转动一圈了（以0位分界）。那么第二个转子就转动一转，位置就是17了，而第三转子不动。类似地当第二个转子到达0时，第三转子才转动一转，位置为1。其实就是类似时钟。  </li>
+<li>每个转子上都有数字代表位置，如果将这些位置代表成相应的字母的话，那么转子转动联通不同线路的这个加密过程可以表示为：</li>
+</ol>
+<p><img src="https://pic.downk.cc/item/5e6b7338e83c3a1e3aa3cb83.jpg" alt></p>
+<p>可以看到，当按下字母如K时，根据转轮的初始位置判断得到通过第一个转轮的密文是A，然后又考虑上第二个转轮的位置，通过第二个转轮的密文变为T，同理，通过第三个转轮的密文为C，即K-A-T-C。然后在反射器中，C变为了F（之所以叫反射器，是因为F对应的字母是C）。然后再按原路返回，此时输出的是F通过第三转轮，然后F对应O，O对应M，因此最终加密成功得到的密文是M。因此<strong>K加密成了M</strong>。<br>Enigma特殊之处在于，当<strong>输入M时，最终能得到K</strong>。相当于按上图逆过程一遍。</p>
+<h1 id="Python实现"><a href="#Python实现" class="headerlink" title="Python实现"></a>Python实现</h1><p><img src="https://pic.downk.cc/item/5e6b7570e83c3a1e3aa49c2f.jpg" alt></p>
+<p>首先初始化反射器和三个转子。<strong>注意：反射器中的下标和值必须两两对应。</strong>如：下标为0的值是11，那么下标为11的值必须是0。转子中的数值则没有要求。初始化一个列表用来存储通信密码和明文加密后得到的密文。</p>
+<p><img src="https://pic.downk.cc/item/5e6b75e2e83c3a1e3aa4cf72.jpg" alt></p>
+<p>主函数中，输入转子个数，并初始化转子的位置。因为需要加密两次，第一次加密通信密码，第二次加密明文。在第一次加密后转子位置会改变，因此需要一个list2来保存加密前的转子初始位置。这样在第二次加密时使用的也是同一个转子位置。</p>
+<p><img src="https://pic.downk.cc/item/5e6b76b2e83c3a1e3aa512d5.jpg" alt></p>
+<p>对传入的字符串进行转化成列表形式，然后可以遍历其中每一个字母并传入加密函数crypt中进行加密。</p>
+<p><img src="https://pic.downk.cc/item/5e6b7772e83c3a1e3aa55612.jpg" alt></p>
+<p>实现加密函数。首先传入一个字母，得到它跟字母a相差的距离大小n。然后开始进行转子的加密。首先这个n会与第一个转子的初始位置相加，为了防止溢出，需要模26。相加后得到的值作为下标去获取转子列表中对应的第一个转子的值。并还是赋值给n，这样循环递归。接着循环第二次，第一个转子得到的值与第二个转子的初始位置相加，作为下标，获取对应的值；最后进行第三次循环，得到的值与第三个转子的初始位置相加，作为下标，获取对应的值。然后是<code>n = reflector[n]</code>这句，获得的值作为reflecttor的下标获取对应的值。然后反过来，得到的这个值经过第三个转轮，它同样是需要先使用index方法获取这个值对应的下标再减去第三转轮的初始位置，得到的值去对比第二个转轮的值，获取它在第二个转轮中的下标，再减去第二个转轮的初始位置，得到一个值。这个值再去对应第一个转轮的值，获取它在第一个转轮中的下标，再减去第一个转轮的初始位置，最后得到的值经过<code>miWen1 = chr(n+ord(&#39;a&#39;))</code>后，得到最终加密后的一个密文字母。并把它存进去miWen列表中。<br>上述实现了一个字母的加密，于是第一个转子需要转动一转，即初始位置加1.判断是否满26了，相应的将第二个转子加1.第三转子同理。<br>以上便是全部实现过程。</p>
+<h1 id="结果"><a href="#结果" class="headerlink" title="结果"></a>结果</h1><p><img src="https://pic.downk.cc/item/5e6b7b76e83c3a1e3aa69b28.jpg" alt></p>
+<p>通信密码是：ggyggy<br>明文是：isveryhandsome<br>加密后得到的密文是：hfkqlnookogixkcoolqu</p>
+<p>按照Enigma原理，<strong>在转子的初始位置相同的情况下，将密文加密一遍后可以得到原来的明文</strong>。如下：</p>
+<p><img src="https://pic.downk.cc/item/5e6b7ca3e83c3a1e3aa6f8e2.png" alt></p>
+<p>输入密文的前六位为通信密码：hfkqln。然后将剩下的明文输入，最后得到了原来的明文：ggyggyisveryhandsome。</p>
+
+    </div>
+    
+    <div class="reward" ontouchstart>
+    <div class="reward-wrap">赏
+        <div class="reward-box">
+            
+            <span class="reward-type">
+                <img class="alipay" src="/img/alipay.jpg"><b>支付宝打赏</b>
+            </span>
+            
+            
+            <span class="reward-type">
+                <img class="wechat" src="/img/wechat.jpg"><b>微信打赏</b>
+            </span>
+            
+        </div>
+    </div>
+    <p class="reward-tip">
+        赞赏是不耍流氓的鼓励
+    </p>
+</div>
+    
+    <div class="post-footer">
+        <div>
+            
+            转载声明：
+            商业转载请联系作者获得授权,非商业转载请注明出处 © <a href="ggy.44pp.vip" target="_blank">ggy</a>
+            
+            
+        </div>
+        <div>
+            
+        </div>
+    </div>
+</article>
+<div class="article-nav prev-next-wrap clearfix">
+    
+    <a href="/2020/03/15/%E5%AD%A6Linux%E7%9A%84%E7%AC%AC%E4%BA%8C%E5%A4%A9/" class="pre-post btn btn-default" title='学Linux的第二天'>
+        <i class="fa fa-angle-left fa-fw"></i><span class="hidden-lg">上一篇</span>
+        <span class="hidden-xs">
+            学Linux的第二天</span>
+    </a>
+    
+    
+    <a href="/2020/03/11/%E5%AD%A6Linux%E7%9A%84%E7%AC%AC%E4%B8%80%E5%A4%A9/" class="next-post btn btn-default" title='学Linux的第一天'>
+        <span class="hidden-lg">下一篇</span>
+        <span class="hidden-xs">
+            学Linux的第一天</span><i class="fa fa-angle-right fa-fw"></i>
+    </a>
+    
+</div>
+
+<div id="comments">
+    
+<div id="lv-container" data-id="city" data-uid="MTAyMC80ODM1Ni8yNDg1MA==">
+    <script type="text/javascript">
+    (function(d, s) {
+        var j, e = d.getElementsByTagName(s)[0];
+        if (typeof LivereTower === 'function') { return; }
+        j = d.createElement(s);
+        j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+        j.async = true;
+        e.parentNode.insertBefore(j, e);
+    })(document, 'script');
+    </script>
+</div>
+
+</div>
+
+                </main>
+                
+                    <aside id="article-toc" role="navigation" class="col-md-4">
+    <div class="widget">
+        <h3 class="title">
+            文章目录
+        </h3>
+        
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#原理"><span class="toc-text">原理</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Python实现"><span class="toc-text">Python实现</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#结果"><span class="toc-text">结果</span></a></li></ol>
+        
+    </div>
+</aside>
+                
+            </div>
+        </div>
+    </section>
+    <footer class="main-footer">
+    <div class="container">
+        <div class="row">
+        </div>
+    </div>
+</footer>
+<a id="back-to-top" class="icon-btn hide">
+    <i class="fa fa-chevron-up"></i>
+</a>
+    <div class="copyright">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="busuanzi">
+    
+    访问量:
+    <strong id="busuanzi_value_site_pv">
+        <i class="fa fa-spinner fa-spin"></i>
+    </strong>
+    &nbsp; | &nbsp;
+    访客数:
+    <strong id="busuanzi_value_site_uv">
+        <i class="fa fa-spinner fa-spin"></i>
+    </strong>
+    
+</div>
+            </div>
+            <div class="col-sm-12">
+                <span>Copyright &copy;
+                    2020
+                    
+                </span> |
+                <span>
+                    Powered by <a href="//hexo.io" class="copyright-links" target="_blank" rel="nofollow">Hexo</a>
+                </span> |
+                <span>
+                    Theme by <a href="//github.com/shenliyang/hexo-theme-snippet.git" class="copyright-links" target="_blank" rel="nofollow">Snippet</a>
+                </span>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<script src="/assets/tagcanvas.min.js?rev=2.9.js"></script>
+
+<script>
+var tagOption = {
+    textColour: '#444', // 字体颜色
+    outlineMethod: 'block', // 选中模式
+    outlineColour: '#FFDAB9', // 选中模式的颜色
+    interval: 30 || 30, // 动画帧之间的时间间隔，值越大，转动幅度越大
+    textHeight: 13,
+    outlineRadius: 3,
+    freezeActive: true || '', // 选中的标签是否继续滚动
+    frontSelect: true || '', // 不选标签云后部的标签
+    initial: [0.1, -0.1],
+    depth: 0.5,
+    decel: 0.95,
+    maxSpeed: 0.03,
+    reverse: true || '', // 是否反向触发
+    fadeIn: 500, // 进入动画时间
+    wheelZoom: false || '' // 是否启用鼠标滚轮
+}
+TagCanvas.Start('tag-cloud-3d', '', tagOption);
+</script>
+
+
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+<script src="/js/app.js?rev=@@hash.js"></script>
+
+
+<!-- 雪花特效 -->
+<script type="text/javascript" src="http://libs.baidu.com/jquery/1.8.3/jquery.js"></script>
+<script type="text/javascript" src="http://libs.baidu.com/jquery/1.8.3/jquery.min.js"></script>
+<script type="text/javascript" src="\js\snow.js"></script>
+
+<canvas class="fireworks" style="position: fixed;left: 0;top: 0;z-index: 1; pointer-events: none;" ></canvas> 
+<script type="text/javascript" src="//cdn.bootcss.com/animejs/2.2.0/anime.min.js"></script> 
+<script type="text/javascript" src="/js/fireworks.js"></script>
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"model":{"jsonPath":"live2d-widget-model-haruto"},"display":{"position":"right","width":150,"height":300},"mobile":{"show":false},"log":false,"pluginJsPath":"lib/","pluginModelPath":"assets/","pluginRootPath":"live2dw/","tagMode":false});</script></body>
+</html>

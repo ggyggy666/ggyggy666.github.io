@@ -1,0 +1,426 @@
+<head>
+<script src="https://cdn.jsdelivr.net/npm/jquery/dist/jquery.min.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome/css/font-awesome.min.css">
+<script src="https://cdn.jsdelivr.net/gh/stevenjoezhang/live2d-widget/autoload.js"></script>
+</head>
+
+<!DOCTYPE HTML>
+<html lang="zh-CN">
+
+<head>
+    <!--Setting-->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+    <meta http-equiv="Cache-Control" content="no-siteapp">
+    <meta http-equiv="Cache-Control" content="no-transform">
+    <meta name="renderer" content="webkit|ie-comp|ie-stand">
+    <meta name="apple-mobile-web-app-capable" content="ggy的个人博客">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="format-detection" content="telephone=no,email=no,adress=no">
+    <meta name="browsermode" content="application">
+    <meta name="screen-orientation" content="portrait">
+    <meta name="theme-version" content="1.2.3">
+    <meta name="root" content="/">
+    <link rel="dns-prefetch" href="https://ggyggy666.github.io">
+    <!--SEO-->
+
+<meta name="keywords" content="Web业务-密码找回模块测试" />
+
+
+<meta name="description" content="今天晚上有课，所以更新迟了些。
+
+
+
+今天学习了密码找回模块这一章。
+
+验证码客户端回显
+原理：  验证码回显在服务端的响应包中。
+方法：  在找回密码中，填写信息，发送验证码，burp抓包，查..." />
+
+
+<meta name="robots" content="all" />
+<meta name="google" content="all" />
+<meta name="googlebot" content="all" />
+<meta name="verify" content="all" />
+    <!--Title-->
+
+<title>
+    
+    Web业务-密码找回模块测试 |
+    
+    ggy的个人博客
+</title>
+
+<link rel="alternate" href="/atom.xml" title="ggy的个人博客" type="application/atom+xml">
+
+
+<link rel="icon" href="/favicon.ico">
+
+    
+
+
+<link rel="stylesheet" href="/css/bootstrap.min.css?rev=3.3.7.css">
+<link rel="stylesheet" href="/css/font-awesome.min.css?rev=4.7.0.css">
+<link rel="stylesheet" href="/css/style.css?rev=@@hash.css">
+
+    
+<div class="hide">
+    <script type="text/javascript">
+    var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+    document.write(unescape("%3Cspan class='cnzz_stat_icon_1263868967 hide' %3E%3Cscript%20src%3D%22https%3A%2F%2Fs95.cnzz.com%2Fz_stat.php%3Fweb_id%3D1272564536%22%3E%3C%2Fscript%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s19.cnzz.com/z_stat.php%3Fid%3D1263868967%26show%3Dpic1' type='text/javascript'%3E%3C/script%3E"));
+    </script>
+</div>
+
+
+
+
+    
+
+<meta name="generator" content="Hexo 4.2.0"></head>
+<!--[if lte IE 8]>
+<style>
+    html{ font-size: 1em }
+</style>
+<![endif]-->
+<!--[if lte IE 9]>
+<div style="ie">你使用的浏览器版本过低，为了你更好的阅读体验，请更新浏览器的版本或者使用其他现代浏览器，比如Chrome、Firefox、Safari等。</div>
+<![endif]-->
+<body>
+    <header class="main-header"  style="background-image:url(
+    https://pic.downk.cc/item/5e3816b82fb38b8c3c8791f9.jpg)"
+     >
+    <div class="main-header-box">
+        <a class="header-avatar" href="/" title='ggy'>
+            <img src="/img/avatar.jpg" alt="logo头像" class="img-responsive center-block">
+        </a>
+        <div class="branding">
+            <!--<h2 class="text-hide">Snippet主题,从未如此简单有趣</h2>-->
+            
+            <h2>
+                欢迎来到ggy的个人网站
+            </h2>
+            
+        </div>
+    </div>
+</header>
+    <nav class="main-navigation">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="navbar-header"><span class="nav-toggle-button collapsed pull-right" data-toggle="collapse" data-target="#main-menu" id="mnav">
+                        <span class="sr-only"></span>
+                        <i class="fa fa-bars"></i>
+                    </span>
+                    <a class="navbar-brand" href="https://ggyggy666.github.io">
+                        ggy的个人博客</a>
+                </div>
+                <div class="collapse navbar-collapse" id="main-menu">
+                    <ul class="menu">
+                        
+                        <li role="presentation" class="text-center">
+                            <a href="/"><i class="fa "></i>
+                                首页</a>
+                        </li>
+                        
+                        <li role="presentation" class="text-center">
+                            <a href="/categories/web安全/"><i class="fa "></i>
+                                web安全</a>
+                        </li>
+                        
+                        <li role="presentation" class="text-center">
+                            <a href="/categories/python工具/"><i class="fa "></i>
+                                python工具</a>
+                        </li>
+                        
+                        <li role="presentation" class="text-center">
+                            <a href="/categories/密码学/"><i class="fa "></i>
+                                密码学</a>
+                        </li>
+                        
+                        <li role="presentation" class="text-center">
+                            <a href="/archives/"><i class="fa "></i>
+                                时间轴</a>
+                        </li>
+                        
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</nav>
+    <section class="content-wrap">
+        <div class="container">
+            <div class="row">
+                <main class="col-md-8 main-content m-post">
+                    <p id="process"></p>
+<article class="post">
+    <div class="post-head">
+        <h1 id="Web业务-密码找回模块测试">
+            
+            Web业务-密码找回模块测试
+            
+        </h1>
+        <div class="post-meta">
+    
+    <span class="categories-meta fa-wrap">
+        <i class="fa fa-folder-open-o"></i>
+        <a class="category-link" href="/categories/web%E5%AE%89%E5%85%A8/">web安全</a>
+    </span>
+    
+    
+    <span class="fa-wrap">
+        <i class="fa fa-tags"></i>
+        <span class="tags-meta">
+            
+            <a class="tag-link" href="/tags/Web%E4%B8%9A%E5%8A%A1-%E5%AF%86%E7%A0%81%E6%89%BE%E5%9B%9E%E6%A8%A1%E5%9D%97%E6%B5%8B%E8%AF%95/" rel="tag">Web业务-密码找回模块测试</a>
+            
+        </span>
+    </span>
+    
+    
+    
+    <span class="fa-wrap">
+        <i class="fa fa-clock-o"></i>
+        <span class="date-meta">
+            2020/02/25</span>
+    </span>
+    
+    <span class="fa-wrap">
+        <i class="fa fa-eye"></i>
+        <span id="busuanzi_value_page_pv"></span>
+    </span>
+    
+    
+</div>
+        
+        
+        <p class="fa fa-exclamation-triangle warning">
+            本文于<strong>
+                381</strong>
+            天之前发表，文中内容可能已经过时。
+        </p>
+        
+    </div>
+    
+    <div class="post-body post-content">
+        <p>今天晚上有课，所以更新迟了些。</p>
+<a id="more"></a>
+<!--more-->
+<p><img src="https://s2.ax1x.com/2020/03/01/3caSdH.png" alt></p>
+<p>今天学习了密码找回模块这一章。</p>
+<hr>
+<h2 id="验证码客户端回显"><a href="#验证码客户端回显" class="headerlink" title="验证码客户端回显"></a>验证码客户端回显</h2><ul>
+<li><strong>原理：</strong><br>  验证码回显在服务端的响应包中。</li>
+<li><strong>方法：</strong><br>  在找回密码中，填写信息，发送验证码，burp抓包，查看响应包，观察是否回显了验证码。</li>
+<li><strong>修复：</strong><br>  验证码不能放到响应包中，应在服务端进行校验。</li>
+</ul>
+<h2 id="验证码暴力破解"><a href="#验证码暴力破解" class="headerlink" title="验证码暴力破解"></a>验证码暴力破解</h2><ul>
+<li><strong>原理：</strong><br>  验证码失效时间较长，只有4位数字这样短且复杂性弱，没有对验证失败次数做限制。</li>
+<li><strong>方法：</strong><br>  发送验证码后，随便填写，抓包，发送到intrude中，使用1000到9999爆破。</li>
+<li><strong>修复：</strong><br>  提高验证码复杂度，对验证失败次数做限制，验证码存活时间缩短。</li>
+</ul>
+<h2 id="接口参数账号修改"><a href="#接口参数账号修改" class="headerlink" title="接口参数账号修改"></a>接口参数账号修改</h2><ul>
+<li><strong>原理：</strong><br>  找回密码功能会在用户修改密码接口提交参数时传递用户的参数，如果该参数可控且没有什么验证，就能修改这个参数。将验证码等发送到攻击者手上。</li>
+<li><strong>方法：</strong><br>  输入一个不是自己的账号（比如admin）后，发送重置密码的邮件或者手机验证码，抓包，将邮箱或者手机号修改为自己的，观察是否能收到信息。如果可以就能修改掉admin的密码了。</li>
+<li><strong>修复：</strong><br>  在服务端对找回密码的账号与邮箱或者手机号亦或者token进行验证。</li>
+</ul>
+<h2 id="response状态值修改"><a href="#response状态值修改" class="headerlink" title="response状态值修改"></a>response状态值修改</h2><ul>
+<li><strong>原理：</strong><br>  服务端返回包出现明显的校验成功或者失败的关键字（比如状态码0和1、false和true等），而且校验是在客户端进行校验返回包的关键字。那么就可以被修改。</li>
+<li><strong>方法：</strong><br>  发送验证码后，随便填写一个验证码，点击提交同时抓包，查看返回包，修改false-&gt;true，发包即可绕过。</li>
+<li><strong>修复：</strong><br>  不要在前端利用服务端返回的值判断。应在服务端进行校验。</li>
+</ul>
+<h2 id="Session覆盖"><a href="#Session覆盖" class="headerlink" title="Session覆盖"></a>Session覆盖</h2><ul>
+<li><strong>原理：</strong><br>  有两个账号，一个已经成功进入重置密码界面，另一个还未发送验证码，它们处在同一浏览器的不同标签下，那么可以刷新成功的那个，此时浏览器的Session会将未发送的那个账号的Session覆盖掉，从而使未发送的那个账号也成功进入重置密码界面。</li>
+<li><strong>方法：</strong>  <ol>
+<li>A账号：需要用户自己的真实信息。填写信息，发送验证码，填入后成功进入到了重置密码界面。</li>
+<li>打开一个新标签，也进入找回密码界面。填入B账号信息，到发送验证码这步时，发送后，因为不是自己的手机号，所以收不到。切换到A账号这个标签中，刷新一下，看是不是显示的是B账号信息而且此时进入了重置密码界面。如果是，那么就可以进行任意账号密码重置了。</li>
+</ol>
+</li>
+<li><strong>修复：</strong><br>  要对修改的账号和Session凭证进行校验。</li>
+</ul>
+<h2 id="弱Token设计缺陷"><a href="#弱Token设计缺陷" class="headerlink" title="弱Token设计缺陷"></a>弱Token设计缺陷</h2><ul>
+<li><strong>原理：</strong><br>  找回密码时，向邮箱发送一个邮件，需要点击邮件中的一个链接就可以认证成功了。如果这个链接的认证参数如Token可被解码猜解，那么可以被构造出这个链接点击就能认证成功了。</li>
+<li><strong>方法：</strong><br>  填写账号信息，向邮箱发送邮件，多点击几次。邮箱就能收到几个邮件。观察这几个邮件中的URL看是否有什么不同。查看到只有Token不同，而且Token使用了base64编码，解码后比较，发送只有几个数字不同，那么可以抓包，发送到intrude中，使用数字而且加密成base64后进行爆破，爆破出来点击那个链接即可。也可能是使用了时间戳作为Token，那么可以转化为系统时间。在点击发送邮件那时，记录下此时系统的时间，转化为时间戳即可构造出来。</li>
+<li><strong>修复：</strong><br>  应使用复制的TOken。</li>
+</ul>
+<h2 id="密码找回流程绕过"><a href="#密码找回流程绕过" class="headerlink" title="密码找回流程绕过"></a>密码找回流程绕过</h2><ul>
+<li><strong>原理：</strong><br>  找回密码分几步走，而且每一步的链接直接显示出来，直接访问也可以访问到。</li>
+<li><strong>方法：</strong>  <ol>
+<li>先使用自己的账号注册后，点击找回密码，安按照流程走一遍修改密码，将每一步的URL记录下来。</li>
+<li>重新进入重置密码界面，在第一步输入某个账号信息（如admin），然后点击下一步进入发送验证码这个界面，在URL中直接修改成验证了验证码后的最后一步的URL，看是否能直接跳转到最后一步。这样就能绕过验证身份这一步。当然或许也可以通过抓包修改返回包绕过。</li>
+</ol>
+</li>
+<li><strong>修复：</strong><br>  一定要在后端验证每一步。</li>
+</ul>
+
+    </div>
+    
+    <div class="reward" ontouchstart>
+    <div class="reward-wrap">赏
+        <div class="reward-box">
+            
+            <span class="reward-type">
+                <img class="alipay" src="/img/alipay.jpg"><b>支付宝打赏</b>
+            </span>
+            
+            
+            <span class="reward-type">
+                <img class="wechat" src="/img/wechat.jpg"><b>微信打赏</b>
+            </span>
+            
+        </div>
+    </div>
+    <p class="reward-tip">
+        赞赏是不耍流氓的鼓励
+    </p>
+</div>
+    
+    <div class="post-footer">
+        <div>
+            
+            转载声明：
+            商业转载请联系作者获得授权,非商业转载请注明出处 © <a href="ggy.44pp.vip" target="_blank">ggy</a>
+            
+            
+        </div>
+        <div>
+            
+        </div>
+    </div>
+</article>
+<div class="article-nav prev-next-wrap clearfix">
+    
+    <a href="/2020/02/28/Web%E4%B8%9A%E5%8A%A1-%E4%B8%9A%E5%8A%A1%E6%8E%A5%E5%8F%A3%E8%B0%83%E7%94%A8%E6%A8%A1%E5%9D%97/" class="pre-post btn btn-default" title='Web业务-业务接口调用模块'>
+        <i class="fa fa-angle-left fa-fw"></i><span class="hidden-lg">上一篇</span>
+        <span class="hidden-xs">
+            Web业务-业务接口调用模块</span>
+    </a>
+    
+    
+    <a href="/2020/02/24/Web%E4%B8%9A%E5%8A%A1-%E4%B8%9A%E5%8A%A1%E6%95%B0%E6%8D%AE%E5%AE%89%E5%85%A8%E5%92%8C%E4%B8%9A%E5%8A%A1%E5%A4%84%E7%90%86%E4%B9%B1%E5%BA%8F%E6%A8%A1%E5%9D%97/" class="next-post btn btn-default" title='Web业务-业务数据安全和业务处理乱序模块测试'>
+        <span class="hidden-lg">下一篇</span>
+        <span class="hidden-xs">
+            Web业务-业务数据安全和业务处理乱序模块测试</span><i class="fa fa-angle-right fa-fw"></i>
+    </a>
+    
+</div>
+
+<div id="comments">
+    
+<div id="lv-container" data-id="city" data-uid="MTAyMC80ODM1Ni8yNDg1MA==">
+    <script type="text/javascript">
+    (function(d, s) {
+        var j, e = d.getElementsByTagName(s)[0];
+        if (typeof LivereTower === 'function') { return; }
+        j = d.createElement(s);
+        j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+        j.async = true;
+        e.parentNode.insertBefore(j, e);
+    })(document, 'script');
+    </script>
+</div>
+
+</div>
+
+                </main>
+                
+                    <aside id="article-toc" role="navigation" class="col-md-4">
+    <div class="widget">
+        <h3 class="title">
+            文章目录
+        </h3>
+        
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#验证码客户端回显"><span class="toc-text">验证码客户端回显</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#验证码暴力破解"><span class="toc-text">验证码暴力破解</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#接口参数账号修改"><span class="toc-text">接口参数账号修改</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#response状态值修改"><span class="toc-text">response状态值修改</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Session覆盖"><span class="toc-text">Session覆盖</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#弱Token设计缺陷"><span class="toc-text">弱Token设计缺陷</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#密码找回流程绕过"><span class="toc-text">密码找回流程绕过</span></a></li></ol>
+        
+    </div>
+</aside>
+                
+            </div>
+        </div>
+    </section>
+    <footer class="main-footer">
+    <div class="container">
+        <div class="row">
+        </div>
+    </div>
+</footer>
+<a id="back-to-top" class="icon-btn hide">
+    <i class="fa fa-chevron-up"></i>
+</a>
+    <div class="copyright">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="busuanzi">
+    
+    访问量:
+    <strong id="busuanzi_value_site_pv">
+        <i class="fa fa-spinner fa-spin"></i>
+    </strong>
+    &nbsp; | &nbsp;
+    访客数:
+    <strong id="busuanzi_value_site_uv">
+        <i class="fa fa-spinner fa-spin"></i>
+    </strong>
+    
+</div>
+            </div>
+            <div class="col-sm-12">
+                <span>Copyright &copy;
+                    2020
+                    
+                </span> |
+                <span>
+                    Powered by <a href="//hexo.io" class="copyright-links" target="_blank" rel="nofollow">Hexo</a>
+                </span> |
+                <span>
+                    Theme by <a href="//github.com/shenliyang/hexo-theme-snippet.git" class="copyright-links" target="_blank" rel="nofollow">Snippet</a>
+                </span>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<script src="/assets/tagcanvas.min.js?rev=2.9.js"></script>
+
+<script>
+var tagOption = {
+    textColour: '#444', // 字体颜色
+    outlineMethod: 'block', // 选中模式
+    outlineColour: '#FFDAB9', // 选中模式的颜色
+    interval: 30 || 30, // 动画帧之间的时间间隔，值越大，转动幅度越大
+    textHeight: 13,
+    outlineRadius: 3,
+    freezeActive: true || '', // 选中的标签是否继续滚动
+    frontSelect: true || '', // 不选标签云后部的标签
+    initial: [0.1, -0.1],
+    depth: 0.5,
+    decel: 0.95,
+    maxSpeed: 0.03,
+    reverse: true || '', // 是否反向触发
+    fadeIn: 500, // 进入动画时间
+    wheelZoom: false || '' // 是否启用鼠标滚轮
+}
+TagCanvas.Start('tag-cloud-3d', '', tagOption);
+</script>
+
+
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+<script src="/js/app.js?rev=@@hash.js"></script>
+
+
+<!-- 雪花特效 -->
+<script type="text/javascript" src="http://libs.baidu.com/jquery/1.8.3/jquery.js"></script>
+<script type="text/javascript" src="http://libs.baidu.com/jquery/1.8.3/jquery.min.js"></script>
+<script type="text/javascript" src="\js\snow.js"></script>
+
+<canvas class="fireworks" style="position: fixed;left: 0;top: 0;z-index: 1; pointer-events: none;" ></canvas> 
+<script type="text/javascript" src="//cdn.bootcss.com/animejs/2.2.0/anime.min.js"></script> 
+<script type="text/javascript" src="/js/fireworks.js"></script>
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"model":{"jsonPath":"live2d-widget-model-haruto"},"display":{"position":"right","width":150,"height":300},"mobile":{"show":false},"log":false,"pluginJsPath":"lib/","pluginModelPath":"assets/","pluginRootPath":"live2dw/","tagMode":false});</script></body>
+</html>

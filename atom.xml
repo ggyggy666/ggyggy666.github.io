@@ -148,21 +148,6 @@
   </entry>
   
   <entry>
-    <title>README</title>
-    <link href="https://ggyggy666.github.io/2021/02/15/README/"/>
-    <id>https://ggyggy666.github.io/2021/02/15/README/</id>
-    <published>2021-02-15T11:08:09.884Z</published>
-    <updated>2021-02-15T11:08:10.078Z</updated>
-    
-    <summary type="html">
-    
-    </summary>
-    
-    
-    
-  </entry>
-  
-  <entry>
     <title>涅普CTF入门-misc（三）</title>
     <link href="https://ggyggy666.github.io/2021/02/09/%C2%96%E6%B6%85%E6%99%AECTF%E5%85%A5%E9%97%A8-misc%EF%BC%88%E4%B8%89%EF%BC%89/"/>
     <id>https://ggyggy666.github.io/2021/02/09/%C2%96%E6%B6%85%E6%99%AECTF%E5%85%A5%E9%97%A8-misc%EF%BC%88%E4%B8%89%EF%BC%89/</id>
@@ -533,6 +518,29 @@
     
     
       <category term="msf的使用" scheme="https://ggyggy666.github.io/tags/msf%E7%9A%84%E4%BD%BF%E7%94%A8/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>ettercap进行中间人攻击</title>
+    <link href="https://ggyggy666.github.io/2020/07/30/ettercap%E8%BF%9B%E8%A1%8C%E4%B8%AD%E9%97%B4%E4%BA%BA%E6%94%BB%E5%87%BB/"/>
+    <id>https://ggyggy666.github.io/2020/07/30/ettercap%E8%BF%9B%E8%A1%8C%E4%B8%AD%E9%97%B4%E4%BA%BA%E6%94%BB%E5%87%BB/</id>
+    <published>2020-07-30T13:00:47.000Z</published>
+    <updated>2020-07-30T13:43:12.557Z</updated>
+    
+    <content type="html"><![CDATA[<p>今天使用ettercap进行中间人攻击。</p><a id="more"></a><h2 id="过程"><a href="#过程" class="headerlink" title="过程"></a>过程</h2><h3 id="ARP欺骗"><a href="#ARP欺骗" class="headerlink" title="ARP欺骗"></a>ARP欺骗</h3><p>打开ettercap： <code>ettercap -G</code></p><p>默认选择打勾。点击左上方的搜索按钮，搜索后点击搜索按钮旁边的按钮。</p><p>将网关添加到target1，受害者的主机ip添加到target2.</p><p>点击右上方第一个：MITM menu, 选择arp Posining, 点击OK即可进行arp欺骗。</p><p>这个时候是没网的。需要：<code>echo 1 &gt; /proc/sys/net/ipv4/ip_forward</code>。</p><h3 id="dns欺骗"><a href="#dns欺骗" class="headerlink" title="dns欺骗"></a>dns欺骗</h3><p>点击右上角第三个按钮，选择 Plugins -&gt; Manage plugins, 然后双击dns_spoof。</p><p>如果需要自定义，当Windows访问<code>www.baidu.com</code>时，解析到我们攻击者的地址，需要修改配置：</p><p><code>vim /etc/ettercap/etter.dns</code></p><p>找到Microsoft.com那里，在那个位置加上：<code>www.baidu.com        A        127.0.0.1</code>。</p><p>修改后，整个ARP欺骗和DNS欺骗过程都需要重来，即关闭ettercap，然后再次：ettercap -G</p><p>重新来过一遍后，在Windows的命令行中，先：</p><p><code>ipconfig /flushdns</code></p><p>然后：<code>ping www.baidu.com</code></p><p>发现解析到了127.0.0.1， 可惜访问的时候是拒绝连接的。</p><h3 id="driftnet获取图片"><a href="#driftnet获取图片" class="headerlink" title="driftnet获取图片"></a>driftnet获取图片</h3><p><code>driftnet -i eht0</code></p>]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;今天使用ettercap进行中间人攻击。&lt;/p&gt;
+    
+    </summary>
+    
+    
+      <category term="kali" scheme="https://ggyggy666.github.io/categories/kali/"/>
+    
+    
+      <category term="ettercap进行中间人攻击" scheme="https://ggyggy666.github.io/tags/ettercap%E8%BF%9B%E8%A1%8C%E4%B8%AD%E9%97%B4%E4%BA%BA%E6%94%BB%E5%87%BB/"/>
     
   </entry>
   

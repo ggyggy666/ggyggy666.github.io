@@ -39,7 +39,7 @@
 
 <title>
     
-    标签: xxe漏洞总结 |
+    分类: 无线安全 |
     
     ggy的个人博客
 </title>
@@ -148,9 +148,8 @@
                     <ol class="breadcrumb">
     
     <li>
-        xxe漏洞总结
+        无线安全
     </li>
-    
     
 </ol>
 
@@ -159,20 +158,22 @@
     <div class="post-content">
         <div class="post-head home-post-head">
             <h1 class="post-title">
-                <a href="/2020/07/14/xxe%E6%BC%8F%E6%B4%9E%E6%80%BB%E7%BB%93/">
-                    xxe漏洞总结</a>
+                <a href="/2021/03/08/%E8%8E%B7%E5%8F%96%E7%94%B5%E8%84%91%E8%BF%9E%E6%8E%A5%E7%9A%84WiFi%E5%AF%86%E7%A0%81/">
+                    获取电脑连接的WiFi密码</a>
             </h1>
             <div class="post-meta"> &bull;
                 <time class="post-date" datetime="" title="">
-                    2020年07月14日
+                    2021年03月08日
                 </time>
             </div>
         </div>
         <p class="brief">
             
-            xxe理解起来还是挺难的，涉及知识比较多，今天总结一下。
-原理xxe, 外部实体注入，通过构造xml格式的恶意代码传输后被解析执行，得到攻击者想要看到的东西。仅针对外部实体而言。
-XML文档结构XML文档结构包括xml声明、DTD文档...
+            今天在B站看到一个视频，发现能查看电脑连接过的WIFI密码，于是实战一下。
+操作
+win+R，输入cmd，进入命令行
+
+粘贴：netsh wlan export profile key=clear &amp;amp;&amp;amp; type *....
             
         </p>
     </div>

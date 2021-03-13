@@ -25,10 +25,11 @@
     <link rel="dns-prefetch" href="https://ggyggy666.github.io">
     <!--SEO-->
 
-<meta name="keywords" content="" />
+<meta name="keywords" content="git学习" />
 
 
-<meta name="description" content="123456echo &quot;dd&quot; &gt;&gt; README.md	#在工作区新建一个文件git init	#git初始化git add README.md	#将工作区文件..." />
+<meta name="description" content="之前学习过git操作，但是又忘了，特此记录。
+初始使用123456echo &quot;dd&quot; &gt;&gt; README.md	#在工作区新建一个文件git init	#git初..." />
 
 
 <meta name="robots" content="all" />
@@ -157,13 +158,15 @@
     
     <span class="categories-meta fa-wrap">
         <i class="fa fa-folder-open-o"></i>
-        
+        <a class="category-link" href="/categories/web%E5%AE%89%E5%85%A8/">web安全</a>
     </span>
     
     
     <span class="fa-wrap">
         <i class="fa fa-tags"></i>
         <span class="tags-meta">
+            
+            <a class="tag-link" href="/tags/git%E5%AD%A6%E4%B9%A0/" rel="tag">git学习</a>
             
         </span>
     </span>
@@ -188,18 +191,18 @@
     </div>
     
     <div class="post-body post-content">
-        <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">echo &quot;dd&quot; &gt;&gt; README.md	#在工作区新建一个文件</span><br><span class="line">git init	#git初始化</span><br><span class="line">git add README.md	#将工作区文件添加到暂存区</span><br><span class="line">git commit -m &quot;first commit&quot;	#将暂存区的文件提交到本地仓库，并添加描述“first commit”</span><br><span class="line">git remote add origin &#39;git的地址&#39;	#需要在GitHub新建一个仓库，然后复制那个仓库地址。origin是这个地址的描述。</span><br><span class="line">git push -u origin master	#将origin添加到master分支。</span><br></pre></td></tr></table></figure>
+        <p>之前学习过git操作，但是又忘了，特此记录。</p>
+<h1 id="初始使用"><a href="#初始使用" class="headerlink" title="初始使用"></a>初始使用</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">echo &quot;dd&quot; &gt;&gt; README.md	#在工作区新建一个文件</span><br><span class="line">git init	#git初始化</span><br><span class="line">git add README.md	#将工作区文件添加到暂存区</span><br><span class="line">git commit -m &quot;first commit&quot;	#将暂存区的文件提交到本地仓库，并添加描述“first commit”</span><br><span class="line">git remote add origin &#39;git的地址&#39;	#需要在GitHub新建一个仓库，然后复制那个仓库地址。origin是这个地址的描述。</span><br><span class="line">git push -u origin master	#将origin添加到master分支。</span><br></pre></td></tr></table></figure>
 
-<p>git remote这个只需要第一次连接时才用。之后就不用了。如果是添加或者修改文件，不用分支的话，只需要:</p>
+<h1 id="简单使用"><a href="#简单使用" class="headerlink" title="简单使用"></a>简单使用</h1><p>git remote这个只需要第一次连接时才用。之后就不用了。如果是添加或者修改文件，不用分支的话，只需要:</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">git add xxx</span><br><span class="line">git commit -m &quot;xx&quot;</span><br><span class="line">git push</span><br></pre></td></tr></table></figure>
 
 <p>通过建立分支，可以方便获取每次修改的文件内容，即：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">git checkout -b content	#创建并切换到content分支</span><br><span class="line">这个时候去修改文件内容，完之后。</span><br><span class="line">git status	#查看文件的状态</span><br><span class="line">git add xxx	#将工作区文件添加到暂存区</span><br><span class="line">git commit -m &quot;xxx&quot;	#提交到本地仓库，这个时候可以描述是&quot;second commit&quot;</span><br><span class="line">git checkout master	#切换回master分支</span><br><span class="line">git merge content	#将content分支合并到master分支。这样在content分区修改了的内容就会被合并到master分支</span><br><span class="line">git log	#查看文件日志</span><br><span class="line">git push	#推送到GitHub</span><br></pre></td></tr></table></figure>
 
-<p>其它操作：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">git clone 网址</span><br><span class="line">git mv [原文件] [新文件]	#修改文件名</span><br><span class="line">git rm [文件名]	#删除文件</span><br><span class="line">git pull [远程主机别名]&lt;远程分支名称&gt;:[本地分支名称]	#下载代码并快速合并</span><br><span class="line">git push [远程主机别名][本地分支名称]:&lt;远程分支名称&gt;</span><br></pre></td></tr></table></figure>
+<h1 id="其它操作"><a href="#其它操作" class="headerlink" title="其它操作"></a>其它操作</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">git clone 网址</span><br><span class="line">git mv [原文件] [新文件]	#修改文件名</span><br><span class="line">git rm [文件名]	#删除文件</span><br><span class="line">git pull [远程主机别名]&lt;远程分支名称&gt;:[本地分支名称]	#下载代码并快速合并</span><br><span class="line">git push [远程主机别名][本地分支名称]:&lt;远程分支名称&gt;</span><br></pre></td></tr></table></figure>
 
-<p>遇到一个问题，git无法连接上GitHub了，搞了一下午，最后终于解决了。使用SSH连接。</p>
+<h1 id="问题"><a href="#问题" class="headerlink" title="问题"></a>问题</h1><p>遇到一个问题，git无法连接上GitHub了，搞了一下午，最后终于解决了。使用SSH连接。</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">1.  git remote set-url origin git@github.com:xxx（仓库ssh地址）</span><br><span class="line"> 2.https:&#x2F;&#x2F;blog.csdn.net&#x2F;YanceChen2013&#x2F;article&#x2F;details&#x2F;82218356</span><br><span class="line">3.第二步会遇到问题，看下面链接：https:&#x2F;&#x2F;blog.csdn.net&#x2F;argleary&#x2F;article&#x2F;details&#x2F;100638560</span><br></pre></td></tr></table></figure>
 
 
@@ -276,7 +279,7 @@
             文章目录
         </h3>
         
-        <p>暂无目录</p>
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#初始使用"><span class="toc-text">初始使用</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#简单使用"><span class="toc-text">简单使用</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#其它操作"><span class="toc-text">其它操作</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#问题"><span class="toc-text">问题</span></a></li></ol>
         
     </div>
 </aside>

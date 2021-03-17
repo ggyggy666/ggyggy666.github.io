@@ -29,9 +29,11 @@
 
 
 <meta name="description" content="今天主要学习RSA。
+
+
 简单实现RSA求逆元12from Crypto.Util.number import *d &#x3D; invert(e, (p-1)*(q-1))
 
-判断素数12fro..." />
+判断素数12f..." />
 
 
 <meta name="robots" content="all" />
@@ -194,6 +196,8 @@
     
     <div class="post-body post-content">
         <p>今天主要学习RSA。</p>
+<a id="more"></a>
+
 <h1 id="简单实现RSA"><a href="#简单实现RSA" class="headerlink" title="简单实现RSA"></a>简单实现RSA</h1><h2 id="求逆元"><a href="#求逆元" class="headerlink" title="求逆元"></a>求逆元</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">from Crypto.Util.number import *</span><br><span class="line">d &#x3D; invert(e, (p-1)*(q-1))</span><br></pre></td></tr></table></figure>
 
 <h2 id="判断素数"><a href="#判断素数" class="headerlink" title="判断素数"></a>判断素数</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">from Crypto.Util.number import *</span><br><span class="line">print(isPrime(7))</span><br></pre></td></tr></table></figure>

@@ -29,9 +29,11 @@
 
 
 <meta name="description" content="今天开始学习crypt。地址：39.100.234.129
+
+
 凯撒密码实质就是替代，使用一个密码表，将26个字母偏移一定的顺序一一替代。
 加密：
-123456789101112131415from..." />
+123456789101112131415fr..." />
 
 
 <meta name="robots" content="all" />
@@ -194,6 +196,8 @@
     
     <div class="post-body post-content">
         <p>今天开始学习crypt。地址：39.100.234.129</p>
+<a id="more"></a>
+
 <h1 id="凯撒密码"><a href="#凯撒密码" class="headerlink" title="凯撒密码"></a>凯撒密码</h1><p>实质就是替代，使用一个密码表，将26个字母偏移一定的顺序一一替代。</p>
 <p>加密：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">from string import ascii_uppercase</span><br><span class="line"></span><br><span class="line">Plaintext &#x3D; &quot;GGY&quot;</span><br><span class="line">key &#x3D; 3	&#x2F;&#x2F;偏移3</span><br><span class="line"></span><br><span class="line">Plaintext &#x3D; Plaintext.upper()</span><br><span class="line">Ciphertext &#x3D; &quot;&quot;</span><br><span class="line"></span><br><span class="line">for i in Plaintext:</span><br><span class="line">	if i not in ascii_uppercase:</span><br><span class="line">		Ciphertext +&#x3D; i</span><br><span class="line">	else:</span><br><span class="line">		Ciphertext +&#x3D; chr(((ord(i)-ord(&quot;A&quot;)-key) % 26) + ord(&quot;A&quot;))</span><br><span class="line">print(Ciphertext)</span><br><span class="line">&#x2F;&#x2F;得到密文DDV</span><br></pre></td></tr></table></figure>

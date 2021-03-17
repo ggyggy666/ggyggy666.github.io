@@ -29,9 +29,11 @@
 
 
 <meta name="description" content="昨天配置好了环境，今天就来学习一下RCE。
+
+
 运行http://localhost:8080/java-sec/rce/exec?cmd=whoami
 即可看到输出了用户名。
-代码12345678..." />
+代码123456..." />
 
 
 <meta name="robots" content="all" />
@@ -194,6 +196,8 @@
     
     <div class="post-body post-content">
         <p>昨天配置好了环境，今天就来学习一下RCE。</p>
+<a id="more"></a>
+
 <h1 id="运行"><a href="#运行" class="headerlink" title="运行"></a>运行</h1><p><code>http://localhost:8080/java-sec/rce/exec?cmd=whoami</code></p>
 <p>即可看到输出了用户名。</p>
 <h1 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">public String CommandExec(String cmd) &#123;</span><br><span class="line">       Runtime run &#x3D; Runtime.getRuntime();</span><br><span class="line">       StringBuilder sb &#x3D; new StringBuilder();</span><br><span class="line"></span><br><span class="line">       try &#123;</span><br><span class="line">           Process p &#x3D; run.exec(cmd);</span><br><span class="line">           BufferedInputStream in &#x3D; new BufferedInputStream(p.getInputStream());</span><br><span class="line">           BufferedReader inBr &#x3D; new BufferedReader(new InputStreamReader(in));</span><br><span class="line">           String tmpStr;</span><br><span class="line"></span><br><span class="line">           while ((tmpStr &#x3D; inBr.readLine()) !&#x3D; null) &#123;</span><br><span class="line">               sb.append(tmpStr);</span><br><span class="line">           &#125;</span><br></pre></td></tr></table></figure>

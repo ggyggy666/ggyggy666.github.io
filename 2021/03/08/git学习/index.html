@@ -29,7 +29,9 @@
 
 
 <meta name="description" content="之前学习过git操作，但是又忘了，特此记录。
-初始使用123456echo &quot;dd&quot; &gt;&gt; README.md	#在工作区新建一个文件git init	#git初..." />
+
+
+初始使用123456echo &quot;dd&quot; &gt;&gt; README.md	#在工作区新建一个文件git init	#gi..." />
 
 
 <meta name="robots" content="all" />
@@ -192,6 +194,8 @@
     
     <div class="post-body post-content">
         <p>之前学习过git操作，但是又忘了，特此记录。</p>
+<a id="more"></a>
+
 <h1 id="初始使用"><a href="#初始使用" class="headerlink" title="初始使用"></a>初始使用</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">echo &quot;dd&quot; &gt;&gt; README.md	#在工作区新建一个文件</span><br><span class="line">git init	#git初始化</span><br><span class="line">git add README.md	#将工作区文件添加到暂存区</span><br><span class="line">git commit -m &quot;first commit&quot;	#将暂存区的文件提交到本地仓库，并添加描述“first commit”</span><br><span class="line">git remote add origin &#39;git的地址&#39;	#需要在GitHub新建一个仓库，然后复制那个仓库地址。origin是这个地址的描述。</span><br><span class="line">git push -u origin master	#将origin添加到master分支。</span><br></pre></td></tr></table></figure>
 
 <h1 id="简单使用"><a href="#简单使用" class="headerlink" title="简单使用"></a>简单使用</h1><p>git remote这个只需要第一次连接时才用。之后就不用了。如果是添加或者修改文件，不用分支的话，只需要:</p>

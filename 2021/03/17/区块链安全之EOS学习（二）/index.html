@@ -1,0 +1,526 @@
+<head>
+<script src="https://cdn.jsdelivr.net/npm/jquery/dist/jquery.min.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome/css/font-awesome.min.css">
+<script src="https://cdn.jsdelivr.net/gh/stevenjoezhang/live2d-widget/autoload.js"></script>
+</head>
+
+<!DOCTYPE HTML>
+<html lang="zh-CN">
+
+<head>
+    <!--Setting-->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+    <meta http-equiv="Cache-Control" content="no-siteapp">
+    <meta http-equiv="Cache-Control" content="no-transform">
+    <meta name="renderer" content="webkit|ie-comp|ie-stand">
+    <meta name="apple-mobile-web-app-capable" content="ggy的个人博客">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="format-detection" content="telephone=no,email=no,adress=no">
+    <meta name="browsermode" content="application">
+    <meta name="screen-orientation" content="portrait">
+    <meta name="theme-version" content="1.2.3">
+    <meta name="root" content="/">
+    <link rel="dns-prefetch" href="https://ggyggy666.github.io">
+    <!--SEO-->
+
+<meta name="keywords" content="区块链安全之EOS学习（二）" />
+
+
+<meta name="description" content="进入智能合约部分。
+Hello World首先创建一个HelloWorld智能合约，然后编译，部署到区块链上运行。
+1234cd &#x2F;xxx&#x2F;contracts	&#x2F;&..." />
+
+
+<meta name="robots" content="all" />
+<meta name="google" content="all" />
+<meta name="googlebot" content="all" />
+<meta name="verify" content="all" />
+    <!--Title-->
+
+<title>
+    
+    区块链安全之EOS学习（二） |
+    
+    ggy的个人博客
+</title>
+
+<link rel="alternate" href="/atom.xml" title="ggy的个人博客" type="application/atom+xml">
+
+
+<link rel="icon" href="/favicon.ico">
+
+    
+
+
+<link rel="stylesheet" href="/css/bootstrap.min.css?rev=3.3.7.css">
+<link rel="stylesheet" href="/css/font-awesome.min.css?rev=4.7.0.css">
+<link rel="stylesheet" href="/css/style.css?rev=@@hash.css">
+
+    
+<div class="hide">
+    <script type="text/javascript">
+    var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+    document.write(unescape("%3Cspan class='cnzz_stat_icon_1263868967 hide' %3E%3Cscript%20src%3D%22https%3A%2F%2Fs95.cnzz.com%2Fz_stat.php%3Fweb_id%3D1272564536%22%3E%3C%2Fscript%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s19.cnzz.com/z_stat.php%3Fid%3D1263868967%26show%3Dpic1' type='text/javascript'%3E%3C/script%3E"));
+    </script>
+</div>
+
+
+
+
+    
+
+<meta name="generator" content="Hexo 4.2.0"></head>
+<!--[if lte IE 8]>
+<style>
+    html{ font-size: 1em }
+</style>
+<![endif]-->
+<!--[if lte IE 9]>
+<div style="ie">你使用的浏览器版本过低，为了你更好的阅读体验，请更新浏览器的版本或者使用其他现代浏览器，比如Chrome、Firefox、Safari等。</div>
+<![endif]-->
+<body>
+    <header class="main-header"  style="background-image:url(
+    https://pic.downk.cc/item/5e3816b82fb38b8c3c8791f9.jpg)"
+     >
+    <div class="main-header-box">
+        <a class="header-avatar" href="/" title='ggy'>
+            <img src="/img/avatar.jpg" alt="logo头像" class="img-responsive center-block">
+        </a>
+        <div class="branding">
+            <!--<h2 class="text-hide">Snippet主题,从未如此简单有趣</h2>-->
+            
+            <h2>
+                欢迎来到ggy的个人网站
+            </h2>
+            
+        </div>
+    </div>
+</header>
+    <nav class="main-navigation">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="navbar-header"><span class="nav-toggle-button collapsed pull-right" data-toggle="collapse" data-target="#main-menu" id="mnav">
+                        <span class="sr-only"></span>
+                        <i class="fa fa-bars"></i>
+                    </span>
+                    <a class="navbar-brand" href="https://ggyggy666.github.io">
+                        ggy的个人博客</a>
+                </div>
+                <div class="collapse navbar-collapse" id="main-menu">
+                    <ul class="menu">
+                        
+                        <li role="presentation" class="text-center">
+                            <a href="/"><i class="fa "></i>
+                                首页</a>
+                        </li>
+                        
+                        <li role="presentation" class="text-center">
+                            <a href="/categories/web安全/"><i class="fa "></i>
+                                web安全</a>
+                        </li>
+                        
+                        <li role="presentation" class="text-center">
+                            <a href="/categories/python工具/"><i class="fa "></i>
+                                python工具</a>
+                        </li>
+                        
+                        <li role="presentation" class="text-center">
+                            <a href="/categories/密码学/"><i class="fa "></i>
+                                密码学</a>
+                        </li>
+                        
+                        <li role="presentation" class="text-center">
+                            <a href="/archives/"><i class="fa "></i>
+                                时间轴</a>
+                        </li>
+                        
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</nav>
+    <section class="content-wrap">
+        <div class="container">
+            <div class="row">
+                <main class="col-md-8 main-content m-post">
+                    <p id="process"></p>
+<article class="post">
+    <div class="post-head">
+        <h1 id="区块链安全之EOS学习（二）">
+            
+            区块链安全之EOS学习（二）
+            
+        </h1>
+        <div class="post-meta">
+    
+    <span class="categories-meta fa-wrap">
+        <i class="fa fa-folder-open-o"></i>
+        <a class="category-link" href="/categories/%E5%8C%BA%E5%9D%97%E9%93%BE%E5%AE%89%E5%85%A8/">区块链安全</a>
+    </span>
+    
+    
+    <span class="fa-wrap">
+        <i class="fa fa-tags"></i>
+        <span class="tags-meta">
+            
+            <a class="tag-link" href="/tags/%E5%8C%BA%E5%9D%97%E9%93%BE%E5%AE%89%E5%85%A8%E4%B9%8BEOS%E5%AD%A6%E4%B9%A0%EF%BC%88%E4%BA%8C%EF%BC%89/" rel="tag">区块链安全之EOS学习（二）</a>
+            
+        </span>
+    </span>
+    
+    
+    
+    <span class="fa-wrap">
+        <i class="fa fa-clock-o"></i>
+        <span class="date-meta">
+            2021/03/17</span>
+    </span>
+    
+    <span class="fa-wrap">
+        <i class="fa fa-eye"></i>
+        <span id="busuanzi_value_page_pv"></span>
+    </span>
+    
+    
+</div>
+        
+        
+    </div>
+    
+    <div class="post-body post-content">
+        <p>进入智能合约部分。</p>
+<h1 id="Hello-World"><a href="#Hello-World" class="headerlink" title="Hello World"></a>Hello World</h1><p>首先创建一个HelloWorld智能合约，然后编译，部署到区块链上运行。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">cd &#x2F;xxx&#x2F;contracts	&#x2F;&#x2F;先进入到之前创建的contracts目录</span><br><span class="line">mkdir hello			&#x2F;&#x2F;创建hello目录</span><br><span class="line">cd hello</span><br><span class="line">vim hello.cpp</span><br></pre></td></tr></table></figure>
+
+<h2 id="编写智能合约"><a href="#编写智能合约" class="headerlink" title="编写智能合约"></a>编写智能合约</h2><p>创建并打开hello.cpp后，就可以输入智能合约了。由于使用的是C++11标准写的，可能看起来不是太能懂。</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;eosio/eosio.hpp&gt;	//导入头文件</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> eosio;		<span class="comment">//使用eosio命名空间，之后可直接使用print</span></span><br><span class="line"></span><br><span class="line">#添加公共访问说明符</span><br><span class="line"><span class="class"><span class="keyword">class</span> [[<span class="title">eosio</span>:</span>:contract]] hello : <span class="keyword">public</span> contract &#123;</span><br><span class="line">  <span class="keyword">public</span>:</span><br><span class="line">      <span class="keyword">using</span> contract::contract;	<span class="comment">//使用说明</span></span><br><span class="line"></span><br><span class="line">      [[eosio::action]]	<span class="comment">//为了给hi函数添加action属性，否则ABI生成器无法产生可靠输出。</span></span><br><span class="line">      <span class="function"><span class="keyword">void</span> <span class="title">hi</span><span class="params">( name user )</span> </span>&#123;</span><br><span class="line">         print( <span class="string">"Hello, "</span>, user);	<span class="comment">//这个print是eosio定义的函数</span></span><br><span class="line">      &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<h2 id="编译-部署"><a href="#编译-部署" class="headerlink" title="编译/部署"></a>编译/部署</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">eosio-cpp hello.cpp -o hello.wasm</span><br></pre></td></tr></table></figure>
+
+<p>将cpp编译为wasm文件。</p>
+<p>部署合约时需要部署到一个账户上，使其成为合约的接口。因此先创建一个hello账户：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cleos create account eosio hello EOS8STYz9TYuEDHS1fErjgaDR1ApTk62eEaBzC7Jhn486paNrgsZC -p eosio@active</span><br></pre></td></tr></table></figure>
+
+<p>指定合约所在目录的绝对路径，将合约部署到区块链</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cleos set contract hello &#x2F;home&#x2F;ggy&#x2F;桌面&#x2F;blockchain&#x2F;contracts&#x2F;hello -p hello@active</span><br></pre></td></tr></table></figure>
+
+<h2 id="与合约交互"><a href="#与合约交互" class="headerlink" title="与合约交互"></a>与合约交互</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cleos push action hello hi &#39;[&quot;bob&quot;]&#39; -p bob@active</span><br></pre></td></tr></table></figure>
+
+<p>使用push将输入传给合约hello的hi函数执行，即’[“bob”]’就是传进去的参数，后面的bob@active是发起这个动作的账户。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cleos push action hello hi &#39;[&quot;bob&quot;]&#39; -p alice@active</span><br></pre></td></tr></table></figure>
+
+<p>alice传bob值进去。这是因为合约没有绑定当前执行这个合约的账户与传进来的user值一致，导致任何账户都可以向任何用户say hello。因此必须要将执行合约的用户与hi中的user相同。在print函数之前加上一个验证：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">require_auth(user);</span><br></pre></td></tr></table></figure>
+
+<p>修改了合约，需要重新编译和部署：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">eosio-cpp -abigen -o hello.wasm hello.cpp</span><br><span class="line">cleos set contract hello &#x2F;home&#x2F;ggy&#x2F;桌面&#x2F;blockchain&#x2F;contracts&#x2F;hello -p hello@active</span><br></pre></td></tr></table></figure>
+
+<p>再次尝试使用alice账户传bob，报错了。使用alice账户传alice，成功。</p>
+<h1 id="部署token"><a href="#部署token" class="headerlink" title="部署token"></a>部署token</h1><p>token就是用来交易的货币，EOS中称为：eosio.token。</p>
+<h2 id="获得合约"><a href="#获得合约" class="headerlink" title="获得合约"></a>获得合约</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">cd xxx&#x2F;contracts</span><br><span class="line">git clone https:&#x2F;&#x2F;github.com&#x2F;EOSIO&#x2F;eosio.contracts --branch v1.7.0 --single-branch</span><br><span class="line">cd eosio.contracts&#x2F;contracts&#x2F;eosio.token</span><br></pre></td></tr></table></figure>
+
+<p>github下得太慢，可以先转到gitee下。</p>
+<h2 id="部署合约"><a href="#部署合约" class="headerlink" title="部署合约"></a>部署合约</h2><p>首先得创建token账户,解锁钱包后</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cleos create account eosio eosio.token EOS6MRyAjQq8ud7hVNYcfnVPJqcVpscN5So8BhtHuGYqET5GDW5CV</span><br></pre></td></tr></table></figure>
+
+<p>编制合约</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">eosio-cpp -I include -o eosio.token.wasm src&#x2F;eosio.token.cpp --abigen</span><br></pre></td></tr></table></figure>
+
+<p>部署token合约</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cleos set contract eosio.token &#x2F;home&#x2F;ggy&#x2F;桌面&#x2F;blockchain&#x2F;contracts&#x2F;eosio.contracts&#x2F;contracts&#x2F;eosio.token --abi eosio.token.abi -p eosio.token@active</span><br></pre></td></tr></table></figure>
+
+<h2 id="创建令牌"><a href="#创建令牌" class="headerlink" title="创建令牌"></a>创建令牌</h2><p>创建令牌，需要确定发行者的账户比如Alice，需要设置资产数量，比如1.000SYS，浮点数代表最大供给量，大写字母SYS表示资产。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cleos push action eosio.token create &#39;[&quot;alice&quot;, &quot;1000.0000SYS&quot;]&#39; -p eosio.token@active</span><br></pre></td></tr></table></figure>
+
+<p>-p 后指定的账户表面已经过这个token账户授权。还有另一种方法:</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cleos push action eosio.token create '&#123;"issuer":"alice", "maximum_supply":"1000000000.0000 SYS"&#125;' -p eosio.token@active</span><br></pre></td></tr></table></figure>
+
+<h2 id="发行令牌"><a href="#发行令牌" class="headerlink" title="发行令牌"></a>发行令牌</h2><p>上面已经指定Alice是发行人了，只能它发行。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cleos push action eosio.token issue &#39;[&quot;alice&quot;, &quot;100.0000SYS&quot;, &quot;memo&quot;]&#39; -p alice@active</span><br></pre></td></tr></table></figure>
+
+<p>这个要求通知资金的发送者和接收者，可以使用-d -j指示“不要广播”和”将事务返回json”。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cleos push action eosio.token issue &#39;[&quot;alice&quot;, &quot;100.0000 SYS&quot;, &quot;memo&quot;]&#39; -p alice@active -d -j</span><br></pre></td></tr></table></figure>
+
+<h2 id="转移令牌"><a href="#转移令牌" class="headerlink" title="转移令牌"></a>转移令牌</h2><p>一个账户向另一个账户转钱</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cleos push action eosio.token transfer &#39;[&quot;alice&quot;, &quot;bob&quot;, &quot;25.0000SYS&quot;, &quot;m&quot;]&#39; -p alice@active</span><br></pre></td></tr></table></figure>
+
+<p>alice向bob转了25</p>
+<p>检查bob是否接收到了</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cleos get currency balance eosio.token bob SYS</span><br></pre></td></tr></table></figure>
+
+<p>查看Alice的余额</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cleos get currency balance eosio.token alice SYS</span><br></pre></td></tr></table></figure>
+
+<h1 id="ABI文件"><a href="#ABI文件" class="headerlink" title="ABI文件"></a>ABI文件</h1><p>看指导书吧</p>
+<p><a href="https://developers.eos.io/welcome/latest/smart-contract-guides/understanding-ABI-files" target="_blank" rel="noopener">https://developers.eos.io/welcome/latest/smart-contract-guides/understanding-ABI-files</a></p>
+<h1 id="数据持久性"><a href="#数据持久性" class="headerlink" title="数据持久性"></a>数据持久性</h1><p>持久保存智能合约的使用，不被无关的业务逻辑分散。实质就是配置表，实例化表，创建新记录，修改记录和删除记录。</p>
+<h2 id="创建地址簿智能合约"><a href="#创建地址簿智能合约" class="headerlink" title="创建地址簿智能合约"></a>创建地址簿智能合约</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cd &#x2F;home&#x2F;ggy&#x2F;桌面&#x2F;blockchain&#x2F;contracts</span><br></pre></td></tr></table></figure>
+
+<p>切换回contracts目录下</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">mkdir addressbook</span><br><span class="line">cd addressbook</span><br><span class="line">vim addressbook.cpp</span><br></pre></td></tr></table></figure>
+
+<p>新建文件打开后</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">#include&lt;eosio&#x2F;eosio.hpp&gt;</span><br><span class="line"></span><br><span class="line">using namespace eosio;</span><br><span class="line"></span><br><span class="line">class [[eosio::contract(&quot;addressbook&quot;)]] addressbook : public eosio::contract&#123;</span><br><span class="line">	public:</span><br><span class="line">	</span><br><span class="line">	private:</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>以上是按照之前那样的C++11标准编写的框架。下面来完善它。</p>
+<h2 id="为地址簿创建数据结构"><a href="#为地址簿创建数据结构" class="headerlink" title="为地址簿创建数据结构"></a>为地址簿创建数据结构</h2><p>这是一个通讯录，对象肯定是人，因此需要创建一个人的结构。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">struct person&#123;</span><br><span class="line">	name key;		&#x2F;&#x2F;用户的key,name类型的，唯一。</span><br><span class="line">	std::string first_name;</span><br><span class="line">	std::string last_name;</span><br><span class="line">	std::string street;</span><br><span class="line">	std::string city;</span><br><span class="line">	std::string state;</span><br><span class="line">	</span><br><span class="line">	uint64_t primary_key() const &#123;return key.value&#125;;	&#x2F;&#x2F;为了让之后的multi_index可以根据key得到value</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="配置多索引表"><a href="#配置多索引表" class="headerlink" title="配置多索引表"></a>配置多索引表</h2><p>使用前面的struct配置表。该表的eosio::multi_index需要命名。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">using address_index &#x3D; eosio::multi_index&lt;&quot;people&quot;_n, person&gt;</span><br></pre></td></tr></table></figure>
+
+<p>通过multi_index的配置，有了一个people的表。</p>
+<ul>
+<li><p>使用_n定义eosio::name类型，使用该类型命名表为people。</p>
+</li>
+<li><p>传递person给之前的person结构。</p>
+</li>
+<li><p>声明了此表的类型，之后用来实例化这个表。</p>
+</li>
+</ul>
+<h2 id="构造函数"><a href="#构造函数" class="headerlink" title="构造函数"></a>构造函数</h2><p>合约第一个公共方法应该是构造函数。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">addressbook(name receiver, name code, datastream&lt;const char*&gt; ds):contract(receiver, code, ds)&#123;&#125;</span><br></pre></td></tr></table></figure>
+
+<p>code是将合约部署到区块链的账户。</p>
+<h2 id="向表中添加记录"><a href="#向表中添加记录" class="headerlink" title="向表中添加记录"></a>向表中添加记录</h2><p>先前定义了多索引表的primary_key，是为了强制每个账户只能存储一个记录。设计规则：</p>
+<ul>
+<li>能修改地址簿的唯一账户只能是用户自身。</li>
+<li>表的primary_key唯一。</li>
+<li>可以创建和修改表的记录。</li>
+</ul>
+<p>而person结构中，name类似的key也是唯一的，因此它可成为primary_key（uint64_t 整数）。而条件一的满足只需要require即可。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">void upsert(</span><br><span class="line">	name user,</span><br><span class="line">	std::string first_name,</span><br><span class="line">	std::string last_name,</span><br><span class="line">    std::string street,</span><br><span class="line">    std::string city,</span><br><span class="line">    std::string state</span><br><span class="line">)&#123;</span><br><span class="line">	require_auth(user);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="实例化表"><a href="#实例化表" class="headerlink" title="实例化表"></a>实例化表</h3><p>可以看到要实例化表，需要两个参数：</p>
+<ul>
+<li>code：由于修改，删除记录都是只能自身合约账户来操作，因此参数值应该是：get_self(), 即合约名字。</li>
+<li>scope: 直接使用部署该合约的账户，即：get_first_receiver()。</li>
+</ul>
+<p>因此，增加代码如下:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">address_index addresses(get_self(), get_first_receiver().value);</span><br></pre></td></tr></table></figure>
+
+<p>之后查询迭代器，将其设置为变量。因为它后面会需要被多次使用。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">auto iterator &#x3D; addresses.find(user.value)</span><br></pre></td></tr></table></figure>
+
+<p>它的用处是用来查询用户</p>
+<h3 id="创建-修改表"><a href="#创建-修改表" class="headerlink" title="创建/修改表"></a>创建/修改表</h3><p>上面的addresses.find查找某个用户，如果用户不存在，会返回null, 赋值给iterator。而addresses.end()方法就是”null”的别名。因此可以判断它们是否相等来判断某个用户是否存在。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">#如果用户不存在，就创建一条记录。</span><br><span class="line">if(iterator &#x3D;&#x3D; addresses.end())&#123;</span><br><span class="line">	addresses.emplace(user, [&amp;](auto&amp; row)&#123;</span><br><span class="line">		row.key &#x3D; user;</span><br><span class="line">		row.first_name &#x3D; first_name;</span><br><span class="line">		row.last_name &#x3D; last_name;</span><br><span class="line">		row.street &#x3D; street;</span><br><span class="line">		row.city &#x3D; city;</span><br><span class="line">		row.state &#x3D; state;</span><br><span class="line">	&#125;);</span><br><span class="line">&#125;</span><br><span class="line">else&#123;	#如果用户存在，就修改其记录</span><br><span class="line">	 addresses.modify(iterator, user, [&amp;]( auto&amp; row ) &#123;&#x2F;&#x2F;找到的用户iterator, 为添加这条记录付款的当前用户，lamba函数引用修改</span><br><span class="line">      row.key &#x3D; user;</span><br><span class="line">      row.first_name &#x3D; first_name;</span><br><span class="line">      row.last_name &#x3D; last_name;</span><br><span class="line">      row.street &#x3D; street;</span><br><span class="line">      row.city &#x3D; city;</span><br><span class="line">      row.state &#x3D; state;</span><br><span class="line">    &#125;);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="从表中删除记录"><a href="#从表中删除记录" class="headerlink" title="从表中删除记录"></a>从表中删除记录</h2><p>前面部分一致</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">void erase(name user)&#123;</span><br><span class="line">	require_auth(user);</span><br><span class="line">	address_index addresses(get_self(), get_first_receiver().value);</span><br><span class="line">	auto iterator &#x3D; addresses.find(user.value);</span><br><span class="line">	check(iterator !&#x3D; addresses.end, &quot;Record does not exist&quot;);&#x2F;&#x2F;检查记录是否存在</span><br><span class="line">	addresses.erase(iterator);&#x2F;&#x2F;存在则删除</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="为ABI准备"><a href="#为ABI准备" class="headerlink" title="为ABI准备"></a>为ABI准备</h2><p>要使ABI生成器正常工作，需要添加一写action生命。</p>
+<p>在upsert和erase函数上方，添加：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[[eosio::action]]</span><br></pre></td></tr></table></figure>
+
+<p>对person数据结构：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">struct person&#123;...&#125; --&gt; struct [[eosio::table]] person&#123;...&#125;</span><br></pre></td></tr></table></figure>
+
+<p>有了这个声明才会将一些必要的描述添加到ABI文件中。</p>
+<h2 id="最终的合约"><a href="#最终的合约" class="headerlink" title="最终的合约"></a>最终的合约</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br></pre></td><td class="code"><pre><span class="line">#include &lt;eosio&#x2F;eosio.hpp&gt;</span><br><span class="line"></span><br><span class="line">using namespace eosio;</span><br><span class="line"></span><br><span class="line">class [[eosio::contract(&quot;addressbook&quot;)]] addressbook : public eosio::contract &#123;</span><br><span class="line"></span><br><span class="line">public:</span><br><span class="line"></span><br><span class="line">  addressbook(name receiver, name code,  datastream&lt;const char*&gt; ds): contract(receiver, code, ds) &#123;&#125;</span><br><span class="line"></span><br><span class="line">  [[eosio::action]]</span><br><span class="line">  void upsert(name user, std::string first_name, std::string last_name, std::string street, std::string city, std::string state) &#123;</span><br><span class="line">    require_auth( user );</span><br><span class="line">    address_index addresses( get_self(), get_first_receiver().value );</span><br><span class="line">    auto iterator &#x3D; addresses.find(user.value);</span><br><span class="line">    if( iterator &#x3D;&#x3D; addresses.end() )</span><br><span class="line">    &#123;</span><br><span class="line">      addresses.emplace(user, [&amp;]( auto&amp; row ) &#123;</span><br><span class="line">       row.key &#x3D; user;</span><br><span class="line">       row.first_name &#x3D; first_name;</span><br><span class="line">       row.last_name &#x3D; last_name;</span><br><span class="line">       row.street &#x3D; street;</span><br><span class="line">       row.city &#x3D; city;</span><br><span class="line">       row.state &#x3D; state;</span><br><span class="line">      &#125;);</span><br><span class="line">    &#125;</span><br><span class="line">    else &#123;</span><br><span class="line">      addresses.modify(iterator, user, [&amp;]( auto&amp; row ) &#123;</span><br><span class="line">        row.key &#x3D; user;</span><br><span class="line">        row.first_name &#x3D; first_name;</span><br><span class="line">        row.last_name &#x3D; last_name;</span><br><span class="line">        row.street &#x3D; street;</span><br><span class="line">        row.city &#x3D; city;</span><br><span class="line">        row.state &#x3D; state;</span><br><span class="line">      &#125;);</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  [[eosio::action]]</span><br><span class="line">  void erase(name user) &#123;</span><br><span class="line">    require_auth(user);</span><br><span class="line"></span><br><span class="line">    address_index addresses( get_self(), get_first_receiver().value);</span><br><span class="line"></span><br><span class="line">    auto iterator &#x3D; addresses.find(user.value);</span><br><span class="line">    check(iterator !&#x3D; addresses.end(), &quot;Record does not exist&quot;);</span><br><span class="line">    addresses.erase(iterator);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">private:</span><br><span class="line">  struct [[eosio::table]] person &#123;</span><br><span class="line">    name key;</span><br><span class="line">    std::string first_name;</span><br><span class="line">    std::string last_name;</span><br><span class="line">    std::string street;</span><br><span class="line">    std::string city;</span><br><span class="line">    std::string state;</span><br><span class="line">    uint64_t primary_key() const &#123; return key.value; &#125;</span><br><span class="line">  &#125;;</span><br><span class="line">  using address_index &#x3D; eosio::multi_index&lt;&quot;people&quot;_n, person&gt;;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<h2 id="准备Ricardian合同"><a href="#准备Ricardian合同" class="headerlink" title="准备Ricardian合同"></a>准备Ricardian合同</h2><p>没有Ricardian合同，编译使会产生警告，然后默认生成一些条目。</p>
+<p>首先新建文件（合约名称需与智能合约的名称相同）</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">touch addressbook.contracts.md</span><br></pre></td></tr></table></figure>
+
+<p>然后往文件添加定义</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">&lt;h1 class&#x3D;&quot;contract&quot;&gt;upsert&lt;&#x2F;h1&gt;</span><br><span class="line">---</span><br><span class="line">spec-version: 0.0.2</span><br><span class="line">title: Upsert</span><br><span class="line">summary: This action will either insert or update an entry in the address book. If an entry exists with the same name as the specified user parameter, the record is updated with the first_name, last_name, street, city, and state parameters. If a record does not exist, a new record is created. The data is stored in the multi index table. The ram costs are paid by the smart contract.</span><br><span class="line">icon:</span><br><span class="line"></span><br><span class="line">&lt;h1 class&#x3D;&quot;contract&quot;&gt;erase&lt;&#x2F;h1&gt;</span><br><span class="line">---</span><br><span class="line">spec-version: 0.0.2</span><br><span class="line">title: Erase</span><br><span class="line">summary: This action will remove an entry from the address book if an entry in the multi index table exists with the specified name.</span><br><span class="line">icon:</span><br></pre></td></tr></table></figure>
+
+<h2 id="准备Ricardian子句"><a href="#准备Ricardian子句" class="headerlink" title="准备Ricardian子句"></a>准备Ricardian子句</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">touch addressbook.clauses.md</span><br></pre></td></tr></table></figure>
+
+<p>添加</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line">&lt;h1 class&#x3D;&quot;clause&quot;&gt;Data Storage&lt;&#x2F;h1&gt;</span><br><span class="line">---</span><br><span class="line">spec-version: 0.0.1</span><br><span class="line">title: General Data Storage</span><br><span class="line">summary: This smart contract will store data added by the user. The user consents to the storage of this data by signing the transaction.</span><br><span class="line">icon:</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&lt;h1 class&#x3D;&quot;clause&quot;&gt;Data Usage&lt;&#x2F;h1&gt;</span><br><span class="line">---</span><br><span class="line">spec-version: 0.0.1</span><br><span class="line">title: General Data Use</span><br><span class="line">summary: This smart contract will store user data. The smart contract will not use the stored data for any purpose outside store and delete.</span><br><span class="line">icon:</span><br><span class="line"></span><br><span class="line">&lt;h1 class&#x3D;&quot;clause&quot;&gt;Data Ownership&lt;&#x2F;h1&gt;</span><br><span class="line">---</span><br><span class="line">spec-version: 0.0.1</span><br><span class="line">title: Data Ownership</span><br><span class="line">summary: The user of this smart contract verifies that the data is owned by the smart contract, and that the smart contract can use the data in accordance to the terms defined in the Ricardian Contract.</span><br><span class="line">icon:</span><br><span class="line"></span><br><span class="line">&lt;h1 class&#x3D;&quot;clause&quot;&gt;Data Distirbution&lt;&#x2F;h1&gt;</span><br><span class="line">---</span><br><span class="line">spec-version: 0.0.1</span><br><span class="line">title: Data Distirbution</span><br><span class="line">summary: The smart contract promises to not actively share or distribute the address data. The user of the smart contract understands that data stored in a multi index table is not private data and can be accessed by any user of the blockchain.  </span><br><span class="line">icon:</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&lt;h1 class&#x3D;&quot;clause&quot;&gt;Data Future&lt;&#x2F;h1&gt;</span><br><span class="line">---</span><br><span class="line">spec-version: 0.0.1</span><br><span class="line">title: Data Future</span><br><span class="line">summary: The smart contract promises to only use the data in accordance of the terms defined in the Ricardian Contract, now and at all future dates.</span><br><span class="line">icon:</span><br></pre></td></tr></table></figure>
+
+<h2 id="编译-部署合约"><a href="#编译-部署合约" class="headerlink" title="编译/部署合约"></a>编译/部署合约</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">eosio-cpp addressbook.cpp -o addressbook.wasm</span><br></pre></td></tr></table></figure>
+
+<p>编译之后，进行部署。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cleos create account eosio addressbook EOS8STYz9TYuEDHS1fErjgaDR1ApTk62eEaBzC7Jhn486paNrgsZC -p eosio@active</span><br></pre></td></tr></table></figure>
+
+<p>创建一个账户。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cleos set contract addressbook &#x2F;home&#x2F;ggy&#x2F;桌面&#x2F;blockchain&#x2F;contracts&#x2F;addressbook -p addressbook@active</span><br></pre></td></tr></table></figure>
+
+<p>部署合约</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cleos push action addressbook upsert &#39;[&quot;alice&quot;, &quot;alice&quot;, &quot;liddell&quot;, &quot;123 drink me way&quot;, &quot;wonderland&quot;, &quot;amsterdam&quot;]&#39; -p alice@active</span><br></pre></td></tr></table></figure>
+
+<p>测试合约</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cleos push action addressbook upsert &#39;[&quot;bob&quot;, &quot;bob&quot;, &quot;is a loser&quot;, &quot;doesnt exist&quot;, &quot;somewhere&quot;, &quot;someplace&quot;]&#39; -p alice@active</span><br></pre></td></tr></table></figure>
+
+<p>检查alice是否无法为bob添加记录。报错了，确实阻止了。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cleos get table addressbook addressbook people --lower alice --limit 1</span><br></pre></td></tr></table></figure>
+
+<p>检查alice的记录。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cleos push action addressbook erase &#39;[&quot;alice&quot;]&#39; -p alice@active</span><br></pre></td></tr></table></figure>
+
+<p>测试alice是否可以删除记录。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cleos get table addressbook addressbook people --lower alice --limit 1</span><br></pre></td></tr></table></figure>
+
+<p>检查记录是否已经删除。</p>
+
+    </div>
+    
+    <div class="reward" ontouchstart>
+    <div class="reward-wrap">赏
+        <div class="reward-box">
+            
+            <span class="reward-type">
+                <img class="alipay" src="/img/alipay.jpg"><b>支付宝打赏</b>
+            </span>
+            
+            
+            <span class="reward-type">
+                <img class="wechat" src="/img/wechat.jpg"><b>微信打赏</b>
+            </span>
+            
+        </div>
+    </div>
+    <p class="reward-tip">
+        赞赏是不耍流氓的鼓励
+    </p>
+</div>
+    
+    <div class="post-footer">
+        <div>
+            
+            转载声明：
+            商业转载请联系作者获得授权,非商业转载请注明出处 © <a href="ggy.44pp.vip" target="_blank">ggy</a>
+            
+            
+        </div>
+        <div>
+            
+        </div>
+    </div>
+</article>
+<div class="article-nav prev-next-wrap clearfix">
+    
+    
+    <a href="/2021/03/17/%E5%8C%BA%E5%9D%97%E9%93%BE%E5%AE%89%E5%85%A8%E4%B9%8BEOS%E5%AD%A6%E4%B9%A0%EF%BC%88%E4%B8%80%EF%BC%89/" class="next-post btn btn-default" title='区块链安全之EOS学习（一）'>
+        <span class="hidden-lg">下一篇</span>
+        <span class="hidden-xs">
+            区块链安全之EOS学习（一）</span><i class="fa fa-angle-right fa-fw"></i>
+    </a>
+    
+</div>
+
+<div id="comments">
+    
+<div id="lv-container" data-id="city" data-uid="MTAyMC80ODM1Ni8yNDg1MA==">
+    <script type="text/javascript">
+    (function(d, s) {
+        var j, e = d.getElementsByTagName(s)[0];
+        if (typeof LivereTower === 'function') { return; }
+        j = d.createElement(s);
+        j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+        j.async = true;
+        e.parentNode.insertBefore(j, e);
+    })(document, 'script');
+    </script>
+</div>
+
+</div>
+
+                </main>
+                
+                    <aside id="article-toc" role="navigation" class="col-md-4">
+    <div class="widget">
+        <h3 class="title">
+            文章目录
+        </h3>
+        
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Hello-World"><span class="toc-text">Hello World</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#编写智能合约"><span class="toc-text">编写智能合约</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#编译-部署"><span class="toc-text">编译&#x2F;部署</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#与合约交互"><span class="toc-text">与合约交互</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#部署token"><span class="toc-text">部署token</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#获得合约"><span class="toc-text">获得合约</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#部署合约"><span class="toc-text">部署合约</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#创建令牌"><span class="toc-text">创建令牌</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#发行令牌"><span class="toc-text">发行令牌</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#转移令牌"><span class="toc-text">转移令牌</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#ABI文件"><span class="toc-text">ABI文件</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#数据持久性"><span class="toc-text">数据持久性</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#创建地址簿智能合约"><span class="toc-text">创建地址簿智能合约</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#为地址簿创建数据结构"><span class="toc-text">为地址簿创建数据结构</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#配置多索引表"><span class="toc-text">配置多索引表</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#构造函数"><span class="toc-text">构造函数</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#向表中添加记录"><span class="toc-text">向表中添加记录</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#实例化表"><span class="toc-text">实例化表</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#创建-修改表"><span class="toc-text">创建&#x2F;修改表</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#从表中删除记录"><span class="toc-text">从表中删除记录</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#为ABI准备"><span class="toc-text">为ABI准备</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#最终的合约"><span class="toc-text">最终的合约</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#准备Ricardian合同"><span class="toc-text">准备Ricardian合同</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#准备Ricardian子句"><span class="toc-text">准备Ricardian子句</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#编译-部署合约"><span class="toc-text">编译&#x2F;部署合约</span></a></li></ol></li></ol>
+        
+    </div>
+</aside>
+                
+            </div>
+        </div>
+    </section>
+    <footer class="main-footer">
+    <div class="container">
+        <div class="row">
+        </div>
+    </div>
+</footer>
+<a id="back-to-top" class="icon-btn hide">
+    <i class="fa fa-chevron-up"></i>
+</a>
+    <div class="copyright">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="busuanzi">
+    
+    访问量:
+    <strong id="busuanzi_value_site_pv">
+        <i class="fa fa-spinner fa-spin"></i>
+    </strong>
+    &nbsp; | &nbsp;
+    访客数:
+    <strong id="busuanzi_value_site_uv">
+        <i class="fa fa-spinner fa-spin"></i>
+    </strong>
+    
+</div>
+            </div>
+            <div class="col-sm-12">
+                <span>Copyright &copy;
+                    2020
+                    
+                </span> |
+                <span>
+                    Powered by <a href="//hexo.io" class="copyright-links" target="_blank" rel="nofollow">Hexo</a>
+                </span> |
+                <span>
+                    Theme by <a href="//github.com/shenliyang/hexo-theme-snippet.git" class="copyright-links" target="_blank" rel="nofollow">Snippet</a>
+                </span>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<script src="/assets/tagcanvas.min.js?rev=2.9.js"></script>
+
+<script>
+var tagOption = {
+    textColour: '#444', // 字体颜色
+    outlineMethod: 'block', // 选中模式
+    outlineColour: '#FFDAB9', // 选中模式的颜色
+    interval: 30 || 30, // 动画帧之间的时间间隔，值越大，转动幅度越大
+    textHeight: 13,
+    outlineRadius: 3,
+    freezeActive: true || '', // 选中的标签是否继续滚动
+    frontSelect: true || '', // 不选标签云后部的标签
+    initial: [0.1, -0.1],
+    depth: 0.5,
+    decel: 0.95,
+    maxSpeed: 0.03,
+    reverse: true || '', // 是否反向触发
+    fadeIn: 500, // 进入动画时间
+    wheelZoom: false || '' // 是否启用鼠标滚轮
+}
+TagCanvas.Start('tag-cloud-3d', '', tagOption);
+</script>
+
+
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+<script src="/js/app.js?rev=@@hash.js"></script>
+
+
+<!-- 雪花特效 -->
+<script type="text/javascript" src="http://libs.baidu.com/jquery/1.8.3/jquery.js"></script>
+<script type="text/javascript" src="http://libs.baidu.com/jquery/1.8.3/jquery.min.js"></script>
+<script type="text/javascript" src="\js\snow.js"></script>
+
+<canvas class="fireworks" style="position: fixed;left: 0;top: 0;z-index: 1; pointer-events: none;" ></canvas> 
+<script type="text/javascript" src="//cdn.bootcss.com/animejs/2.2.0/anime.min.js"></script> 
+<script type="text/javascript" src="/js/fireworks.js"></script>
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"model":{"jsonPath":"live2d-widget-model-haruto"},"display":{"position":"right","width":150,"height":300},"mobile":{"show":false},"log":false,"pluginJsPath":"lib/","pluginModelPath":"assets/","pluginRootPath":"live2dw/","tagMode":false});</script></body>
+</html>

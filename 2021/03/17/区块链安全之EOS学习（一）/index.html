@@ -1,0 +1,417 @@
+<head>
+<script src="https://cdn.jsdelivr.net/npm/jquery/dist/jquery.min.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome/css/font-awesome.min.css">
+<script src="https://cdn.jsdelivr.net/gh/stevenjoezhang/live2d-widget/autoload.js"></script>
+</head>
+
+<!DOCTYPE HTML>
+<html lang="zh-CN">
+
+<head>
+    <!--Setting-->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+    <meta http-equiv="Cache-Control" content="no-siteapp">
+    <meta http-equiv="Cache-Control" content="no-transform">
+    <meta name="renderer" content="webkit|ie-comp|ie-stand">
+    <meta name="apple-mobile-web-app-capable" content="ggy的个人博客">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="format-detection" content="telephone=no,email=no,adress=no">
+    <meta name="browsermode" content="application">
+    <meta name="screen-orientation" content="portrait">
+    <meta name="theme-version" content="1.2.3">
+    <meta name="root" content="/">
+    <link rel="dns-prefetch" href="https://ggyggy666.github.io">
+    <!--SEO-->
+
+<meta name="keywords" content="区块链安全之EOS学习（一）" />
+
+
+<meta name="description" content="入门指南：https://developers.eos.io/welcome/latest/getting-started-guide/local-development-environment..." />
+
+
+<meta name="robots" content="all" />
+<meta name="google" content="all" />
+<meta name="googlebot" content="all" />
+<meta name="verify" content="all" />
+    <!--Title-->
+
+<title>
+    
+    区块链安全之EOS学习（一） |
+    
+    ggy的个人博客
+</title>
+
+<link rel="alternate" href="/atom.xml" title="ggy的个人博客" type="application/atom+xml">
+
+
+<link rel="icon" href="/favicon.ico">
+
+    
+
+
+<link rel="stylesheet" href="/css/bootstrap.min.css?rev=3.3.7.css">
+<link rel="stylesheet" href="/css/font-awesome.min.css?rev=4.7.0.css">
+<link rel="stylesheet" href="/css/style.css?rev=@@hash.css">
+
+    
+<div class="hide">
+    <script type="text/javascript">
+    var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+    document.write(unescape("%3Cspan class='cnzz_stat_icon_1263868967 hide' %3E%3Cscript%20src%3D%22https%3A%2F%2Fs95.cnzz.com%2Fz_stat.php%3Fweb_id%3D1272564536%22%3E%3C%2Fscript%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s19.cnzz.com/z_stat.php%3Fid%3D1263868967%26show%3Dpic1' type='text/javascript'%3E%3C/script%3E"));
+    </script>
+</div>
+
+
+
+
+    
+
+<meta name="generator" content="Hexo 4.2.0"></head>
+<!--[if lte IE 8]>
+<style>
+    html{ font-size: 1em }
+</style>
+<![endif]-->
+<!--[if lte IE 9]>
+<div style="ie">你使用的浏览器版本过低，为了你更好的阅读体验，请更新浏览器的版本或者使用其他现代浏览器，比如Chrome、Firefox、Safari等。</div>
+<![endif]-->
+<body>
+    <header class="main-header"  style="background-image:url(
+    https://pic.downk.cc/item/5e3816b82fb38b8c3c8791f9.jpg)"
+     >
+    <div class="main-header-box">
+        <a class="header-avatar" href="/" title='ggy'>
+            <img src="/img/avatar.jpg" alt="logo头像" class="img-responsive center-block">
+        </a>
+        <div class="branding">
+            <!--<h2 class="text-hide">Snippet主题,从未如此简单有趣</h2>-->
+            
+            <h2>
+                欢迎来到ggy的个人网站
+            </h2>
+            
+        </div>
+    </div>
+</header>
+    <nav class="main-navigation">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="navbar-header"><span class="nav-toggle-button collapsed pull-right" data-toggle="collapse" data-target="#main-menu" id="mnav">
+                        <span class="sr-only"></span>
+                        <i class="fa fa-bars"></i>
+                    </span>
+                    <a class="navbar-brand" href="https://ggyggy666.github.io">
+                        ggy的个人博客</a>
+                </div>
+                <div class="collapse navbar-collapse" id="main-menu">
+                    <ul class="menu">
+                        
+                        <li role="presentation" class="text-center">
+                            <a href="/"><i class="fa "></i>
+                                首页</a>
+                        </li>
+                        
+                        <li role="presentation" class="text-center">
+                            <a href="/categories/web安全/"><i class="fa "></i>
+                                web安全</a>
+                        </li>
+                        
+                        <li role="presentation" class="text-center">
+                            <a href="/categories/python工具/"><i class="fa "></i>
+                                python工具</a>
+                        </li>
+                        
+                        <li role="presentation" class="text-center">
+                            <a href="/categories/密码学/"><i class="fa "></i>
+                                密码学</a>
+                        </li>
+                        
+                        <li role="presentation" class="text-center">
+                            <a href="/archives/"><i class="fa "></i>
+                                时间轴</a>
+                        </li>
+                        
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</nav>
+    <section class="content-wrap">
+        <div class="container">
+            <div class="row">
+                <main class="col-md-8 main-content m-post">
+                    <p id="process"></p>
+<article class="post">
+    <div class="post-head">
+        <h1 id="区块链安全之EOS学习（一）">
+            
+            区块链安全之EOS学习（一）
+            
+        </h1>
+        <div class="post-meta">
+    
+    <span class="categories-meta fa-wrap">
+        <i class="fa fa-folder-open-o"></i>
+        <a class="category-link" href="/categories/%E5%8C%BA%E5%9D%97%E9%93%BE%E5%AE%89%E5%85%A8/">区块链安全</a>
+    </span>
+    
+    
+    <span class="fa-wrap">
+        <i class="fa fa-tags"></i>
+        <span class="tags-meta">
+            
+            <a class="tag-link" href="/tags/%E5%8C%BA%E5%9D%97%E9%93%BE%E5%AE%89%E5%85%A8%E4%B9%8BEOS%E5%AD%A6%E4%B9%A0%EF%BC%88%E4%B8%80%EF%BC%89/" rel="tag">区块链安全之EOS学习（一）</a>
+            
+        </span>
+    </span>
+    
+    
+    
+    <span class="fa-wrap">
+        <i class="fa fa-clock-o"></i>
+        <span class="date-meta">
+            2021/03/17</span>
+    </span>
+    
+    <span class="fa-wrap">
+        <i class="fa fa-eye"></i>
+        <span id="busuanzi_value_page_pv"></span>
+    </span>
+    
+    
+</div>
+        
+        
+    </div>
+    
+    <div class="post-body post-content">
+        <p>入门指南：<a href="https://developers.eos.io/welcome/latest/getting-started-guide/local-development-environment/system_requirements" target="_blank" rel="noopener">https://developers.eos.io/welcome/latest/getting-started-guide/local-development-environment/system_requirements</a></p>
+<h1 id="环境安装"><a href="#环境安装" class="headerlink" title="环境安装"></a>环境安装</h1><h2 id="下载EOSIO"><a href="#下载EOSIO" class="headerlink" title="下载EOSIO"></a>下载EOSIO</h2><p>Ubuntu18.04：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">wget https://github.com/EOSIO/eos/releases/download/v2.0.9/eosio_2.0.9-1-ubuntu-18.04_amd64.deb</span><br><span class="line">sudo apt install ./eosio_2.0.9-1-ubuntu-18.04_amd64.deb</span><br></pre></td></tr></table></figure>
+
+<h2 id="设置目录"><a href="#设置目录" class="headerlink" title="设置目录"></a>设置目录</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">mkdir contracts</span><br><span class="line">cd contracts</span><br></pre></td></tr></table></figure>
+
+<h2 id="安装CDT"><a href="#安装CDT" class="headerlink" title="安装CDT"></a>安装CDT</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">wget https://github.com/eosio/eosio.cdt/releases/download/v1.7.0/eosio.cdt_1.7.0-1-ubuntu-18.04_amd64.deb</span><br><span class="line"></span><br><span class="line">sudo apt install ./eosio.cdt_1.7.0-1-ubuntu-18.04_amd64.deb</span><br></pre></td></tr></table></figure>
+
+<h2 id="创建钱包"><a href="#创建钱包" class="headerlink" title="创建钱包"></a>创建钱包</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cleos wallet create --to-console</span><br></pre></td></tr></table></figure>
+
+<p>创建一个default账户，返回一个密码，要好好保存它。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cleos wallet open</span><br></pre></td></tr></table></figure>
+
+<p>打开钱包</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cleos wallet list</span><br></pre></td></tr></table></figure>
+
+<p>返回钱包列表。这个时候default账户是锁了的。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cleos wallet unlock</span><br></pre></td></tr></table></figure>
+
+<p>解锁钱包，需要用到上面创建时候的密码。再查看钱包列表，会发现default后面多了个*，表明钱包已解锁。</p>
+<h2 id="将密钥导入钱包"><a href="#将密钥导入钱包" class="headerlink" title="将密钥导入钱包"></a>将密钥导入钱包</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cleos wallet create_key</span><br></pre></td></tr></table></figure>
+
+<p>生成一个私钥和公钥，返回的是公钥，这个公钥也要好好保存。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cleos wallet import</span><br></pre></td></tr></table></figure>
+
+<p>导入私钥，这时候会提醒输入开发密钥，只需要输入下面的开发密钥(eosio提供的):</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">5KQwrPbwdL6PhXujxW37FSSQZ1JiwsST4cqQzDeyXtP79zkvFD3</span><br></pre></td></tr></table></figure>
+
+<h1 id="部署区块链"><a href="#部署区块链" class="headerlink" title="部署区块链"></a>部署区块链</h1><p>钱包和智能合约创建好后，开始部署到区块链进行测试。</p>
+<h2 id="keosd"><a href="#keosd" class="headerlink" title="keosd"></a>keosd</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">keosd &amp;</span><br></pre></td></tr></table></figure>
+
+<p>启动keosd。看到一些输出，然后按回车即可。如果遇到错误信息，很可能是另一个keosd在运行，需要使用：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">pkill keosd	&#x2F;&#x2F;杀死所有keosd实例</span><br><span class="line">keosd &amp;	&#x2F;&#x2F;重新运行</span><br></pre></td></tr></table></figure>
+
+<h2 id="nodeos"><a href="#nodeos" class="headerlink" title="nodeos"></a>nodeos</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">nodeos -e -p eosio \</span><br><span class="line">--plugin eosio::producer_plugin \</span><br><span class="line">--plugin eosio::producer_api_plugin \</span><br><span class="line">--plugin eosio::chain_api_plugin \</span><br><span class="line">--plugin eosio::http_plugin \</span><br><span class="line">--plugin eosio::history_plugin \</span><br><span class="line">--plugin eosio::history_api_plugin \</span><br><span class="line">--filter-on&#x3D;&quot;*&quot; \</span><br><span class="line">--access-control-allow-origin&#x3D;&#39;*&#39; \</span><br><span class="line">--contracts-console \</span><br><span class="line">--http-validate-host&#x3D;false \</span><br><span class="line">--verbose-http-errors &gt;&gt; nodeos.log 2&gt;&amp;1 &amp;</span><br></pre></td></tr></table></figure>
+
+<p>启动nodeos, 这个命令会加载所有插件，设置服务器地址，启用CORS并添加一些合同调试和日志记录。当然启动后很可能也是有另一个在运行，同意得先<strong>kill</strong>掉再<strong>重启</strong>。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">tail -f nodeos.log</span><br></pre></td></tr></table></figure>
+
+<p>看到一堆输出，这是检查nodeos是否正在生产块，Ctrl+C即可停止。</p>
+<h2 id="查看钱包"><a href="#查看钱包" class="headerlink" title="查看钱包"></a>查看钱包</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cleos wallet list</span><br></pre></td></tr></table></figure>
+
+<p>查看钱包列表，这时会看到一个空钱包列表。</p>
+<h2 id="浏览器检查nodeos端点"><a href="#浏览器检查nodeos端点" class="headerlink" title="浏览器检查nodeos端点"></a>浏览器检查nodeos端点</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">curl http:&#x2F;&#x2F;localhost:8888&#x2F;v1&#x2F;chain&#x2F;get_info</span><br></pre></td></tr></table></figure>
+
+<p>即可查看到区块信息。</p>
+<h1 id="创建开发账户"><a href="#创建开发账户" class="headerlink" title="创建开发账户"></a>创建开发账户</h1><p>可创建多个账户，注意需要对账户分配权限。</p>
+<h2 id="创建测试账户"><a href="#创建测试账户" class="headerlink" title="创建测试账户"></a>创建测试账户</h2><p><strong>需要先确保钱包解锁了。</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cleos create account eosio bob 公钥</span><br></pre></td></tr></table></figure>
+
+<p>这个公钥是之前保存的钱包的公钥。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cleos get account bob</span><br></pre></td></tr></table></figure>
+
+<p>获取bob账户的相关信息，比如它关联的公钥。</p>
+
+    </div>
+    
+    <div class="reward" ontouchstart>
+    <div class="reward-wrap">赏
+        <div class="reward-box">
+            
+            <span class="reward-type">
+                <img class="alipay" src="/img/alipay.jpg"><b>支付宝打赏</b>
+            </span>
+            
+            
+            <span class="reward-type">
+                <img class="wechat" src="/img/wechat.jpg"><b>微信打赏</b>
+            </span>
+            
+        </div>
+    </div>
+    <p class="reward-tip">
+        赞赏是不耍流氓的鼓励
+    </p>
+</div>
+    
+    <div class="post-footer">
+        <div>
+            
+            转载声明：
+            商业转载请联系作者获得授权,非商业转载请注明出处 © <a href="ggy.44pp.vip" target="_blank">ggy</a>
+            
+            
+        </div>
+        <div>
+            
+        </div>
+    </div>
+</article>
+<div class="article-nav prev-next-wrap clearfix">
+    
+    <a href="/2021/03/17/%E5%8C%BA%E5%9D%97%E9%93%BE%E5%AE%89%E5%85%A8%E4%B9%8BEOS%E5%AD%A6%E4%B9%A0%EF%BC%88%E4%BA%8C%EF%BC%89/" class="pre-post btn btn-default" title='区块链安全之EOS学习（二）'>
+        <i class="fa fa-angle-left fa-fw"></i><span class="hidden-lg">上一篇</span>
+        <span class="hidden-xs">
+            区块链安全之EOS学习（二）</span>
+    </a>
+    
+    
+    <a href="/2021/03/08/git%E5%AD%A6%E4%B9%A0/" class="next-post btn btn-default" title='git学习'>
+        <span class="hidden-lg">下一篇</span>
+        <span class="hidden-xs">
+            git学习</span><i class="fa fa-angle-right fa-fw"></i>
+    </a>
+    
+</div>
+
+<div id="comments">
+    
+<div id="lv-container" data-id="city" data-uid="MTAyMC80ODM1Ni8yNDg1MA==">
+    <script type="text/javascript">
+    (function(d, s) {
+        var j, e = d.getElementsByTagName(s)[0];
+        if (typeof LivereTower === 'function') { return; }
+        j = d.createElement(s);
+        j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+        j.async = true;
+        e.parentNode.insertBefore(j, e);
+    })(document, 'script');
+    </script>
+</div>
+
+</div>
+
+                </main>
+                
+                    <aside id="article-toc" role="navigation" class="col-md-4">
+    <div class="widget">
+        <h3 class="title">
+            文章目录
+        </h3>
+        
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#环境安装"><span class="toc-text">环境安装</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#下载EOSIO"><span class="toc-text">下载EOSIO</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#设置目录"><span class="toc-text">设置目录</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#安装CDT"><span class="toc-text">安装CDT</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#创建钱包"><span class="toc-text">创建钱包</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#将密钥导入钱包"><span class="toc-text">将密钥导入钱包</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#部署区块链"><span class="toc-text">部署区块链</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#keosd"><span class="toc-text">keosd</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#nodeos"><span class="toc-text">nodeos</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#查看钱包"><span class="toc-text">查看钱包</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#浏览器检查nodeos端点"><span class="toc-text">浏览器检查nodeos端点</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#创建开发账户"><span class="toc-text">创建开发账户</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#创建测试账户"><span class="toc-text">创建测试账户</span></a></li></ol></li></ol>
+        
+    </div>
+</aside>
+                
+            </div>
+        </div>
+    </section>
+    <footer class="main-footer">
+    <div class="container">
+        <div class="row">
+        </div>
+    </div>
+</footer>
+<a id="back-to-top" class="icon-btn hide">
+    <i class="fa fa-chevron-up"></i>
+</a>
+    <div class="copyright">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="busuanzi">
+    
+    访问量:
+    <strong id="busuanzi_value_site_pv">
+        <i class="fa fa-spinner fa-spin"></i>
+    </strong>
+    &nbsp; | &nbsp;
+    访客数:
+    <strong id="busuanzi_value_site_uv">
+        <i class="fa fa-spinner fa-spin"></i>
+    </strong>
+    
+</div>
+            </div>
+            <div class="col-sm-12">
+                <span>Copyright &copy;
+                    2020
+                    
+                </span> |
+                <span>
+                    Powered by <a href="//hexo.io" class="copyright-links" target="_blank" rel="nofollow">Hexo</a>
+                </span> |
+                <span>
+                    Theme by <a href="//github.com/shenliyang/hexo-theme-snippet.git" class="copyright-links" target="_blank" rel="nofollow">Snippet</a>
+                </span>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<script src="/assets/tagcanvas.min.js?rev=2.9.js"></script>
+
+<script>
+var tagOption = {
+    textColour: '#444', // 字体颜色
+    outlineMethod: 'block', // 选中模式
+    outlineColour: '#FFDAB9', // 选中模式的颜色
+    interval: 30 || 30, // 动画帧之间的时间间隔，值越大，转动幅度越大
+    textHeight: 13,
+    outlineRadius: 3,
+    freezeActive: true || '', // 选中的标签是否继续滚动
+    frontSelect: true || '', // 不选标签云后部的标签
+    initial: [0.1, -0.1],
+    depth: 0.5,
+    decel: 0.95,
+    maxSpeed: 0.03,
+    reverse: true || '', // 是否反向触发
+    fadeIn: 500, // 进入动画时间
+    wheelZoom: false || '' // 是否启用鼠标滚轮
+}
+TagCanvas.Start('tag-cloud-3d', '', tagOption);
+</script>
+
+
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+<script src="/js/app.js?rev=@@hash.js"></script>
+
+
+<!-- 雪花特效 -->
+<script type="text/javascript" src="http://libs.baidu.com/jquery/1.8.3/jquery.js"></script>
+<script type="text/javascript" src="http://libs.baidu.com/jquery/1.8.3/jquery.min.js"></script>
+<script type="text/javascript" src="\js\snow.js"></script>
+
+<canvas class="fireworks" style="position: fixed;left: 0;top: 0;z-index: 1; pointer-events: none;" ></canvas> 
+<script type="text/javascript" src="//cdn.bootcss.com/animejs/2.2.0/anime.min.js"></script> 
+<script type="text/javascript" src="/js/fireworks.js"></script>
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"model":{"jsonPath":"live2d-widget-model-haruto"},"display":{"position":"right","width":150,"height":300},"mobile":{"show":false},"log":false,"pluginJsPath":"lib/","pluginModelPath":"assets/","pluginRootPath":"live2dw/","tagMode":false});</script></body>
+</html>

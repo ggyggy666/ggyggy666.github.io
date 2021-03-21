@@ -1,0 +1,492 @@
+<head>
+<script src="https://cdn.jsdelivr.net/npm/jquery/dist/jquery.min.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome/css/font-awesome.min.css">
+<script src="https://cdn.jsdelivr.net/gh/stevenjoezhang/live2d-widget/autoload.js"></script>
+</head>
+
+<!DOCTYPE HTML>
+<html lang="zh-CN">
+
+<head>
+    <!--Setting-->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+    <meta http-equiv="Cache-Control" content="no-siteapp">
+    <meta http-equiv="Cache-Control" content="no-transform">
+    <meta name="renderer" content="webkit|ie-comp|ie-stand">
+    <meta name="apple-mobile-web-app-capable" content="ggy的个人博客">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="format-detection" content="telephone=no,email=no,adress=no">
+    <meta name="browsermode" content="application">
+    <meta name="screen-orientation" content="portrait">
+    <meta name="theme-version" content="1.2.3">
+    <meta name="root" content="/">
+    <link rel="dns-prefetch" href="https://ggyggy666.github.io">
+    <!--SEO-->
+
+<meta name="keywords" content="区块链安全之EOSIO相关工具的使用" />
+
+
+<meta name="description" content="先前已经学会了编写智能合约并编译部署，但对于使用到的工具比如nodeos, cleos并不熟悉，因此学习一下。
+来源:https://developers.eos.io/manuals/eos/..." />
+
+
+<meta name="robots" content="all" />
+<meta name="google" content="all" />
+<meta name="googlebot" content="all" />
+<meta name="verify" content="all" />
+    <!--Title-->
+
+<title>
+    
+    区块链安全之EOSIO相关工具的使用 |
+    
+    ggy的个人博客
+</title>
+
+<link rel="alternate" href="/atom.xml" title="ggy的个人博客" type="application/atom+xml">
+
+
+<link rel="icon" href="/favicon.ico">
+
+    
+
+
+<link rel="stylesheet" href="/css/bootstrap.min.css?rev=3.3.7.css">
+<link rel="stylesheet" href="/css/font-awesome.min.css?rev=4.7.0.css">
+<link rel="stylesheet" href="/css/style.css?rev=@@hash.css">
+
+    
+<div class="hide">
+    <script type="text/javascript">
+    var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+    document.write(unescape("%3Cspan class='cnzz_stat_icon_1263868967 hide' %3E%3Cscript%20src%3D%22https%3A%2F%2Fs95.cnzz.com%2Fz_stat.php%3Fweb_id%3D1272564536%22%3E%3C%2Fscript%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s19.cnzz.com/z_stat.php%3Fid%3D1263868967%26show%3Dpic1' type='text/javascript'%3E%3C/script%3E"));
+    </script>
+</div>
+
+
+
+
+    
+
+<meta name="generator" content="Hexo 4.2.0"></head>
+<!--[if lte IE 8]>
+<style>
+    html{ font-size: 1em }
+</style>
+<![endif]-->
+<!--[if lte IE 9]>
+<div style="ie">你使用的浏览器版本过低，为了你更好的阅读体验，请更新浏览器的版本或者使用其他现代浏览器，比如Chrome、Firefox、Safari等。</div>
+<![endif]-->
+<body>
+    <header class="main-header"  style="background-image:url(
+    https://pic.downk.cc/item/5e3816b82fb38b8c3c8791f9.jpg)"
+     >
+    <div class="main-header-box">
+        <a class="header-avatar" href="/" title='ggy'>
+            <img src="/img/avatar.jpg" alt="logo头像" class="img-responsive center-block">
+        </a>
+        <div class="branding">
+            <!--<h2 class="text-hide">Snippet主题,从未如此简单有趣</h2>-->
+            
+            <h2>
+                欢迎来到ggy的个人网站
+            </h2>
+            
+        </div>
+    </div>
+</header>
+    <nav class="main-navigation">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="navbar-header"><span class="nav-toggle-button collapsed pull-right" data-toggle="collapse" data-target="#main-menu" id="mnav">
+                        <span class="sr-only"></span>
+                        <i class="fa fa-bars"></i>
+                    </span>
+                    <a class="navbar-brand" href="https://ggyggy666.github.io">
+                        ggy的个人博客</a>
+                </div>
+                <div class="collapse navbar-collapse" id="main-menu">
+                    <ul class="menu">
+                        
+                        <li role="presentation" class="text-center">
+                            <a href="/"><i class="fa "></i>
+                                首页</a>
+                        </li>
+                        
+                        <li role="presentation" class="text-center">
+                            <a href="/categories/web安全/"><i class="fa "></i>
+                                web安全</a>
+                        </li>
+                        
+                        <li role="presentation" class="text-center">
+                            <a href="/categories/python工具/"><i class="fa "></i>
+                                python工具</a>
+                        </li>
+                        
+                        <li role="presentation" class="text-center">
+                            <a href="/categories/密码学/"><i class="fa "></i>
+                                密码学</a>
+                        </li>
+                        
+                        <li role="presentation" class="text-center">
+                            <a href="/archives/"><i class="fa "></i>
+                                时间轴</a>
+                        </li>
+                        
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</nav>
+    <section class="content-wrap">
+        <div class="container">
+            <div class="row">
+                <main class="col-md-8 main-content m-post">
+                    <p id="process"></p>
+<article class="post">
+    <div class="post-head">
+        <h1 id="区块链安全之EOSIO相关工具的使用">
+            
+            区块链安全之EOSIO相关工具的使用
+            
+        </h1>
+        <div class="post-meta">
+    
+    <span class="categories-meta fa-wrap">
+        <i class="fa fa-folder-open-o"></i>
+        <a class="category-link" href="/categories/BlockChain/">BlockChain</a>
+    </span>
+    
+    
+    <span class="fa-wrap">
+        <i class="fa fa-tags"></i>
+        <span class="tags-meta">
+            
+            <a class="tag-link" href="/tags/%E5%8C%BA%E5%9D%97%E9%93%BE%E5%AE%89%E5%85%A8%E4%B9%8BEOSIO%E7%9B%B8%E5%85%B3%E5%B7%A5%E5%85%B7%E7%9A%84%E4%BD%BF%E7%94%A8/" rel="tag">区块链安全之EOSIO相关工具的使用</a>
+            
+        </span>
+    </span>
+    
+    
+    
+    <span class="fa-wrap">
+        <i class="fa fa-clock-o"></i>
+        <span class="date-meta">
+            2021/03/20</span>
+    </span>
+    
+    <span class="fa-wrap">
+        <i class="fa fa-eye"></i>
+        <span id="busuanzi_value_page_pv"></span>
+    </span>
+    
+    
+</div>
+        
+        
+    </div>
+    
+    <div class="post-body post-content">
+        <p>先前已经学会了编写智能合约并编译部署，但对于使用到的工具比如nodeos, cleos并不熟悉，因此学习一下。</p>
+<p>来源:<a href="https://developers.eos.io/manuals/eos/latest/nodeos/index" target="_blank" rel="noopener">https://developers.eos.io/manuals/eos/latest/nodeos/index</a></p>
+<h1 id="nodeos"><a href="#nodeos" class="headerlink" title="nodeos"></a>nodeos</h1><p>nodeos是在每个EOSIO节点上运行的核心服务守护程序，可以配置为处理智能合约，验证交易，产生包含有效交易的区块，确认区块并将其记录在区块链上。</p>
+<p>nodeos主要是加载插件，选项有nodeos特定的以及插件特定的。</p>
+<ul>
+<li><p>nodeos特定的选项</p>
+<p>用于内部管理。可以使用<code>nodeos --help</code>可以看到特定于nodeos的选项。</p>
+</li>
+<li><p>插件特定的选项</p>
+<p>用于控制nodeos插件，每个插件有唯一名称，因此可以–plugin指定它。有些插件固定：chain_plugin, net_plugin, producer_plugin。有两种配置方法：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">1.config.ini</span><br><span class="line">plugin &#x3D; eosio::net_api_plugin</span><br><span class="line"></span><br><span class="line">2.cli</span><br><span class="line">nodeos ... --plugin eosio::net_api_plugin</span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<h1 id="cleos"><a href="#cleos" class="headerlink" title="cleos"></a>cleos</h1><p>命令行工具，可以用来部署和测试智能合约。需要先启动Nodeos实例，而且实例配置为：eosio::chain_api_plugin在启动时加载插件。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cleos --help</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>-u, 指定nodeos运行的ip和端口。</li>
+<li>–wallet-url, 指定keosd运行的URL</li>
+<li>-r, 传递http头部</li>
+<li>-n, 使用HTTPS时不验证证书。</li>
+<li>–no-auto-keosd，keosd没有运行时不自动加载。</li>
+<li>-v, 输出详细的错误和action信息</li>
+<li>–print-request, 打印HTTP请求</li>
+<li>–print-response, 打印HTTP响应</li>
+<li>version, 返回版本信息。<code>cleos version</code>, <code>cleos version client</code></li>
+<li>create, 创建各种项目，打开和关闭区块链</li>
+<li>convert, 打包或者卸载交易</li>
+<li>get，返回各种关于区块链的信息</li>
+<li>set, 设置或者更新区块链状态</li>
+<li>transfer, 在账户之间传送token</li>
+<li>net, 与本地的p2p网络连接交互</li>
+<li>wallet，与本地钱包交互</li>
+<li>sign, 给一个交易签名</li>
+<li>push，推送任意的交易到区块链</li>
+<li>multisig,  对合约命令多重签名</li>
+<li>wrap, 包装合约命令</li>
+<li>system, 发送eosio.system 合约action到区块链</li>
+</ul>
+<p>还有子命令的帮助信息，如：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cleos create --help</span><br></pre></td></tr></table></figure>
+
+<p>查看create子命令的信息。返回</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">key, 创建密钥打印公钥和私钥。</span><br><span class="line">account, 创建新的账户。</span><br></pre></td></tr></table></figure>
+
+<p>然后继续查询子命令帮助信息</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cleos create account --help</span><br></pre></td></tr></table></figure>
+
+<p>返回一堆信息，自己看就是了。</p>
+<h2 id="示例"><a href="#示例" class="headerlink" title="示例"></a>示例</h2><p><strong>创建钱包</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">#-n后是钱包名字，--to-console是将钱包密码显示在屏幕</span><br><span class="line">cleos wallet create -n mywallet --to-console</span><br><span class="line"></span><br><span class="line">#-f后是文件名，将密码保存到文件中</span><br><span class="line">cleos wallet create -n mywallet -f default_wallet.pwd</span><br></pre></td></tr></table></figure>
+
+<p><strong>为账户购买0.1SYStoken的RAM</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cleos system buyram alice alice &quot;0.1SYS&quot; -p alice@active</span><br></pre></td></tr></table></figure>
+
+<p><strong>配置多重签名账户</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cleos set account permission multisig active &#39;&#123;\&quot;threshold\&quot; : 1, \&quot;accounts\&quot; :[&#123;\&quot;permission\&quot;:&#123;\&quot;actor\&quot;:\&quot;eosio\&quot;,\&quot;permission\&quot;:\&quot;active\&quot;&#125;,\&quot;weight\&quot;:1&#125;,&#123;\&quot;permission\&quot;:&#123;\&quot;actor\&quot;:\&quot;customera\&quot;,\&quot;permission\&quot;:\&quot;active\&quot;&#125;,\&quot;weight\&quot;:1&#125;]&#125;&#39; owner -p multisig@owner&quot;</span><br></pre></td></tr></table></figure>
+
+<p><strong>连接到特定nodeos或keosd</strong></p>
+<p>使用–url或–wallet-url, 不过不加参数就默认连接到127.0.0.1:8888</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">#nodeos</span><br><span class="line">cleos -url http:&#x2F;&#x2F;nodeos-host:8888 命令</span><br><span class="line">#keosd</span><br><span class="line">cleos --wallet-url http:&#x2F;&#x2F;keosd-host:8888 命令</span><br></pre></td></tr></table></figure>
+
+<p><strong>创建账户</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cleos create account creator name OwnerKey [ActiveKey]</span><br></pre></td></tr></table></figure>
+
+<p><strong>创建密钥对</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">#将密钥输出到控制台</span><br><span class="line">cleos create key --to-console</span><br><span class="line">#保存到文件</span><br><span class="line">cleos create key --file xxx</span><br></pre></td></tr></table></figure>
+
+<p><strong>分配CPU资源</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cleos system delegatebw bob alice &quot;0 SYS&quot; &quot;0.01 SYS&quot;</span><br></pre></td></tr></table></figure>
+
+<p>bob给alice分配资源，0 SYS的网络带宽，0.01 SYS的CPU带宽。</p>
+<p><strong>分配带宽</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cleos system delegatebw bob alice <span class="string">"0.01 SYS"</span> <span class="string">"0 SYS"</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>部署智能合约</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cleos set contract contract_account contract_folder [wasm-file] [abi-file]</span><br></pre></td></tr></table></figure>
+
+<p><strong>获取账户信息</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cleos get account 账户名</span><br></pre></td></tr></table></figure>
+
+<p><strong>获取区块信息</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cleos get block 区块号或ID</span><br></pre></td></tr></table></figure>
+
+<p><strong>获取表信息</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cleos get table 账户 SCOPE TABLE</span><br></pre></td></tr></table></figure>
+
+<p><strong>获取交易信息</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cleos get transaction 交易id</span><br></pre></td></tr></table></figure>
+
+<p><strong>导入密钥</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cleos wallet import</span><br></pre></td></tr></table></figure>
+
+<p>然后输入密钥即可。</p>
+<p><strong>链接权限</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cleos set action permission alice hodlcontract transfer permlvl</span><br></pre></td></tr></table></figure>
+
+<p>将权限链接permlvl到actionhodlcontract合约的transfer行为</p>
+<p><strong>列出所有密钥对</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">#解锁钱包</span><br><span class="line">cleos wallet unlock</span><br><span class="line"></span><br><span class="line">#列出公钥和私钥</span><br><span class="line">cleos wallet keys</span><br><span class="line">cleos wallet private_keys</span><br></pre></td></tr></table></figure>
+
+<p><strong>占用网络带宽</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cleos system delegatebw alice alice &quot;0 SYS&quot; &quot;0.01 SYS&quot;</span><br></pre></td></tr></table></figure>
+
+<p><strong>提交交易</strong></p>
+<p>创建一个有效交易的JSON代码</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  &quot;expiration&quot;: &quot;2019-08-01T07:15:49&quot;,</span><br><span class="line">  &quot;ref_block_num&quot;: 34881,</span><br><span class="line">  &quot;ref_block_prefix&quot;: 2972818865,</span><br><span class="line">  &quot;max_net_usage_words&quot;: 0,</span><br><span class="line">  &quot;max_cpu_usage_ms&quot;: 0,</span><br><span class="line">  &quot;delay_sec&quot;: 0,</span><br><span class="line">  &quot;context_free_actions&quot;: [],</span><br><span class="line">  &quot;actions&quot;: [&#123;</span><br><span class="line">      &quot;account&quot;: &quot;eosio.token&quot;,</span><br><span class="line">      &quot;name&quot;: &quot;transfer&quot;,</span><br><span class="line">      &quot;authorization&quot;: [&#123;</span><br><span class="line">          &quot;actor&quot;: &quot;han&quot;,</span><br><span class="line">          &quot;permission&quot;: &quot;active&quot;</span><br><span class="line">        &#125;</span><br><span class="line">      ],</span><br><span class="line">      &quot;data&quot;: &quot;000000000000a6690000000000ea305501000000000000000453595300000000016d&quot;</span><br><span class="line">    &#125;</span><br><span class="line">  ],</span><br><span class="line">  &quot;transaction_extensions&quot;: [],</span><br><span class="line">  &quot;context_free_data&quot;: []</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>提交</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cleos push transaction xxx.json</span><br></pre></td></tr></table></figure>
+
+<p>通过JSON提交</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cleos push transaction JSON</span><br></pre></td></tr></table></figure>
+
+<p><strong>转移token</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cleos transfer alice bob &quot;0.0001 SYS&quot; &quot;Hodl!&quot; -p alice@active</span><br></pre></td></tr></table></figure>
+
+<p>将0.0001 SYS的token从alice转移到bob</p>
+<p><strong>取消删除CPU资源</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cleos system undelegatebw bob alice &quot;0 SYS&quot; &quot;0.01 SYS&quot;</span><br></pre></td></tr></table></figure>
+
+<p>将0.01 SYSCPU带宽从alice返回到bob.网络带宽类似。</p>
+<p><strong>删除链接的权限基本</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cleos set action permission alice hodlcontract transfer NULL</span><br></pre></td></tr></table></figure>
+
+<p>删除一个链接到hodlcontract合约的transfer行为的权限。</p>
+<p><strong>取消CPU</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cleos system undelegatebw alice alice &quot;0.01 SYS&quot; &quot;0 SYS&quot;</span><br></pre></td></tr></table></figure>
+
+<p>投票</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cleos system voteproducer prods eosiotestts2 blockproducer1 blockproducer2</span><br></pre></td></tr></table></figure>
+
+<p>从eosiotestts2账户向blockproducer1和blockproducer2投票</p>
+
+    </div>
+    
+    <div class="reward" ontouchstart>
+    <div class="reward-wrap">赏
+        <div class="reward-box">
+            
+            <span class="reward-type">
+                <img class="alipay" src="/img/alipay.jpg"><b>支付宝打赏</b>
+            </span>
+            
+            
+            <span class="reward-type">
+                <img class="wechat" src="/img/wechat.jpg"><b>微信打赏</b>
+            </span>
+            
+        </div>
+    </div>
+    <p class="reward-tip">
+        赞赏是不耍流氓的鼓励
+    </p>
+</div>
+    
+    <div class="post-footer">
+        <div>
+            
+            转载声明：
+            商业转载请联系作者获得授权,非商业转载请注明出处 © <a href="ggy.44pp.vip" target="_blank">ggy</a>
+            
+            
+        </div>
+        <div>
+            
+        </div>
+    </div>
+</article>
+<div class="article-nav prev-next-wrap clearfix">
+    
+    
+    <a href="/2021/03/18/%E5%8C%BA%E5%9D%97%E9%93%BE%E5%AE%89%E5%85%A8%E4%B9%8BEOS%E5%AD%A6%E4%B9%A0%EF%BC%88%E4%B8%89%EF%BC%89/" class="next-post btn btn-default" title='区块链安全之EOS学习（三）'>
+        <span class="hidden-lg">下一篇</span>
+        <span class="hidden-xs">
+            区块链安全之EOS学习（三）</span><i class="fa fa-angle-right fa-fw"></i>
+    </a>
+    
+</div>
+
+<div id="comments">
+    
+<div id="lv-container" data-id="city" data-uid="MTAyMC80ODM1Ni8yNDg1MA==">
+    <script type="text/javascript">
+    (function(d, s) {
+        var j, e = d.getElementsByTagName(s)[0];
+        if (typeof LivereTower === 'function') { return; }
+        j = d.createElement(s);
+        j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+        j.async = true;
+        e.parentNode.insertBefore(j, e);
+    })(document, 'script');
+    </script>
+</div>
+
+</div>
+
+                </main>
+                
+                    <aside id="article-toc" role="navigation" class="col-md-4">
+    <div class="widget">
+        <h3 class="title">
+            文章目录
+        </h3>
+        
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#nodeos"><span class="toc-text">nodeos</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#cleos"><span class="toc-text">cleos</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#示例"><span class="toc-text">示例</span></a></li></ol></li></ol>
+        
+    </div>
+</aside>
+                
+            </div>
+        </div>
+    </section>
+    <footer class="main-footer">
+    <div class="container">
+        <div class="row">
+        </div>
+    </div>
+</footer>
+<a id="back-to-top" class="icon-btn hide">
+    <i class="fa fa-chevron-up"></i>
+</a>
+    <div class="copyright">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="busuanzi">
+    
+    访问量:
+    <strong id="busuanzi_value_site_pv">
+        <i class="fa fa-spinner fa-spin"></i>
+    </strong>
+    &nbsp; | &nbsp;
+    访客数:
+    <strong id="busuanzi_value_site_uv">
+        <i class="fa fa-spinner fa-spin"></i>
+    </strong>
+    
+</div>
+            </div>
+            <div class="col-sm-12">
+                <span>Copyright &copy;
+                    2020
+                    
+                </span> |
+                <span>
+                    Powered by <a href="//hexo.io" class="copyright-links" target="_blank" rel="nofollow">Hexo</a>
+                </span> |
+                <span>
+                    Theme by <a href="//github.com/shenliyang/hexo-theme-snippet.git" class="copyright-links" target="_blank" rel="nofollow">Snippet</a>
+                </span>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<script src="/assets/tagcanvas.min.js?rev=2.9.js"></script>
+
+<script>
+var tagOption = {
+    textColour: '#444', // 字体颜色
+    outlineMethod: 'block', // 选中模式
+    outlineColour: '#FFDAB9', // 选中模式的颜色
+    interval: 30 || 30, // 动画帧之间的时间间隔，值越大，转动幅度越大
+    textHeight: 13,
+    outlineRadius: 3,
+    freezeActive: true || '', // 选中的标签是否继续滚动
+    frontSelect: true || '', // 不选标签云后部的标签
+    initial: [0.1, -0.1],
+    depth: 0.5,
+    decel: 0.95,
+    maxSpeed: 0.03,
+    reverse: true || '', // 是否反向触发
+    fadeIn: 500, // 进入动画时间
+    wheelZoom: false || '' // 是否启用鼠标滚轮
+}
+TagCanvas.Start('tag-cloud-3d', '', tagOption);
+</script>
+
+
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+<script src="/js/app.js?rev=@@hash.js"></script>
+
+
+<!-- 雪花特效 -->
+<script type="text/javascript" src="http://libs.baidu.com/jquery/1.8.3/jquery.js"></script>
+<script type="text/javascript" src="http://libs.baidu.com/jquery/1.8.3/jquery.min.js"></script>
+<script type="text/javascript" src="\js\snow.js"></script>
+
+<canvas class="fireworks" style="position: fixed;left: 0;top: 0;z-index: 1; pointer-events: none;" ></canvas> 
+<script type="text/javascript" src="//cdn.bootcss.com/animejs/2.2.0/anime.min.js"></script> 
+<script type="text/javascript" src="/js/fireworks.js"></script>
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"model":{"jsonPath":"live2d-widget-model-haruto"},"display":{"position":"right","width":150,"height":300},"mobile":{"show":false},"log":false,"pluginJsPath":"lib/","pluginModelPath":"assets/","pluginRootPath":"live2dw/","tagMode":false});</script></body>
+</html>

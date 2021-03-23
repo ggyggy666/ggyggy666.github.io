@@ -1,0 +1,559 @@
+<head>
+<script src="https://cdn.jsdelivr.net/npm/jquery/dist/jquery.min.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome/css/font-awesome.min.css">
+<script src="https://cdn.jsdelivr.net/gh/stevenjoezhang/live2d-widget/autoload.js"></script>
+</head>
+
+<!DOCTYPE HTML>
+<html lang="zh-CN">
+
+<head>
+    <!--Setting-->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+    <meta http-equiv="Cache-Control" content="no-siteapp">
+    <meta http-equiv="Cache-Control" content="no-transform">
+    <meta name="renderer" content="webkit|ie-comp|ie-stand">
+    <meta name="apple-mobile-web-app-capable" content="ggy的个人博客">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="format-detection" content="telephone=no,email=no,adress=no">
+    <meta name="browsermode" content="application">
+    <meta name="screen-orientation" content="portrait">
+    <meta name="theme-version" content="1.2.3">
+    <meta name="root" content="/">
+    <link rel="dns-prefetch" href="https://ggyggy666.github.io">
+    <!--SEO-->
+
+<meta name="keywords" content="区块链安全之WebAssembly" />
+
+
+<meta name="description" content="由于EOSIO在编译智能合约时会将CPP文件编译成wasm文件，因此需要好好了解一下wasm—WebAssembly。
+
+
+概念WebAssembly是一种新型代码，是C/C++代码编译后的目标..." />
+
+
+<meta name="robots" content="all" />
+<meta name="google" content="all" />
+<meta name="googlebot" content="all" />
+<meta name="verify" content="all" />
+    <!--Title-->
+
+<title>
+    
+    区块链安全之WebAssembly |
+    
+    ggy的个人博客
+</title>
+
+<link rel="alternate" href="/atom.xml" title="ggy的个人博客" type="application/atom+xml">
+
+
+<link rel="icon" href="/favicon.ico">
+
+    
+
+
+<link rel="stylesheet" href="/css/bootstrap.min.css?rev=3.3.7.css">
+<link rel="stylesheet" href="/css/font-awesome.min.css?rev=4.7.0.css">
+<link rel="stylesheet" href="/css/style.css?rev=@@hash.css">
+
+    
+<div class="hide">
+    <script type="text/javascript">
+    var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+    document.write(unescape("%3Cspan class='cnzz_stat_icon_1263868967 hide' %3E%3Cscript%20src%3D%22https%3A%2F%2Fs95.cnzz.com%2Fz_stat.php%3Fweb_id%3D1272564536%22%3E%3C%2Fscript%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s19.cnzz.com/z_stat.php%3Fid%3D1263868967%26show%3Dpic1' type='text/javascript'%3E%3C/script%3E"));
+    </script>
+</div>
+
+
+
+
+    
+
+<meta name="generator" content="Hexo 4.2.0"></head>
+<!--[if lte IE 8]>
+<style>
+    html{ font-size: 1em }
+</style>
+<![endif]-->
+<!--[if lte IE 9]>
+<div style="ie">你使用的浏览器版本过低，为了你更好的阅读体验，请更新浏览器的版本或者使用其他现代浏览器，比如Chrome、Firefox、Safari等。</div>
+<![endif]-->
+<body>
+    <header class="main-header"  style="background-image:url(
+    https://pic.downk.cc/item/5e3816b82fb38b8c3c8791f9.jpg)"
+     >
+    <div class="main-header-box">
+        <a class="header-avatar" href="/" title='ggy'>
+            <img src="/img/avatar.jpg" alt="logo头像" class="img-responsive center-block">
+        </a>
+        <div class="branding">
+            <!--<h2 class="text-hide">Snippet主题,从未如此简单有趣</h2>-->
+            
+            <h2>
+                欢迎来到ggy的个人网站
+            </h2>
+            
+        </div>
+    </div>
+</header>
+    <nav class="main-navigation">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="navbar-header"><span class="nav-toggle-button collapsed pull-right" data-toggle="collapse" data-target="#main-menu" id="mnav">
+                        <span class="sr-only"></span>
+                        <i class="fa fa-bars"></i>
+                    </span>
+                    <a class="navbar-brand" href="https://ggyggy666.github.io">
+                        ggy的个人博客</a>
+                </div>
+                <div class="collapse navbar-collapse" id="main-menu">
+                    <ul class="menu">
+                        
+                        <li role="presentation" class="text-center">
+                            <a href="/"><i class="fa "></i>
+                                首页</a>
+                        </li>
+                        
+                        <li role="presentation" class="text-center">
+                            <a href="/categories/web安全/"><i class="fa "></i>
+                                web安全</a>
+                        </li>
+                        
+                        <li role="presentation" class="text-center">
+                            <a href="/categories/python工具/"><i class="fa "></i>
+                                python工具</a>
+                        </li>
+                        
+                        <li role="presentation" class="text-center">
+                            <a href="/categories/密码学/"><i class="fa "></i>
+                                密码学</a>
+                        </li>
+                        
+                        <li role="presentation" class="text-center">
+                            <a href="/archives/"><i class="fa "></i>
+                                时间轴</a>
+                        </li>
+                        
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</nav>
+    <section class="content-wrap">
+        <div class="container">
+            <div class="row">
+                <main class="col-md-8 main-content m-post">
+                    <p id="process"></p>
+<article class="post">
+    <div class="post-head">
+        <h1 id="区块链安全之WebAssembly">
+            
+            区块链安全之WebAssembly
+            
+        </h1>
+        <div class="post-meta">
+    
+    <span class="categories-meta fa-wrap">
+        <i class="fa fa-folder-open-o"></i>
+        
+    </span>
+    
+    
+    <span class="fa-wrap">
+        <i class="fa fa-tags"></i>
+        <span class="tags-meta">
+            
+            <a class="tag-link" href="/tags/%E5%8C%BA%E5%9D%97%E9%93%BE%E5%AE%89%E5%85%A8%E4%B9%8BWebAssembly/" rel="tag">区块链安全之WebAssembly</a>
+            
+        </span>
+    </span>
+    
+    
+    
+    <span class="fa-wrap">
+        <i class="fa fa-clock-o"></i>
+        <span class="date-meta">
+            2021/03/21</span>
+    </span>
+    
+    <span class="fa-wrap">
+        <i class="fa fa-eye"></i>
+        <span id="busuanzi_value_page_pv"></span>
+    </span>
+    
+    
+</div>
+        
+        
+    </div>
+    
+    <div class="post-body post-content">
+        <p>由于EOSIO在编译智能合约时会将CPP文件编译成wasm文件，因此需要好好了解一下wasm—WebAssembly。</p>
+<a id="more"></a>
+
+<h1 id="概念"><a href="#概念" class="headerlink" title="概念"></a>概念</h1><p>WebAssembly是一种新型代码，是C/C++代码编译后的目标。它是一种低级汇编语言，表现为二进制格式，但也有可读的文本格式。它的速度快。</p>
+<ul>
+<li>Module: 表示一个WebAssemble二进制文件，已被浏览器编译为可执行的机器码。</li>
+<li>Memory：可调整大小的数组缓冲区。内含低级内存访问指令读取和写入的线性字节数组。</li>
+<li>Table：可调整大小的类型化引用数组（如函数）。</li>
+<li>Instance（实例): 一个模块，它与运行时使用的所有状态配对，包括内存，表和一组导入的值。</li>
+</ul>
+<p>生成wasm代码的方式：</p>
+<ul>
+<li><p>在线生成:</p>
+<ol>
+<li><a href="https://wasdk.github.io/WasmFiddle/" target="_blank" rel="noopener">https://wasdk.github.io/WasmFiddle/</a></li>
+<li><a href="https://anonyco.github.io/WasmFiddlePlusPlus/" target="_blank" rel="noopener">https://anonyco.github.io/WasmFiddlePlusPlus/</a></li>
+<li><a href="https://mbebenita.github.io/WasmExplorer/" target="_blank" rel="noopener">https://mbebenita.github.io/WasmExplorer/</a></li>
+</ol>
+</li>
+<li><p>Emscripten工具: </p>
+<p><a href="https://developer.mozilla.org/en-US/docs/Mozilla/Projects/Emscripten" target="_blank" rel="noopener">https://developer.mozilla.org/en-US/docs/Mozilla/Projects/Emscripten</a></p>
+<p>这个功能更完善。</p>
+</li>
+</ul>
+<h1 id="C-C-程序编译成wasm文件"><a href="#C-C-程序编译成wasm文件" class="headerlink" title="C/C++程序编译成wasm文件"></a>C/C++程序编译成wasm文件</h1><p>首先下载Emscripten工具：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">git clone https:&#x2F;&#x2F;gitee.com&#x2F;ggy666&#x2F;emsdk1.git</span><br><span class="line">cd emsdk1</span><br><span class="line"></span><br><span class="line">#更新emsdk</span><br><span class="line">git pull</span><br><span class="line">.&#x2F;emsdk install latest	&#x2F;&#x2F;下载一堆必要的东西</span><br><span class="line">.&#x2F;emsdk activate latest</span><br><span class="line">source .&#x2F;emsdk_env.sh</span><br></pre></td></tr></table></figure>
+
+<h2 id="例子一"><a href="#例子一" class="headerlink" title="例子一"></a>例子一</h2><p>hello.c</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">#include &lt;stdio.h&gt;</span><br><span class="line"></span><br><span class="line">int main() &#123;</span><br><span class="line">    printf(&quot;Hello World\n&quot;);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>Emscripten编译</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">emcc hello.c -s WASM&#x3D;1 -o hello.html</span><br></pre></td></tr></table></figure>
+
+<p>-s WASM=1，指定需要输出wasm文件，否则它只会输出js文件。运行命令后会存在: hello.wasm, hello.js, hello.html。</p>
+<p>在火狐或者谷歌浏览器直接打开hello.html, 由于使用的是file://协议，无法成功执行。</p>
+<p><img src="https://i.loli.net/2021/03/21/cmwj5IPV8sJ4CaT.png" alt="image-20210321202446990"></p>
+<p>需要将该HTML文件，js文件和wasm文件三个都放到本地服务器之上，这里使用的是PHPStudy。然后浏览器中访问: <code>http://127.0.0.1:xxxx/hello.html</code>。</p>
+<p><img src="https://i.loli.net/2021/03/21/kbWgVvqRFAI2xPm.png" alt="image-20210321202559906"></p>
+<p>成功打印出来了。</p>
+<h2 id="使用自定义HTML模板"><a href="#使用自定义HTML模板" class="headerlink" title="使用自定义HTML模板"></a>使用自定义HTML模板</h2><p>还是hello2.c</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">#include &lt;stdio.h&gt;</span><br><span class="line"></span><br><span class="line">int main() &#123;</span><br><span class="line">    printf(&quot;Hello World\n&quot;);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>找到shell_minimal.html, 将其复制到html_template目录下。然后运行命令:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">emcc -o hello2.html hello.c -O3 -s WASM&#x3D;1 --shell-file html_template&#x2F;shell_minimal.html</span><br></pre></td></tr></table></figure>
+
+<p>使用了–shell-file指定了一个HTML模板，那么生成的hello2.html就是这个模板生成的。</p>
+<p><img src="https://i.loli.net/2021/03/21/xwXRsC17AeOKJnf.png" alt="image-20210321202918737"></p>
+<h2 id="调用C中定义的自定义函数"><a href="#调用C中定义的自定义函数" class="headerlink" title="调用C中定义的自定义函数"></a>调用C中定义的自定义函数</h2><p>hello3.c</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">#include &lt;stdio.h&gt;</span><br><span class="line">#include &lt;emscripten&#x2F;emscripten.h&gt;</span><br><span class="line"></span><br><span class="line">int main() &#123;</span><br><span class="line">    printf(&quot;Hello World\n&quot;);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">#ifdef __cplusplus</span><br><span class="line">extern &quot;C&quot; &#123;</span><br><span class="line">#endif</span><br><span class="line"></span><br><span class="line">EMSCRIPTEN_KEEPALIVE void myFunction(int argc, char ** argv) &#123;</span><br><span class="line">    printf(&quot;MyFunction Called\n&quot;);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">#ifdef __cplusplus</span><br><span class="line">&#125;</span><br><span class="line">#endif</span><br></pre></td></tr></table></figure>
+
+<p>本来有效代码只有main函数，但是使用了EMSCRIPTEN_KEEPALIVE声明之后myFunction也是有效代码了。但是还需要设置NO_EXIT_RUNTIME=1, 不然main执行完后就退出了。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">emcc -o hello3.html hello3.c -O3 -s WASM&#x3D;1 --shell-file html_template&#x2F;shell_minimal.html -s NO_EXIT_RUNTIME&#x3D;1  -s &quot;EXTRA_EXPORTED_RUNTIME_METHODS&#x3D;[&#39;ccall&#39;]&quot;</span><br></pre></td></tr></table></figure>
+
+<p>照常打开hello3.html后，跟之前一样。要看到运行myFunction函数的效果，需要编辑器中打开hello3.html，（sublime text中打开的html文件代码全都是贴在一块的，需要prettify。<a href="https://www.jianshu.com/p/58265c587cbf）" target="_blank" rel="noopener">https://www.jianshu.com/p/58265c587cbf）</a></p>
+<p>首先加一个按钮:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;button class&#x3D;&quot;mybutton&quot;&gt;Run myFunction&lt;&#x2F;button&gt;</span><br></pre></td></tr></table></figure>
+
+<p>然后在按钮下方的script中添加script代码:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">document.querySelector(&#39;.mybutton&#39;)</span><br><span class="line">    .addEventListener(&#39;click&#39;, function() &#123;</span><br><span class="line">        alert(&#39;check console&#39;);</span><br><span class="line">        var result &#x3D; Module.ccall(</span><br><span class="line">            &#39;myFunction&#39;,	&#x2F;&#x2F; name of C function</span><br><span class="line">            null,	&#x2F;&#x2F; return type</span><br><span class="line">            null,	&#x2F;&#x2F; argument types</span><br><span class="line">            null	&#x2F;&#x2F; arguments</span><br><span class="line">        );</span><br><span class="line">    &#125;);</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://i.loli.net/2021/03/21/cMiPpogzqQDW84w.png" alt="image-20210321204339596"></p>
+<p><img src="https://i.loli.net/2021/03/21/PRCBQpZyS3fw9Vk.png" alt="image-20210321204400100"></p>
+<h1 id="WebAssembly文本格式"><a href="#WebAssembly文本格式" class="headerlink" title="WebAssembly文本格式"></a>WebAssembly文本格式</h1><p>不管是二进制格式还是文本格式，WebAssembly的基本代码单元都是一个模块。表示为一个S表达式。其实就是个平面树的结构。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">(module (memory 1) (func))</span><br></pre></td></tr></table></figure>
+
+<p>每个节点放在一对括号内，比如根节点就是module，子节点有两个，memory和func, 1是memory节点的属性。</p>
+<p><strong>模块中添加功能</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">(func (签名) (本地类型声明) (body))</span><br></pre></td></tr></table></figure>
+
+<p>签名其实也是参数类型声明，如果有返回值，后面还会跟返回类型声明。类型只有四种：i32, i63, f32, f63</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">(func (param i32) (param i32) (result f64) (本地类型声明) (body))</span><br></pre></td></tr></table></figure>
+
+<p>两个i32的参数，返回值是f64类型的。</p>
+<p>本地类型声明实质是获取参数和返回值的类型。使用local.get 0这种，0代表第一个参数。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">(func (param i32) (param f32) (local f64)</span><br><span class="line">  local.get 0	&#x2F;&#x2F;i32</span><br><span class="line">  local.get 1	&#x2F;&#x2F;f32</span><br><span class="line">  local.get 2)	&#x2F;&#x2F;f64</span><br></pre></td></tr></table></figure>
+
+<p>这种通过数字获取类型不太行，最好就是给每个参数都加一个名称，然后去get它。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">(func (param $p1 i32) (param $p2 f32) local.get $p1 local.get $p2 …)</span><br></pre></td></tr></table></figure>
+
+<p>local.get是将获得的值压栈，出栈用add。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">(func (param $p i32)</span><br><span class="line">  (result i32)</span><br><span class="line">  local.get $p</span><br><span class="line">  local.get $p</span><br><span class="line">  i32.add)</span><br></pre></td></tr></table></figure>
+
+<p>弹出两个i32值，如果是弹出f32, 使用f32.add</p>
+<p><strong>调用函数</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">(module</span><br><span class="line">  (func $add (param $lhs i32) (param $rhs i32) (result i32)</span><br><span class="line">    local.get $lhs</span><br><span class="line">    local.get $rhs</span><br><span class="line">    i32.add)</span><br><span class="line">  (export &quot;add&quot; (func $add))</span><br><span class="line">)</span><br></pre></td></tr></table></figure>
+
+<p>给func函数起名$add, 之后export中调用。将模块保存为add.wat, 之后wabt转换成add.wasm。</p>
+<p><strong>同一模块中的其它函数调用函数</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">(module</span><br><span class="line">  (func $getAnswer (result i32)</span><br><span class="line">    i32.const 42)</span><br><span class="line">  (func (export &quot;getAnswerPlus1&quot;) (result i32)</span><br><span class="line">    call $getAnswer</span><br><span class="line">    i32.const 1</span><br><span class="line">    i32.add))</span><br></pre></td></tr></table></figure>
+
+<p>第二个函数调用第一个函数。</p>
+<p><strong>声明全局变量</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">(module</span><br><span class="line">   (global $g (import &quot;js&quot; &quot;global&quot;) (mut i32))</span><br><span class="line">   (func (export &quot;getGlobal&quot;) (result i32)</span><br><span class="line">        (global.get $g))</span><br><span class="line">   (func (export &quot;incGlobal&quot;)</span><br><span class="line">        (global.set $g</span><br><span class="line">            (i32.add (global.get $g) (i32.const 1))))</span><br><span class="line">)</span><br></pre></td></tr></table></figure>
+
+<h1 id="文本格式与二进制转换"><a href="#文本格式与二进制转换" class="headerlink" title="文本格式与二进制转换"></a>文本格式与二进制转换</h1><p>git下载</p>
+<p><code>git clone --recursive https://gitee.com/ggy666/wabt.git</code></p>
+<p>github原因之后有好几个都下载不了，只能去到GitHub下载下来然后复制到third_party。之后执行</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">mkdir build &amp;&amp; cd build</span><br><span class="line">cmake ..</span><br><span class="line">cmake --build .</span><br></pre></td></tr></table></figure>
+
+<p>但还是报错。。莫得办法了。</p>
+<p>wast-&gt;wasm: <a href="https://cdn.rawgit.com/WebAssembly/sexpr-wasm-prototype/2bb13aa785be9908b95d0e2e09950b39a26004fa/demo/index.html" target="_blank" rel="noopener">https://cdn.rawgit.com/WebAssembly/sexpr-wasm-prototype/2bb13aa785be9908b95d0e2e09950b39a26004fa/demo/index.html</a></p>
+<p>wasm-&gt;wast: <a href="https://webassembly.github.io/wabt/demo/" target="_blank" rel="noopener">https://webassembly.github.io/wabt/demo/</a></p>
+<h1 id="二进制格式"><a href="#二进制格式" class="headerlink" title="二进制格式"></a>二进制格式</h1><p>WebAssembly, 使用LEB128编码，因此有效位是7位，剩余一位表示是否终结的标志位。如果标志位是1，表示编码的数据还没结束。</p>
+<p>wasm是二进制格式，采用小端存储。</p>
+<p>参考这个解析:<a href="https://www.jianshu.com/p/2f18b33ee389" target="_blank" rel="noopener">https://www.jianshu.com/p/2f18b33ee389</a></p>
+<p>下面段截图来源: <a href="https://cdn.rawgit.com/WebAssembly/sexpr-wasm-prototype/2bb13aa785be9908b95d0e2e09950b39a26004fa/demo/index.html" target="_blank" rel="noopener">https://cdn.rawgit.com/WebAssembly/sexpr-wasm-prototype/2bb13aa785be9908b95d0e2e09950b39a26004fa/demo/index.html</a></p>
+<p>与解析有出入，所以看得不太懂。</p>
+<h2 id="段类型"><a href="#段类型" class="headerlink" title="段类型"></a>段类型</h2><p>模块主要由多个段组成。每个段对应一个ID。</p>
+<table>
+<thead>
+<tr>
+<th>ID</th>
+<th>段</th>
+<th>用处</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>０</td>
+<td>自定义段</td>
+<td>用于存储调试信息</td>
+</tr>
+<tr>
+<td>１</td>
+<td>类型段（Type）</td>
+<td>存储导入函数，模块内部函数的函数参数列表</td>
+</tr>
+<tr>
+<td>２</td>
+<td>导入段（import）</td>
+<td>存储导入函数的名称，参数索引</td>
+</tr>
+<tr>
+<td>３</td>
+<td>函数段（Function）</td>
+<td>存储函数索引值</td>
+</tr>
+<tr>
+<td>４</td>
+<td>表格段（Table）</td>
+<td>存储对象引用，实现函数指针功能，可导入也可导出</td>
+</tr>
+<tr>
+<td>５</td>
+<td>内存段（Memory）</td>
+<td>存储程序运行时动态数据，可导入导出</td>
+</tr>
+<tr>
+<td>６</td>
+<td>全局段（Global）</td>
+<td>存储全部变量值</td>
+</tr>
+<tr>
+<td>７</td>
+<td>导出段（Export）</td>
+<td>存储导出函数的名称，参数索引</td>
+</tr>
+<tr>
+<td>８</td>
+<td>开始段（Start）</td>
+<td>指定模块初始化时的函数索引值</td>
+</tr>
+<tr>
+<td>９</td>
+<td>元素段（Elem）</td>
+<td>表格段没有显式初始化，存储函数的索引值</td>
+</tr>
+<tr>
+<td>１０</td>
+<td>代码段（Code）</td>
+<td>存储函数的指令代码</td>
+</tr>
+<tr>
+<td>１１</td>
+<td>数据段（Data）</td>
+<td>存储初始化内存的静态数据</td>
+</tr>
+</tbody></table>
+<h2 id="头部"><a href="#头部" class="headerlink" title="头部"></a>头部</h2><p>头部有8字节，前四个字节是：00 61 73 6d, 对应字符串“\x00asm”, 其实就是0x6d736100。后面四个字节代表版本号。</p>
+<p><img src="https://i.loli.net/2021/03/23/86nueJN2sTamYKc.png" alt="image-20210323114612298"></p>
+<h2 id="自定义段"><a href="#自定义段" class="headerlink" title="自定义段"></a>自定义段</h2><p>还没有。</p>
+<h2 id="类型段"><a href="#类型段" class="headerlink" title="类型段"></a>类型段</h2><p><img src="https://i.loli.net/2021/03/23/F3SL5EIQTRh6Jdm.png" alt="image-20210323115709774"></p>
+<h2 id="函数段"><a href="#函数段" class="headerlink" title="函数段"></a>函数段</h2><p><img src="https://i.loli.net/2021/03/23/MIXRQoe2ZNPJiGm.png" alt="image-20210323120102491"></p>
+<h2 id="导入段"><a href="#导入段" class="headerlink" title="导入段"></a>导入段</h2><p><img src="https://i.loli.net/2021/03/23/noSNf4kj5v2YT7D.png" alt="image-20210323120234648"></p>
+<h2 id="导出段"><a href="#导出段" class="headerlink" title="导出段"></a>导出段</h2><p><img src="https://i.loli.net/2021/03/23/p1nKcCwmFav7bRf.png" alt="image-20210323120120944"></p>
+<h2 id="代码段"><a href="#代码段" class="headerlink" title="代码段"></a>代码段</h2><p><img src="https://i.loli.net/2021/03/23/iy9CVab4xfLJhgN.png" alt="image-20210323120145065"></p>
+<h2 id="表格段"><a href="#表格段" class="headerlink" title="表格段"></a>表格段</h2><p><img src="https://i.loli.net/2021/03/23/I6wncy8RsUJHSMD.png" alt="image-20210323120257090"></p>
+<h2 id="内存段"><a href="#内存段" class="headerlink" title="内存段"></a>内存段</h2><p><img src="https://i.loli.net/2021/03/23/hYVbNukS5TZCfp8.png" alt="image-20210323120335459"></p>
+<h2 id="开始段"><a href="#开始段" class="headerlink" title="开始段"></a>开始段</h2><p><img src="https://i.loli.net/2021/03/23/Pme1wOzWTpHtnFh.png" alt="image-20210323120351979"></p>
+<h2 id="数据段"><a href="#数据段" class="headerlink" title="数据段"></a>数据段</h2><p><img src="https://i.loli.net/2021/03/23/3ZcEj6eTtdAHGFk.png" alt="image-20210323120424011"></p>
+<h1 id="使用XMLHttpRequest调用wasm"><a href="#使用XMLHttpRequest调用wasm" class="headerlink" title="使用XMLHttpRequest调用wasm"></a>使用XMLHttpRequest调用wasm</h1><p>html文件如下:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line">&lt;!DOCTYPE html&gt;</span><br><span class="line">&lt;html&gt;</span><br><span class="line">&lt;head&gt;</span><br><span class="line">	&lt;title&gt;xhr&lt;&#x2F;title&gt;</span><br><span class="line">&lt;&#x2F;head&gt;</span><br><span class="line">&lt;body&gt;</span><br><span class="line">	&lt;p&gt;test&lt;&#x2F;p&gt;</span><br><span class="line">	&lt;script type&#x3D;&quot;text&#x2F;javascript&quot;&gt;</span><br><span class="line">		var importObject &#x3D; &#123;</span><br><span class="line">			imports:&#123;</span><br><span class="line">				imported_func: function(arg)&#123;</span><br><span class="line">					console.log(arg);</span><br><span class="line">				&#125;</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">		request &#x3D; new XMLHttpRequest();</span><br><span class="line">		request.open(&#39;GET&#39;, &#39;simple.wasm&#39;);</span><br><span class="line">		request.responseType &#x3D; &#39;arraybuffer&#39;;</span><br><span class="line">		request.send();</span><br><span class="line"></span><br><span class="line">		request.onload &#x3D; function() &#123;</span><br><span class="line">		  var bytes &#x3D; request.response;</span><br><span class="line">		  WebAssembly.instantiate(bytes, importObject).then(results &#x3D;&gt; &#123;</span><br><span class="line">		    results.instance.exports.exported_func();</span><br><span class="line">		  &#125;);</span><br><span class="line">		&#125;;</span><br><span class="line">	&lt;&#x2F;script&gt;</span><br><span class="line">&lt;&#x2F;body&gt;</span><br><span class="line">&lt;&#x2F;html&gt;</span><br></pre></td></tr></table></figure>
+
+<p>注意，需要先创建一个importObject才行，而且它要满足wasm里的内容。也就是说，换一个wasm会运行错误的。</p>
+<p><strong>看一下simple.wasm内容:</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">0061 736d 0100 0000 0108 0260 017f 0060</span><br><span class="line">0000 0219 0107 696d 706f 7274 730d 696d</span><br><span class="line">706f 7274 6564 5f66 756e 6300 0003 0201</span><br><span class="line">0107 1101 0d65 7870 6f72 7465 645f 6675</span><br><span class="line">6e63 0001 0a08 0106 0041 2a10 000b</span><br></pre></td></tr></table></figure>
+
+<p>转成wat看一下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">(module</span><br><span class="line">  (type $t0 (func (param i32)))</span><br><span class="line">  (type $t1 (func))</span><br><span class="line">  (import &quot;imports&quot; &quot;imported_func&quot; (func $imports.imported_func (type $t0)))</span><br><span class="line">  (func $exported_func (export &quot;exported_func&quot;) (type $t1)</span><br><span class="line">    (call $imports.imported_func</span><br><span class="line">      (i32.const 42))))</span><br></pre></td></tr></table></figure>
+
+
+    </div>
+    
+    <div class="reward" ontouchstart>
+    <div class="reward-wrap">赏
+        <div class="reward-box">
+            
+            <span class="reward-type">
+                <img class="alipay" src="/img/alipay.jpg"><b>支付宝打赏</b>
+            </span>
+            
+            
+            <span class="reward-type">
+                <img class="wechat" src="/img/wechat.jpg"><b>微信打赏</b>
+            </span>
+            
+        </div>
+    </div>
+    <p class="reward-tip">
+        赞赏是不耍流氓的鼓励
+    </p>
+</div>
+    
+    <div class="post-footer">
+        <div>
+            
+            转载声明：
+            商业转载请联系作者获得授权,非商业转载请注明出处 © <a href="ggy.44pp.vip" target="_blank">ggy</a>
+            
+            
+        </div>
+        <div>
+            
+        </div>
+    </div>
+</article>
+<div class="article-nav prev-next-wrap clearfix">
+    
+    
+    <a href="/2021/03/20/%E5%8C%BA%E5%9D%97%E9%93%BE%E5%AE%89%E5%85%A8%E4%B9%8BEOSIO%E7%9B%B8%E5%85%B3%E5%B7%A5%E5%85%B7%E7%9A%84%E4%BD%BF%E7%94%A8/" class="next-post btn btn-default" title='区块链安全之EOSIO相关工具的使用'>
+        <span class="hidden-lg">下一篇</span>
+        <span class="hidden-xs">
+            区块链安全之EOSIO相关工具的使用</span><i class="fa fa-angle-right fa-fw"></i>
+    </a>
+    
+</div>
+
+<div id="comments">
+    
+<div id="lv-container" data-id="city" data-uid="MTAyMC80ODM1Ni8yNDg1MA==">
+    <script type="text/javascript">
+    (function(d, s) {
+        var j, e = d.getElementsByTagName(s)[0];
+        if (typeof LivereTower === 'function') { return; }
+        j = d.createElement(s);
+        j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+        j.async = true;
+        e.parentNode.insertBefore(j, e);
+    })(document, 'script');
+    </script>
+</div>
+
+</div>
+
+                </main>
+                
+                    <aside id="article-toc" role="navigation" class="col-md-4">
+    <div class="widget">
+        <h3 class="title">
+            文章目录
+        </h3>
+        
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#概念"><span class="toc-text">概念</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#C-C-程序编译成wasm文件"><span class="toc-text">C&#x2F;C++程序编译成wasm文件</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#例子一"><span class="toc-text">例子一</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#使用自定义HTML模板"><span class="toc-text">使用自定义HTML模板</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#调用C中定义的自定义函数"><span class="toc-text">调用C中定义的自定义函数</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#WebAssembly文本格式"><span class="toc-text">WebAssembly文本格式</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#文本格式与二进制转换"><span class="toc-text">文本格式与二进制转换</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#二进制格式"><span class="toc-text">二进制格式</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#段类型"><span class="toc-text">段类型</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#头部"><span class="toc-text">头部</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#自定义段"><span class="toc-text">自定义段</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#类型段"><span class="toc-text">类型段</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#函数段"><span class="toc-text">函数段</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#导入段"><span class="toc-text">导入段</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#导出段"><span class="toc-text">导出段</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#代码段"><span class="toc-text">代码段</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#表格段"><span class="toc-text">表格段</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#内存段"><span class="toc-text">内存段</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#开始段"><span class="toc-text">开始段</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#数据段"><span class="toc-text">数据段</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#使用XMLHttpRequest调用wasm"><span class="toc-text">使用XMLHttpRequest调用wasm</span></a></li></ol>
+        
+    </div>
+</aside>
+                
+            </div>
+        </div>
+    </section>
+    <footer class="main-footer">
+    <div class="container">
+        <div class="row">
+        </div>
+    </div>
+</footer>
+<a id="back-to-top" class="icon-btn hide">
+    <i class="fa fa-chevron-up"></i>
+</a>
+    <div class="copyright">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="busuanzi">
+    
+    访问量:
+    <strong id="busuanzi_value_site_pv">
+        <i class="fa fa-spinner fa-spin"></i>
+    </strong>
+    &nbsp; | &nbsp;
+    访客数:
+    <strong id="busuanzi_value_site_uv">
+        <i class="fa fa-spinner fa-spin"></i>
+    </strong>
+    
+</div>
+            </div>
+            <div class="col-sm-12">
+                <span>Copyright &copy;
+                    2020
+                    
+                </span> |
+                <span>
+                    Powered by <a href="//hexo.io" class="copyright-links" target="_blank" rel="nofollow">Hexo</a>
+                </span> |
+                <span>
+                    Theme by <a href="//github.com/shenliyang/hexo-theme-snippet.git" class="copyright-links" target="_blank" rel="nofollow">Snippet</a>
+                </span>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<script src="/assets/tagcanvas.min.js?rev=2.9.js"></script>
+
+<script>
+var tagOption = {
+    textColour: '#444', // 字体颜色
+    outlineMethod: 'block', // 选中模式
+    outlineColour: '#FFDAB9', // 选中模式的颜色
+    interval: 30 || 30, // 动画帧之间的时间间隔，值越大，转动幅度越大
+    textHeight: 13,
+    outlineRadius: 3,
+    freezeActive: true || '', // 选中的标签是否继续滚动
+    frontSelect: true || '', // 不选标签云后部的标签
+    initial: [0.1, -0.1],
+    depth: 0.5,
+    decel: 0.95,
+    maxSpeed: 0.03,
+    reverse: true || '', // 是否反向触发
+    fadeIn: 500, // 进入动画时间
+    wheelZoom: false || '' // 是否启用鼠标滚轮
+}
+TagCanvas.Start('tag-cloud-3d', '', tagOption);
+</script>
+
+
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+<script src="/js/app.js?rev=@@hash.js"></script>
+
+
+<!-- 雪花特效 -->
+<script type="text/javascript" src="http://libs.baidu.com/jquery/1.8.3/jquery.js"></script>
+<script type="text/javascript" src="http://libs.baidu.com/jquery/1.8.3/jquery.min.js"></script>
+<script type="text/javascript" src="\js\snow.js"></script>
+
+<canvas class="fireworks" style="position: fixed;left: 0;top: 0;z-index: 1; pointer-events: none;" ></canvas> 
+<script type="text/javascript" src="//cdn.bootcss.com/animejs/2.2.0/anime.min.js"></script> 
+<script type="text/javascript" src="/js/fireworks.js"></script>
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"model":{"jsonPath":"live2d-widget-model-haruto"},"display":{"position":"right","width":150,"height":300},"mobile":{"show":false},"log":false,"pluginJsPath":"lib/","pluginModelPath":"assets/","pluginRootPath":"live2dw/","tagMode":false});</script></body>
+</html>

@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://ggyggy666.github.io/"/>
-  <updated>2021-03-23T04:27:03.075Z</updated>
+  <updated>2021-05-02T14:59:55.784Z</updated>
   <id>https://ggyggy666.github.io/</id>
   
   <author>
@@ -15,6 +15,29 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>JavaWeb学习(1)</title>
+    <link href="https://ggyggy666.github.io/2021/05/01/JavaWeb%E5%AD%A6%E4%B9%A0-1/"/>
+    <id>https://ggyggy666.github.io/2021/05/01/JavaWeb%E5%AD%A6%E4%B9%A0-1/</id>
+    <published>2021-05-01T10:04:38.000Z</published>
+    <updated>2021-05-02T14:59:55.784Z</updated>
+    
+    <content type="html"><![CDATA[<p>今天开始好好学习JavaWeb。</p><a id="more"></a><p>主要是配合IDEA使用。</p><h1 id="环境配置"><a href="#环境配置" class="headerlink" title="环境配置"></a>环境配置</h1><h2 id="IDEA添加tomcat"><a href="#IDEA添加tomcat" class="headerlink" title="IDEA添加tomcat"></a>IDEA添加tomcat</h2><p>前提：需要JAVA_HOME环境变量。</p><p>下载tomcat压缩包，解压后，在bin目录下点击startup.bat启动tomcat, 之后可以访问本地的8080端口看是否成功部署。成功后就可以关掉了。</p><p>IDEA中，进入settings设置，然后</p><p><img src="/2021/05/01/JavaWeb%E5%AD%A6%E4%B9%A0-1/C:%5CUsers%5C29924%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5Cimage-20210501181023506.png" alt="image-20210501181023506"></p><p>浏览目录，找到tomcat的安装目录，并确认</p><p><img src="https://i.loli.net/2021/05/01/Otf7NRo3UIwivZr.png" alt="image-20210501181121055"></p><p>自动显示出来了tomcat版本，确认后即可看到</p><p><img src="https://i.loli.net/2021/05/01/WlUXIQZhrgxFutf.png" alt="image-20210501181201515"></p><h2 id="新建JavaWeb工程"><a href="#新建JavaWeb工程" class="headerlink" title="新建JavaWeb工程"></a>新建JavaWeb工程</h2><p>点击File-&gt;new-&gt;new project，新建工程</p><p><img src="https://i.loli.net/2021/05/01/bEsZAdU4Mm5OurV.png" alt="image-20210501181332404"></p><p>按图中所示操作即可，之后next，输入项目名确认即可。</p><h2 id="导入第三方库"><a href="#导入第三方库" class="headerlink" title="导入第三方库"></a>导入第三方库</h2><p>首先在WEB-INF目录下新建一个lib目录，用来保存jar包</p><p><img src="/2021/05/01/JavaWeb%E5%AD%A6%E4%B9%A0-1/C:%5CUsers%5C29924%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5Cimage-20210501181635941.png" alt="image-20210501181635941"></p><p>导入第三方库有两种方法：</p><ol><li><p>复制jar包，鼠标移到lib目录，右键选择粘贴。然后再移到jar包，右键，选择：Add as library</p><p><img src="/2021/05/01/JavaWeb%E5%AD%A6%E4%B9%A0-1/C:%5CUsers%5C29924%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5Cimage-20210501181851414.png" alt="image-20210501181851414"></p></li><li><p>点击File-&gt;Project Structure</p><p><img src="https://i.loli.net/2021/05/01/Exzk2KvmiCDjt7B.png" alt="image-20210501181947452"></p><p>点击Libraries, 点击+</p><p><img src="https://i.loli.net/2021/05/01/VkC4glRZXOndEPw.png" alt="image-20210501182034698"></p><p>选择Java，然后浏览到jar包位置</p><p><img src="/2021/05/01/JavaWeb%E5%AD%A6%E4%B9%A0-1/C:%5CUsers%5C29924%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5Cimage-20210501182130167.png" alt="image-20210501182130167"></p><p>之后都是OK。然后点击Artifacts</p><p><img src="/2021/05/01/JavaWeb%E5%AD%A6%E4%B9%A0-1/C:%5CUsers%5C29924%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5Cimage-20210501182233103.png" alt="image-20210501182233103"></p><p>点击Fix, 选择添加</p><p><img src="/2021/05/01/JavaWeb%E5%AD%A6%E4%B9%A0-1/C:%5CUsers%5C29924%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5Cimage-20210501182321357.png" alt="image-20210501182321357"></p><p>OK之后可以在外部库中看到</p><p><img src="/2021/05/01/JavaWeb%E5%AD%A6%E4%B9%A0-1/C:%5CUsers%5C29924%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5Cimage-20210501182352781.png" alt="image-20210501182352781"></p></li></ol><h1 id="修改tomcat配置"><a href="#修改tomcat配置" class="headerlink" title="修改tomcat配置"></a>修改tomcat配置</h1><p>点击tomcat的配置进行编辑</p><p><img src="https://i.loli.net/2021/05/01/l5QTvqeWpdChUXx.png" alt="image-20210501182450280"></p><p>在Deployment中可以修改本项目的访问路径</p><p><img src="/2021/05/01/JavaWeb%E5%AD%A6%E4%B9%A0-1/C:%5CUsers%5C29924%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5Cimage-20210501182539202.png" alt="image-20210501182539202"></p><p>最好与工程名一致，即JavaWeb</p><p>在server中可以修改端口与热部署</p><p><img src="/2021/05/01/JavaWeb%E5%AD%A6%E4%B9%A0-1/C:%5CUsers%5C29924%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5Cimage-20210501182631195.png" alt="image-20210501182631195"></p><p>所谓热部署，就是在修改tomcat网页内容后，不用重启实例就能自动刷新网页。将On frame deactivation的值改为Update classes and resources就行。然后，On ‘Update’ action 修改为Restart server，意思是点击IDEA的tomcat的重启按钮时会默认显选中这个选项</p><p><img src="https://i.loli.net/2021/05/01/EbTFWC4B9PiA7tY.png" alt="image-20210501182916526"></p><h1 id="Servlet"><a href="#Servlet" class="headerlink" title="Servlet"></a>Servlet</h1><p>相当于是服务器程序，可以接受请求并响应。</p><h2 id="第一个Servlet程序"><a href="#第一个Servlet程序" class="headerlink" title="第一个Servlet程序"></a>第一个Servlet程序</h2><p>在JavaWeb目录下，new一个Web Application模块，然后在src中新建package: com.JavaWeb.servlet, 在该包下新建一个类：HelloServlet</p><p><img src="https://i.loli.net/2021/05/01/g15zS3QontHvE72.png" alt="image-20210501221949782"></p><p>然后这个类需要实现Servlet, 即添加上implements Servlet, 之后可以Alt+Enter, 自动出现需要实现的方法</p><p><img src="https://i.loli.net/2021/05/01/tVuz7aKsIT3m9G8.png" alt="image-20210501222111779"></p><p>在service方法中，输出一句话。这样当访问这个Servlet时就能打印这句话。有了Servlet程序之后，还需要给它配置访问路径。在web.xml中</p><p><img src="https://i.loli.net/2021/05/01/vG9Dsakgp28ZzMO.png" alt="image-20210501222230075"></p><p>首先添加一个servlet标签，里面是容器名以及链接到的类。然后是添加servlet-mapping, 给这个servlet配置访问路径。同样是需要容器名，后面的url-pattern即为访问目录。完整URL应为：工程所在路径+url-pattern, 工程所在路径即为tomcat配置的路径</p><p><img src="https://i.loli.net/2021/05/01/Vfaidg3utPpGHDX.png" alt="image-20210501222523594"></p><p>因此，访问：<a href="http://localhost:8080/JavaWeb/hello" target="_blank" rel="noopener">http://localhost:8080/JavaWeb/hello</a></p><p><img src="/2021/05/01/JavaWeb%E5%AD%A6%E4%B9%A0-1/C:%5CUsers%5C29924%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5Cimage-20210501222600501.png" alt="image-20210501222600501"></p><p>输出日志将那句话打印了出来。</p><h2 id="Servlet函数执行顺序"><a href="#Servlet函数执行顺序" class="headerlink" title="Servlet函数执行顺序"></a>Servlet函数执行顺序</h2><p>首先Alt+Insert使用Generate功能为HelloServlet生成一个构造器，然后在构造函数、init、service、destroy函数下打印语句</p><p><img src="/2021/05/01/JavaWeb%E5%AD%A6%E4%B9%A0-1/C:%5CUsers%5C29924%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5Cimage-20210501223652762.png" alt="image-20210501223652762"></p><p>重启之后连续访问：<a href="http://localhost:8080/JavaWeb/hello" target="_blank" rel="noopener">http://localhost:8080/JavaWeb/hello</a></p><p><img src="/2021/05/01/JavaWeb%E5%AD%A6%E4%B9%A0-1/C:%5CUsers%5C29924%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5Cimage-20210501223821069.png" alt="image-20210501223821069"></p><p>可以发现，构造函数和init函数只在最初访问servlet时调用，之后调用的都是service方法，而destroy函数则在点击停止tomcat时调用</p><p><img src="/2021/05/01/JavaWeb%E5%AD%A6%E4%B9%A0-1/C:%5CUsers%5C29924%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5Cimage-20210501223942868.png" alt="image-20210501223942868"></p><h2 id="区分请求类型是GET还是POST"><a href="#区分请求类型是GET还是POST" class="headerlink" title="区分请求类型是GET还是POST"></a>区分请求类型是GET还是POST</h2><p>servlet相当于服务器，接受客户端发送来的请求，那么就要识别出它是哪一种请求。</p><p>首先创建一个test.html，模拟一个form表单提交请求</p><p><img src="/2021/05/01/JavaWeb%E5%AD%A6%E4%B9%A0-1/C:%5CUsers%5C29924%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5Cimage-20210501225717489.png" alt="image-20210501225717489"></p><p>然后在Servlet的service中处理请求</p><p><img src="/2021/05/01/JavaWeb%E5%AD%A6%E4%B9%A0-1/C:%5CUsers%5C29924%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5Cimage-20210501225756466.png" alt="image-20210501225756466"></p><p>这里有一个点，HttpServletRequest是继承了servletRequest的。</p><p>首先创建一个httpServletRequest对象，然后使用getMethod()即可获得请求的方法，然后使用equals判断该请求是哪种类型。</p><p>先使用get方法，再使用post方法测试。访问：<a href="http://localhost:8080/JavaWeb/test.html" target="_blank" rel="noopener">http://localhost:8080/JavaWeb/test.html</a></p><p>点击页面的submit按钮</p><p><img src="/2021/05/01/JavaWeb%E5%AD%A6%E4%B9%A0-1/C:%5CUsers%5C29924%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5Cimage-20210501230023728.png" alt="image-20210501230023728"></p><p>将处理的内容封装成一个函数，方便日后查看</p><p><img src="https://i.loli.net/2021/05/01/I9Uyobd183OMlHq.png" alt="image-20210501230303988"></p><h2 id="继承HttpServlet"><a href="#继承HttpServlet" class="headerlink" title="继承HttpServlet"></a>继承HttpServlet</h2><p>通常在项目中，都不会直接使用实现Servlet，而是使用继承HttpServlet</p><p><img src="/2021/05/01/JavaWeb%E5%AD%A6%E4%B9%A0-1/C:%5CUsers%5C29924%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5Cimage-20210502223803026.png" alt="image-20210502223803026"></p><p>同样在doGet()和doPost()方法中自定义代码</p><p><img src="/2021/05/01/JavaWeb%E5%AD%A6%E4%B9%A0-1/C:%5CUsers%5C29924%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5Cimage-20210502223928368.png" alt="image-20210502223928368"></p><p>web.xml中配置路径</p><p><img src="https://i.loli.net/2021/05/02/GjxkhRZKn5CHD9W.png" alt="image-20210502224050044"></p><p>之后修改test.html的action为hello2, 启动tomcat，访问test.html, 点击提交</p><p><img src="/2021/05/01/JavaWeb%E5%AD%A6%E4%B9%A0-1/C:%5CUsers%5C29924%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5Cimage-20210502224257814.png" alt="image-20210502224257814"></p><h2 id="直接使用IDEA生成HttpServlet程序"><a href="#直接使用IDEA生成HttpServlet程序" class="headerlink" title="直接使用IDEA生成HttpServlet程序"></a>直接使用IDEA生成HttpServlet程序</h2><p>上述的HttpServlet程序需要手动生成，有点麻烦。IDEA提供了直接生成</p><p>new-&gt;Create New Servlet</p><p><img src="https://i.loli.net/2021/05/02/2fraJEviekLZPYB.png" alt="image-20210502224530278"></p><p>然后填写Servlet的名称</p><p><img src="https://i.loli.net/2021/05/02/CT1KErjzqOgQWHF.png" alt="image-20210502224623540"></p><p>直接出现了Servlet程序</p><p><img src="https://i.loli.net/2021/05/02/CT1KErjzqOgQWHF.png" alt></p><p>同样在web.xml中配置路径即可</p><p><img src="/2021/05/01/JavaWeb%E5%AD%A6%E4%B9%A0-1/C:%5CUsers%5C29924%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5Cimage-20210502225651902.png" alt="image-20210502225651902"></p><h2 id="整个Servlet体系"><a href="#整个Servlet体系" class="headerlink" title="整个Servlet体系"></a>整个Servlet体系</h2><p><img src="https://i.loli.net/2021/05/02/Kgp6vIfDbzMQWju.png" alt="image-20210502225746677"></p>]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;今天开始好好学习JavaWeb。&lt;/p&gt;
+    
+    </summary>
+    
+    
+      <category term="JavaWeb" scheme="https://ggyggy666.github.io/categories/JavaWeb/"/>
+    
+    
+      <category term="JavaWeb学习" scheme="https://ggyggy666.github.io/tags/JavaWeb%E5%AD%A6%E4%B9%A0/"/>
+    
+  </entry>
   
   <entry>
     <title>区块链安全之WebAssembly</title>
@@ -470,36 +493,6 @@
     
     
       <category term="pwn入门-最简单的溢出" scheme="https://ggyggy666.github.io/tags/pwn%E5%85%A5%E9%97%A8-%E6%9C%80%E7%AE%80%E5%8D%95%E7%9A%84%E6%BA%A2%E5%87%BA/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>pwn入门-环境安装</title>
-    <link href="https://ggyggy666.github.io/2020/11/06/pwn%E5%85%A5%E9%97%A8-%E7%8E%AF%E5%A2%83%E5%AE%89%E8%A3%85/"/>
-    <id>https://ggyggy666.github.io/2020/11/06/pwn%E5%85%A5%E9%97%A8-%E7%8E%AF%E5%A2%83%E5%AE%89%E8%A3%85/</id>
-    <published>2020-11-06T14:55:25.000Z</published>
-    <updated>2020-11-08T12:53:06.306Z</updated>
-    
-    <content type="html"><![CDATA[<p>今天学习pwn</p><h2 id="环境准备"><a href="#环境准备" class="headerlink" title="环境准备"></a>环境准备</h2><p>Ubuntu系统</p><p>pwntools</p><p>pwndbg</p><p>IDA</p><p>ipython</p><p>gcc-multilib</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-get install python-pip</span><br><span class="line">sudo apt-get install python3-pip</span><br><span class="line"></span><br><span class="line">cd ~</span><br><span class="line">mkdir .pip &amp; cd .pip</span><br><span class="line">vim pip.conf</span><br><span class="line">[global]</span><br><span class="line">index-url &#x3D; https:&#x2F;&#x2F;pypi.tuna.tsinghua.edu.cn&#x2F;simple</span><br><span class="line"></span><br><span class="line">pip install pwntools</span><br><span class="line"></span><br><span class="line">git clone https:&#x2F;&#x2F;gitee.com&#x2F;ggy666&#x2F;GDB-Plugins.git</span><br><span class="line">cd GDB-Plugins&#x2F;pwndbg</span><br><span class="line">git init</span><br><span class="line">chmod 777 .&#x2F;setup.sh</span><br><span class="line">.&#x2F;setup.sh(ubuntu18可以，ubuntu20一直报错)</span><br><span class="line"></span><br><span class="line">apt-get install gcc-multilib</span><br></pre></td></tr></table></figure><h2 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h2><p>pwntools:</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">cd pwntools</span><br><span class="line">pip install -r requirement.txt</span><br><span class="line">python setup.py(root下执行)</span><br></pre></td></tr></table></figure><p>pwndbg:</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">cd pwndbg</span><br><span class="line">.&#x2F;setup.sh</span><br></pre></td></tr></table></figure><p>IDA:</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">解压IDA到任意目录，然后</span><br><span class="line">sudo apt-get install libstdc++5:i386</span><br><span class="line">cd IDA</span><br><span class="line">.&#x2F;idaq  即可运行</span><br></pre></td></tr></table></figure><p>其它可参考下面链接的配置</p><p>主要参考：<a href="https://www.yuque.com/hxfqg9/bin/zzg02e" target="_blank" rel="noopener">https://www.yuque.com/hxfqg9/bin/zzg02e</a></p>]]></content>
-    
-    <summary type="html">
-    
-      
-      
-        &lt;p&gt;今天学习pwn&lt;/p&gt;
-&lt;h2 id=&quot;环境准备&quot;&gt;&lt;a href=&quot;#环境准备&quot; class=&quot;headerlink&quot; title=&quot;环境准备&quot;&gt;&lt;/a&gt;环境准备&lt;/h2&gt;&lt;p&gt;Ubuntu系统&lt;/p&gt;
-&lt;p&gt;pwntools&lt;/p&gt;
-&lt;p&gt;pwndbg&lt;/p&gt;
-&lt;p&gt;I
-      
-    
-    </summary>
-    
-    
-      <category term="pwn" scheme="https://ggyggy666.github.io/categories/pwn/"/>
-    
-    
-      <category term="pwn入门-环境安装" scheme="https://ggyggy666.github.io/tags/pwn%E5%85%A5%E9%97%A8-%E7%8E%AF%E5%A2%83%E5%AE%89%E8%A3%85/"/>
     
   </entry>
   

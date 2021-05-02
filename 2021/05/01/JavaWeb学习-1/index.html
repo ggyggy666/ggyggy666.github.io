@@ -1,0 +1,455 @@
+<head>
+<script src="https://cdn.jsdelivr.net/npm/jquery/dist/jquery.min.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome/css/font-awesome.min.css">
+<script src="https://cdn.jsdelivr.net/gh/stevenjoezhang/live2d-widget/autoload.js"></script>
+</head>
+
+<!DOCTYPE HTML>
+<html lang="zh-CN">
+
+<head>
+    <!--Setting-->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+    <meta http-equiv="Cache-Control" content="no-siteapp">
+    <meta http-equiv="Cache-Control" content="no-transform">
+    <meta name="renderer" content="webkit|ie-comp|ie-stand">
+    <meta name="apple-mobile-web-app-capable" content="ggy的个人博客">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="format-detection" content="telephone=no,email=no,adress=no">
+    <meta name="browsermode" content="application">
+    <meta name="screen-orientation" content="portrait">
+    <meta name="theme-version" content="1.2.3">
+    <meta name="root" content="/">
+    <link rel="dns-prefetch" href="https://ggyggy666.github.io">
+    <!--SEO-->
+
+<meta name="keywords" content="JavaWeb学习" />
+
+
+<meta name="description" content="今天开始好好学习JavaWeb。
+
+
+主要是配合IDEA使用。
+环境配置IDEA添加tomcat前提：需要JAVA_HOME环境变量。
+下载tomcat压缩包，解压后，在bin目录下点击star..." />
+
+
+<meta name="robots" content="all" />
+<meta name="google" content="all" />
+<meta name="googlebot" content="all" />
+<meta name="verify" content="all" />
+    <!--Title-->
+
+<title>
+    
+    JavaWeb学习(1) |
+    
+    ggy的个人博客
+</title>
+
+<link rel="alternate" href="/atom.xml" title="ggy的个人博客" type="application/atom+xml">
+
+
+<link rel="icon" href="/favicon.ico">
+
+    
+
+
+<link rel="stylesheet" href="/css/bootstrap.min.css?rev=3.3.7.css">
+<link rel="stylesheet" href="/css/font-awesome.min.css?rev=4.7.0.css">
+<link rel="stylesheet" href="/css/style.css?rev=@@hash.css">
+
+    
+<div class="hide">
+    <script type="text/javascript">
+    var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+    document.write(unescape("%3Cspan class='cnzz_stat_icon_1263868967 hide' %3E%3Cscript%20src%3D%22https%3A%2F%2Fs95.cnzz.com%2Fz_stat.php%3Fweb_id%3D1272564536%22%3E%3C%2Fscript%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s19.cnzz.com/z_stat.php%3Fid%3D1263868967%26show%3Dpic1' type='text/javascript'%3E%3C/script%3E"));
+    </script>
+</div>
+
+
+
+
+    
+
+<meta name="generator" content="Hexo 4.2.0"></head>
+<!--[if lte IE 8]>
+<style>
+    html{ font-size: 1em }
+</style>
+<![endif]-->
+<!--[if lte IE 9]>
+<div style="ie">你使用的浏览器版本过低，为了你更好的阅读体验，请更新浏览器的版本或者使用其他现代浏览器，比如Chrome、Firefox、Safari等。</div>
+<![endif]-->
+<body>
+    <header class="main-header"  style="background-image:url(
+    https://pic.downk.cc/item/5e3816b82fb38b8c3c8791f9.jpg)"
+     >
+    <div class="main-header-box">
+        <a class="header-avatar" href="/" title='ggy'>
+            <img src="/img/avatar.jpg" alt="logo头像" class="img-responsive center-block">
+        </a>
+        <div class="branding">
+            <!--<h2 class="text-hide">Snippet主题,从未如此简单有趣</h2>-->
+            
+            <h2>
+                欢迎来到ggy的个人网站
+            </h2>
+            
+        </div>
+    </div>
+</header>
+    <nav class="main-navigation">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="navbar-header"><span class="nav-toggle-button collapsed pull-right" data-toggle="collapse" data-target="#main-menu" id="mnav">
+                        <span class="sr-only"></span>
+                        <i class="fa fa-bars"></i>
+                    </span>
+                    <a class="navbar-brand" href="https://ggyggy666.github.io">
+                        ggy的个人博客</a>
+                </div>
+                <div class="collapse navbar-collapse" id="main-menu">
+                    <ul class="menu">
+                        
+                        <li role="presentation" class="text-center">
+                            <a href="/"><i class="fa "></i>
+                                首页</a>
+                        </li>
+                        
+                        <li role="presentation" class="text-center">
+                            <a href="/categories/web安全/"><i class="fa "></i>
+                                web安全</a>
+                        </li>
+                        
+                        <li role="presentation" class="text-center">
+                            <a href="/categories/python工具/"><i class="fa "></i>
+                                python工具</a>
+                        </li>
+                        
+                        <li role="presentation" class="text-center">
+                            <a href="/categories/密码学/"><i class="fa "></i>
+                                密码学</a>
+                        </li>
+                        
+                        <li role="presentation" class="text-center">
+                            <a href="/archives/"><i class="fa "></i>
+                                时间轴</a>
+                        </li>
+                        
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</nav>
+    <section class="content-wrap">
+        <div class="container">
+            <div class="row">
+                <main class="col-md-8 main-content m-post">
+                    <p id="process"></p>
+<article class="post">
+    <div class="post-head">
+        <h1 id="JavaWeb学习(1)">
+            
+            JavaWeb学习(1)
+            
+        </h1>
+        <div class="post-meta">
+    
+    <span class="categories-meta fa-wrap">
+        <i class="fa fa-folder-open-o"></i>
+        <a class="category-link" href="/categories/JavaWeb/">JavaWeb</a>
+    </span>
+    
+    
+    <span class="fa-wrap">
+        <i class="fa fa-tags"></i>
+        <span class="tags-meta">
+            
+            <a class="tag-link" href="/tags/JavaWeb%E5%AD%A6%E4%B9%A0/" rel="tag">JavaWeb学习</a>
+            
+        </span>
+    </span>
+    
+    
+    
+    <span class="fa-wrap">
+        <i class="fa fa-clock-o"></i>
+        <span class="date-meta">
+            2021/05/01</span>
+    </span>
+    
+    <span class="fa-wrap">
+        <i class="fa fa-eye"></i>
+        <span id="busuanzi_value_page_pv"></span>
+    </span>
+    
+    
+</div>
+        
+        
+    </div>
+    
+    <div class="post-body post-content">
+        <p>今天开始好好学习JavaWeb。</p>
+<a id="more"></a>
+
+<p>主要是配合IDEA使用。</p>
+<h1 id="环境配置"><a href="#环境配置" class="headerlink" title="环境配置"></a>环境配置</h1><h2 id="IDEA添加tomcat"><a href="#IDEA添加tomcat" class="headerlink" title="IDEA添加tomcat"></a>IDEA添加tomcat</h2><p>前提：需要JAVA_HOME环境变量。</p>
+<p>下载tomcat压缩包，解压后，在bin目录下点击startup.bat启动tomcat, 之后可以访问本地的8080端口看是否成功部署。成功后就可以关掉了。</p>
+<p>IDEA中，进入settings设置，然后</p>
+<p><img src="/2021/05/01/JavaWeb%E5%AD%A6%E4%B9%A0-1/C:%5CUsers%5C29924%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5Cimage-20210501181023506.png" alt="image-20210501181023506"></p>
+<p>浏览目录，找到tomcat的安装目录，并确认</p>
+<p><img src="https://i.loli.net/2021/05/01/Otf7NRo3UIwivZr.png" alt="image-20210501181121055"></p>
+<p>自动显示出来了tomcat版本，确认后即可看到</p>
+<p><img src="https://i.loli.net/2021/05/01/WlUXIQZhrgxFutf.png" alt="image-20210501181201515"></p>
+<h2 id="新建JavaWeb工程"><a href="#新建JavaWeb工程" class="headerlink" title="新建JavaWeb工程"></a>新建JavaWeb工程</h2><p>点击File-&gt;new-&gt;new project，新建工程</p>
+<p><img src="https://i.loli.net/2021/05/01/bEsZAdU4Mm5OurV.png" alt="image-20210501181332404"></p>
+<p>按图中所示操作即可，之后next，输入项目名确认即可。</p>
+<h2 id="导入第三方库"><a href="#导入第三方库" class="headerlink" title="导入第三方库"></a>导入第三方库</h2><p>首先在WEB-INF目录下新建一个lib目录，用来保存jar包</p>
+<p><img src="/2021/05/01/JavaWeb%E5%AD%A6%E4%B9%A0-1/C:%5CUsers%5C29924%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5Cimage-20210501181635941.png" alt="image-20210501181635941"></p>
+<p>导入第三方库有两种方法：</p>
+<ol>
+<li><p>复制jar包，鼠标移到lib目录，右键选择粘贴。然后再移到jar包，右键，选择：Add as library</p>
+<p><img src="/2021/05/01/JavaWeb%E5%AD%A6%E4%B9%A0-1/C:%5CUsers%5C29924%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5Cimage-20210501181851414.png" alt="image-20210501181851414"></p>
+</li>
+<li><p>点击File-&gt;Project Structure</p>
+<p><img src="https://i.loli.net/2021/05/01/Exzk2KvmiCDjt7B.png" alt="image-20210501181947452"></p>
+<p>点击Libraries, 点击+</p>
+<p><img src="https://i.loli.net/2021/05/01/VkC4glRZXOndEPw.png" alt="image-20210501182034698"></p>
+<p>选择Java，然后浏览到jar包位置</p>
+<p><img src="/2021/05/01/JavaWeb%E5%AD%A6%E4%B9%A0-1/C:%5CUsers%5C29924%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5Cimage-20210501182130167.png" alt="image-20210501182130167"></p>
+<p>之后都是OK。然后点击Artifacts</p>
+<p><img src="/2021/05/01/JavaWeb%E5%AD%A6%E4%B9%A0-1/C:%5CUsers%5C29924%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5Cimage-20210501182233103.png" alt="image-20210501182233103"></p>
+<p>点击Fix, 选择添加</p>
+<p><img src="/2021/05/01/JavaWeb%E5%AD%A6%E4%B9%A0-1/C:%5CUsers%5C29924%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5Cimage-20210501182321357.png" alt="image-20210501182321357"></p>
+<p>OK之后可以在外部库中看到</p>
+<p><img src="/2021/05/01/JavaWeb%E5%AD%A6%E4%B9%A0-1/C:%5CUsers%5C29924%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5Cimage-20210501182352781.png" alt="image-20210501182352781"></p>
+</li>
+</ol>
+<h1 id="修改tomcat配置"><a href="#修改tomcat配置" class="headerlink" title="修改tomcat配置"></a>修改tomcat配置</h1><p>点击tomcat的配置进行编辑</p>
+<p><img src="https://i.loli.net/2021/05/01/l5QTvqeWpdChUXx.png" alt="image-20210501182450280"></p>
+<p>在Deployment中可以修改本项目的访问路径</p>
+<p><img src="/2021/05/01/JavaWeb%E5%AD%A6%E4%B9%A0-1/C:%5CUsers%5C29924%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5Cimage-20210501182539202.png" alt="image-20210501182539202"></p>
+<p>最好与工程名一致，即JavaWeb</p>
+<p>在server中可以修改端口与热部署</p>
+<p><img src="/2021/05/01/JavaWeb%E5%AD%A6%E4%B9%A0-1/C:%5CUsers%5C29924%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5Cimage-20210501182631195.png" alt="image-20210501182631195"></p>
+<p>所谓热部署，就是在修改tomcat网页内容后，不用重启实例就能自动刷新网页。将On frame deactivation的值改为Update classes and resources就行。然后，On ‘Update’ action 修改为Restart server，意思是点击IDEA的tomcat的重启按钮时会默认显选中这个选项</p>
+<p><img src="https://i.loli.net/2021/05/01/EbTFWC4B9PiA7tY.png" alt="image-20210501182916526"></p>
+<h1 id="Servlet"><a href="#Servlet" class="headerlink" title="Servlet"></a>Servlet</h1><p>相当于是服务器程序，可以接受请求并响应。</p>
+<h2 id="第一个Servlet程序"><a href="#第一个Servlet程序" class="headerlink" title="第一个Servlet程序"></a>第一个Servlet程序</h2><p>在JavaWeb目录下，new一个Web Application模块，然后在src中新建package: com.JavaWeb.servlet, 在该包下新建一个类：HelloServlet</p>
+<p><img src="https://i.loli.net/2021/05/01/g15zS3QontHvE72.png" alt="image-20210501221949782"></p>
+<p>然后这个类需要实现Servlet, 即添加上implements Servlet, 之后可以Alt+Enter, 自动出现需要实现的方法</p>
+<p><img src="https://i.loli.net/2021/05/01/tVuz7aKsIT3m9G8.png" alt="image-20210501222111779"></p>
+<p>在service方法中，输出一句话。这样当访问这个Servlet时就能打印这句话。有了Servlet程序之后，还需要给它配置访问路径。在web.xml中</p>
+<p><img src="https://i.loli.net/2021/05/01/vG9Dsakgp28ZzMO.png" alt="image-20210501222230075"></p>
+<p>首先添加一个servlet标签，里面是容器名以及链接到的类。然后是添加servlet-mapping, 给这个servlet配置访问路径。同样是需要容器名，后面的url-pattern即为访问目录。完整URL应为：工程所在路径+url-pattern, 工程所在路径即为tomcat配置的路径</p>
+<p><img src="https://i.loli.net/2021/05/01/Vfaidg3utPpGHDX.png" alt="image-20210501222523594"></p>
+<p>因此，访问：<a href="http://localhost:8080/JavaWeb/hello" target="_blank" rel="noopener">http://localhost:8080/JavaWeb/hello</a></p>
+<p><img src="/2021/05/01/JavaWeb%E5%AD%A6%E4%B9%A0-1/C:%5CUsers%5C29924%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5Cimage-20210501222600501.png" alt="image-20210501222600501"></p>
+<p>输出日志将那句话打印了出来。</p>
+<h2 id="Servlet函数执行顺序"><a href="#Servlet函数执行顺序" class="headerlink" title="Servlet函数执行顺序"></a>Servlet函数执行顺序</h2><p>首先Alt+Insert使用Generate功能为HelloServlet生成一个构造器，然后在构造函数、init、service、destroy函数下打印语句</p>
+<p><img src="/2021/05/01/JavaWeb%E5%AD%A6%E4%B9%A0-1/C:%5CUsers%5C29924%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5Cimage-20210501223652762.png" alt="image-20210501223652762"></p>
+<p>重启之后连续访问：<a href="http://localhost:8080/JavaWeb/hello" target="_blank" rel="noopener">http://localhost:8080/JavaWeb/hello</a></p>
+<p><img src="/2021/05/01/JavaWeb%E5%AD%A6%E4%B9%A0-1/C:%5CUsers%5C29924%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5Cimage-20210501223821069.png" alt="image-20210501223821069"></p>
+<p>可以发现，构造函数和init函数只在最初访问servlet时调用，之后调用的都是service方法，而destroy函数则在点击停止tomcat时调用</p>
+<p><img src="/2021/05/01/JavaWeb%E5%AD%A6%E4%B9%A0-1/C:%5CUsers%5C29924%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5Cimage-20210501223942868.png" alt="image-20210501223942868"></p>
+<h2 id="区分请求类型是GET还是POST"><a href="#区分请求类型是GET还是POST" class="headerlink" title="区分请求类型是GET还是POST"></a>区分请求类型是GET还是POST</h2><p>servlet相当于服务器，接受客户端发送来的请求，那么就要识别出它是哪一种请求。</p>
+<p>首先创建一个test.html，模拟一个form表单提交请求</p>
+<p><img src="/2021/05/01/JavaWeb%E5%AD%A6%E4%B9%A0-1/C:%5CUsers%5C29924%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5Cimage-20210501225717489.png" alt="image-20210501225717489"></p>
+<p>然后在Servlet的service中处理请求</p>
+<p><img src="/2021/05/01/JavaWeb%E5%AD%A6%E4%B9%A0-1/C:%5CUsers%5C29924%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5Cimage-20210501225756466.png" alt="image-20210501225756466"></p>
+<p>这里有一个点，HttpServletRequest是继承了servletRequest的。</p>
+<p>首先创建一个httpServletRequest对象，然后使用getMethod()即可获得请求的方法，然后使用equals判断该请求是哪种类型。</p>
+<p>先使用get方法，再使用post方法测试。访问：<a href="http://localhost:8080/JavaWeb/test.html" target="_blank" rel="noopener">http://localhost:8080/JavaWeb/test.html</a></p>
+<p>点击页面的submit按钮</p>
+<p><img src="/2021/05/01/JavaWeb%E5%AD%A6%E4%B9%A0-1/C:%5CUsers%5C29924%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5Cimage-20210501230023728.png" alt="image-20210501230023728"></p>
+<p>将处理的内容封装成一个函数，方便日后查看</p>
+<p><img src="https://i.loli.net/2021/05/01/I9Uyobd183OMlHq.png" alt="image-20210501230303988"></p>
+<h2 id="继承HttpServlet"><a href="#继承HttpServlet" class="headerlink" title="继承HttpServlet"></a>继承HttpServlet</h2><p>通常在项目中，都不会直接使用实现Servlet，而是使用继承HttpServlet</p>
+<p><img src="/2021/05/01/JavaWeb%E5%AD%A6%E4%B9%A0-1/C:%5CUsers%5C29924%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5Cimage-20210502223803026.png" alt="image-20210502223803026"></p>
+<p>同样在doGet()和doPost()方法中自定义代码</p>
+<p><img src="/2021/05/01/JavaWeb%E5%AD%A6%E4%B9%A0-1/C:%5CUsers%5C29924%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5Cimage-20210502223928368.png" alt="image-20210502223928368"></p>
+<p>web.xml中配置路径</p>
+<p><img src="https://i.loli.net/2021/05/02/GjxkhRZKn5CHD9W.png" alt="image-20210502224050044"></p>
+<p>之后修改test.html的action为hello2, 启动tomcat，访问test.html, 点击提交</p>
+<p><img src="/2021/05/01/JavaWeb%E5%AD%A6%E4%B9%A0-1/C:%5CUsers%5C29924%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5Cimage-20210502224257814.png" alt="image-20210502224257814"></p>
+<h2 id="直接使用IDEA生成HttpServlet程序"><a href="#直接使用IDEA生成HttpServlet程序" class="headerlink" title="直接使用IDEA生成HttpServlet程序"></a>直接使用IDEA生成HttpServlet程序</h2><p>上述的HttpServlet程序需要手动生成，有点麻烦。IDEA提供了直接生成</p>
+<p>new-&gt;Create New Servlet</p>
+<p><img src="https://i.loli.net/2021/05/02/2fraJEviekLZPYB.png" alt="image-20210502224530278"></p>
+<p>然后填写Servlet的名称</p>
+<p><img src="https://i.loli.net/2021/05/02/CT1KErjzqOgQWHF.png" alt="image-20210502224623540"></p>
+<p>直接出现了Servlet程序</p>
+<p><img src="https://i.loli.net/2021/05/02/CT1KErjzqOgQWHF.png" alt></p>
+<p>同样在web.xml中配置路径即可</p>
+<p><img src="/2021/05/01/JavaWeb%E5%AD%A6%E4%B9%A0-1/C:%5CUsers%5C29924%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5Cimage-20210502225651902.png" alt="image-20210502225651902"></p>
+<h2 id="整个Servlet体系"><a href="#整个Servlet体系" class="headerlink" title="整个Servlet体系"></a>整个Servlet体系</h2><p><img src="https://i.loli.net/2021/05/02/Kgp6vIfDbzMQWju.png" alt="image-20210502225746677"></p>
+
+    </div>
+    
+    <div class="reward" ontouchstart>
+    <div class="reward-wrap">赏
+        <div class="reward-box">
+            
+            <span class="reward-type">
+                <img class="alipay" src="/img/alipay.jpg"><b>支付宝打赏</b>
+            </span>
+            
+            
+            <span class="reward-type">
+                <img class="wechat" src="/img/wechat.jpg"><b>微信打赏</b>
+            </span>
+            
+        </div>
+    </div>
+    <p class="reward-tip">
+        赞赏是不耍流氓的鼓励
+    </p>
+</div>
+    
+    <div class="post-footer">
+        <div>
+            
+            转载声明：
+            商业转载请联系作者获得授权,非商业转载请注明出处 © <a href="ggy.44pp.vip" target="_blank">ggy</a>
+            
+            
+        </div>
+        <div>
+            
+        </div>
+    </div>
+</article>
+<div class="article-nav prev-next-wrap clearfix">
+    
+    
+    <a href="/2021/03/21/%E5%8C%BA%E5%9D%97%E9%93%BE%E5%AE%89%E5%85%A8%E4%B9%8BWebAssembly/" class="next-post btn btn-default" title='区块链安全之WebAssembly'>
+        <span class="hidden-lg">下一篇</span>
+        <span class="hidden-xs">
+            区块链安全之WebAssembly</span><i class="fa fa-angle-right fa-fw"></i>
+    </a>
+    
+</div>
+
+<div id="comments">
+    
+<div id="lv-container" data-id="city" data-uid="MTAyMC80ODM1Ni8yNDg1MA==">
+    <script type="text/javascript">
+    (function(d, s) {
+        var j, e = d.getElementsByTagName(s)[0];
+        if (typeof LivereTower === 'function') { return; }
+        j = d.createElement(s);
+        j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+        j.async = true;
+        e.parentNode.insertBefore(j, e);
+    })(document, 'script');
+    </script>
+</div>
+
+</div>
+
+                </main>
+                
+                    <aside id="article-toc" role="navigation" class="col-md-4">
+    <div class="widget">
+        <h3 class="title">
+            文章目录
+        </h3>
+        
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#环境配置"><span class="toc-text">环境配置</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#IDEA添加tomcat"><span class="toc-text">IDEA添加tomcat</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#新建JavaWeb工程"><span class="toc-text">新建JavaWeb工程</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#导入第三方库"><span class="toc-text">导入第三方库</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#修改tomcat配置"><span class="toc-text">修改tomcat配置</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Servlet"><span class="toc-text">Servlet</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#第一个Servlet程序"><span class="toc-text">第一个Servlet程序</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Servlet函数执行顺序"><span class="toc-text">Servlet函数执行顺序</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#区分请求类型是GET还是POST"><span class="toc-text">区分请求类型是GET还是POST</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#继承HttpServlet"><span class="toc-text">继承HttpServlet</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#直接使用IDEA生成HttpServlet程序"><span class="toc-text">直接使用IDEA生成HttpServlet程序</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#整个Servlet体系"><span class="toc-text">整个Servlet体系</span></a></li></ol></li></ol>
+        
+    </div>
+</aside>
+                
+            </div>
+        </div>
+    </section>
+    <footer class="main-footer">
+    <div class="container">
+        <div class="row">
+        </div>
+    </div>
+</footer>
+<a id="back-to-top" class="icon-btn hide">
+    <i class="fa fa-chevron-up"></i>
+</a>
+    <div class="copyright">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="busuanzi">
+    
+    访问量:
+    <strong id="busuanzi_value_site_pv">
+        <i class="fa fa-spinner fa-spin"></i>
+    </strong>
+    &nbsp; | &nbsp;
+    访客数:
+    <strong id="busuanzi_value_site_uv">
+        <i class="fa fa-spinner fa-spin"></i>
+    </strong>
+    
+</div>
+            </div>
+            <div class="col-sm-12">
+                <span>Copyright &copy;
+                    2020
+                    
+                </span> |
+                <span>
+                    Powered by <a href="//hexo.io" class="copyright-links" target="_blank" rel="nofollow">Hexo</a>
+                </span> |
+                <span>
+                    Theme by <a href="//github.com/shenliyang/hexo-theme-snippet.git" class="copyright-links" target="_blank" rel="nofollow">Snippet</a>
+                </span>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<script src="/assets/tagcanvas.min.js?rev=2.9.js"></script>
+
+<script>
+var tagOption = {
+    textColour: '#444', // 字体颜色
+    outlineMethod: 'block', // 选中模式
+    outlineColour: '#FFDAB9', // 选中模式的颜色
+    interval: 30 || 30, // 动画帧之间的时间间隔，值越大，转动幅度越大
+    textHeight: 13,
+    outlineRadius: 3,
+    freezeActive: true || '', // 选中的标签是否继续滚动
+    frontSelect: true || '', // 不选标签云后部的标签
+    initial: [0.1, -0.1],
+    depth: 0.5,
+    decel: 0.95,
+    maxSpeed: 0.03,
+    reverse: true || '', // 是否反向触发
+    fadeIn: 500, // 进入动画时间
+    wheelZoom: false || '' // 是否启用鼠标滚轮
+}
+TagCanvas.Start('tag-cloud-3d', '', tagOption);
+</script>
+
+
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+<script src="/js/app.js?rev=@@hash.js"></script>
+
+
+<!-- 雪花特效 -->
+<script type="text/javascript" src="http://libs.baidu.com/jquery/1.8.3/jquery.js"></script>
+<script type="text/javascript" src="http://libs.baidu.com/jquery/1.8.3/jquery.min.js"></script>
+<script type="text/javascript" src="\js\snow.js"></script>
+
+<canvas class="fireworks" style="position: fixed;left: 0;top: 0;z-index: 1; pointer-events: none;" ></canvas> 
+<script type="text/javascript" src="//cdn.bootcss.com/animejs/2.2.0/anime.min.js"></script> 
+<script type="text/javascript" src="/js/fireworks.js"></script>
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"model":{"jsonPath":"live2d-widget-model-haruto"},"display":{"position":"right","width":150,"height":300},"mobile":{"show":false},"log":false,"pluginJsPath":"lib/","pluginModelPath":"assets/","pluginRootPath":"live2dw/","tagMode":false});</script></body>
+</html>

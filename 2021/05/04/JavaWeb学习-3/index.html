@@ -1,0 +1,572 @@
+<head>
+<script src="https://cdn.jsdelivr.net/npm/jquery/dist/jquery.min.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome/css/font-awesome.min.css">
+<script src="https://cdn.jsdelivr.net/gh/stevenjoezhang/live2d-widget/autoload.js"></script>
+</head>
+
+<!DOCTYPE HTML>
+<html lang="zh-CN">
+
+<head>
+    <!--Setting-->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+    <meta http-equiv="Cache-Control" content="no-siteapp">
+    <meta http-equiv="Cache-Control" content="no-transform">
+    <meta name="renderer" content="webkit|ie-comp|ie-stand">
+    <meta name="apple-mobile-web-app-capable" content="ggy的个人博客">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="format-detection" content="telephone=no,email=no,adress=no">
+    <meta name="browsermode" content="application">
+    <meta name="screen-orientation" content="portrait">
+    <meta name="theme-version" content="1.2.3">
+    <meta name="root" content="/">
+    <link rel="dns-prefetch" href="https://ggyggy666.github.io">
+    <!--SEO-->
+
+<meta name="keywords" content="JavaWeb学习" />
+
+
+<meta name="description" content="书城项目的功能的编写
+今天学习书城项目的功能的编写。
+
+
+JavaEE三层架构
+客户端发送请求给服务端，服务端有三层，首先是Web层，负责封装请求，然后调用业务层的service处理业务；接着是..." />
+
+
+<meta name="robots" content="all" />
+<meta name="google" content="all" />
+<meta name="googlebot" content="all" />
+<meta name="verify" content="all" />
+    <!--Title-->
+
+<title>
+    
+    JavaWeb学习(3) |
+    
+    ggy的个人博客
+</title>
+
+<link rel="alternate" href="/atom.xml" title="ggy的个人博客" type="application/atom+xml">
+
+
+<link rel="icon" href="/favicon.ico">
+
+    
+
+
+<link rel="stylesheet" href="/css/bootstrap.min.css?rev=3.3.7.css">
+<link rel="stylesheet" href="/css/font-awesome.min.css?rev=4.7.0.css">
+<link rel="stylesheet" href="/css/style.css?rev=@@hash.css">
+
+    
+<div class="hide">
+    <script type="text/javascript">
+    var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+    document.write(unescape("%3Cspan class='cnzz_stat_icon_1263868967 hide' %3E%3Cscript%20src%3D%22https%3A%2F%2Fs95.cnzz.com%2Fz_stat.php%3Fweb_id%3D1272564536%22%3E%3C%2Fscript%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s19.cnzz.com/z_stat.php%3Fid%3D1263868967%26show%3Dpic1' type='text/javascript'%3E%3C/script%3E"));
+    </script>
+</div>
+
+
+
+
+    
+
+<meta name="generator" content="Hexo 4.2.0"></head>
+<!--[if lte IE 8]>
+<style>
+    html{ font-size: 1em }
+</style>
+<![endif]-->
+<!--[if lte IE 9]>
+<div style="ie">你使用的浏览器版本过低，为了你更好的阅读体验，请更新浏览器的版本或者使用其他现代浏览器，比如Chrome、Firefox、Safari等。</div>
+<![endif]-->
+<body>
+    <header class="main-header"  style="background-image:url(
+    https://pic.downk.cc/item/5e3816b82fb38b8c3c8791f9.jpg)"
+     >
+    <div class="main-header-box">
+        <a class="header-avatar" href="/" title='ggy'>
+            <img src="/img/avatar.jpg" alt="logo头像" class="img-responsive center-block">
+        </a>
+        <div class="branding">
+            <!--<h2 class="text-hide">Snippet主题,从未如此简单有趣</h2>-->
+            
+            <h2>
+                欢迎来到ggy的个人网站
+            </h2>
+            
+        </div>
+    </div>
+</header>
+    <nav class="main-navigation">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="navbar-header"><span class="nav-toggle-button collapsed pull-right" data-toggle="collapse" data-target="#main-menu" id="mnav">
+                        <span class="sr-only"></span>
+                        <i class="fa fa-bars"></i>
+                    </span>
+                    <a class="navbar-brand" href="https://ggyggy666.github.io">
+                        ggy的个人博客</a>
+                </div>
+                <div class="collapse navbar-collapse" id="main-menu">
+                    <ul class="menu">
+                        
+                        <li role="presentation" class="text-center">
+                            <a href="/"><i class="fa "></i>
+                                首页</a>
+                        </li>
+                        
+                        <li role="presentation" class="text-center">
+                            <a href="/categories/web安全/"><i class="fa "></i>
+                                web安全</a>
+                        </li>
+                        
+                        <li role="presentation" class="text-center">
+                            <a href="/categories/python工具/"><i class="fa "></i>
+                                python工具</a>
+                        </li>
+                        
+                        <li role="presentation" class="text-center">
+                            <a href="/categories/密码学/"><i class="fa "></i>
+                                密码学</a>
+                        </li>
+                        
+                        <li role="presentation" class="text-center">
+                            <a href="/archives/"><i class="fa "></i>
+                                时间轴</a>
+                        </li>
+                        
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</nav>
+    <section class="content-wrap">
+        <div class="container">
+            <div class="row">
+                <main class="col-md-8 main-content m-post">
+                    <p id="process"></p>
+<article class="post">
+    <div class="post-head">
+        <h1 id="JavaWeb学习(3)">
+            
+            JavaWeb学习(3)
+            
+        </h1>
+        <div class="post-meta">
+    
+    <span class="categories-meta fa-wrap">
+        <i class="fa fa-folder-open-o"></i>
+        <a class="category-link" href="/categories/JavaWeb/">JavaWeb</a>
+    </span>
+    
+    
+    <span class="fa-wrap">
+        <i class="fa fa-tags"></i>
+        <span class="tags-meta">
+            
+            <a class="tag-link" href="/tags/JavaWeb%E5%AD%A6%E4%B9%A0/" rel="tag">JavaWeb学习</a>
+            
+        </span>
+    </span>
+    
+    
+    
+    <span class="fa-wrap">
+        <i class="fa fa-clock-o"></i>
+        <span class="date-meta">
+            2021/05/04</span>
+    </span>
+    
+    <span class="fa-wrap">
+        <i class="fa fa-eye"></i>
+        <span id="busuanzi_value_page_pv"></span>
+    </span>
+    
+    
+</div>
+        
+        
+    </div>
+    
+    <div class="post-body post-content">
+        <p>书城项目的功能的编写</p>
+<p>今天学习书城项目的功能的编写。</p>
+<a id="more"></a>
+
+<h1 id="JavaEE三层架构"><a href="#JavaEE三层架构" class="headerlink" title="JavaEE三层架构"></a>JavaEE三层架构</h1><p><img src="/2021/05/04/JavaWeb%E5%AD%A6%E4%B9%A0-3/C:%5CUsers%5C29924%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5Cimage-20210504130148345.png" alt="image-20210504130148345"></p>
+<p>客户端发送请求给服务端，服务端有三层，首先是Web层，负责封装请求，然后调用业务层的service处理业务；接着是业务层，负责处理业务请求，然后调用数据库进行存储；最后是持久层，负责与数据库进行交互。当然，这还得有个数据库才行。最后web层响应数据给客户端。</p>
+<p>因此，一个完整的前后端项目需要的包为：</p>
+<table>
+<thead>
+<tr>
+<th>web层</th>
+<th>com.JavaWeb.web/servlet/controller</th>
+<th></th>
+</tr>
+</thead>
+<tbody><tr>
+<td>service层</td>
+<td>com.JavaWeb.service</td>
+<td>service接口包</td>
+</tr>
+<tr>
+<td>service层</td>
+<td>com.JavaWeb.service.impl</td>
+<td>service接口实现包</td>
+</tr>
+<tr>
+<td>dao持久层</td>
+<td>com.JavaWeb.dao</td>
+<td>dao接口包</td>
+</tr>
+<tr>
+<td>dao持久层</td>
+<td>com.JavaWeb.dao.impl</td>
+<td>dao接口实现类</td>
+</tr>
+<tr>
+<td>实体bean对象</td>
+<td>com.JavaWeb.pojo/entity/domain/bean</td>
+<td>JavaBean类</td>
+</tr>
+<tr>
+<td>测试包</td>
+<td>com.JavaWeb.test/unit</td>
+<td></td>
+</tr>
+<tr>
+<td>工具类</td>
+<td>com.JavaWeb.utils</td>
+<td></td>
+</tr>
+</tbody></table>
+<p><img src="/2021/05/04/JavaWeb%E5%AD%A6%E4%B9%A0-3/C:%5CUsers%5C29924%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5Cimage-20210504132236612.png" alt="image-20210504132236612"></p>
+<p>注意：在com.JavaWeb上新建package后得到service包，然后在service包上新建package得到service.impl包。最后只显示了service.impl包。</p>
+<h1 id="数据库"><a href="#数据库" class="headerlink" title="数据库"></a>数据库</h1><p>需要先搭建好数据库并进行操作。</p>
+<h2 id="MySQL创建数据库和表"><a href="#MySQL创建数据库和表" class="headerlink" title="MySQL创建数据库和表"></a>MySQL创建数据库和表</h2><p>首先打开PHP Study的MySQL数据库，然后在PHP Study的设置中</p>
+<p><img src="/2021/05/04/JavaWeb%E5%AD%A6%E4%B9%A0-3/C:%5CUsers%5C29924%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5Cimage-20210504150559284.png" alt="image-20210504150559284"></p>
+<p>图中是Mysql8.0的，但是最后使用的是5.7。打开MySql的安装目录，进入到bin目录下，可以发现存在mysql.exe。因此将此时所在目录添加到环境变量。然后命令行中：<code>mysql -uroot -p</code>, 输入密码即可连接到数据库。</p>
+<p>创建book数据库</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">create database book;</span><br><span class="line">use book;</span><br></pre></td></tr></table></figure>
+
+<p>创建表</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">create table user(</span><br><span class="line">    &#96;id&#96; int primary key auto_increment,</span><br><span class="line">    &#96;username&#96; varchar(20) not null unique,</span><br><span class="line">    &#96;password&#96; varchar(32) not null,</span><br><span class="line">    &#96;email&#96; varchar(200));</span><br></pre></td></tr></table></figure>
+
+<p>插入数据</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">insert into user(&#96;username&#96;,&#96;password&#96;,&#96;email&#96;) values (&#39;admin&#39;,&#39;ggy666&#39;,&#39;123@qq.com&#39;);</span><br></pre></td></tr></table></figure>
+
+<p>查看数据</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">select * from user;</span><br></pre></td></tr></table></figure>
+
+<h2 id="编写数据库表对应的JavaBean对象"><a href="#编写数据库表对应的JavaBean对象" class="headerlink" title="编写数据库表对应的JavaBean对象"></a>编写数据库表对应的JavaBean对象</h2><p>Bean对象在pojo包下创建。创建一个类User，对应数据库的user表。</p>
+<p><img src="/2021/05/04/JavaWeb%E5%AD%A6%E4%B9%A0-3/C:%5CUsers%5C29924%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5Cimage-20210504152536441.png" alt="image-20210504152536441"></p>
+<p>首先编写4个变量，然后右键点击Generate，点击Getter and Setter, 就会生成get和set的方法。继续右键单击Generate，点击toString方法，然后是一个空的Constructor, 最后是4个变量的Constructor。</p>
+<h2 id="编写工具类获取数据库连接和关闭"><a href="#编写工具类获取数据库连接和关闭" class="headerlink" title="编写工具类获取数据库连接和关闭"></a>编写工具类获取数据库连接和关闭</h2><p>工具类包是Utils，在其下新建一个类JdbcUtils</p>
+<p><img src="/2021/05/04/JavaWeb%E5%AD%A6%E4%B9%A0-3/C:%5CUsers%5C29924%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5Cimage-20210504153057140.png" alt="image-20210504153057140"></p>
+<p>有两个方法，获取数据库连接和关闭数据库连接。</p>
+<p>要连接数据库，还需要一个数据库的配置文件，应该在src目录下新建一个文件：jdbc.properties</p>
+<p><img src="/2021/05/04/JavaWeb%E5%AD%A6%E4%B9%A0-3/C:%5CUsers%5C29924%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5Cimage-20210504165527099.png" alt="image-20210504165527099"></p>
+<p>然后在JdbcUtils.java中去读取配置文件</p>
+<p><img src="/2021/05/04/JavaWeb%E5%AD%A6%E4%B9%A0-3/C:%5CUsers%5C29924%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5Cimage-20210504165619172.png" alt="image-20210504165619172"></p>
+<p>注意，需要导入两个jar包</p>
+<p><img src="/2021/05/04/JavaWeb%E5%AD%A6%E4%B9%A0-3/C:%5CUsers%5C29924%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5Cimage-20210504165725209.png" alt="image-20210504165725209"></p>
+<p>用的连接Mysql包是5.几的版本，因此需要使用Mysql5.x的版本。最开始使用的是8.x的，报错了。</p>
+<p>实现创建连接对象和关闭连接的函数</p>
+<p><img src="/2021/05/04/JavaWeb%E5%AD%A6%E4%B9%A0-3/C:%5CUsers%5C29924%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5Cimage-20210504165649506.png" alt="image-20210504165649506"></p>
+<p>到Test包里写一个测试类JdbcUtilsTest，测试能否顺利连接数据库</p>
+<p><img src="/2021/05/04/JavaWeb%E5%AD%A6%E4%B9%A0-3/C:%5CUsers%5C29924%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5Cimage-20210504165920921.png" alt="image-20210504165920921"></p>
+<p><img src="/2021/05/04/JavaWeb%E5%AD%A6%E4%B9%A0-3/C:%5CUsers%5C29924%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5Cimage-20210504165954853.png" alt="image-20210504165954853"></p>
+<p>返回了连接数据库的对象。</p>
+<h2 id="编写BaseDao类操作数据库"><a href="#编写BaseDao类操作数据库" class="headerlink" title="编写BaseDao类操作数据库"></a>编写BaseDao类操作数据库</h2><p>在dao.impl包下新建一个BaseDao类，这个类是抽象类。需要先下载一个common-dbutils-1.3 jar, 并导入进来。</p>
+<p><img src="/2021/05/04/JavaWeb%E5%AD%A6%E4%B9%A0-3/C:%5CUsers%5C29924%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5Cimage-20210504172336518.png" alt="image-20210504172336518"></p>
+<p>首先创建一个QueryRunner对象，它就是用来执行sql语句的。</p>
+<p>然后是update方法，传sql语句以及参数进去，先连接数据库，然后执行sql语句。它可以进行增删改操作。同理</p>
+<p><img src="/2021/05/04/JavaWeb%E5%AD%A6%E4%B9%A0-3/C:%5CUsers%5C29924%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5Cimage-20210504172459890.png" alt="image-20210504172459890"></p>
+<p>它可以执行查询sql语句后返回一条数据</p>
+<p><img src="/2021/05/04/JavaWeb%E5%AD%A6%E4%B9%A0-3/C:%5CUsers%5C29924%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5Cimage-20210504172555245.png" alt="image-20210504172555245"></p>
+<p>这个可以返回多条数据</p>
+<p><img src="/2021/05/04/JavaWeb%E5%AD%A6%E4%B9%A0-3/C:%5CUsers%5C29924%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5Cimage-20210504172613075.png" alt="image-20210504172613075"></p>
+<p>这个可以返回一行一列的数据。</p>
+<h2 id="编写UserDao接口类"><a href="#编写UserDao接口类" class="headerlink" title="编写UserDao接口类"></a>编写UserDao接口类</h2><p>根据前端的功能，需要进行相应的数据库操作。上面已经实现了数据库操作方法，UserDao就是提供了一个接口去根据相应功能操作数据库。</p>
+<p>首先在dao.impl包下，新建一个UserDao接口。</p>
+<p><img src="/2021/05/04/JavaWeb%E5%AD%A6%E4%B9%A0-3/C:%5CUsers%5C29924%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5Cimage-20210504175642548.png" alt="image-20210504175642548"></p>
+<p>但是UserDao需要在dao下，而不是dao.impl下，因此将impl删除。</p>
+<p><img src="/2021/05/04/JavaWeb%E5%AD%A6%E4%B9%A0-3/C:%5CUsers%5C29924%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5Cimage-20210504175721974.png" alt="image-20210504175721974"></p>
+<p>报错了，点击错误，选择移动即可</p>
+<p><img src="/2021/05/04/JavaWeb%E5%AD%A6%E4%B9%A0-3/C:%5CUsers%5C29924%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5Cimage-20210504175806056.png" alt="image-20210504175806056"></p>
+<p>填写上接口</p>
+<p><img src="/2021/05/04/JavaWeb%E5%AD%A6%E4%B9%A0-3/C:%5CUsers%5C29924%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5Cimage-20210504180141357.png" alt="image-20210504180141357"></p>
+<p>一个是根据用户名查询用户信息，用来注册时检查用户名是否已经存在；</p>
+<p>一个是根据用户名和密码查询用户信息，用来检查登陆信息是否正确；</p>
+<p>最后是保存用户信息。用来注册用户。</p>
+<h2 id="编写UserDaoImpl实现类"><a href="#编写UserDaoImpl实现类" class="headerlink" title="编写UserDaoImpl实现类"></a>编写UserDaoImpl实现类</h2><p>继承BaseDao类，实现UserDao类，去实现3个功能接口。</p>
+<p>在dao的impl下新建UserDaoImpl类</p>
+<p><img src="/2021/05/04/JavaWeb%E5%AD%A6%E4%B9%A0-3/C:%5CUsers%5C29924%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5Cimage-20210504180539420.png" alt="image-20210504180539420"></p>
+<p>选择三个接口函数后确认。</p>
+<p><img src="/2021/05/04/JavaWeb%E5%AD%A6%E4%B9%A0-3/C:%5CUsers%5C29924%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5Cimage-20210504181059732.png" alt="image-20210504181059732"></p>
+<p>实现三个接口。之后要测试这三个接口，可以到UserDao接口类中，按Ctrl+Shift+T</p>
+<p><img src="/2021/05/04/JavaWeb%E5%AD%A6%E4%B9%A0-3/C:%5CUsers%5C29924%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5Cimage-20210504181220446.png" alt="image-20210504181220446"></p>
+<p>点击</p>
+<p><img src="/2021/05/04/JavaWeb%E5%AD%A6%E4%B9%A0-3/C:%5CUsers%5C29924%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5Cimage-20210504181324781.png" alt="image-20210504181324781"></p>
+<p>按图中选择，确定</p>
+<p><img src="/2021/05/04/JavaWeb%E5%AD%A6%E4%B9%A0-3/C:%5CUsers%5C29924%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5Cimage-20210504181525727.png" alt="image-20210504181525727"></p>
+<p>新建UserDao对象，调用方法，查询admin记录</p>
+<p><img src="/2021/05/04/JavaWeb%E5%AD%A6%E4%B9%A0-3/C:%5CUsers%5C29924%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5Cimage-20210504181555928.png" alt="image-20210504181555928"></p>
+<p>成功查询。最后完善方法</p>
+<p><img src="/2021/05/04/JavaWeb%E5%AD%A6%E4%B9%A0-3/C:%5CUsers%5C29924%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5Cimage-20210504182042484.png" alt="image-20210504182042484"></p>
+<h2 id="编写UserService接口类"><a href="#编写UserService接口类" class="headerlink" title="编写UserService接口类"></a>编写UserService接口类</h2><p>该接口提供处理业务的功能。在service.impl下新建一个接口类UserService, 同样在package中去掉impl, 然后点击错误处理的小灯，移动即可。</p>
+<p><img src="/2021/05/04/JavaWeb%E5%AD%A6%E4%B9%A0-3/C:%5CUsers%5C29924%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5Cimage-20210504182634203.png" alt="image-20210504182634203"></p>
+<p>写了三个接口，注册，登陆，判断用户是否存在。</p>
+<h2 id="编写UserServiceImpl实现类"><a href="#编写UserServiceImpl实现类" class="headerlink" title="编写UserServiceImpl实现类"></a>编写UserServiceImpl实现类</h2><p>在service的impl下新建，然后Ctrl+O，点击三个接口并确认，实现</p>
+<p><img src="/2021/05/04/JavaWeb%E5%AD%A6%E4%B9%A0-3/C:%5CUsers%5C29924%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5Cimage-20210504183131528.png" alt="image-20210504183131528"></p>
+<p>之后测试三个接口，同样切换到UserService接口类中，Ctrl+Shift+T</p>
+<p><img src="/2021/05/04/JavaWeb%E5%AD%A6%E4%B9%A0-3/C:%5CUsers%5C29924%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5Cimage-20210504183240292.png" alt="image-20210504183240292"></p>
+<p>填写函数</p>
+<p><img src="/2021/05/04/JavaWeb%E5%AD%A6%E4%B9%A0-3/C:%5CUsers%5C29924%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5Cimage-20210504183913867.png" alt="image-20210504183913867"></p>
+<h1 id="编写一个注册页面"><a href="#编写一个注册页面" class="headerlink" title="编写一个注册页面"></a>编写一个注册页面</h1><p>在web目录下新建user目录，然后新建regist.html</p>
+<p><img src="/2021/05/04/JavaWeb%E5%AD%A6%E4%B9%A0-3/C:%5CUsers%5C29924%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5Cimage-20210504190044581.png" alt="image-20210504190044581"></p>
+<p>访问：<a href="http://localhost:8080/book/user/regist.html" target="_blank" rel="noopener">http://localhost:8080/book/user/regist.html</a></p>
+<p><img src="/2021/05/04/JavaWeb%E5%AD%A6%E4%B9%A0-3/C:%5CUsers%5C29924%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5Cimage-20210504190100021.png" alt="image-20210504190100021"></p>
+<h1 id="编写注册RegistServlet类"><a href="#编写注册RegistServlet类" class="headerlink" title="编写注册RegistServlet类"></a>编写注册RegistServlet类</h1><p>在web包下新建一个RegistServlet类（注意，首字母要大写，小写了在web.xml没找到…)</p>
+<p><img src="/2021/05/04/JavaWeb%E5%AD%A6%E4%B9%A0-3/C:%5CUsers%5C29924%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5Cimage-20210504191402794.png" alt="image-20210504191402794"></p>
+<p>web.xml中配置访问路径</p>
+<p><img src="/2021/05/04/JavaWeb%E5%AD%A6%E4%B9%A0-3/C:%5CUsers%5C29924%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5Cimage-20210504191418506.png" alt="image-20210504191418506"></p>
+<p>继续完善RegistServlet</p>
+<p>首先检查验证码是否正确</p>
+<p><img src="/2021/05/04/JavaWeb%E5%AD%A6%E4%B9%A0-3/C:%5CUsers%5C29924%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5Cimage-20210504191653299.png" alt="image-20210504191653299"></p>
+<p>不正确就跳转回注册界面。正确之后</p>
+<p>先检查用户名是否存在</p>
+<p><img src="/2021/05/04/JavaWeb%E5%AD%A6%E4%B9%A0-3/C:%5CUsers%5C29924%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5Cimage-20210504192159331.png" alt="image-20210504192159331"></p>
+<p>首先创建UserService对象，然后调用isExistName方法。注意需要throws SQLException，用户名存在还是转发回注册页面，否则就注册，插入数据：</p>
+<p><img src="/2021/05/04/JavaWeb%E5%AD%A6%E4%B9%A0-3/C:%5CUsers%5C29924%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5Cimage-20210504192515099.png" alt="image-20210504192515099"></p>
+<p>然后跳转到登录界面。但是这时候抛出的SQLException出错了。将它删除，然后鼠标移到红线的函数，按提示增加try-catch。</p>
+<p><img src="/2021/05/04/JavaWeb%E5%AD%A6%E4%B9%A0-3/C:%5CUsers%5C29924%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5Cimage-20210504192723203.png" alt="image-20210504192723203"></p>
+<h1 id="编写登陆界面"><a href="#编写登陆界面" class="headerlink" title="编写登陆界面"></a>编写登陆界面</h1><p>先去user目录下新建一个login.html</p>
+<p><img src="/2021/05/04/JavaWeb%E5%AD%A6%E4%B9%A0-3/C:%5CUsers%5C29924%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5Cimage-20210504193041297.png" alt="image-20210504193041297"></p>
+<p>与注册页面差不多，只是不用邮箱了，改为了登陆页面。</p>
+<p>重新部署，然后访问</p>
+<p><img src="/2021/05/04/JavaWeb%E5%AD%A6%E4%B9%A0-3/C:%5CUsers%5C29924%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5Cimage-20210504192833432.png" alt="image-20210504192833432"></p>
+<p>输入没有存在的用户名注册</p>
+<p><img src="/2021/05/04/JavaWeb%E5%AD%A6%E4%B9%A0-3/C:%5CUsers%5C29924%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5Cimage-20210504193137996.png" alt="image-20210504193137996"></p>
+<p>成功跳转到了登陆页面。</p>
+<h1 id="编写LoginServlet登陆类"><a href="#编写LoginServlet登陆类" class="headerlink" title="编写LoginServlet登陆类"></a>编写LoginServlet登陆类</h1><p>类似注册类。首先在web下新建一个LoginServlet类，然后配置web.xml</p>
+<p><img src="/2021/05/04/JavaWeb%E5%AD%A6%E4%B9%A0-3/C:%5CUsers%5C29924%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5Cimage-20210504210619396.png" alt="image-20210504210619396"></p>
+<p>登陆页面login.html的表单的action也应该修改</p>
+<p><img src="/2021/05/04/JavaWeb%E5%AD%A6%E4%B9%A0-3/C:%5CUsers%5C29924%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5Cimage-20210504210700267.png" alt="image-20210504210700267"></p>
+<p>实现LoginServlet类</p>
+<p><img src="/2021/05/04/JavaWeb%E5%AD%A6%E4%B9%A0-3/C:%5CUsers%5C29924%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5Cimage-20210504213557771.png" alt="image-20210504213557771"></p>
+<p>首先判断验证码是否正确，正确就判断用户名和密码是否正确，正确就进入index.html。</p>
+<p>这里必须要注意，之前那个userService.login函数有问题，它返回的是void类型。因此我将它改成了boolean型，如下</p>
+<p><img src="/2021/05/04/JavaWeb%E5%AD%A6%E4%B9%A0-3/C:%5CUsers%5C29924%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5Cimage-20210504213715153.png" alt="image-20210504213715153"></p>
+<p>这是在UserServiceImpl里的。因此UserService接口类也需要改成boolean型</p>
+<p><img src="/2021/05/04/JavaWeb%E5%AD%A6%E4%B9%A0-3/C:%5CUsers%5C29924%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5Cimage-20210504213802276.png" alt="image-20210504213802276"></p>
+<p>还需要编写一个index.html</p>
+<p><img src="/2021/05/04/JavaWeb%E5%AD%A6%E4%B9%A0-3/C:%5CUsers%5C29924%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5Cimage-20210504211336686.png" alt="image-20210504211336686"></p>
+<p>之后重新部署，访问登陆界面：<a href="http://localhost:8080/book/user/login.html" target="_blank" rel="noopener">http://localhost:8080/book/user/login.html</a></p>
+<p><img src="/2021/05/04/JavaWeb%E5%AD%A6%E4%B9%A0-3/C:%5CUsers%5C29924%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5Cimage-20210504211637927.png" alt="image-20210504211637927"></p>
+<p><img src="/2021/05/04/JavaWeb%E5%AD%A6%E4%B9%A0-3/C:%5CUsers%5C29924%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5Cimage-20210504213900588.png" alt="image-20210504213900588"></p>
+<p>登陆成功。</p>
+<h1 id="debug调试"><a href="#debug调试" class="headerlink" title="debug调试"></a>debug调试</h1><p>首先停止tomcat服务后，点击debug启动</p>
+<p><img src="/2021/05/04/JavaWeb%E5%AD%A6%E4%B9%A0-3/C:%5CUsers%5C29924%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5Cimage-20210504204739971.png" alt="image-20210504204739971"></p>
+<p>启动之后一样会打开浏览器访问book工程，即正常运行。在注册类的开头下一个断点</p>
+<p><img src="/2021/05/04/JavaWeb%E5%AD%A6%E4%B9%A0-3/C:%5CUsers%5C29924%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5Cimage-20210504204919583.png" alt="image-20210504204919583"></p>
+<p>然后访问注册页面：<a href="http://localhost:8080/book/user/regist.html，输入信息" target="_blank" rel="noopener">http://localhost:8080/book/user/regist.html，输入信息</a></p>
+<p><img src="/2021/05/04/JavaWeb%E5%AD%A6%E4%B9%A0-3/C:%5CUsers%5C29924%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5Cimage-20210504205023315.png" alt="image-20210504205023315"></p>
+<p>点击提交后，浏览器在转圈，看IDEA</p>
+<p><img src="/2021/05/04/JavaWeb%E5%AD%A6%E4%B9%A0-3/C:%5CUsers%5C29924%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5Cimage-20210504205101737.png" alt="image-20210504205101737"></p>
+<p>程序停在了断点处，并出现了debug信息。</p>
+<p><img src="/2021/05/04/JavaWeb%E5%AD%A6%E4%B9%A0-3/C:%5CUsers%5C29924%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5Cimage-20210504205314720.png" alt="image-20210504205314720"></p>
+<p>查看调试相关的按钮</p>
+<p><img src="/2021/05/04/JavaWeb%E5%AD%A6%E4%B9%A0-3/C:%5CUsers%5C29924%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5Cimage-20210504205451293.png" alt="image-20210504205451293"></p>
+<ul>
+<li>1：运行到下一行。</li>
+<li>2：进入自己写的函数体部分。比如运行到一个getConnection()函数处，按下2，就会打开这个函数所在的文件，并定位到该函数的实现位置。注意必须是自己写的，不是系统函数。</li>
+<li>3：强制进入函数体部分，包括系统函数。</li>
+<li>4：退出函数体查看，返回上一个文件调用该函数的位置。</li>
+<li>5：不太清楚。应该是打开文件，定位到当前所在行的所在函数的定义处</li>
+<li>6：鼠标点到哪一行，按下6后就会运行到那一行的位置。</li>
+</ul>
+<p><img src="/2021/05/04/JavaWeb%E5%AD%A6%E4%B9%A0-3/C:%5CUsers%5C29924%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5Cimage-20210504205904262.png" alt="image-20210504205904262"></p>
+<p>这个是运行的函数的堆栈信息。下面的函数调用上面的函数。</p>
+<p><img src="/2021/05/04/JavaWeb%E5%AD%A6%E4%B9%A0-3/C:%5CUsers%5C29924%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5Cimage-20210504205957798.png" alt="image-20210504205957798"></p>
+<p>分别是停止服务，运行到下一个断点处，临时取消所有断点运行。</p>
+<h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><p>该书城注册和登陆完全就是照着JavaEE的三层架构写的。</p>
+<ul>
+<li>首先是数据库和表，使用Mysql建立了book数据库和user表，并添加了数据。</li>
+<li>针对User表，有4个数据，在pojo包下建立了User类，这个类作为JavaBean对象，可以让其它类访问或者设置里面的4个数据。用法是：传4个数据进去给构造函数new一个user对象出来，就可以直接传递这个user对象，其它类获取这个对象后就可以得到4个数据。</li>
+<li>然后是Dao层。有BaseDao类和UserDao接口及UserDaoImpl实现类。BaseDao类只针对数据库操作，增删改查并返回数据。UserDao接口就要考虑到实际需要用到数据库的功能，因此定义了<strong>注册和登陆，查询用户是否存在</strong>3个接口。UserDaoImpl就负责调用BaseDao的方法去实现。</li>
+<li>接着是业务层。在service包下有UserService接口和实现类。接口就要处理业务，而处理业务就需要用到数据库。<strong>业务有3个，注册和登陆，查询用户是否存在。</strong>实现接口就只需要去调用UserDaoImpl中的方法即可。</li>
+<li>之后就是web层。有注册和登陆类。因为是web层，类就首先解析请求中的数据，将一些数据(如username, password)传进service层的方法去查询数据库得到结果，并与解析出来的一些数据进行对比。</li>
+<li>最后就是前端的注册和登陆界面了。</li>
+</ul>
+
+    </div>
+    
+    <div class="reward" ontouchstart>
+    <div class="reward-wrap">赏
+        <div class="reward-box">
+            
+            <span class="reward-type">
+                <img class="alipay" src="/img/alipay.jpg"><b>支付宝打赏</b>
+            </span>
+            
+            
+            <span class="reward-type">
+                <img class="wechat" src="/img/wechat.jpg"><b>微信打赏</b>
+            </span>
+            
+        </div>
+    </div>
+    <p class="reward-tip">
+        赞赏是不耍流氓的鼓励
+    </p>
+</div>
+    
+    <div class="post-footer">
+        <div>
+            
+            转载声明：
+            商业转载请联系作者获得授权,非商业转载请注明出处 © <a href="ggy.44pp.vip" target="_blank">ggy</a>
+            
+            
+        </div>
+        <div>
+            
+        </div>
+    </div>
+</article>
+<div class="article-nav prev-next-wrap clearfix">
+    
+    
+    <a href="/2021/05/02/JavaWeb%E5%AD%A6%E4%B9%A0-2/" class="next-post btn btn-default" title='JavaWeb学习(2)'>
+        <span class="hidden-lg">下一篇</span>
+        <span class="hidden-xs">
+            JavaWeb学习(2)</span><i class="fa fa-angle-right fa-fw"></i>
+    </a>
+    
+</div>
+
+<div id="comments">
+    
+<div id="lv-container" data-id="city" data-uid="MTAyMC80ODM1Ni8yNDg1MA==">
+    <script type="text/javascript">
+    (function(d, s) {
+        var j, e = d.getElementsByTagName(s)[0];
+        if (typeof LivereTower === 'function') { return; }
+        j = d.createElement(s);
+        j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+        j.async = true;
+        e.parentNode.insertBefore(j, e);
+    })(document, 'script');
+    </script>
+</div>
+
+</div>
+
+                </main>
+                
+                    <aside id="article-toc" role="navigation" class="col-md-4">
+    <div class="widget">
+        <h3 class="title">
+            文章目录
+        </h3>
+        
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#JavaEE三层架构"><span class="toc-text">JavaEE三层架构</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#数据库"><span class="toc-text">数据库</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#MySQL创建数据库和表"><span class="toc-text">MySQL创建数据库和表</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#编写数据库表对应的JavaBean对象"><span class="toc-text">编写数据库表对应的JavaBean对象</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#编写工具类获取数据库连接和关闭"><span class="toc-text">编写工具类获取数据库连接和关闭</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#编写BaseDao类操作数据库"><span class="toc-text">编写BaseDao类操作数据库</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#编写UserDao接口类"><span class="toc-text">编写UserDao接口类</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#编写UserDaoImpl实现类"><span class="toc-text">编写UserDaoImpl实现类</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#编写UserService接口类"><span class="toc-text">编写UserService接口类</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#编写UserServiceImpl实现类"><span class="toc-text">编写UserServiceImpl实现类</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#编写一个注册页面"><span class="toc-text">编写一个注册页面</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#编写注册RegistServlet类"><span class="toc-text">编写注册RegistServlet类</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#编写登陆界面"><span class="toc-text">编写登陆界面</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#编写LoginServlet登陆类"><span class="toc-text">编写LoginServlet登陆类</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#debug调试"><span class="toc-text">debug调试</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#总结"><span class="toc-text">总结</span></a></li></ol>
+        
+    </div>
+</aside>
+                
+            </div>
+        </div>
+    </section>
+    <footer class="main-footer">
+    <div class="container">
+        <div class="row">
+        </div>
+    </div>
+</footer>
+<a id="back-to-top" class="icon-btn hide">
+    <i class="fa fa-chevron-up"></i>
+</a>
+    <div class="copyright">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="busuanzi">
+    
+    访问量:
+    <strong id="busuanzi_value_site_pv">
+        <i class="fa fa-spinner fa-spin"></i>
+    </strong>
+    &nbsp; | &nbsp;
+    访客数:
+    <strong id="busuanzi_value_site_uv">
+        <i class="fa fa-spinner fa-spin"></i>
+    </strong>
+    
+</div>
+            </div>
+            <div class="col-sm-12">
+                <span>Copyright &copy;
+                    2020
+                    
+                </span> |
+                <span>
+                    Powered by <a href="//hexo.io" class="copyright-links" target="_blank" rel="nofollow">Hexo</a>
+                </span> |
+                <span>
+                    Theme by <a href="//github.com/shenliyang/hexo-theme-snippet.git" class="copyright-links" target="_blank" rel="nofollow">Snippet</a>
+                </span>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<script src="/assets/tagcanvas.min.js?rev=2.9.js"></script>
+
+<script>
+var tagOption = {
+    textColour: '#444', // 字体颜色
+    outlineMethod: 'block', // 选中模式
+    outlineColour: '#FFDAB9', // 选中模式的颜色
+    interval: 30 || 30, // 动画帧之间的时间间隔，值越大，转动幅度越大
+    textHeight: 13,
+    outlineRadius: 3,
+    freezeActive: true || '', // 选中的标签是否继续滚动
+    frontSelect: true || '', // 不选标签云后部的标签
+    initial: [0.1, -0.1],
+    depth: 0.5,
+    decel: 0.95,
+    maxSpeed: 0.03,
+    reverse: true || '', // 是否反向触发
+    fadeIn: 500, // 进入动画时间
+    wheelZoom: false || '' // 是否启用鼠标滚轮
+}
+TagCanvas.Start('tag-cloud-3d', '', tagOption);
+</script>
+
+
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+<script src="/js/app.js?rev=@@hash.js"></script>
+
+
+<!-- 雪花特效 -->
+<script type="text/javascript" src="http://libs.baidu.com/jquery/1.8.3/jquery.js"></script>
+<script type="text/javascript" src="http://libs.baidu.com/jquery/1.8.3/jquery.min.js"></script>
+<script type="text/javascript" src="\js\snow.js"></script>
+
+<canvas class="fireworks" style="position: fixed;left: 0;top: 0;z-index: 1; pointer-events: none;" ></canvas> 
+<script type="text/javascript" src="//cdn.bootcss.com/animejs/2.2.0/anime.min.js"></script> 
+<script type="text/javascript" src="/js/fireworks.js"></script>
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"model":{"jsonPath":"live2d-widget-model-haruto"},"display":{"position":"right","width":150,"height":300},"mobile":{"show":false},"log":false,"pluginJsPath":"lib/","pluginModelPath":"assets/","pluginRootPath":"live2dw/","tagMode":false});</script></body>
+</html>

@@ -1,0 +1,450 @@
+<head>
+<script src="https://cdn.jsdelivr.net/npm/jquery/dist/jquery.min.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome/css/font-awesome.min.css">
+<script src="https://cdn.jsdelivr.net/gh/stevenjoezhang/live2d-widget/autoload.js"></script>
+</head>
+
+<!DOCTYPE HTML>
+<html lang="zh-CN">
+
+<head>
+    <!--Setting-->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+    <meta http-equiv="Cache-Control" content="no-siteapp">
+    <meta http-equiv="Cache-Control" content="no-transform">
+    <meta name="renderer" content="webkit|ie-comp|ie-stand">
+    <meta name="apple-mobile-web-app-capable" content="ggy的个人博客">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="format-detection" content="telephone=no,email=no,adress=no">
+    <meta name="browsermode" content="application">
+    <meta name="screen-orientation" content="portrait">
+    <meta name="theme-version" content="1.2.3">
+    <meta name="root" content="/">
+    <link rel="dns-prefetch" href="https://ggyggy666.github.io">
+    <!--SEO-->
+
+<meta name="keywords" content="JavaWeb学习" />
+
+
+<meta name="description" content="今天开始学习jsp。
+
+
+之前用的Servlet返回数据给页面，如果返回的是一个网页，那么得一行行输出返回，实在麻烦。而Jsp可以像写网页那样直接写网页就行了，方便很多。访问也可以直接访问xxx..." />
+
+
+<meta name="robots" content="all" />
+<meta name="google" content="all" />
+<meta name="googlebot" content="all" />
+<meta name="verify" content="all" />
+    <!--Title-->
+
+<title>
+    
+    JavaWeb学习(4) |
+    
+    ggy的个人博客
+</title>
+
+<link rel="alternate" href="/atom.xml" title="ggy的个人博客" type="application/atom+xml">
+
+
+<link rel="icon" href="/favicon.ico">
+
+    
+
+
+<link rel="stylesheet" href="/css/bootstrap.min.css?rev=3.3.7.css">
+<link rel="stylesheet" href="/css/font-awesome.min.css?rev=4.7.0.css">
+<link rel="stylesheet" href="/css/style.css?rev=@@hash.css">
+
+    
+<div class="hide">
+    <script type="text/javascript">
+    var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+    document.write(unescape("%3Cspan class='cnzz_stat_icon_1263868967 hide' %3E%3Cscript%20src%3D%22https%3A%2F%2Fs95.cnzz.com%2Fz_stat.php%3Fweb_id%3D1272564536%22%3E%3C%2Fscript%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s19.cnzz.com/z_stat.php%3Fid%3D1263868967%26show%3Dpic1' type='text/javascript'%3E%3C/script%3E"));
+    </script>
+</div>
+
+
+
+
+    
+
+<meta name="generator" content="Hexo 4.2.0"></head>
+<!--[if lte IE 8]>
+<style>
+    html{ font-size: 1em }
+</style>
+<![endif]-->
+<!--[if lte IE 9]>
+<div style="ie">你使用的浏览器版本过低，为了你更好的阅读体验，请更新浏览器的版本或者使用其他现代浏览器，比如Chrome、Firefox、Safari等。</div>
+<![endif]-->
+<body>
+    <header class="main-header"  style="background-image:url(
+    https://pic.downk.cc/item/5e3816b82fb38b8c3c8791f9.jpg)"
+     >
+    <div class="main-header-box">
+        <a class="header-avatar" href="/" title='ggy'>
+            <img src="/img/avatar.jpg" alt="logo头像" class="img-responsive center-block">
+        </a>
+        <div class="branding">
+            <!--<h2 class="text-hide">Snippet主题,从未如此简单有趣</h2>-->
+            
+            <h2>
+                欢迎来到ggy的个人网站
+            </h2>
+            
+        </div>
+    </div>
+</header>
+    <nav class="main-navigation">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="navbar-header"><span class="nav-toggle-button collapsed pull-right" data-toggle="collapse" data-target="#main-menu" id="mnav">
+                        <span class="sr-only"></span>
+                        <i class="fa fa-bars"></i>
+                    </span>
+                    <a class="navbar-brand" href="https://ggyggy666.github.io">
+                        ggy的个人博客</a>
+                </div>
+                <div class="collapse navbar-collapse" id="main-menu">
+                    <ul class="menu">
+                        
+                        <li role="presentation" class="text-center">
+                            <a href="/"><i class="fa "></i>
+                                首页</a>
+                        </li>
+                        
+                        <li role="presentation" class="text-center">
+                            <a href="/categories/web安全/"><i class="fa "></i>
+                                web安全</a>
+                        </li>
+                        
+                        <li role="presentation" class="text-center">
+                            <a href="/categories/python工具/"><i class="fa "></i>
+                                python工具</a>
+                        </li>
+                        
+                        <li role="presentation" class="text-center">
+                            <a href="/categories/密码学/"><i class="fa "></i>
+                                密码学</a>
+                        </li>
+                        
+                        <li role="presentation" class="text-center">
+                            <a href="/archives/"><i class="fa "></i>
+                                时间轴</a>
+                        </li>
+                        
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</nav>
+    <section class="content-wrap">
+        <div class="container">
+            <div class="row">
+                <main class="col-md-8 main-content m-post">
+                    <p id="process"></p>
+<article class="post">
+    <div class="post-head">
+        <h1 id="JavaWeb学习(4)">
+            
+            JavaWeb学习(4)
+            
+        </h1>
+        <div class="post-meta">
+    
+    <span class="categories-meta fa-wrap">
+        <i class="fa fa-folder-open-o"></i>
+        <a class="category-link" href="/categories/JavaWeb/">JavaWeb</a>
+    </span>
+    
+    
+    <span class="fa-wrap">
+        <i class="fa fa-tags"></i>
+        <span class="tags-meta">
+            
+            <a class="tag-link" href="/tags/JavaWeb%E5%AD%A6%E4%B9%A0/" rel="tag">JavaWeb学习</a>
+            
+        </span>
+    </span>
+    
+    
+    
+    <span class="fa-wrap">
+        <i class="fa fa-clock-o"></i>
+        <span class="date-meta">
+            2021/05/07</span>
+    </span>
+    
+    <span class="fa-wrap">
+        <i class="fa fa-eye"></i>
+        <span id="busuanzi_value_page_pv"></span>
+    </span>
+    
+    
+</div>
+        
+        
+    </div>
+    
+    <div class="post-body post-content">
+        <p>今天开始学习jsp。</p>
+<a id="more"></a>
+
+<p>之前用的Servlet返回数据给页面，如果返回的是一个网页，那么得一行行输出返回，实在麻烦。而Jsp可以像写网页那样直接写网页就行了，方便很多。访问也可以直接访问xxx.jsp即可。</p>
+<h1 id="Jsp本质"><a href="#Jsp本质" class="headerlink" title="Jsp本质"></a>Jsp本质</h1><blockquote>
+<p>当第一次访问Jsp时，tomcat服务器会将jsp文件翻译成一个.class和java源文件。路径是：C:\Users\29924.IntelliJIdea2019.3\system\tomcat\Tomcat_8_5_60_JavaWeb_5\work\Catalina\localhost\Jsp\org\apache\jsp</p>
+</blockquote>
+<p><img src="/2021/05/07/JavaWeb%E5%AD%A6%E4%B9%A0-4/C:%5CUsers%5C29924%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5Cimage-20210507111104179.png" alt="image-20210507111104179"></p>
+<p>而java源文件里面</p>
+<p><img src="/2021/05/07/JavaWeb%E5%AD%A6%E4%B9%A0-4/C:%5CUsers%5C29924%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5Cimage-20210507104712419.png" alt="image-20210507104712419"></p>
+<p>我创建的是test.jsp, 它则定义了一个test_jsp类，继承了HttpJspBase, 而这个HttpJspBase又是继承了HttpServlet, 因此jsp可以说是HttpServlet的封装。看后面内容</p>
+<p><img src="/2021/05/07/JavaWeb%E5%AD%A6%E4%B9%A0-4/C:%5CUsers%5C29924%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5Cimage-20210507104842063.png" alt="image-20210507104842063"></p>
+<p>这是Jsp的内容，但在这个源文件里，也是像servlet程序那样将内容一行行输出。所以说，我们在jsp文件里输的内容，tomcat服务器会帮我们自动转化成servlet输出返回的形式封装在这个Java源文件里面。我们只需要专心写网页就行，tomcat帮我们做好了输出返回。</p>
+<h1 id="page标签"><a href="#page标签" class="headerlink" title="page标签"></a>page标签</h1><p>注意到jsp文件页面的首部有一个page标签。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;%@ page contentType&#x3D;&quot;text&#x2F;html;charset&#x3D;UTF-8&quot; language&#x3D;&quot;java&quot; %&gt;</span><br></pre></td></tr></table></figure>
+
+<p>它可以用来修改页面的属性。属性如下：</p>
+<ul>
+<li>language: jsp翻译后是什么程序的文件，暂时只支持Java，就是上面说的Java源文件。</li>
+<li>contentType: jsp返回的数据类型，text/html返回HTML。</li>
+<li>pageEncoding: 当前jsp页面的字符集编码。</li>
+<li>import: 导入包和类。</li>
+<li>autoFlush：缓冲区满了之后，是否自动刷新缓冲区。默认是true。</li>
+<li>buffer: 缓冲区的大小，默认是8kb. </li>
+<li>errorPage: 出错后重定向到哪个错误页面。</li>
+<li>isErrorPage: 当前页面是否是错误页面。默认是false，如果是true可以获取异常信息。</li>
+<li>session: 访问当前jsp页面时，是否创建HttpSession对象，默认是true。</li>
+<li>extends: 将jsp翻译出来的java源文件里的java类默认继承谁。</li>
+</ul>
+<h1 id="声明脚本"><a href="#声明脚本" class="headerlink" title="声明脚本"></a>声明脚本</h1><p>可以在JSP页面声明属性、方法、静态代码块和内部类等。使用<code>&lt;%! %&gt;</code>即可。</p>
+<p><strong>声明属性</strong></p>
+<p><img src="/2021/05/07/JavaWeb%E5%AD%A6%E4%B9%A0-4/C:%5CUsers%5C29924%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5Cimage-20210507111306247.png" alt="image-20210507111306247"></p>
+<p>再访问一下jsp，然后看java源文件</p>
+<p><img src="/2021/05/07/JavaWeb%E5%AD%A6%E4%B9%A0-4/C:%5CUsers%5C29924%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5Cimage-20210507111407853.png" alt="image-20210507111407853"></p>
+<p>可以发现定义的东西一模一样的输出到了Java源文件里面。</p>
+<p><strong>声明静态代码块</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">static&#123;</span><br><span class="line">	map &#x3D; new HashMap&lt;String, Object&gt;();</span><br><span class="line">	map.put(&quot;key1&quot;, &quot;value1&quot;);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><strong>声明方法</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">public int abc()&#123;</span><br><span class="line">	return 1;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><strong>声明内部类</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">public static class A &#123;</span><br><span class="line">	private Integer id &#x3D; 12;</span><br><span class="line">	private String name &#x3D; &quot;ggy&quot;;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>将它们放在JSP文件里面，使用<code>&lt;%!  %&gt;</code>即可。</p>
+<h1 id="表达式脚本"><a href="#表达式脚本" class="headerlink" title="表达式脚本"></a>表达式脚本</h1><p>表达式脚本可以在JSP页面上输出数据。使用：<code>&lt;%=表达式 %&gt;</code></p>
+<p><img src="/2021/05/07/JavaWeb%E5%AD%A6%E4%B9%A0-4/C:%5CUsers%5C29924%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5Cimage-20210507112628332.png" alt="image-20210507112628332"></p>
+<p>注意map对象，静态代码块里面实例化的，定义的时候也需要static。访问JSP页面</p>
+<p><img src="/2021/05/07/JavaWeb%E5%AD%A6%E4%B9%A0-4/C:%5CUsers%5C29924%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5Cimage-20210507112730378.png" alt="image-20210507112730378"></p>
+<p>查看JAVA源文件</p>
+<p><img src="/2021/05/07/JavaWeb%E5%AD%A6%E4%B9%A0-4/C:%5CUsers%5C29924%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5Cimage-20210507112807810.png" alt="image-20210507112807810"></p>
+<p><img src="/2021/05/07/JavaWeb%E5%AD%A6%E4%B9%A0-4/C:%5CUsers%5C29924%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5Cimage-20210507112841286.png" alt="image-20210507112841286"></p>
+<p>都是直接调用out.print打印的。</p>
+<p><strong>特点</strong></p>
+<ul>
+<li>所有的表达式脚本都是输出到jspService方法中的，因此jspService()中的对象、方法等在表达式脚本里边都可以调用。</li>
+<li>表达式脚本都会被翻译成out.print打印输出到页面。</li>
+<li>表达式脚本中的表达式不能以分号结束。</li>
+</ul>
+<p><strong>调用jspService的request对象</strong></p>
+<p><img src="/2021/05/07/JavaWeb%E5%AD%A6%E4%B9%A0-4/C:%5CUsers%5C29924%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5Cimage-20210507113239941.png" alt="image-20210507113239941"></p>
+<p>访问：</p>
+<p><a href="http://localhost:8080/Jsp/test.jsp?username=ggy" target="_blank" rel="noopener">http://localhost:8080/Jsp/test.jsp?username=ggy</a></p>
+<p><img src="/2021/05/07/JavaWeb%E5%AD%A6%E4%B9%A0-4/C:%5CUsers%5C29924%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5Cimage-20210507113324651.png" alt="image-20210507113324651"></p>
+<p><strong>如果表达式以分号结束</strong></p>
+<p><img src="/2021/05/07/JavaWeb%E5%AD%A6%E4%B9%A0-4/C:%5CUsers%5C29924%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5Cimage-20210507113550637.png" alt="image-20210507113550637"></p>
+<p>访问JSP页面，报错了，查看Java源文件</p>
+<p><img src="/2021/05/07/JavaWeb%E5%AD%A6%E4%B9%A0-4/C:%5CUsers%5C29924%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5Cimage-20210507113634840.png" alt="image-20210507113634840"></p>
+<p>很明显看到错误。因为表达式都是在out.print里面的，就是参数传进print函数，没有分号。</p>
+<h1 id="代码脚本"><a href="#代码脚本" class="headerlink" title="代码脚本"></a>代码脚本</h1><p>就是写Java代码，格式：<code>&lt;% %&gt;</code></p>
+<p><strong>if语句</strong></p>
+<p><img src="/2021/05/07/JavaWeb%E5%AD%A6%E4%B9%A0-4/C:%5CUsers%5C29924%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5Cimage-20210507114211766.png" alt="image-20210507114211766"></p>
+<p>如果是i==1可以，如果是if(i)会报错。在Java源文件里面</p>
+<p><img src="/2021/05/07/JavaWeb%E5%AD%A6%E4%B9%A0-4/C:%5CUsers%5C29924%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5Cimage-20210507114249298.png" alt="image-20210507114249298"></p>
+<p>原样输出。同样是在jspService方法里面，也可以调用request对象等。<strong>可以用分号！</strong></p>
+<p>重点是循环，与Jsp嵌套</p>
+<p><strong>for循环</strong></p>
+<p>for循环可以被jsp语句隔开，并不会影响它的完整性。</p>
+<p><img src="/2021/05/07/JavaWeb%E5%AD%A6%E4%B9%A0-4/C:%5CUsers%5C29924%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5Cimage-20210507114745832.png" alt="image-20210507114745832"></p>
+<p>其实跟PHP那种写法一样的。访问jsp</p>
+<p><img src="/2021/05/07/JavaWeb%E5%AD%A6%E4%B9%A0-4/C:%5CUsers%5C29924%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5Cimage-20210507114754963.png" alt="image-20210507114754963"></p>
+<p>刚开始很难理解，但是去看Java源文件后</p>
+<p><img src="/2021/05/07/JavaWeb%E5%AD%A6%E4%B9%A0-4/C:%5CUsers%5C29924%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5Cimage-20210507114831000.png" alt="image-20210507114831000"></p>
+<p>要时刻记住，jsp的html语句会被翻译成out.write(xxx)，这样的效果就是循环打印了。</p>
+
+    </div>
+    
+    <div class="reward" ontouchstart>
+    <div class="reward-wrap">赏
+        <div class="reward-box">
+            
+            <span class="reward-type">
+                <img class="alipay" src="/img/alipay.jpg"><b>支付宝打赏</b>
+            </span>
+            
+            
+            <span class="reward-type">
+                <img class="wechat" src="/img/wechat.jpg"><b>微信打赏</b>
+            </span>
+            
+        </div>
+    </div>
+    <p class="reward-tip">
+        赞赏是不耍流氓的鼓励
+    </p>
+</div>
+    
+    <div class="post-footer">
+        <div>
+            
+            转载声明：
+            商业转载请联系作者获得授权,非商业转载请注明出处 © <a href="ggy.44pp.vip" target="_blank">ggy</a>
+            
+            
+        </div>
+        <div>
+            
+        </div>
+    </div>
+</article>
+<div class="article-nav prev-next-wrap clearfix">
+    
+    <a href="/2021/05/11/JavaWeb%E5%AD%A6%E4%B9%A0-5/" class="pre-post btn btn-default" title='JavaWeb学习(5)'>
+        <i class="fa fa-angle-left fa-fw"></i><span class="hidden-lg">上一篇</span>
+        <span class="hidden-xs">
+            JavaWeb学习(5)</span>
+    </a>
+    
+    
+    <a href="/2021/05/04/JavaWeb%E5%AD%A6%E4%B9%A0-3/" class="next-post btn btn-default" title='JavaWeb学习(3)'>
+        <span class="hidden-lg">下一篇</span>
+        <span class="hidden-xs">
+            JavaWeb学习(3)</span><i class="fa fa-angle-right fa-fw"></i>
+    </a>
+    
+</div>
+
+<div id="comments">
+    
+<div id="lv-container" data-id="city" data-uid="MTAyMC80ODM1Ni8yNDg1MA==">
+    <script type="text/javascript">
+    (function(d, s) {
+        var j, e = d.getElementsByTagName(s)[0];
+        if (typeof LivereTower === 'function') { return; }
+        j = d.createElement(s);
+        j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+        j.async = true;
+        e.parentNode.insertBefore(j, e);
+    })(document, 'script');
+    </script>
+</div>
+
+</div>
+
+                </main>
+                
+                    <aside id="article-toc" role="navigation" class="col-md-4">
+    <div class="widget">
+        <h3 class="title">
+            文章目录
+        </h3>
+        
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Jsp本质"><span class="toc-text">Jsp本质</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#page标签"><span class="toc-text">page标签</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#声明脚本"><span class="toc-text">声明脚本</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#表达式脚本"><span class="toc-text">表达式脚本</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#代码脚本"><span class="toc-text">代码脚本</span></a></li></ol>
+        
+    </div>
+</aside>
+                
+            </div>
+        </div>
+    </section>
+    <footer class="main-footer">
+    <div class="container">
+        <div class="row">
+        </div>
+    </div>
+</footer>
+<a id="back-to-top" class="icon-btn hide">
+    <i class="fa fa-chevron-up"></i>
+</a>
+    <div class="copyright">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="busuanzi">
+    
+    访问量:
+    <strong id="busuanzi_value_site_pv">
+        <i class="fa fa-spinner fa-spin"></i>
+    </strong>
+    &nbsp; | &nbsp;
+    访客数:
+    <strong id="busuanzi_value_site_uv">
+        <i class="fa fa-spinner fa-spin"></i>
+    </strong>
+    
+</div>
+            </div>
+            <div class="col-sm-12">
+                <span>Copyright &copy;
+                    2020
+                    
+                </span> |
+                <span>
+                    Powered by <a href="//hexo.io" class="copyright-links" target="_blank" rel="nofollow">Hexo</a>
+                </span> |
+                <span>
+                    Theme by <a href="//github.com/shenliyang/hexo-theme-snippet.git" class="copyright-links" target="_blank" rel="nofollow">Snippet</a>
+                </span>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<script src="/assets/tagcanvas.min.js?rev=2.9.js"></script>
+
+<script>
+var tagOption = {
+    textColour: '#444', // 字体颜色
+    outlineMethod: 'block', // 选中模式
+    outlineColour: '#FFDAB9', // 选中模式的颜色
+    interval: 30 || 30, // 动画帧之间的时间间隔，值越大，转动幅度越大
+    textHeight: 13,
+    outlineRadius: 3,
+    freezeActive: true || '', // 选中的标签是否继续滚动
+    frontSelect: true || '', // 不选标签云后部的标签
+    initial: [0.1, -0.1],
+    depth: 0.5,
+    decel: 0.95,
+    maxSpeed: 0.03,
+    reverse: true || '', // 是否反向触发
+    fadeIn: 500, // 进入动画时间
+    wheelZoom: false || '' // 是否启用鼠标滚轮
+}
+TagCanvas.Start('tag-cloud-3d', '', tagOption);
+</script>
+
+
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+<script src="/js/app.js?rev=@@hash.js"></script>
+
+
+<!-- 雪花特效 -->
+<script type="text/javascript" src="http://libs.baidu.com/jquery/1.8.3/jquery.js"></script>
+<script type="text/javascript" src="http://libs.baidu.com/jquery/1.8.3/jquery.min.js"></script>
+<script type="text/javascript" src="\js\snow.js"></script>
+
+<canvas class="fireworks" style="position: fixed;left: 0;top: 0;z-index: 1; pointer-events: none;" ></canvas> 
+<script type="text/javascript" src="//cdn.bootcss.com/animejs/2.2.0/anime.min.js"></script> 
+<script type="text/javascript" src="/js/fireworks.js"></script>
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"model":{"jsonPath":"live2d-widget-model-haruto"},"display":{"position":"right","width":150,"height":300},"mobile":{"show":false},"log":false,"pluginJsPath":"lib/","pluginModelPath":"assets/","pluginRootPath":"live2dw/","tagMode":false});</script></body>
+</html>

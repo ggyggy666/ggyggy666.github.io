@@ -1,0 +1,483 @@
+<head>
+<script src="https://cdn.jsdelivr.net/npm/jquery/dist/jquery.min.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome/css/font-awesome.min.css">
+<script src="https://cdn.jsdelivr.net/gh/stevenjoezhang/live2d-widget/autoload.js"></script>
+</head>
+
+<!DOCTYPE HTML>
+<html lang="zh-CN">
+
+<head>
+    <!--Setting-->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+    <meta http-equiv="Cache-Control" content="no-siteapp">
+    <meta http-equiv="Cache-Control" content="no-transform">
+    <meta name="renderer" content="webkit|ie-comp|ie-stand">
+    <meta name="apple-mobile-web-app-capable" content="ggy的个人博客">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="format-detection" content="telephone=no,email=no,adress=no">
+    <meta name="browsermode" content="application">
+    <meta name="screen-orientation" content="portrait">
+    <meta name="theme-version" content="1.2.3">
+    <meta name="root" content="/">
+    <link rel="dns-prefetch" href="https://ggyggy666.github.io">
+    <!--SEO-->
+
+<meta name="keywords" content="JavaWeb学习" />
+
+
+<meta name="description" content="今天接着学习jsp的内容
+
+
+注释JSP页面中可以有三种注释。
+
+HTML注释：&lt;!-- xxx --&gt;,会被JSP编译器翻译成out.write直接输出到客户端。
+Java代码注释..." />
+
+
+<meta name="robots" content="all" />
+<meta name="google" content="all" />
+<meta name="googlebot" content="all" />
+<meta name="verify" content="all" />
+    <!--Title-->
+
+<title>
+    
+    JavaWeb学习(5) |
+    
+    ggy的个人博客
+</title>
+
+<link rel="alternate" href="/atom.xml" title="ggy的个人博客" type="application/atom+xml">
+
+
+<link rel="icon" href="/favicon.ico">
+
+    
+
+
+<link rel="stylesheet" href="/css/bootstrap.min.css?rev=3.3.7.css">
+<link rel="stylesheet" href="/css/font-awesome.min.css?rev=4.7.0.css">
+<link rel="stylesheet" href="/css/style.css?rev=@@hash.css">
+
+    
+<div class="hide">
+    <script type="text/javascript">
+    var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+    document.write(unescape("%3Cspan class='cnzz_stat_icon_1263868967 hide' %3E%3Cscript%20src%3D%22https%3A%2F%2Fs95.cnzz.com%2Fz_stat.php%3Fweb_id%3D1272564536%22%3E%3C%2Fscript%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s19.cnzz.com/z_stat.php%3Fid%3D1263868967%26show%3Dpic1' type='text/javascript'%3E%3C/script%3E"));
+    </script>
+</div>
+
+
+
+
+    
+
+<meta name="generator" content="Hexo 4.2.0"></head>
+<!--[if lte IE 8]>
+<style>
+    html{ font-size: 1em }
+</style>
+<![endif]-->
+<!--[if lte IE 9]>
+<div style="ie">你使用的浏览器版本过低，为了你更好的阅读体验，请更新浏览器的版本或者使用其他现代浏览器，比如Chrome、Firefox、Safari等。</div>
+<![endif]-->
+<body>
+    <header class="main-header"  style="background-image:url(
+    https://pic.downk.cc/item/5e3816b82fb38b8c3c8791f9.jpg)"
+     >
+    <div class="main-header-box">
+        <a class="header-avatar" href="/" title='ggy'>
+            <img src="/img/avatar.jpg" alt="logo头像" class="img-responsive center-block">
+        </a>
+        <div class="branding">
+            <!--<h2 class="text-hide">Snippet主题,从未如此简单有趣</h2>-->
+            
+            <h2>
+                欢迎来到ggy的个人网站
+            </h2>
+            
+        </div>
+    </div>
+</header>
+    <nav class="main-navigation">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="navbar-header"><span class="nav-toggle-button collapsed pull-right" data-toggle="collapse" data-target="#main-menu" id="mnav">
+                        <span class="sr-only"></span>
+                        <i class="fa fa-bars"></i>
+                    </span>
+                    <a class="navbar-brand" href="https://ggyggy666.github.io">
+                        ggy的个人博客</a>
+                </div>
+                <div class="collapse navbar-collapse" id="main-menu">
+                    <ul class="menu">
+                        
+                        <li role="presentation" class="text-center">
+                            <a href="/"><i class="fa "></i>
+                                首页</a>
+                        </li>
+                        
+                        <li role="presentation" class="text-center">
+                            <a href="/categories/web安全/"><i class="fa "></i>
+                                web安全</a>
+                        </li>
+                        
+                        <li role="presentation" class="text-center">
+                            <a href="/categories/python工具/"><i class="fa "></i>
+                                python工具</a>
+                        </li>
+                        
+                        <li role="presentation" class="text-center">
+                            <a href="/categories/密码学/"><i class="fa "></i>
+                                密码学</a>
+                        </li>
+                        
+                        <li role="presentation" class="text-center">
+                            <a href="/archives/"><i class="fa "></i>
+                                时间轴</a>
+                        </li>
+                        
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</nav>
+    <section class="content-wrap">
+        <div class="container">
+            <div class="row">
+                <main class="col-md-8 main-content m-post">
+                    <p id="process"></p>
+<article class="post">
+    <div class="post-head">
+        <h1 id="JavaWeb学习(5)">
+            
+            JavaWeb学习(5)
+            
+        </h1>
+        <div class="post-meta">
+    
+    <span class="categories-meta fa-wrap">
+        <i class="fa fa-folder-open-o"></i>
+        <a class="category-link" href="/categories/JavaWeb/">JavaWeb</a>
+    </span>
+    
+    
+    <span class="fa-wrap">
+        <i class="fa fa-tags"></i>
+        <span class="tags-meta">
+            
+            <a class="tag-link" href="/tags/JavaWeb%E5%AD%A6%E4%B9%A0/" rel="tag">JavaWeb学习</a>
+            
+        </span>
+    </span>
+    
+    
+    
+    <span class="fa-wrap">
+        <i class="fa fa-clock-o"></i>
+        <span class="date-meta">
+            2021/05/11</span>
+    </span>
+    
+    <span class="fa-wrap">
+        <i class="fa fa-eye"></i>
+        <span id="busuanzi_value_page_pv"></span>
+    </span>
+    
+    
+</div>
+        
+        
+    </div>
+    
+    <div class="post-body post-content">
+        <p>今天接着学习jsp的内容</p>
+<a id="more"></a>
+
+<h1 id="注释"><a href="#注释" class="headerlink" title="注释"></a>注释</h1><p>JSP页面中可以有三种注释。</p>
+<ul>
+<li>HTML注释：<code>&lt;!-- xxx --&gt;</code>,会被JSP编译器翻译成out.write直接输出到客户端。</li>
+<li>Java代码注释：单行<code>//</code>, 多行<code>/* xx */</code>。会被翻译到Java文件中作为注释，这是因为它需要放到<code>&lt;% xxx %&gt;</code>里面，作为代码部分。</li>
+<li>JSP注释：<code>&lt;%-- xx --%&gt;</code>, 不会输出到客户端源码，也不会翻译到Java文件中它也可以注释掉JSP页面中所有代码。包括其它注释。</li>
+</ul>
+<p>另外注意：HTML注释中，JSP的表达式脚本可以运行。</p>
+<p><img src="https://raw.githubusercontent.com/ggyggy666/ggyggy666.github.io/master/img/image-20210511200639080.png" alt="image-20210511200639080"></p>
+<p><img src="https://raw.githubusercontent.com/ggyggy666/ggyggy666.github.io/master/img/image-20210511200833493.png" alt></p>
+<p>嵌在HTML注释中的JSP表达式脚本被执行了返回ggy，然后作为HTML中的注释被输出。</p>
+<h1 id="九大内置对象"><a href="#九大内置对象" class="headerlink" title="九大内置对象"></a>九大内置对象</h1><ul>
+<li>request：请求对象。</li>
+<li>response：响应对象。</li>
+<li>pageContext: jsp的上下文对象。</li>
+<li>session: 会话对象。</li>
+<li>application：ServletContext对象。</li>
+<li>config：ServletConfig对象。</li>
+<li>out: jsp输出流对象。</li>
+<li>page：指向当前jsp的对象。</li>
+<li>exception: 异常对象。</li>
+</ul>
+<h1 id="四大域对象"><a href="#四大域对象" class="headerlink" title="四大域对象"></a>四大域对象</h1><ul>
+<li>pageContext对象（pageContextimpl类）：有效范围是当前jsp页面。</li>
+<li>request对象（HttpServletRequest类）：一次请求内有效</li>
+<li>session对象（HttpSession类）：一个会话范围内有效。</li>
+<li>application对象（ServletContext类）：整个web工程有效。</li>
+</ul>
+<p>域对象是指可以像Map一样存取数据。</p>
+<p>首先创建一个scope.jsp</p>
+<p><img src="https://i.loli.net/2021/05/11/6L7abYUI9p23jXB.png" alt="image-20210511202900212"></p>
+<p>设置好域对象的数据，然后获取输出到页面，访问scope.jsp即可看到四个数据。接下来一个个测试它们的作用范围。</p>
+<p>首先是pageContext对象，作用范围是当前JSP页面。</p>
+<p>新建一个JSP页面scope2.JSP，其内容是获取四个域对象的数据。</p>
+<p><img src="https://i.loli.net/2021/05/11/EWgmvArP8QF7DkC.png" alt="image-20210511203056738"></p>
+<p>然后在scope.jsp中将请求转发到scope2.jsp。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&lt;%     		request.getRequestDispatcher(&quot;&#x2F;scope2.jsp&quot;).forward(request, response);</span><br><span class="line">%&gt;</span><br></pre></td></tr></table></figure>
+
+<p>这样，访问scope.jsp的时候会转发请求然后跳到scope2.jsp, scope2.jsp就无法获取到scope.jsp中设置的pageContext域对象数据。</p>
+<p><img src="https://i.loli.net/2021/05/11/oDZKbVn17SOgRwv.png" alt="image-20210511203246438"></p>
+<p>然后是直接访问scope2.jsp，会看到request域对象的数据也是null。</p>
+<p>之后将浏览器关闭，再重新访问scope2.jsp，发现session数据也没了。</p>
+<p>最后重启tomcat，访问scope2.jsp, application数据没了。</p>
+<h1 id="out和response输出"><a href="#out和response输出" class="headerlink" title="out和response输出"></a>out和response输出</h1><p>先看代码</p>
+<p><img src="https://i.loli.net/2021/05/11/7IZjsTM3A9eLUxw.png" alt="image-20210511204011521"></p>
+<p>访问</p>
+<p><img src="https://i.loli.net/2021/05/11/qaoDm4eCfXWlP5i.png" alt="image-20210511204030350"></p>
+<p>发现response的输出比out更靠前了！</p>
+<p>这是因为，out有缓冲区，response也有缓冲区。当页面代码执行完毕后要输出时，会先执行out.flush()操作，将out缓冲区中的内容追加到response缓冲区中，然后再执行response缓冲区的刷新操作输出。</p>
+<p>当然，也可以手动改变输出顺序，可以在out打印之后就执行out.flush()</p>
+<p><img src="https://i.loli.net/2021/05/11/HUA1EYJMlPNj8Gk.png" alt="image-20210511204343889"></p>
+<p>执行输出顺序就变成：test1-&gt;test3-&gt;test4-&gt;test2了。</p>
+<p>由于JSP编译器将JSP代码翻译成java文件时，使用的就是out.write。因此，<strong>为了避免输出顺序乱了，应使用out.write输出</strong></p>
+<h1 id="out和print打印"><a href="#out和print打印" class="headerlink" title="out和print打印"></a>out和print打印</h1><p>代码：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&lt;%</span><br><span class="line">    out.write(&quot;ggy&quot;);</span><br><span class="line">    out.print(&quot;ggy&quot;);</span><br><span class="line">    </span><br><span class="line">    out.write(&quot;12&quot;);</span><br><span class="line">    out.print(&quot;12&quot;);</span><br><span class="line">%&gt;</span><br></pre></td></tr></table></figure>
+
+<p>结果是两个都能正确打印。因为打印的是字符串。</p>
+<p>代码：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&lt;%</span><br><span class="line">    out.write(12);</span><br><span class="line">    out.print(12);</span><br><span class="line">%&gt;</span><br></pre></td></tr></table></figure>
+
+<p>打印数字，第一个out.write打印出来奇怪的东西，而out.print正确打印出来了12。</p>
+<p>这是因为：out.write打印字符串没问题，打印数字时，会将数字作为ASCII码，然后将该ASCII码对应的字符输出来。而out.print不管打印什么类型的，都会先将其转换成字符串类型再打印出来。</p>
+<p>因此，最好使用：out.print()打印。</p>
+<h1 id="包含其它jsp文件"><a href="#包含其它jsp文件" class="headerlink" title="包含其它jsp文件"></a>包含其它jsp文件</h1><h2 id="静态包含"><a href="#静态包含" class="headerlink" title="静态包含"></a>静态包含</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;%@ include file&#x3D;&quot;&#x2F;include&#x2F;footer.jsp&quot;%&gt;</span><br></pre></td></tr></table></figure>
+
+<p><code>&lt;%@ xx %&gt;</code>表示的是指令，比如：<code>&lt;%@ page=xx %&gt;</code>也是。</p>
+<p>静态包含会将其它jsp文件的内容包含进来，相当于在本jsp文件中加入了其它jsp文件里的内容，翻译成Java文件输出。</p>
+<p>被包含的jsp文件不会被翻译成java文件。</p>
+<h2 id="动态包含"><a href="#动态包含" class="headerlink" title="动态包含"></a>动态包含</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;jsp:include page&#x3D;&quot;footer.jsp&quot;&gt;&lt;&#x2F;jsp:include&gt;</span><br></pre></td></tr></table></figure>
+
+<p>翻译成java文件后</p>
+<p><img src="https://i.loli.net/2021/05/11/P2O3sGXtmW6hQqc.png" alt="image-20210511210029073"></p>
+<p>发现是一行代码，该代码作用：main.jsp动态包含footer.jsp, 那么main.jsp会将request和response，out对象都传给footer.jsp供它使用，那么这两个文件操作的都是同一个域对象，可以共享数据。</p>
+<p><img src="https://i.loli.net/2021/05/11/IlXjJFT8HfYdD1s.png" alt="image-20210511210243654"></p>
+<p>动态包含可以传递数据。</p>
+<p>main.jsp中</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&lt;jsp:include page&#x3D;&quot;footer.jsp&quot;&gt;</span><br><span class="line">    &lt;jsp:param name&#x3D;&quot;username&quot; value&#x3D;&quot;root&quot;&#x2F;&gt;</span><br><span class="line">    &lt;jsp:param name&#x3D;&quot;password&quot; value&#x3D;&quot;ggy666&quot;&#x2F;&gt;</span><br><span class="line">&lt;&#x2F;jsp:include&gt;</span><br></pre></td></tr></table></figure>
+
+<p>footer.jsp中</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&lt;%&#x3D;request.getParameter(&quot;username&quot;)%&gt;</span><br><span class="line">&lt;%&#x3D;request.getParameter(&quot;password&quot;)%&gt;</span><br></pre></td></tr></table></figure>
+
+<p>再访问main.jsp, 然后看到包含进来的footer.jsp输出了root和ggy666。</p>
+<h1 id="请求转发"><a href="#请求转发" class="headerlink" title="请求转发"></a>请求转发</h1><p>之前的servlet的请求转发：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">request.getRequestDispatcher(&quot;&#x2F;scope2.jsp&quot;).forward(request, response);</span><br></pre></td></tr></table></figure>
+
+<p>现在JSP的请求转发：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;jsp:forward page&#x3D;&quot;scope2.jsp&quot;&gt;&lt;&#x2F;jsp:forward&gt;</span><br></pre></td></tr></table></figure>
+
+<h1 id="Listener监听器"><a href="#Listener监听器" class="headerlink" title="Listener监听器"></a>Listener监听器</h1><p>JavaWeb三大组件：Servlet程序、Filter过滤器和Listener监听器。</p>
+<p>它其实就是个接口，负责监听事件，然后需要我们去实现接口，当触发事件时执行相应的函数。</p>
+<p>有八大监听器。</p>
+<p><strong>ServletContextListener监听器</strong></p>
+<p>主要是用于监听ServletContext对象的创建和销毁。而Web工程创建时会创建ServletContext对象，重新部署运行会销毁。</p>
+<ul>
+<li>contextInitialized(ServletContextEvent sce): 创建</li>
+<li>contextDestroyed(ServletContextEvent sce): 销毁</li>
+</ul>
+<p>新建一个类，然后实现监听器接口</p>
+<p><img src="https://i.loli.net/2021/05/12/AgekWn6FYXI9r4D.png" alt="image-20210512231412306"></p>
+<h1 id="练习"><a href="#练习" class="headerlink" title="练习"></a>练习</h1><h2 id="九九乘法表"><a href="#九九乘法表" class="headerlink" title="九九乘法表"></a>九九乘法表</h2><p><img src="https://i.loli.net/2021/05/13/X1vYHtSE42NOUPw.png" alt="image-20210513132509951"></p>
+<p><img src="https://i.loli.net/2021/05/13/TBwLtkdvFes8Z2y.png" alt="image-20210513132523893"></p>
+<h2 id="输出学生信息"><a href="#输出学生信息" class="headerlink" title="输出学生信息"></a>输出学生信息</h2><p>1.首先定义一个学生类，类里面定义学生的属性，然后构造函数初始化，再生成Getter and Setter, 最好再生成一个toString方法将学生属性输出。</p>
+<p><img src="https://i.loli.net/2021/05/13/Mkpt5ZC6iEVxbOJ.png" alt="image-20210513164444178"></p>
+<p>2.使用JSP文件，先是生成10个学生对象并同时对它们进行初始化，然后将对象保存进一个数组中</p>
+<p><img src="https://i.loli.net/2021/05/13/hPxvy5LldciKYCf.png" alt="image-20210513164549105"></p>
+<p>注意，Java的列表使用的是List&lt;&gt;，需要动态new一个空间出来，空间大小则是根据&lt;&gt;里的类型而定。然后列表有add方法，可以直接将内容添加到数组中。</p>
+<p>3.遍历列表中保存的学生对象，将每个对象的属性数据输出</p>
+<p><img src="https://i.loli.net/2021/05/13/6HEmAOCXRjzvqBU.png" alt="image-20210513164814918"></p>
+<p>注意，遍历数组时，for循环可以直接用(Student student: 列表)的形式。稍微加一些css即可</p>
+<p><img src="https://i.loli.net/2021/05/13/aIQGYT7RJDAV1Pu.png" alt="image-20210513164937190"></p>
+<h2 id="JSP与Servlet联动"><a href="#JSP与Servlet联动" class="headerlink" title="JSP与Servlet联动"></a>JSP与Servlet联动</h2><p>Servlet程序在web.xml中部署了访问路径，用户首先可以访问这个servlet路径，发起一个请求。Servlet接收到请求后，获取请求参数，然后将参数拼接到sql语句去查询数据库，得到的数据保存到request中。然后使用<strong>请求转发</strong>的方式，将请求转发到JSP中。由于请求转发的request对象和response对象都不变，JSP中则可以使用request对象访问到Servlet程序保存的数据，并输出到页面。</p>
+<p>1.新建一个Servlet程序，在doGet方法中</p>
+<p><img src="https://i.loli.net/2021/05/13/l34EbVQnhzYLSkj.png" alt="image-20210513170517514"></p>
+<p>2.修改test2.jsp内容，这次不用再生成学生对象了，只需要接收request中的学生对象数组。</p>
+<p><img src="https://i.loli.net/2021/05/13/C3dxHbDvwaBOScJ.png" alt="image-20210513170609627"></p>
+<p>3.配置web.xml, 增加访问Servlet程序的路径</p>
+<p><img src="https://i.loli.net/2021/05/13/n3Da5467qGwL1jY.png" alt="image-20210513170735806"></p>
+<p>一定要重新部署，然后访问student即可</p>
+
+    </div>
+    
+    <div class="reward" ontouchstart>
+    <div class="reward-wrap">赏
+        <div class="reward-box">
+            
+            <span class="reward-type">
+                <img class="alipay" src="/img/alipay.jpg"><b>支付宝打赏</b>
+            </span>
+            
+            
+            <span class="reward-type">
+                <img class="wechat" src="/img/wechat.jpg"><b>微信打赏</b>
+            </span>
+            
+        </div>
+    </div>
+    <p class="reward-tip">
+        赞赏是不耍流氓的鼓励
+    </p>
+</div>
+    
+    <div class="post-footer">
+        <div>
+            
+            转载声明：
+            商业转载请联系作者获得授权,非商业转载请注明出处 © <a href="ggy.44pp.vip" target="_blank">ggy</a>
+            
+            
+        </div>
+        <div>
+            
+        </div>
+    </div>
+</article>
+<div class="article-nav prev-next-wrap clearfix">
+    
+    
+    <a href="/2021/05/07/JavaWeb%E5%AD%A6%E4%B9%A0-4/" class="next-post btn btn-default" title='JavaWeb学习(4)'>
+        <span class="hidden-lg">下一篇</span>
+        <span class="hidden-xs">
+            JavaWeb学习(4)</span><i class="fa fa-angle-right fa-fw"></i>
+    </a>
+    
+</div>
+
+<div id="comments">
+    
+<div id="lv-container" data-id="city" data-uid="MTAyMC80ODM1Ni8yNDg1MA==">
+    <script type="text/javascript">
+    (function(d, s) {
+        var j, e = d.getElementsByTagName(s)[0];
+        if (typeof LivereTower === 'function') { return; }
+        j = d.createElement(s);
+        j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+        j.async = true;
+        e.parentNode.insertBefore(j, e);
+    })(document, 'script');
+    </script>
+</div>
+
+</div>
+
+                </main>
+                
+                    <aside id="article-toc" role="navigation" class="col-md-4">
+    <div class="widget">
+        <h3 class="title">
+            文章目录
+        </h3>
+        
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#注释"><span class="toc-text">注释</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#九大内置对象"><span class="toc-text">九大内置对象</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#四大域对象"><span class="toc-text">四大域对象</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#out和response输出"><span class="toc-text">out和response输出</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#out和print打印"><span class="toc-text">out和print打印</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#包含其它jsp文件"><span class="toc-text">包含其它jsp文件</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#静态包含"><span class="toc-text">静态包含</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#动态包含"><span class="toc-text">动态包含</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#请求转发"><span class="toc-text">请求转发</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Listener监听器"><span class="toc-text">Listener监听器</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#练习"><span class="toc-text">练习</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#九九乘法表"><span class="toc-text">九九乘法表</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#输出学生信息"><span class="toc-text">输出学生信息</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#JSP与Servlet联动"><span class="toc-text">JSP与Servlet联动</span></a></li></ol></li></ol>
+        
+    </div>
+</aside>
+                
+            </div>
+        </div>
+    </section>
+    <footer class="main-footer">
+    <div class="container">
+        <div class="row">
+        </div>
+    </div>
+</footer>
+<a id="back-to-top" class="icon-btn hide">
+    <i class="fa fa-chevron-up"></i>
+</a>
+    <div class="copyright">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="busuanzi">
+    
+    访问量:
+    <strong id="busuanzi_value_site_pv">
+        <i class="fa fa-spinner fa-spin"></i>
+    </strong>
+    &nbsp; | &nbsp;
+    访客数:
+    <strong id="busuanzi_value_site_uv">
+        <i class="fa fa-spinner fa-spin"></i>
+    </strong>
+    
+</div>
+            </div>
+            <div class="col-sm-12">
+                <span>Copyright &copy;
+                    2020
+                    
+                </span> |
+                <span>
+                    Powered by <a href="//hexo.io" class="copyright-links" target="_blank" rel="nofollow">Hexo</a>
+                </span> |
+                <span>
+                    Theme by <a href="//github.com/shenliyang/hexo-theme-snippet.git" class="copyright-links" target="_blank" rel="nofollow">Snippet</a>
+                </span>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<script src="/assets/tagcanvas.min.js?rev=2.9.js"></script>
+
+<script>
+var tagOption = {
+    textColour: '#444', // 字体颜色
+    outlineMethod: 'block', // 选中模式
+    outlineColour: '#FFDAB9', // 选中模式的颜色
+    interval: 30 || 30, // 动画帧之间的时间间隔，值越大，转动幅度越大
+    textHeight: 13,
+    outlineRadius: 3,
+    freezeActive: true || '', // 选中的标签是否继续滚动
+    frontSelect: true || '', // 不选标签云后部的标签
+    initial: [0.1, -0.1],
+    depth: 0.5,
+    decel: 0.95,
+    maxSpeed: 0.03,
+    reverse: true || '', // 是否反向触发
+    fadeIn: 500, // 进入动画时间
+    wheelZoom: false || '' // 是否启用鼠标滚轮
+}
+TagCanvas.Start('tag-cloud-3d', '', tagOption);
+</script>
+
+
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+<script src="/js/app.js?rev=@@hash.js"></script>
+
+
+<!-- 雪花特效 -->
+<script type="text/javascript" src="http://libs.baidu.com/jquery/1.8.3/jquery.js"></script>
+<script type="text/javascript" src="http://libs.baidu.com/jquery/1.8.3/jquery.min.js"></script>
+<script type="text/javascript" src="\js\snow.js"></script>
+
+<canvas class="fireworks" style="position: fixed;left: 0;top: 0;z-index: 1; pointer-events: none;" ></canvas> 
+<script type="text/javascript" src="//cdn.bootcss.com/animejs/2.2.0/anime.min.js"></script> 
+<script type="text/javascript" src="/js/fireworks.js"></script>
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"model":{"jsonPath":"live2d-widget-model-haruto"},"display":{"position":"right","width":150,"height":300},"mobile":{"show":false},"log":false,"pluginJsPath":"lib/","pluginModelPath":"assets/","pluginRootPath":"live2dw/","tagMode":false});</script></body>
+</html>

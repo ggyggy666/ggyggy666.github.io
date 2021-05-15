@@ -1,0 +1,427 @@
+<head>
+<script src="https://cdn.jsdelivr.net/npm/jquery/dist/jquery.min.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome/css/font-awesome.min.css">
+<script src="https://cdn.jsdelivr.net/gh/stevenjoezhang/live2d-widget/autoload.js"></script>
+</head>
+
+<!DOCTYPE HTML>
+<html lang="zh-CN">
+
+<head>
+    <!--Setting-->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+    <meta http-equiv="Cache-Control" content="no-siteapp">
+    <meta http-equiv="Cache-Control" content="no-transform">
+    <meta name="renderer" content="webkit|ie-comp|ie-stand">
+    <meta name="apple-mobile-web-app-capable" content="ggy的个人博客">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="format-detection" content="telephone=no,email=no,adress=no">
+    <meta name="browsermode" content="application">
+    <meta name="screen-orientation" content="portrait">
+    <meta name="theme-version" content="1.2.3">
+    <meta name="root" content="/">
+    <link rel="dns-prefetch" href="https://ggyggy666.github.io">
+    <!--SEO-->
+
+<meta name="keywords" content="JavaWeb学习" />
+
+
+<meta name="description" content="今天学习文件上传和下载。
+
+
+文件上传文件上传，需要前后端操作处理。前端上传，后端处理数据。
+前端上传写上传代码
+12345&lt;form action&#x3D;&quot;&#x2F;up..." />
+
+
+<meta name="robots" content="all" />
+<meta name="google" content="all" />
+<meta name="googlebot" content="all" />
+<meta name="verify" content="all" />
+    <!--Title-->
+
+<title>
+    
+    JavaWeb学习(7) |
+    
+    ggy的个人博客
+</title>
+
+<link rel="alternate" href="/atom.xml" title="ggy的个人博客" type="application/atom+xml">
+
+
+<link rel="icon" href="/favicon.ico">
+
+    
+
+
+<link rel="stylesheet" href="/css/bootstrap.min.css?rev=3.3.7.css">
+<link rel="stylesheet" href="/css/font-awesome.min.css?rev=4.7.0.css">
+<link rel="stylesheet" href="/css/style.css?rev=@@hash.css">
+
+    
+<div class="hide">
+    <script type="text/javascript">
+    var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+    document.write(unescape("%3Cspan class='cnzz_stat_icon_1263868967 hide' %3E%3Cscript%20src%3D%22https%3A%2F%2Fs95.cnzz.com%2Fz_stat.php%3Fweb_id%3D1272564536%22%3E%3C%2Fscript%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s19.cnzz.com/z_stat.php%3Fid%3D1263868967%26show%3Dpic1' type='text/javascript'%3E%3C/script%3E"));
+    </script>
+</div>
+
+
+
+
+    
+
+<meta name="generator" content="Hexo 4.2.0"></head>
+<!--[if lte IE 8]>
+<style>
+    html{ font-size: 1em }
+</style>
+<![endif]-->
+<!--[if lte IE 9]>
+<div style="ie">你使用的浏览器版本过低，为了你更好的阅读体验，请更新浏览器的版本或者使用其他现代浏览器，比如Chrome、Firefox、Safari等。</div>
+<![endif]-->
+<body>
+    <header class="main-header"  style="background-image:url(
+    https://pic.downk.cc/item/5e3816b82fb38b8c3c8791f9.jpg)"
+     >
+    <div class="main-header-box">
+        <a class="header-avatar" href="/" title='ggy'>
+            <img src="/img/avatar.jpg" alt="logo头像" class="img-responsive center-block">
+        </a>
+        <div class="branding">
+            <!--<h2 class="text-hide">Snippet主题,从未如此简单有趣</h2>-->
+            
+            <h2>
+                欢迎来到ggy的个人网站
+            </h2>
+            
+        </div>
+    </div>
+</header>
+    <nav class="main-navigation">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="navbar-header"><span class="nav-toggle-button collapsed pull-right" data-toggle="collapse" data-target="#main-menu" id="mnav">
+                        <span class="sr-only"></span>
+                        <i class="fa fa-bars"></i>
+                    </span>
+                    <a class="navbar-brand" href="https://ggyggy666.github.io">
+                        ggy的个人博客</a>
+                </div>
+                <div class="collapse navbar-collapse" id="main-menu">
+                    <ul class="menu">
+                        
+                        <li role="presentation" class="text-center">
+                            <a href="/"><i class="fa "></i>
+                                首页</a>
+                        </li>
+                        
+                        <li role="presentation" class="text-center">
+                            <a href="/categories/web安全/"><i class="fa "></i>
+                                web安全</a>
+                        </li>
+                        
+                        <li role="presentation" class="text-center">
+                            <a href="/categories/python工具/"><i class="fa "></i>
+                                python工具</a>
+                        </li>
+                        
+                        <li role="presentation" class="text-center">
+                            <a href="/categories/密码学/"><i class="fa "></i>
+                                密码学</a>
+                        </li>
+                        
+                        <li role="presentation" class="text-center">
+                            <a href="/archives/"><i class="fa "></i>
+                                时间轴</a>
+                        </li>
+                        
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</nav>
+    <section class="content-wrap">
+        <div class="container">
+            <div class="row">
+                <main class="col-md-8 main-content m-post">
+                    <p id="process"></p>
+<article class="post">
+    <div class="post-head">
+        <h1 id="JavaWeb学习(7)">
+            
+            JavaWeb学习(7)
+            
+        </h1>
+        <div class="post-meta">
+    
+    <span class="categories-meta fa-wrap">
+        <i class="fa fa-folder-open-o"></i>
+        <a class="category-link" href="/categories/JavaWeb/">JavaWeb</a>
+    </span>
+    
+    
+    <span class="fa-wrap">
+        <i class="fa fa-tags"></i>
+        <span class="tags-meta">
+            
+            <a class="tag-link" href="/tags/JavaWeb%E5%AD%A6%E4%B9%A0/" rel="tag">JavaWeb学习</a>
+            
+        </span>
+    </span>
+    
+    
+    
+    <span class="fa-wrap">
+        <i class="fa fa-clock-o"></i>
+        <span class="date-meta">
+            2021/05/15</span>
+    </span>
+    
+    <span class="fa-wrap">
+        <i class="fa fa-eye"></i>
+        <span id="busuanzi_value_page_pv"></span>
+    </span>
+    
+    
+</div>
+        
+        
+    </div>
+    
+    <div class="post-body post-content">
+        <p>今天学习文件上传和下载。</p>
+<a id="more"></a>
+
+<h1 id="文件上传"><a href="#文件上传" class="headerlink" title="文件上传"></a>文件上传</h1><p>文件上传，需要前后端操作处理。前端上传，后端处理数据。</p>
+<h2 id="前端上传"><a href="#前端上传" class="headerlink" title="前端上传"></a>前端上传</h2><p>写上传代码</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&lt;form action&#x3D;&quot;&#x2F;upload&quot; enctype&#x3D;&quot;multipart&#x2F;form-data&quot; method&#x3D;&quot;post&quot;&gt;</span><br><span class="line">    用户名：&lt;input type&#x3D;&quot;text&quot; name&#x3D;&quot;username&quot; value&#x3D;&quot;&quot;&gt;&lt;br&gt;</span><br><span class="line">    头像：&lt;input type&#x3D;&quot;file&quot; name&#x3D;&quot;photo&quot;&gt;&lt;br&gt;</span><br><span class="line">    &lt;input type&#x3D;&quot;submit&quot; value&#x3D;&quot;上传&quot;&gt;&lt;br&gt;</span><br><span class="line">&lt;&#x2F;form&gt;</span><br></pre></td></tr></table></figure>
+
+<p>enctype类型是multipart/form-data, 代表文件是多段上传，而且上传的是二进制流数据。</p>
+<h2 id="后端处理"><a href="#后端处理" class="headerlink" title="后端处理"></a>后端处理</h2><p>首先得看一下文件上传时的请求包</p>
+<p><img src="/2021/05/15/JavaWeb%E5%AD%A6%E4%B9%A0-7/C:%5CUsers%5C29924%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5Cimage-20210515212918146.png" alt="image-20210515212918146"></p>
+<p>使用boundary作为分割，将每一个input表单项分开。上传的文件数据是二进制流格式，因此需要使用读取输入流的方式。</p>
+<p>写后端处理程序UploadServlet</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;&#x2F;doPost方法：</span><br><span class="line">ServletInputStream inputStream &#x3D; req.getInputStream();</span><br><span class="line">byte[] buffer &#x3D; new byte[1024000];</span><br><span class="line">int read &#x3D; inputStream.read(buffer);</span><br><span class="line">System.out.println(new String(buffer, 0, read));</span><br></pre></td></tr></table></figure>
+
+<p>首先获取输入流数据，然后定义一个字节数组，大小是1024000，大点能装得下数据就行。然后使用输入流的read方法，将输入流保存到buffer里面，并且返回输入流的长度给read。最后输出，需要实例化String对象，传buffer进去，将0到read长度（即所有流数据）变成字符串输出。</p>
+<p>当然，还需要给Servlet程序配置web.xml，并且前端代码的action修改成Servlet的路径<code>http://localhost:8080/EL_JSTL/upload</code>, 这是绝对路径，如果是相对路径，因为在web目录，可使用：upload。注意不要用/upload, 不然会默认是根目录下的。然后重新部署。</p>
+<p><img src="/2021/05/15/JavaWeb%E5%AD%A6%E4%B9%A0-7/C:%5CUsers%5C29924%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5Cimage-20210515214105875.png" alt="image-20210515214105875"></p>
+<p>获取到了上传的数据。</p>
+<h2 id="解析数据"><a href="#解析数据" class="headerlink" title="解析数据"></a>解析数据</h2><p>需要使用commons-fileupload.jar包，到apache下。然后导入。</p>
+<p>还需要commons-io.jar, 因为输入输出流需要IO操作。</p>
+<p>用到的类是：ServletFileUpload类，它涉及以下方法：</p>
+<ul>
+<li>ServletFileUpload.isMultipartContent(HttpServletRequest request), 判断上传的数据是不是多段数据，返回true或false。</li>
+<li>ServletFileUpload.parseRequest(HttpServletReqeust request), 解析上传的数据，提取出每一个表单项，装到List集合。</li>
+<li>isFormField(), 判断当前表单项是否是普通表单项，是则表示普通表单项，否则是上传文件项。</li>
+<li>getFieldName(), 获得表单项中的name属性值。</li>
+<li>getString(), 获得当前表单项的值。</li>
+<li>getName(), 获得上传的文件名。</li>
+<li>write(file), 将上传的文件写到file所指的磁盘路径文件。</li>
+</ul>
+<p>doPost函数：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">if(ServletFileUpload.isMultipartContent(req))&#123;</span><br><span class="line">           &#x2F;&#x2F;创建FileItemFactory工厂实现类</span><br><span class="line">           DiskFileItemFactory diskFileItemFactory &#x3D; new DiskFileItemFactory();</span><br><span class="line">           &#x2F;&#x2F;创建用于解析上传数据的工具栏ServletFileUpload</span><br><span class="line">           ServletFileUpload servletFileUpload &#x3D; new ServletFileUpload(diskFileItemFactory);</span><br><span class="line">           try &#123;</span><br><span class="line">               List&lt;FileItem&gt; list &#x3D; servletFileUpload.parseRequest(req);</span><br><span class="line">               for(FileItem item : list)&#123;</span><br><span class="line">                   if(item.isFormField())&#123;</span><br><span class="line">                       &#x2F;&#x2F;普通表单项</span><br><span class="line">                       System.out.println(&quot;表单项的name属性值：&quot;+item.getFieldName());</span><br><span class="line">                       System.out.println(&quot;表单项的值：&quot;+item.getString(&quot;UTF-8&quot;));</span><br><span class="line">                   &#125;else&#123;</span><br><span class="line">                       System.out.println(&quot;上传的文件名：&quot;+item.getName());</span><br><span class="line">                       System.out.println(&quot;表单项的name属性值：&quot;+item.getFieldName());</span><br><span class="line">                       item.write(new File(&quot;D:\\&quot;+item.getName()));</span><br><span class="line">                   &#125;</span><br><span class="line">               &#125;</span><br><span class="line">           &#125; catch (FileUploadException e) &#123;</span><br><span class="line">               e.printStackTrace();</span><br><span class="line">           &#125; catch (Exception e) &#123;</span><br><span class="line">               e.printStackTrace();</span><br><span class="line">           &#125;</span><br><span class="line">       &#125;</span><br></pre></td></tr></table></figure>
+
+<p>D盘下就可以看到上传的文件了。</p>
+<h1 id="文件下载"><a href="#文件下载" class="headerlink" title="文件下载"></a>文件下载</h1><p>创建DownloadServlet类：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;&#x2F;获取要下载的文件名</span><br><span class="line">        String fileName &#x3D; &quot;burp.png&quot;;</span><br><span class="line">        &#x2F;&#x2F;获取要下载的文件名的类型</span><br><span class="line">        ServletContext servletContext &#x3D; getServletContext();</span><br><span class="line">        String mimeType &#x3D; servletContext.getMimeType(&quot;file&#x2F;&quot;+fileName);</span><br><span class="line">        System.out.println(&quot;要下载的文件类型：&quot;+mimeType);</span><br><span class="line">        &#x2F;&#x2F;设置返回的数据类型</span><br><span class="line">        resp.setContentType(mimeType);</span><br><span class="line">        &#x2F;&#x2F;设置返回头，告诉客户端是下载文件,attachment表示附件</span><br><span class="line">        resp.setHeader(&quot;Content-Disposition&quot;, &quot;attachment; filename&#x3D;&quot;+fileName);</span><br><span class="line">        &#x2F;&#x2F;获取文件流</span><br><span class="line">        InputStream resourceAsStream &#x3D; servletContext.getResourceAsStream(&quot;file&#x2F;&quot; + fileName);</span><br><span class="line">        &#x2F;&#x2F;获取响应的输出流</span><br><span class="line">        OutputStream outputStream &#x3D; resp.getOutputStream();</span><br><span class="line">        &#x2F;&#x2F;将文件流复制到输出流输出</span><br><span class="line">        IOUtils.copy(resourceAsStream, outputStream);</span><br></pre></td></tr></table></figure>
+
+<p>这里是在web目录下新建了一个file目录，里面是burp.png图片。之后部署web.xml，访问路径是/download, 然后重新部署。访问即可下载。</p>
+<h2 id="URL编码"><a href="#URL编码" class="headerlink" title="URL编码"></a>URL编码</h2><p>setHeader里面，文件名可以是自定义的。但如果是中文名，需要使用URL编码，针对谷歌浏览器。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">resp.setHeader(&quot;Content-Disposition&quot;, &quot;attachment; filename&#x3D;&quot;+ URLEncoder.encode(&quot;中国.png&quot;, &quot;UTF-8&quot;));</span><br></pre></td></tr></table></figure>
+
+<p>使用URLEncoder.encode即可。</p>
+<h2 id="Base64编码"><a href="#Base64编码" class="headerlink" title="Base64编码"></a>Base64编码</h2><p>如果是火狐浏览器，对于中文名称的文件使用的是Base64编码。下面先测试使用base64：</p>
+<p>加密</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">String content &#x3D; &quot;这是base64要编码的中文内容&quot;;</span><br><span class="line">&#x2F;&#x2F;new一个base64编码对象</span><br><span class="line">Base64.Encoder encoder &#x3D; Base64.getEncoder();</span><br><span class="line">&#x2F;&#x2F;将content内容使用getBytes转换成字节流，然后再encode，返回也是字节数组</span><br><span class="line">byte[] encodecontent &#x3D; encoder.encode(content.getBytes(&quot;UTF-8&quot;));</span><br><span class="line">&#x2F;&#x2F;需要将字节流转换成字符串输出</span><br><span class="line">System.out.println(new String(encodecontent));</span><br></pre></td></tr></table></figure>
+
+<p>解密</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;&#x2F;获取解密对象</span><br><span class="line">Base64.Decoder decoder &#x3D; Base64.getDecoder();</span><br><span class="line">&#x2F;&#x2F;将加密后的字节流解密，返回也是字节数组</span><br><span class="line">byte[] decode &#x3D; decoder.decode(encodecontent);</span><br><span class="line">&#x2F;&#x2F;将字节数组转换成字符串输出</span><br><span class="line">System.out.println(new String(decode, &quot;UTF-8&quot;));</span><br></pre></td></tr></table></figure>
+
+<p>但是到Servlet程序中进行文件下载时，setHeader的文件名进行base64编码需要有一个特定的格式：</p>
+<p><code>?charset?B?xxx?=</code></p>
+<p>charset表示编码类型，B表示是Base64编码，xxx是Base64加密后的内容，=是结束。因此有：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">resp.setHeader(&quot;Content-Disposition&quot;,</span><br><span class="line">                &quot;attachment; filename&#x3D;?UTF-8?B?&quot;+Base64.getEncoder().encode(&quot;中国.png&quot;.getBytes(&quot;UTF-8&quot;))+&quot;?&#x3D;&quot;);</span><br></pre></td></tr></table></figure>
+
+<h2 id="User-Agent判断"><a href="#User-Agent判断" class="headerlink" title="User-Agent判断"></a>User-Agent判断</h2><p>但是用了火狐设置的方法，IE又不支持了。。因此需要根据User-Agent来判断浏览器，从而判断应该使用哪种方法。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">if(req.getHeader(&quot;User-Agent&quot;).contains(&quot;FireFox&quot;))&#123;</span><br><span class="line">            resp.setHeader(&quot;Content-Disposition&quot;,</span><br><span class="line">                    &quot;attachment; filename&#x3D;?UTF-8?B?&quot;+Base64.getEncoder().encode(&quot;中国.png&quot;.getBytes(&quot;UTF-8&quot;))+&quot;?&#x3D;&quot;);</span><br><span class="line">        &#125;else&#123;</span><br><span class="line">            resp.setHeader(&quot;Content-Disposition&quot;, &quot;attachment; filename&#x3D;&quot;+ URLEncoder.encode(&quot;中国.png&quot;, &quot;UTF-8&quot;));</span><br><span class="line">        &#125;</span><br></pre></td></tr></table></figure>
+
+<h1 id="MVC概念"><a href="#MVC概念" class="headerlink" title="MVC概念"></a>MVC概念</h1><p>主要是将Web层分开工作，更好的解耦合。</p>
+<p><img src="/2021/05/15/JavaWeb%E5%AD%A6%E4%B9%A0-7/C:%5CUsers%5C29924%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5Cimage-20210515233352946.png" alt="image-20210515233352946"></p>
+<p>M是module, 表示模型，V是View，表示视图，C是Controller，表示控制器。</p>
+<ul>
+<li>Module：将与业务相关的数据封装成JavaBean类，但是不处理数据。有：JavaBean/domain/entity/pojo。</li>
+<li>View：只负责展示界面和输出数据。有：JSP/HTML</li>
+<li>Controller：只负责接收请求，然后调用业务层的代码处理请求，获取数据，然后派发界面，跳转到某个界面。有：Servlet。</li>
+</ul>
+
+    </div>
+    
+    <div class="reward" ontouchstart>
+    <div class="reward-wrap">赏
+        <div class="reward-box">
+            
+            <span class="reward-type">
+                <img class="alipay" src="/img/alipay.jpg"><b>支付宝打赏</b>
+            </span>
+            
+            
+            <span class="reward-type">
+                <img class="wechat" src="/img/wechat.jpg"><b>微信打赏</b>
+            </span>
+            
+        </div>
+    </div>
+    <p class="reward-tip">
+        赞赏是不耍流氓的鼓励
+    </p>
+</div>
+    
+    <div class="post-footer">
+        <div>
+            
+            转载声明：
+            商业转载请联系作者获得授权,非商业转载请注明出处 © <a href="ggy.44pp.vip" target="_blank">ggy</a>
+            
+            
+        </div>
+        <div>
+            
+        </div>
+    </div>
+</article>
+<div class="article-nav prev-next-wrap clearfix">
+    
+    
+    <a href="/2021/05/14/JavaWeb%E5%AD%A6%E4%B9%A0-6/" class="next-post btn btn-default" title='JavaWeb学习(6)'>
+        <span class="hidden-lg">下一篇</span>
+        <span class="hidden-xs">
+            JavaWeb学习(6)</span><i class="fa fa-angle-right fa-fw"></i>
+    </a>
+    
+</div>
+
+<div id="comments">
+    
+<div id="lv-container" data-id="city" data-uid="MTAyMC80ODM1Ni8yNDg1MA==">
+    <script type="text/javascript">
+    (function(d, s) {
+        var j, e = d.getElementsByTagName(s)[0];
+        if (typeof LivereTower === 'function') { return; }
+        j = d.createElement(s);
+        j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+        j.async = true;
+        e.parentNode.insertBefore(j, e);
+    })(document, 'script');
+    </script>
+</div>
+
+</div>
+
+                </main>
+                
+                    <aside id="article-toc" role="navigation" class="col-md-4">
+    <div class="widget">
+        <h3 class="title">
+            文章目录
+        </h3>
+        
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#文件上传"><span class="toc-text">文件上传</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#前端上传"><span class="toc-text">前端上传</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#后端处理"><span class="toc-text">后端处理</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#解析数据"><span class="toc-text">解析数据</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#文件下载"><span class="toc-text">文件下载</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#URL编码"><span class="toc-text">URL编码</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Base64编码"><span class="toc-text">Base64编码</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#User-Agent判断"><span class="toc-text">User-Agent判断</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#MVC概念"><span class="toc-text">MVC概念</span></a></li></ol>
+        
+    </div>
+</aside>
+                
+            </div>
+        </div>
+    </section>
+    <footer class="main-footer">
+    <div class="container">
+        <div class="row">
+        </div>
+    </div>
+</footer>
+<a id="back-to-top" class="icon-btn hide">
+    <i class="fa fa-chevron-up"></i>
+</a>
+    <div class="copyright">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="busuanzi">
+    
+    访问量:
+    <strong id="busuanzi_value_site_pv">
+        <i class="fa fa-spinner fa-spin"></i>
+    </strong>
+    &nbsp; | &nbsp;
+    访客数:
+    <strong id="busuanzi_value_site_uv">
+        <i class="fa fa-spinner fa-spin"></i>
+    </strong>
+    
+</div>
+            </div>
+            <div class="col-sm-12">
+                <span>Copyright &copy;
+                    2020
+                    
+                </span> |
+                <span>
+                    Powered by <a href="//hexo.io" class="copyright-links" target="_blank" rel="nofollow">Hexo</a>
+                </span> |
+                <span>
+                    Theme by <a href="//github.com/shenliyang/hexo-theme-snippet.git" class="copyright-links" target="_blank" rel="nofollow">Snippet</a>
+                </span>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<script src="/assets/tagcanvas.min.js?rev=2.9.js"></script>
+
+<script>
+var tagOption = {
+    textColour: '#444', // 字体颜色
+    outlineMethod: 'block', // 选中模式
+    outlineColour: '#FFDAB9', // 选中模式的颜色
+    interval: 30 || 30, // 动画帧之间的时间间隔，值越大，转动幅度越大
+    textHeight: 13,
+    outlineRadius: 3,
+    freezeActive: true || '', // 选中的标签是否继续滚动
+    frontSelect: true || '', // 不选标签云后部的标签
+    initial: [0.1, -0.1],
+    depth: 0.5,
+    decel: 0.95,
+    maxSpeed: 0.03,
+    reverse: true || '', // 是否反向触发
+    fadeIn: 500, // 进入动画时间
+    wheelZoom: false || '' // 是否启用鼠标滚轮
+}
+TagCanvas.Start('tag-cloud-3d', '', tagOption);
+</script>
+
+
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+<script src="/js/app.js?rev=@@hash.js"></script>
+
+
+<!-- 雪花特效 -->
+<script type="text/javascript" src="http://libs.baidu.com/jquery/1.8.3/jquery.js"></script>
+<script type="text/javascript" src="http://libs.baidu.com/jquery/1.8.3/jquery.min.js"></script>
+<script type="text/javascript" src="\js\snow.js"></script>
+
+<canvas class="fireworks" style="position: fixed;left: 0;top: 0;z-index: 1; pointer-events: none;" ></canvas> 
+<script type="text/javascript" src="//cdn.bootcss.com/animejs/2.2.0/anime.min.js"></script> 
+<script type="text/javascript" src="/js/fireworks.js"></script>
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"model":{"jsonPath":"live2d-widget-model-haruto"},"display":{"position":"right","width":150,"height":300},"mobile":{"show":false},"log":false,"pluginJsPath":"lib/","pluginModelPath":"assets/","pluginRootPath":"live2dw/","tagMode":false});</script></body>
+</html>

@@ -1,0 +1,443 @@
+<head>
+<script src="https://cdn.jsdelivr.net/npm/jquery/dist/jquery.min.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome/css/font-awesome.min.css">
+<script src="https://cdn.jsdelivr.net/gh/stevenjoezhang/live2d-widget/autoload.js"></script>
+</head>
+
+<!DOCTYPE HTML>
+<html lang="zh-CN">
+
+<head>
+    <!--Setting-->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+    <meta http-equiv="Cache-Control" content="no-siteapp">
+    <meta http-equiv="Cache-Control" content="no-transform">
+    <meta name="renderer" content="webkit|ie-comp|ie-stand">
+    <meta name="apple-mobile-web-app-capable" content="ggy的个人博客">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="format-detection" content="telephone=no,email=no,adress=no">
+    <meta name="browsermode" content="application">
+    <meta name="screen-orientation" content="portrait">
+    <meta name="theme-version" content="1.2.3">
+    <meta name="root" content="/">
+    <link rel="dns-prefetch" href="https://ggyggy666.github.io">
+    <!--SEO-->
+
+<meta name="keywords" content="JavaWeb学习" />
+
+
+<meta name="description" content="今天学习JavaWeb的JSON和AJAX。
+
+
+JSONJSON是客户端与服务器之间进行数据交换的一种格式。它使用的是大括号，然后里面是键值对，每个键值对之间使用,分割。
+在JavaSctip..." />
+
+
+<meta name="robots" content="all" />
+<meta name="google" content="all" />
+<meta name="googlebot" content="all" />
+<meta name="verify" content="all" />
+    <!--Title-->
+
+<title>
+    
+    JavaWeb学习(9) |
+    
+    ggy的个人博客
+</title>
+
+<link rel="alternate" href="/atom.xml" title="ggy的个人博客" type="application/atom+xml">
+
+
+<link rel="icon" href="/favicon.ico">
+
+    
+
+
+<link rel="stylesheet" href="/css/bootstrap.min.css?rev=3.3.7.css">
+<link rel="stylesheet" href="/css/font-awesome.min.css?rev=4.7.0.css">
+<link rel="stylesheet" href="/css/style.css?rev=@@hash.css">
+
+    
+<div class="hide">
+    <script type="text/javascript">
+    var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+    document.write(unescape("%3Cspan class='cnzz_stat_icon_1263868967 hide' %3E%3Cscript%20src%3D%22https%3A%2F%2Fs95.cnzz.com%2Fz_stat.php%3Fweb_id%3D1272564536%22%3E%3C%2Fscript%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s19.cnzz.com/z_stat.php%3Fid%3D1263868967%26show%3Dpic1' type='text/javascript'%3E%3C/script%3E"));
+    </script>
+</div>
+
+
+
+
+    
+
+<meta name="generator" content="Hexo 4.2.0"></head>
+<!--[if lte IE 8]>
+<style>
+    html{ font-size: 1em }
+</style>
+<![endif]-->
+<!--[if lte IE 9]>
+<div style="ie">你使用的浏览器版本过低，为了你更好的阅读体验，请更新浏览器的版本或者使用其他现代浏览器，比如Chrome、Firefox、Safari等。</div>
+<![endif]-->
+<body>
+    <header class="main-header"  style="background-image:url(
+    https://pic.downk.cc/item/5e3816b82fb38b8c3c8791f9.jpg)"
+     >
+    <div class="main-header-box">
+        <a class="header-avatar" href="/" title='ggy'>
+            <img src="/img/avatar.jpg" alt="logo头像" class="img-responsive center-block">
+        </a>
+        <div class="branding">
+            <!--<h2 class="text-hide">Snippet主题,从未如此简单有趣</h2>-->
+            
+            <h2>
+                欢迎来到ggy的个人网站
+            </h2>
+            
+        </div>
+    </div>
+</header>
+    <nav class="main-navigation">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="navbar-header"><span class="nav-toggle-button collapsed pull-right" data-toggle="collapse" data-target="#main-menu" id="mnav">
+                        <span class="sr-only"></span>
+                        <i class="fa fa-bars"></i>
+                    </span>
+                    <a class="navbar-brand" href="https://ggyggy666.github.io">
+                        ggy的个人博客</a>
+                </div>
+                <div class="collapse navbar-collapse" id="main-menu">
+                    <ul class="menu">
+                        
+                        <li role="presentation" class="text-center">
+                            <a href="/"><i class="fa "></i>
+                                首页</a>
+                        </li>
+                        
+                        <li role="presentation" class="text-center">
+                            <a href="/categories/web安全/"><i class="fa "></i>
+                                web安全</a>
+                        </li>
+                        
+                        <li role="presentation" class="text-center">
+                            <a href="/categories/python工具/"><i class="fa "></i>
+                                python工具</a>
+                        </li>
+                        
+                        <li role="presentation" class="text-center">
+                            <a href="/categories/密码学/"><i class="fa "></i>
+                                密码学</a>
+                        </li>
+                        
+                        <li role="presentation" class="text-center">
+                            <a href="/archives/"><i class="fa "></i>
+                                时间轴</a>
+                        </li>
+                        
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</nav>
+    <section class="content-wrap">
+        <div class="container">
+            <div class="row">
+                <main class="col-md-8 main-content m-post">
+                    <p id="process"></p>
+<article class="post">
+    <div class="post-head">
+        <h1 id="JavaWeb学习(9)">
+            
+            JavaWeb学习(9)
+            
+        </h1>
+        <div class="post-meta">
+    
+    <span class="categories-meta fa-wrap">
+        <i class="fa fa-folder-open-o"></i>
+        <a class="category-link" href="/categories/JavaWeb/">JavaWeb</a>
+    </span>
+    
+    
+    <span class="fa-wrap">
+        <i class="fa fa-tags"></i>
+        <span class="tags-meta">
+            
+            <a class="tag-link" href="/tags/JavaWeb%E5%AD%A6%E4%B9%A0/" rel="tag">JavaWeb学习</a>
+            
+        </span>
+    </span>
+    
+    
+    
+    <span class="fa-wrap">
+        <i class="fa fa-clock-o"></i>
+        <span class="date-meta">
+            2021/05/31</span>
+    </span>
+    
+    <span class="fa-wrap">
+        <i class="fa fa-eye"></i>
+        <span id="busuanzi_value_page_pv"></span>
+    </span>
+    
+    
+</div>
+        
+        
+    </div>
+    
+    <div class="post-body post-content">
+        <p>今天学习JavaWeb的JSON和AJAX。</p>
+<a id="more"></a>
+
+<h1 id="JSON"><a href="#JSON" class="headerlink" title="JSON"></a>JSON</h1><p>JSON是客户端与服务器之间进行数据交换的一种格式。它使用的是大括号，然后里面是键值对，每个键值对之间使用,分割。</p>
+<h2 id="在JavaSctipt中"><a href="#在JavaSctipt中" class="headerlink" title="在JavaSctipt中"></a>在JavaSctipt中</h2><p>首先新建一个新的模块Json_Ajax, 然后在web目录下新建一个json.html。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">var JsonObj &#x3D; &#123;</span><br><span class="line">        &quot;key1&quot;:1,</span><br><span class="line">        &quot;key2&quot;:&quot;2&quot;,</span><br><span class="line">        &quot;key3&quot;:true,</span><br><span class="line">        &quot;key4&quot;:[&quot;a&quot;,&quot;b&quot;,&quot;c&quot;],</span><br><span class="line">        &quot;key5&quot;:&#123;</span><br><span class="line">            &quot;key_1&quot;:11,</span><br><span class="line">            &quot;key_2&quot;:&quot;12&quot;</span><br><span class="line">        &#125;,</span><br><span class="line">        &quot;key6&quot;:[&#123;</span><br><span class="line">            &quot;key6_1&quot;:61,</span><br><span class="line">            &quot;key6_2&quot;:&quot;62&quot;</span><br><span class="line">        &#125;,&#123;</span><br><span class="line">            &quot;key6_3&quot;:63,</span><br><span class="line">            &quot;key6_4&quot;:&quot;64&quot;</span><br><span class="line">        &#125;]</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+<p>键都是字符串, 值可以是整数、字符串、数组、JSON对象，数组里面也可以是JSON对象。</p>
+<p>访问：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">JsonObj.key1;</span><br><span class="line">JsonObj.key4[0];</span><br><span class="line">JsonObj.key5.key_1;</span><br><span class="line">JsonObj.key6[0].key6_1;</span><br></pre></td></tr></table></figure>
+
+<p>JSON类型是对象。所以可以用点来访问。</p>
+<p><strong>JSON对象与字符串转化</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">var JsonString &#x3D; JSON.stringify(JsonObj);</span><br><span class="line">    var Json &#x3D; JSON.parse(JsonString);</span><br><span class="line">    Json.key_1;</span><br></pre></td></tr></table></figure>
+
+<p>JSON.stringify(对象)：将JSON对象转换成字符串。</p>
+<p>JSON.parse(字符串)：将JSON字符串转成JSON对象。</p>
+<h2 id="在Java中"><a href="#在Java中" class="headerlink" title="在Java中"></a>在Java中</h2><p>有三种转换。</p>
+<h3 id="JavaBean和Json的转换"><a href="#JavaBean和Json的转换" class="headerlink" title="JavaBean和Json的转换"></a>JavaBean和Json的转换</h3><p>JavaBean其实就是一个类的实例。需要使用到gson-xxx.jar包。在工程目录下新建一个Lib库，将jar包加载进来。然后在src下新建package，新建一个Person类。</p>
+<p>Person类里有id和name两个变量，然后生成构造函数、Getter and Setter, toString方法。</p>
+<p>之后新建一个JsonTest类</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">public class JsonTest &#123;</span><br><span class="line">    @Test</span><br><span class="line">    public void test()&#123;</span><br><span class="line">        Person person &#x3D; new Person(1, &quot;ggy&quot;);</span><br><span class="line">        Gson gson &#x3D; new Gson();</span><br><span class="line">        String s &#x3D; gson.toJson(person);</span><br><span class="line">        System.out.println(s);</span><br><span class="line">        Person person1 &#x3D; gson.fromJson(s, Person.class);</span><br><span class="line">        System.out.println(person1);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>注意使用@Test, 会产生一个警告，然后将jUtil加载进来就行了。</p>
+<p>首先需要生成Gson对象。</p>
+<ul>
+<li>gson.toJson(对象)，将对象转换成Json字符串。</li>
+<li>gson.fromJson(Json字符串, 原来的类型)，注意是Person.class。将字符串转换成原来的对象类型。</li>
+</ul>
+<p>结果：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&#123;&quot;id&quot;:1,&quot;name&quot;:&quot;ggy&quot;&#125;</span><br><span class="line">Person&#123;id&#x3D;1, name&#x3D;&#39;ggy&#39;&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="List和Json的转换"><a href="#List和Json的转换" class="headerlink" title="List和Json的转换"></a>List和Json的转换</h3><p>将List类型转换成Json字符串与上面的一致，但是从Json字符串转成List类型，而且List里面的值是Person类型就不一样了。</p>
+<p>首先新建一个test1函数，创建一个List集合，里面值类型是Person对象，然后使用add函数，将实例化后的Person添加进来。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">@Test</span><br><span class="line">  public void test1()&#123;</span><br><span class="line">      List&lt;Person&gt; list &#x3D; new ArrayList&lt;Person&gt;();</span><br><span class="line">      list.add(new Person(1,&quot;ggy&quot;));</span><br><span class="line">      list.add(new Person(2, &quot;ggg&quot;));</span><br><span class="line"></span><br><span class="line">      Gson gson &#x3D; new Gson();</span><br><span class="line">      String s &#x3D; gson.toJson(list);</span><br><span class="line">      System.out.println(s);</span><br><span class="line"></span><br><span class="line">      List&lt;Person&gt; o &#x3D; gson.fromJson(s, new PersonList().getType());</span><br><span class="line">      System.out.println(o);</span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure>
+
+<p>之后新建一个Gson对象，使用toJson将list转换成Json字符串。但是反过来时，首先需要新建一个类Person List</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">public class PersonList extends TypeToken&lt;List&lt;Person&gt;&gt; &#123;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>它只需要继承TypeToken即可，&lt;&gt;里面是list的类型。大括号里面不用写任何东西。TypeToken是Gson.jar包提供的。</p>
+<p>之后直接使用fromJson</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">List&lt;Person&gt; o &#x3D; gson.fromJson(s, new PersonList().getType());</span><br></pre></td></tr></table></figure>
+
+<p>类型的话，就需要先new那个PersonList类，然后调用getType方法即可。</p>
+<h3 id="Map和JSON的转换"><a href="#Map和JSON的转换" class="headerlink" title="Map和JSON的转换"></a>Map和JSON的转换</h3><p>跟List差不多</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">@Test</span><br><span class="line">   public void test2()&#123;</span><br><span class="line">       Map&lt;Integer, Person&gt; map &#x3D; new HashMap&lt;&gt;();</span><br><span class="line">       map.put(1, new Person(1, &quot;ggy&quot;));</span><br><span class="line">       map.put(2, new Person(2, &quot;ggg&quot;));</span><br><span class="line"></span><br><span class="line">       Gson gson &#x3D; new Gson();</span><br><span class="line">       String s &#x3D; gson.toJson(map);</span><br><span class="line">       System.out.println(s);</span><br><span class="line"></span><br><span class="line">       Map&lt;Integer, Person&gt; o &#x3D; gson.fromJson(s, new PersonMap().getType());</span><br><span class="line">       System.out.println(o.get(1));</span><br><span class="line">   &#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="问题"><a href="#问题" class="headerlink" title="问题"></a>问题</h3><p>每次要将JSON转成List或者Map时，都要新建一个类去继承TypeToken, 因此可以使用匿名类：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Map&lt;Integer, Person&gt; o &#x3D; gson.fromJson(s, new TypeToken&lt;Map&lt;Integer, Person&gt;&gt;()&#123;&#125;.getType());</span><br></pre></td></tr></table></figure>
+
+<p>直接newTypeToken，(){}必不可少。</p>
+<h1 id="Ajax"><a href="#Ajax" class="headerlink" title="Ajax"></a>Ajax</h1><p>Ajax，浏览器通过js异步发起请求，局部动态更新页面。</p>
+<h2 id="原生JS使用"><a href="#原生JS使用" class="headerlink" title="原生JS使用"></a>原生JS使用</h2><p>首先新建一个html文件。有一个按钮和一个div标签，点击按钮就调用ajax函数，发起一个ajax请求，然后将获得的返回数据输出到div标签中。</p>
+<p><img src="https://i.loli.net/2021/05/31/WoZeaxiPYwfF6br.png" alt="image-20210531173450553"></p>
+<p>因为客户端与服务器交换的数据类型是JSON的，因此接收到之后，使用JSON.parse将其变为JSON对象，然后访问里面的键即可。</p>
+<p>服务器端，新建一个AjaxServlet</p>
+<p><img src="https://i.loli.net/2021/05/31/ecsD8MQEPqFO2Lg.png" alt="image-20210531173701032"></p>
+<p>自己创建一个JSON字符串，然后返回。本来是想用创建一个Person对象，然后使用Gson将其转换成JSON字符串的，但是不知为什么没有办法将转换之后的JSON字符串输出来。。。</p>
+<h2 id="JQuery使用"><a href="#JQuery使用" class="headerlink" title="JQuery使用"></a>JQuery使用</h2><p>1.$.ajax 方法</p>
+<ul>
+<li>url: 请求的地址</li>
+<li>type:  请求的类型，GET、POST</li>
+<li>data:  发送的数据，可以有两种格式：name=value&amp;name=value, 或者：{key：value}</li>
+<li>success: 请求成功，响应的回调函数。</li>
+<li>dataType:  响应的数据类型：text, 纯文本；xml，xml数据；json，json对象。</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">$.ajax(&#123;</span><br><span class="line">	url: xxx,</span><br><span class="line">	type: GET,</span><br><span class="line">	data: name&#x3D;value,</span><br><span class="line">	success: function(data)&#123;	&#x2F;&#x2F;函数必须有个参数，表示返回来的东西。</span><br><span class="line">		alert(data);</span><br><span class="line">	&#125;,</span><br><span class="line">	dataType: json,</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<p>2.$.get方法和$.post方法</p>
+<p>有四个参数，url, data, success, dataType。已经封装好了，直接传值即可。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$.get(url, data, success, type);</span><br><span class="line">$.get(&quot;http:&#x2F;&#x2F;xxx&quot;, &quot;name&#x3D;value&quot;, &quot;function(data)&#123;alert(data);&#125;&quot;, &quot;text&quot;);</span><br></pre></td></tr></table></figure>
+
+<p>post也一样。</p>
+<p>3.getJSON方法</p>
+<p>get请求，返回JSON对象，因此只有三个参数了。url, data, success。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$.getJSON(url, data, success);</span><br><span class="line">$.getJSON(&quot;http:&#x2F;&#x2F;xxx&quot;, &quot;name&#x3D;value&quot;, &quot;function(data)&#123;alert(data);&#125;&quot;)</span><br></pre></td></tr></table></figure>
+
+<p>3.serialize方法</p>
+<p>上面的data传的都是自己写固定的值，如果需要获取表单中的所有提交的键值对并拼接成name=value&amp;name2=value2，就需要使用serialize方法。</p>
+<p>表单的id为form1</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">data &#x3D; $&#123;&quot;#form1&quot;&#125;.serialize()即可得到。</span><br><span class="line">$.getJSON(&quot;http:&#x2F;&#x2F;xxx&quot;, &quot;name&#x3D;value&amp;&quot;+data, &quot;function()&#123;&#125;&quot;)</span><br></pre></td></tr></table></figure>
+
+
+    </div>
+    
+    <div class="reward" ontouchstart>
+    <div class="reward-wrap">赏
+        <div class="reward-box">
+            
+            <span class="reward-type">
+                <img class="alipay" src="/img/alipay.jpg"><b>支付宝打赏</b>
+            </span>
+            
+            
+            <span class="reward-type">
+                <img class="wechat" src="/img/wechat.jpg"><b>微信打赏</b>
+            </span>
+            
+        </div>
+    </div>
+    <p class="reward-tip">
+        赞赏是不耍流氓的鼓励
+    </p>
+</div>
+    
+    <div class="post-footer">
+        <div>
+            
+            转载声明：
+            商业转载请联系作者获得授权,非商业转载请注明出处 © <a href="ggy.44pp.vip" target="_blank">ggy</a>
+            
+            
+        </div>
+        <div>
+            
+        </div>
+    </div>
+</article>
+<div class="article-nav prev-next-wrap clearfix">
+    
+    
+    <a href="/2021/05/16/JavaWeb%E5%AD%A6%E4%B9%A0-8/" class="next-post btn btn-default" title='JavaWeb学习(8)'>
+        <span class="hidden-lg">下一篇</span>
+        <span class="hidden-xs">
+            JavaWeb学习(8)</span><i class="fa fa-angle-right fa-fw"></i>
+    </a>
+    
+</div>
+
+<div id="comments">
+    
+<div id="lv-container" data-id="city" data-uid="MTAyMC80ODM1Ni8yNDg1MA==">
+    <script type="text/javascript">
+    (function(d, s) {
+        var j, e = d.getElementsByTagName(s)[0];
+        if (typeof LivereTower === 'function') { return; }
+        j = d.createElement(s);
+        j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+        j.async = true;
+        e.parentNode.insertBefore(j, e);
+    })(document, 'script');
+    </script>
+</div>
+
+</div>
+
+                </main>
+                
+                    <aside id="article-toc" role="navigation" class="col-md-4">
+    <div class="widget">
+        <h3 class="title">
+            文章目录
+        </h3>
+        
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#JSON"><span class="toc-text">JSON</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#在JavaSctipt中"><span class="toc-text">在JavaSctipt中</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#在Java中"><span class="toc-text">在Java中</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#JavaBean和Json的转换"><span class="toc-text">JavaBean和Json的转换</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#List和Json的转换"><span class="toc-text">List和Json的转换</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Map和JSON的转换"><span class="toc-text">Map和JSON的转换</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#问题"><span class="toc-text">问题</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Ajax"><span class="toc-text">Ajax</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#原生JS使用"><span class="toc-text">原生JS使用</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#JQuery使用"><span class="toc-text">JQuery使用</span></a></li></ol></li></ol>
+        
+    </div>
+</aside>
+                
+            </div>
+        </div>
+    </section>
+    <footer class="main-footer">
+    <div class="container">
+        <div class="row">
+        </div>
+    </div>
+</footer>
+<a id="back-to-top" class="icon-btn hide">
+    <i class="fa fa-chevron-up"></i>
+</a>
+    <div class="copyright">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="busuanzi">
+    
+    访问量:
+    <strong id="busuanzi_value_site_pv">
+        <i class="fa fa-spinner fa-spin"></i>
+    </strong>
+    &nbsp; | &nbsp;
+    访客数:
+    <strong id="busuanzi_value_site_uv">
+        <i class="fa fa-spinner fa-spin"></i>
+    </strong>
+    
+</div>
+            </div>
+            <div class="col-sm-12">
+                <span>Copyright &copy;
+                    2020
+                    
+                </span> |
+                <span>
+                    Powered by <a href="//hexo.io" class="copyright-links" target="_blank" rel="nofollow">Hexo</a>
+                </span> |
+                <span>
+                    Theme by <a href="//github.com/shenliyang/hexo-theme-snippet.git" class="copyright-links" target="_blank" rel="nofollow">Snippet</a>
+                </span>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<script src="/assets/tagcanvas.min.js?rev=2.9.js"></script>
+
+<script>
+var tagOption = {
+    textColour: '#444', // 字体颜色
+    outlineMethod: 'block', // 选中模式
+    outlineColour: '#FFDAB9', // 选中模式的颜色
+    interval: 30 || 30, // 动画帧之间的时间间隔，值越大，转动幅度越大
+    textHeight: 13,
+    outlineRadius: 3,
+    freezeActive: true || '', // 选中的标签是否继续滚动
+    frontSelect: true || '', // 不选标签云后部的标签
+    initial: [0.1, -0.1],
+    depth: 0.5,
+    decel: 0.95,
+    maxSpeed: 0.03,
+    reverse: true || '', // 是否反向触发
+    fadeIn: 500, // 进入动画时间
+    wheelZoom: false || '' // 是否启用鼠标滚轮
+}
+TagCanvas.Start('tag-cloud-3d', '', tagOption);
+</script>
+
+
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+<script src="/js/app.js?rev=@@hash.js"></script>
+
+
+<!-- 雪花特效 -->
+<script type="text/javascript" src="http://libs.baidu.com/jquery/1.8.3/jquery.js"></script>
+<script type="text/javascript" src="http://libs.baidu.com/jquery/1.8.3/jquery.min.js"></script>
+<script type="text/javascript" src="\js\snow.js"></script>
+
+<canvas class="fireworks" style="position: fixed;left: 0;top: 0;z-index: 1; pointer-events: none;" ></canvas> 
+<script type="text/javascript" src="//cdn.bootcss.com/animejs/2.2.0/anime.min.js"></script> 
+<script type="text/javascript" src="/js/fireworks.js"></script>
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"model":{"jsonPath":"live2d-widget-model-haruto"},"display":{"position":"right","width":150,"height":300},"mobile":{"show":false},"log":false,"pluginJsPath":"lib/","pluginModelPath":"assets/","pluginRootPath":"live2dw/","tagMode":false});</script></body>
+</html>

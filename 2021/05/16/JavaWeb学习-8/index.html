@@ -1,0 +1,457 @@
+<head>
+<script src="https://cdn.jsdelivr.net/npm/jquery/dist/jquery.min.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome/css/font-awesome.min.css">
+<script src="https://cdn.jsdelivr.net/gh/stevenjoezhang/live2d-widget/autoload.js"></script>
+</head>
+
+<!DOCTYPE HTML>
+<html lang="zh-CN">
+
+<head>
+    <!--Setting-->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+    <meta http-equiv="Cache-Control" content="no-siteapp">
+    <meta http-equiv="Cache-Control" content="no-transform">
+    <meta name="renderer" content="webkit|ie-comp|ie-stand">
+    <meta name="apple-mobile-web-app-capable" content="ggy的个人博客">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="format-detection" content="telephone=no,email=no,adress=no">
+    <meta name="browsermode" content="application">
+    <meta name="screen-orientation" content="portrait">
+    <meta name="theme-version" content="1.2.3">
+    <meta name="root" content="/">
+    <link rel="dns-prefetch" href="https://ggyggy666.github.io">
+    <!--SEO-->
+
+<meta name="keywords" content="JavaWeb学习" />
+
+
+<meta name="description" content="今天学习Cookie和Session和Filter过滤器。
+
+
+CookieCookie是服务器发送给客户端保存的一组组键值对，客户端传输数据给服务端时都要带上cookie，用来标识客户端。co..." />
+
+
+<meta name="robots" content="all" />
+<meta name="google" content="all" />
+<meta name="googlebot" content="all" />
+<meta name="verify" content="all" />
+    <!--Title-->
+
+<title>
+    
+    JavaWeb学习(8) |
+    
+    ggy的个人博客
+</title>
+
+<link rel="alternate" href="/atom.xml" title="ggy的个人博客" type="application/atom+xml">
+
+
+<link rel="icon" href="/favicon.ico">
+
+    
+
+
+<link rel="stylesheet" href="/css/bootstrap.min.css?rev=3.3.7.css">
+<link rel="stylesheet" href="/css/font-awesome.min.css?rev=4.7.0.css">
+<link rel="stylesheet" href="/css/style.css?rev=@@hash.css">
+
+    
+<div class="hide">
+    <script type="text/javascript">
+    var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+    document.write(unescape("%3Cspan class='cnzz_stat_icon_1263868967 hide' %3E%3Cscript%20src%3D%22https%3A%2F%2Fs95.cnzz.com%2Fz_stat.php%3Fweb_id%3D1272564536%22%3E%3C%2Fscript%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s19.cnzz.com/z_stat.php%3Fid%3D1263868967%26show%3Dpic1' type='text/javascript'%3E%3C/script%3E"));
+    </script>
+</div>
+
+
+
+
+    
+
+<meta name="generator" content="Hexo 4.2.0"></head>
+<!--[if lte IE 8]>
+<style>
+    html{ font-size: 1em }
+</style>
+<![endif]-->
+<!--[if lte IE 9]>
+<div style="ie">你使用的浏览器版本过低，为了你更好的阅读体验，请更新浏览器的版本或者使用其他现代浏览器，比如Chrome、Firefox、Safari等。</div>
+<![endif]-->
+<body>
+    <header class="main-header"  style="background-image:url(
+    https://pic.downk.cc/item/5e3816b82fb38b8c3c8791f9.jpg)"
+     >
+    <div class="main-header-box">
+        <a class="header-avatar" href="/" title='ggy'>
+            <img src="/img/avatar.jpg" alt="logo头像" class="img-responsive center-block">
+        </a>
+        <div class="branding">
+            <!--<h2 class="text-hide">Snippet主题,从未如此简单有趣</h2>-->
+            
+            <h2>
+                欢迎来到ggy的个人网站
+            </h2>
+            
+        </div>
+    </div>
+</header>
+    <nav class="main-navigation">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="navbar-header"><span class="nav-toggle-button collapsed pull-right" data-toggle="collapse" data-target="#main-menu" id="mnav">
+                        <span class="sr-only"></span>
+                        <i class="fa fa-bars"></i>
+                    </span>
+                    <a class="navbar-brand" href="https://ggyggy666.github.io">
+                        ggy的个人博客</a>
+                </div>
+                <div class="collapse navbar-collapse" id="main-menu">
+                    <ul class="menu">
+                        
+                        <li role="presentation" class="text-center">
+                            <a href="/"><i class="fa "></i>
+                                首页</a>
+                        </li>
+                        
+                        <li role="presentation" class="text-center">
+                            <a href="/categories/web安全/"><i class="fa "></i>
+                                web安全</a>
+                        </li>
+                        
+                        <li role="presentation" class="text-center">
+                            <a href="/categories/python工具/"><i class="fa "></i>
+                                python工具</a>
+                        </li>
+                        
+                        <li role="presentation" class="text-center">
+                            <a href="/categories/密码学/"><i class="fa "></i>
+                                密码学</a>
+                        </li>
+                        
+                        <li role="presentation" class="text-center">
+                            <a href="/archives/"><i class="fa "></i>
+                                时间轴</a>
+                        </li>
+                        
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</nav>
+    <section class="content-wrap">
+        <div class="container">
+            <div class="row">
+                <main class="col-md-8 main-content m-post">
+                    <p id="process"></p>
+<article class="post">
+    <div class="post-head">
+        <h1 id="JavaWeb学习(8)">
+            
+            JavaWeb学习(8)
+            
+        </h1>
+        <div class="post-meta">
+    
+    <span class="categories-meta fa-wrap">
+        <i class="fa fa-folder-open-o"></i>
+        <a class="category-link" href="/categories/JavaWeb/">JavaWeb</a>
+    </span>
+    
+    
+    <span class="fa-wrap">
+        <i class="fa fa-tags"></i>
+        <span class="tags-meta">
+            
+            <a class="tag-link" href="/tags/JavaWeb%E5%AD%A6%E4%B9%A0/" rel="tag">JavaWeb学习</a>
+            
+        </span>
+    </span>
+    
+    
+    
+    <span class="fa-wrap">
+        <i class="fa fa-clock-o"></i>
+        <span class="date-meta">
+            2021/05/16</span>
+    </span>
+    
+    <span class="fa-wrap">
+        <i class="fa fa-eye"></i>
+        <span id="busuanzi_value_page_pv"></span>
+    </span>
+    
+    
+</div>
+        
+        
+    </div>
+    
+    <div class="post-body post-content">
+        <p>今天学习Cookie和Session和Filter过滤器。</p>
+<a id="more"></a>
+
+<h1 id="Cookie"><a href="#Cookie" class="headerlink" title="Cookie"></a>Cookie</h1><p>Cookie是服务器发送给客户端保存的一组组键值对，客户端传输数据给服务端时都要带上cookie，用来标识客户端。cookie大小不能超过4KB。</p>
+<h2 id="创建Cookie"><a href="#创建Cookie" class="headerlink" title="创建Cookie"></a>创建Cookie</h2><p>首先创建CreateCookie类，doGet方法中：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">String action &#x3D; req.getParameter(&quot;action&quot;);</span><br><span class="line">if (&quot;createCookie&quot;.equals(action))&#123;</span><br><span class="line">        Cookie cookie &#x3D; new Cookie(&quot;key1&quot;, &quot;value1&quot;);</span><br><span class="line">        resp.addCookie(cookie);</span><br><span class="line">        resp.getWriter().write(&quot;Success!&quot;);</span><br><span class="line"> &#125;</span><br></pre></td></tr></table></figure>
+
+<p>注意，字符串判断相等使用equals函数，不要直接使用==，不然没办法判断相等。</p>
+<p>然后创建一个Cookie.jsp，里面写上一个a标签跳转</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;a href&#x3D;&quot;cookie?action&#x3D;createCookie&quot;&gt;创建Cookie&lt;&#x2F;a&gt;</span><br></pre></td></tr></table></figure>
+
+<p>在web.xml里面配置CreateCookie类的路径是/cookie，重新部署，访问jsp。</p>
+<h2 id="服务端获取Cookie"><a href="#服务端获取Cookie" class="headerlink" title="服务端获取Cookie"></a>服务端获取Cookie</h2><p>cookie保存在客户端，每次发送请求都会发送cookie。服务器获取cookie：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">else if(&quot;getCookie&quot;.equals(action))&#123;</span><br><span class="line">            Cookie[] cookies &#x3D; req.getCookies();</span><br><span class="line">            for(Cookie cookie : cookies)&#123;</span><br><span class="line">                resp.getWriter().write(&quot;Key: &quot;+cookie.getName()+&quot;, value: &quot;+cookie.getValue());</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br></pre></td></tr></table></figure>
+
+<p>只能通过req对象的getCookies方法获取Cookie数组，而不能获得某个Cookie的键值对。也不能通过某个Key获得相应的值。jsp页面中加一个a标签：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;a href&#x3D;&quot;cookie?action&#x3D;getCookie&quot;&gt;获取Cookie&lt;&#x2F;a&gt;</span><br></pre></td></tr></table></figure>
+
+<h2 id="修改Cookie"><a href="#修改Cookie" class="headerlink" title="修改Cookie"></a>修改Cookie</h2><p>修改Cookie也很简单，只需要重新new 一个相同key的Cookie对象，值改为新值，然后添加进Cookie即可。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">else if(&quot;updateCookie&quot;.equals(action))&#123;</span><br><span class="line">            Cookie cookie &#x3D; new Cookie(&quot;key1&quot;, &quot;ggy&quot;);</span><br><span class="line">            resp.addCookie(cookie);</span><br><span class="line">        &#125;</span><br></pre></td></tr></table></figure>
+
+<p>然后jsp中增加a标签：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;a href&#x3D;&quot;cookie?action&#x3D;updateCookie&quot;&gt;修改Cookie&lt;&#x2F;a&gt;</span><br></pre></td></tr></table></figure>
+
+<p>访问jsp页面，点击即可。</p>
+<h2 id="Cookie存活时间"><a href="#Cookie存活时间" class="headerlink" title="Cookie存活时间"></a>Cookie存活时间</h2><p>先获取cookie对象，然后使用setMaxAge方法设置存活时间。</p>
+<ul>
+<li>正数：表示Cookie在多少秒后销毁。</li>
+<li>-1：表示浏览器关闭就销毁，因此显示是session。</li>
+<li>0：表示马上销毁</li>
+</ul>
+<p>默认是-1.</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Cookie cookie &#x3D; new Cookie(&quot;key1&quot;, &quot;ggy&quot;);</span><br><span class="line">            cookie.setMaxAge(-1);</span><br><span class="line">            resp.addCookie(cookie);</span><br></pre></td></tr></table></figure>
+
+<h2 id="Cookie的path属性"><a href="#Cookie的path属性" class="headerlink" title="Cookie的path属性"></a>Cookie的path属性</h2><p>可以过滤哪些cookie可以发送给服务器</p>
+<p><img src="/2021/05/16/JavaWeb%E5%AD%A6%E4%B9%A0-8/C:%5CUsers%5C29924%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5Cimage-20210516214719722.png" alt="image-20210516214719722"></p>
+<p>要符合path路径。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Cookie cookie &#x3D; new Cookie(&quot;key1&quot;, &quot;ggy&quot;);</span><br><span class="line">cookie.setPath(req.getContextPath()+&quot;&#x2F;abc&quot;);</span><br><span class="line">resp.addCookie(cookie);</span><br></pre></td></tr></table></figure>
+
+<p>req.getContextPath()可以获得当前工程路径，后面加了个/abc, 说明Cookie必须在访问<code>/工程路径/abc</code>下的页面时才会发送。</p>
+<h1 id="Session"><a href="#Session" class="headerlink" title="Session"></a>Session</h1><p>Session保存在服务器，用来保存客户端的状态，一个客户端一个Session。</p>
+<h2 id="创建和获取Session"><a href="#创建和获取Session" class="headerlink" title="创建和获取Session"></a>创建和获取Session</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">HttpSession session &#x3D; req.getSession();</span><br><span class="line">boolean aNew &#x3D; session.isNew();</span><br><span class="line">if(aNew)&#123;</span><br><span class="line">System.out.println(&quot;Session is New&quot;);</span><br><span class="line">&#125;</span><br><span class="line">String id &#x3D; session.getId();</span><br><span class="line">System.out.println(id);</span><br></pre></td></tr></table></figure>
+
+<p>首先创建Session对象。创建和获取都是使用getSession()函数，那怎么判断它是创建还是获取呢？使用session.isNew()，返回true就代表创建，false代表获取。然后使用session.getId()可以获取sessionID。</p>
+<h2 id="往Session域存取数据"><a href="#往Session域存取数据" class="headerlink" title="往Session域存取数据"></a>往Session域存取数据</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">req.getSession().setAttribute(&quot;key1&quot;, &quot;value1&quot;);</span><br><span class="line">req.getSession().getAttribute(&quot;key1&quot;);</span><br></pre></td></tr></table></figure>
+
+<h2 id="Session存活时间"><a href="#Session存活时间" class="headerlink" title="Session存活时间"></a>Session存活时间</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">req.getSession().getMaxInactiveInterval();</span><br></pre></td></tr></table></figure>
+
+<p>获取存活时间间隔，没有设置的话就是获取默认的存活时间是30分钟。然后在web.xml中可以全局配置默认的存活时间</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&lt;session-config&gt;</span><br><span class="line">        &lt;session-timeout&gt;20&lt;&#x2F;session-timeout&gt;</span><br><span class="line">&lt;&#x2F;session-config&gt;</span><br></pre></td></tr></table></figure>
+
+<p>存活时间是20分钟。注意这个存活时间是两次请求的间隔时间。</p>
+<p>设置时间间隔（秒）</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">req.getSession().setMaxInactiveInterval(3);</span><br></pre></td></tr></table></figure>
+
+<p>存活时间是3秒。如果是负数，则永不超时。</p>
+<p>设置立即无效</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">req.getSession().invalidate();</span><br></pre></td></tr></table></figure>
+
+<h1 id="Cookie与Session的组合"><a href="#Cookie与Session的组合" class="headerlink" title="Cookie与Session的组合"></a>Cookie与Session的组合</h1><p>首先，浏览器第一次请求服务器，这时候没有session和cookie。然后服务器创建一个session对象，同时生成相应的sessionID，然后将这个sessionID作为值与JSESESSIONID组合成键值对，保存到cookie中。服务器将cookie发送回客户端。之后的请求客户端都会发送cookie，服务器接收到后，解析cookie获得sessionID值，然后找到服务器中保存的sessionID对应的session对象，之后处理。</p>
+<h1 id="Filter过滤器"><a href="#Filter过滤器" class="headerlink" title="Filter过滤器"></a>Filter过滤器</h1><p>用于过滤请求，进行权限管理。</p>
+<p>新建一个Filter工程，然后在web目录下新建一个admin目录，在该目录下新建admin.jsp, 部署访问：<a href="http://localhost:8080/Filter/admin/admin.jsp。此时可以访问。" target="_blank" rel="noopener">http://localhost:8080/Filter/admin/admin.jsp。此时可以访问。</a></p>
+<p>但是admin目录下，我们必须要让admin登陆之后才能访问这个页面，就需要配置Filter过滤器了。</p>
+<p>Filter过滤器会拦截请求，根据doFilter函数中的代码进行权限校验。</p>
+<h2 id="Filter过滤器-1"><a href="#Filter过滤器-1" class="headerlink" title="Filter过滤器"></a>Filter过滤器</h2><p>首先在src目录下新建一个包，然后新建一个AdminFilter类。</p>
+<p><img src="https://i.loli.net/2021/05/31/SN4TIzdOEoGgcDP.png" alt="image-20210531105735121"></p>
+<p>该类实现Filter类，注意，Filter类在很多包里面都有，因此需要选择java.servlet的。然后在dofilter函数中编写校验代码。</p>
+<p>首先拦截http请求，为了获取session域中的数据，需要先将servletRequest强制转换成HttpServletRequest，然后调用getSession获取session对象，再获取username的值。类型是Object哦。之后判断如果user为空，说明没有登陆，就将请求转发到login.jsp登陆界面。否则，说明登陆了，就使用filterChain.doFilter放行请求，继续访问原来要访问的资源。如果没有这句话，请求就会被丢弃，访问是一片空白。</p>
+<p>当然需要在web.xml中配置</p>
+<p><img src="https://i.loli.net/2021/05/31/uQxTcF1W6CS7Ptb.png" alt="image-20210531110227479"></p>
+<p>该Filter过滤器只过滤要访问admin目录下所有资源的请求。之后部署访问即可，发现跳转到了登陆界面。</p>
+<h2 id="加上用户登陆"><a href="#加上用户登陆" class="headerlink" title="加上用户登陆"></a>加上用户登陆</h2><p>新建一个Sevlet包，新建一个LoginServlet类。</p>
+<p><img src="https://i.loli.net/2021/05/31/It5BuwDZnE8GUeV.png" alt="image-20210531112152890"></p>
+<p>然后配置web.xml</p>
+<p><img src="https://i.loli.net/2021/05/31/eRXnsyCvHdN5oMq.png" alt="image-20210531111556509"></p>
+<p>之后login.jsp写一个表单</p>
+<p><img src="https://i.loli.net/2021/05/31/LXCGx15tzDHrhac.png" alt="image-20210531112217710"></p>
+<p>action中写工程名和servlet路径。</p>
+<p>因此，流程如下：login.jsp输入账户密码后，登陆，请求先提交给login即LoginServlet类，检查账户密码是否正确，如果正确，那么获取session对象，设置用户数据。之后访问admin下的admin.jsp时，请求会被Filter过滤器拦截，判断出session域下的用户名存在，说明登陆成功了，那么放行请求，即可访问到admin.jsp。</p>
+<h2 id="Filter的生命周期"><a href="#Filter的生命周期" class="headerlink" title="Filter的生命周期"></a>Filter的生命周期</h2><p>1.构造函数，当启动web工程时就执行。</p>
+<p>2.init初始化，当启动web工程时就执行。</p>
+<p>3.doFilter方法，每次拦截到请求，就执行。</p>
+<p>4.destroy方法，当停止web工程时就执行。</p>
+<h2 id="FilterConfig类"><a href="#FilterConfig类" class="headerlink" title="FilterConfig类"></a>FilterConfig类</h2><p>在Filter过滤器的类中的init函数</p>
+<p><img src="https://i.loli.net/2021/05/31/IqLEsN9r6bSxoZV.png" alt="image-20210531113449468"></p>
+<p>FilterConfig有三个功能，获取Filter的名称，获取Filter的配置参数，获取servletContext上下文对象。</p>
+<p>然后在web.xml中配置init-param</p>
+<p><img src="https://i.loli.net/2021/05/31/aLVfESPd18cIKFA.png" alt="image-20210531113611187"></p>
+<p>需要放在filter中。之后重新部署即可。</p>
+<h2 id="filterChain类"><a href="#filterChain类" class="headerlink" title="filterChain类"></a>filterChain类</h2><p>过滤器链，对同一个url资源可以配置多个过滤器，它们的工作流程如下：</p>
+<p><img src="https://i.loli.net/2021/05/31/GOEKvPhuS8ad92z.png" alt="image-20210531130141537"></p>
+<p>其实就是一个过滤器拦截请求后，使用filterChain放行后，下一个过滤器又拦截了。</p>
+<h2 id="Filter拦截路径"><a href="#Filter拦截路径" class="headerlink" title="Filter拦截路径"></a>Filter拦截路径</h2><ul>
+<li>精确匹配：<code>&lt;url-pattern&gt;/admin.jsp&lt;/url-pattern&gt;</code>, 匹配到的是工程路径下的admin.jsp。</li>
+<li>目录匹配：<code>&lt;url-pattern&gt;/admin/*&lt;/url-pattern&gt;</code>, 匹配到的是当前工程路径下的admin目录下的所有文件。</li>
+<li>后缀匹配：<code>&lt;url-pattern&gt;*.jsp&lt;/url-pattern&gt;</code>, 注意不能有/, 匹配到的是当前工程路径下的以jsp结尾的文件。</li>
+</ul>
+
+    </div>
+    
+    <div class="reward" ontouchstart>
+    <div class="reward-wrap">赏
+        <div class="reward-box">
+            
+            <span class="reward-type">
+                <img class="alipay" src="/img/alipay.jpg"><b>支付宝打赏</b>
+            </span>
+            
+            
+            <span class="reward-type">
+                <img class="wechat" src="/img/wechat.jpg"><b>微信打赏</b>
+            </span>
+            
+        </div>
+    </div>
+    <p class="reward-tip">
+        赞赏是不耍流氓的鼓励
+    </p>
+</div>
+    
+    <div class="post-footer">
+        <div>
+            
+            转载声明：
+            商业转载请联系作者获得授权,非商业转载请注明出处 © <a href="ggy.44pp.vip" target="_blank">ggy</a>
+            
+            
+        </div>
+        <div>
+            
+        </div>
+    </div>
+</article>
+<div class="article-nav prev-next-wrap clearfix">
+    
+    
+    <a href="/2021/05/15/JavaWeb%E5%AD%A6%E4%B9%A0-7/" class="next-post btn btn-default" title='JavaWeb学习(7)'>
+        <span class="hidden-lg">下一篇</span>
+        <span class="hidden-xs">
+            JavaWeb学习(7)</span><i class="fa fa-angle-right fa-fw"></i>
+    </a>
+    
+</div>
+
+<div id="comments">
+    
+<div id="lv-container" data-id="city" data-uid="MTAyMC80ODM1Ni8yNDg1MA==">
+    <script type="text/javascript">
+    (function(d, s) {
+        var j, e = d.getElementsByTagName(s)[0];
+        if (typeof LivereTower === 'function') { return; }
+        j = d.createElement(s);
+        j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+        j.async = true;
+        e.parentNode.insertBefore(j, e);
+    })(document, 'script');
+    </script>
+</div>
+
+</div>
+
+                </main>
+                
+                    <aside id="article-toc" role="navigation" class="col-md-4">
+    <div class="widget">
+        <h3 class="title">
+            文章目录
+        </h3>
+        
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Cookie"><span class="toc-text">Cookie</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#创建Cookie"><span class="toc-text">创建Cookie</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#服务端获取Cookie"><span class="toc-text">服务端获取Cookie</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#修改Cookie"><span class="toc-text">修改Cookie</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Cookie存活时间"><span class="toc-text">Cookie存活时间</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Cookie的path属性"><span class="toc-text">Cookie的path属性</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Session"><span class="toc-text">Session</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#创建和获取Session"><span class="toc-text">创建和获取Session</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#往Session域存取数据"><span class="toc-text">往Session域存取数据</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Session存活时间"><span class="toc-text">Session存活时间</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Cookie与Session的组合"><span class="toc-text">Cookie与Session的组合</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Filter过滤器"><span class="toc-text">Filter过滤器</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Filter过滤器-1"><span class="toc-text">Filter过滤器</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#加上用户登陆"><span class="toc-text">加上用户登陆</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Filter的生命周期"><span class="toc-text">Filter的生命周期</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#FilterConfig类"><span class="toc-text">FilterConfig类</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#filterChain类"><span class="toc-text">filterChain类</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Filter拦截路径"><span class="toc-text">Filter拦截路径</span></a></li></ol></li></ol>
+        
+    </div>
+</aside>
+                
+            </div>
+        </div>
+    </section>
+    <footer class="main-footer">
+    <div class="container">
+        <div class="row">
+        </div>
+    </div>
+</footer>
+<a id="back-to-top" class="icon-btn hide">
+    <i class="fa fa-chevron-up"></i>
+</a>
+    <div class="copyright">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="busuanzi">
+    
+    访问量:
+    <strong id="busuanzi_value_site_pv">
+        <i class="fa fa-spinner fa-spin"></i>
+    </strong>
+    &nbsp; | &nbsp;
+    访客数:
+    <strong id="busuanzi_value_site_uv">
+        <i class="fa fa-spinner fa-spin"></i>
+    </strong>
+    
+</div>
+            </div>
+            <div class="col-sm-12">
+                <span>Copyright &copy;
+                    2020
+                    
+                </span> |
+                <span>
+                    Powered by <a href="//hexo.io" class="copyright-links" target="_blank" rel="nofollow">Hexo</a>
+                </span> |
+                <span>
+                    Theme by <a href="//github.com/shenliyang/hexo-theme-snippet.git" class="copyright-links" target="_blank" rel="nofollow">Snippet</a>
+                </span>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<script src="/assets/tagcanvas.min.js?rev=2.9.js"></script>
+
+<script>
+var tagOption = {
+    textColour: '#444', // 字体颜色
+    outlineMethod: 'block', // 选中模式
+    outlineColour: '#FFDAB9', // 选中模式的颜色
+    interval: 30 || 30, // 动画帧之间的时间间隔，值越大，转动幅度越大
+    textHeight: 13,
+    outlineRadius: 3,
+    freezeActive: true || '', // 选中的标签是否继续滚动
+    frontSelect: true || '', // 不选标签云后部的标签
+    initial: [0.1, -0.1],
+    depth: 0.5,
+    decel: 0.95,
+    maxSpeed: 0.03,
+    reverse: true || '', // 是否反向触发
+    fadeIn: 500, // 进入动画时间
+    wheelZoom: false || '' // 是否启用鼠标滚轮
+}
+TagCanvas.Start('tag-cloud-3d', '', tagOption);
+</script>
+
+
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+<script src="/js/app.js?rev=@@hash.js"></script>
+
+
+<!-- 雪花特效 -->
+<script type="text/javascript" src="http://libs.baidu.com/jquery/1.8.3/jquery.js"></script>
+<script type="text/javascript" src="http://libs.baidu.com/jquery/1.8.3/jquery.min.js"></script>
+<script type="text/javascript" src="\js\snow.js"></script>
+
+<canvas class="fireworks" style="position: fixed;left: 0;top: 0;z-index: 1; pointer-events: none;" ></canvas> 
+<script type="text/javascript" src="//cdn.bootcss.com/animejs/2.2.0/anime.min.js"></script> 
+<script type="text/javascript" src="/js/fireworks.js"></script>
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"model":{"jsonPath":"live2d-widget-model-haruto"},"display":{"position":"right","width":150,"height":300},"mobile":{"show":false},"log":false,"pluginJsPath":"lib/","pluginModelPath":"assets/","pluginRootPath":"live2dw/","tagMode":false});</script></body>
+</html>

@@ -1,0 +1,459 @@
+<head>
+<script src="https://cdn.jsdelivr.net/npm/jquery/dist/jquery.min.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome/css/font-awesome.min.css">
+<script src="https://cdn.jsdelivr.net/gh/stevenjoezhang/live2d-widget/autoload.js"></script>
+</head>
+
+<!DOCTYPE HTML>
+<html lang="zh-CN">
+
+<head>
+    <!--Setting-->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+    <meta http-equiv="Cache-Control" content="no-siteapp">
+    <meta http-equiv="Cache-Control" content="no-transform">
+    <meta name="renderer" content="webkit|ie-comp|ie-stand">
+    <meta name="apple-mobile-web-app-capable" content="ggy的个人博客">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="format-detection" content="telephone=no,email=no,adress=no">
+    <meta name="browsermode" content="application">
+    <meta name="screen-orientation" content="portrait">
+    <meta name="theme-version" content="1.2.3">
+    <meta name="root" content="/">
+    <link rel="dns-prefetch" href="https://ggyggy666.github.io">
+    <!--SEO-->
+
+<meta name="keywords" content="Mybatis学习1" />
+
+
+<meta name="description" content="今天把Maven大概学习完了，知道了怎么创建项目、配置环境、打包项目和部署项目。接下来学习Mybatis。
+
+
+Mybatis简介用来操作数据库的，原来的JDBC代码太复杂了。
+持久化：将程序的..." />
+
+
+<meta name="robots" content="all" />
+<meta name="google" content="all" />
+<meta name="googlebot" content="all" />
+<meta name="verify" content="all" />
+    <!--Title-->
+
+<title>
+    
+    Mybatis学习1 |
+    
+    ggy的个人博客
+</title>
+
+<link rel="alternate" href="/atom.xml" title="ggy的个人博客" type="application/atom+xml">
+
+
+<link rel="icon" href="/favicon.ico">
+
+    
+
+
+<link rel="stylesheet" href="/css/bootstrap.min.css?rev=3.3.7.css">
+<link rel="stylesheet" href="/css/font-awesome.min.css?rev=4.7.0.css">
+<link rel="stylesheet" href="/css/style.css?rev=@@hash.css">
+
+    
+<div class="hide">
+    <script type="text/javascript">
+    var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+    document.write(unescape("%3Cspan class='cnzz_stat_icon_1263868967 hide' %3E%3Cscript%20src%3D%22https%3A%2F%2Fs95.cnzz.com%2Fz_stat.php%3Fweb_id%3D1272564536%22%3E%3C%2Fscript%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s19.cnzz.com/z_stat.php%3Fid%3D1263868967%26show%3Dpic1' type='text/javascript'%3E%3C/script%3E"));
+    </script>
+</div>
+
+
+
+
+    
+
+<meta name="generator" content="Hexo 4.2.0"></head>
+<!--[if lte IE 8]>
+<style>
+    html{ font-size: 1em }
+</style>
+<![endif]-->
+<!--[if lte IE 9]>
+<div style="ie">你使用的浏览器版本过低，为了你更好的阅读体验，请更新浏览器的版本或者使用其他现代浏览器，比如Chrome、Firefox、Safari等。</div>
+<![endif]-->
+<body>
+    <header class="main-header"  style="background-image:url(
+    https://pic.downk.cc/item/5e3816b82fb38b8c3c8791f9.jpg)"
+     >
+    <div class="main-header-box">
+        <a class="header-avatar" href="/" title='ggy'>
+            <img src="/img/avatar.jpg" alt="logo头像" class="img-responsive center-block">
+        </a>
+        <div class="branding">
+            <!--<h2 class="text-hide">Snippet主题,从未如此简单有趣</h2>-->
+            
+            <h2>
+                欢迎来到ggy的个人网站
+            </h2>
+            
+        </div>
+    </div>
+</header>
+    <nav class="main-navigation">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="navbar-header"><span class="nav-toggle-button collapsed pull-right" data-toggle="collapse" data-target="#main-menu" id="mnav">
+                        <span class="sr-only"></span>
+                        <i class="fa fa-bars"></i>
+                    </span>
+                    <a class="navbar-brand" href="https://ggyggy666.github.io">
+                        ggy的个人博客</a>
+                </div>
+                <div class="collapse navbar-collapse" id="main-menu">
+                    <ul class="menu">
+                        
+                        <li role="presentation" class="text-center">
+                            <a href="/"><i class="fa "></i>
+                                首页</a>
+                        </li>
+                        
+                        <li role="presentation" class="text-center">
+                            <a href="/categories/web安全/"><i class="fa "></i>
+                                web安全</a>
+                        </li>
+                        
+                        <li role="presentation" class="text-center">
+                            <a href="/categories/python工具/"><i class="fa "></i>
+                                python工具</a>
+                        </li>
+                        
+                        <li role="presentation" class="text-center">
+                            <a href="/categories/密码学/"><i class="fa "></i>
+                                密码学</a>
+                        </li>
+                        
+                        <li role="presentation" class="text-center">
+                            <a href="/archives/"><i class="fa "></i>
+                                时间轴</a>
+                        </li>
+                        
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</nav>
+    <section class="content-wrap">
+        <div class="container">
+            <div class="row">
+                <main class="col-md-8 main-content m-post">
+                    <p id="process"></p>
+<article class="post">
+    <div class="post-head">
+        <h1 id="Mybatis学习1">
+            
+            Mybatis学习1
+            
+        </h1>
+        <div class="post-meta">
+    
+    <span class="categories-meta fa-wrap">
+        <i class="fa fa-folder-open-o"></i>
+        <a class="category-link" href="/categories/ssm%E5%AD%A6%E4%B9%A0/">ssm学习</a>
+    </span>
+    
+    
+    <span class="fa-wrap">
+        <i class="fa fa-tags"></i>
+        <span class="tags-meta">
+            
+            <a class="tag-link" href="/tags/Mybatis%E5%AD%A6%E4%B9%A01/" rel="tag">Mybatis学习1</a>
+            
+        </span>
+    </span>
+    
+    
+    
+    <span class="fa-wrap">
+        <i class="fa fa-clock-o"></i>
+        <span class="date-meta">
+            2021/06/07</span>
+    </span>
+    
+    <span class="fa-wrap">
+        <i class="fa fa-eye"></i>
+        <span id="busuanzi_value_page_pv"></span>
+    </span>
+    
+    
+</div>
+        
+        
+    </div>
+    
+    <div class="post-body post-content">
+        <p>今天把Maven大概学习完了，知道了怎么创建项目、配置环境、打包项目和部署项目。接下来学习Mybatis。</p>
+<a id="more"></a>
+
+<h1 id="Mybatis简介"><a href="#Mybatis简介" class="headerlink" title="Mybatis简介"></a>Mybatis简介</h1><p>用来操作数据库的，原来的JDBC代码太复杂了。</p>
+<p>持久化：将程序的数据在持久状态和瞬时状态转化的过程。因为内存中的数据是断电即失。</p>
+<ul>
+<li><p>Maven仓库</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&lt;!-- https:&#x2F;&#x2F;mvnrepository.com&#x2F;artifact&#x2F;org.mybatis&#x2F;mybatis --&gt;</span><br><span class="line">&lt;dependency&gt;</span><br><span class="line">    &lt;groupId&gt;org.mybatis&lt;&#x2F;groupId&gt;</span><br><span class="line">    &lt;artifactId&gt;mybatis&lt;&#x2F;artifactId&gt;</span><br><span class="line">    &lt;version&gt;3.5.6&lt;&#x2F;version&gt;</span><br><span class="line">&lt;&#x2F;dependency&gt;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>Github</p>
+<p><a href="https://github.com/mybatis/mybatis-3/releases" target="_blank" rel="noopener">https://github.com/mybatis/mybatis-3/releases</a></p>
+</li>
+<li><p>中文文档</p>
+<p><a href="https://mybatis.org/mybatis-3/zh/getting-started.html" target="_blank" rel="noopener">https://mybatis.org/mybatis-3/zh/getting-started.html</a></p>
+</li>
+<li><p>英文文档</p>
+<p><a href="https://mybatis.org/mybatis-3/getting-started.html" target="_blank" rel="noopener">https://mybatis.org/mybatis-3/getting-started.html</a></p>
+</li>
+</ul>
+<h1 id="Mybatis环境搭建"><a href="#Mybatis环境搭建" class="headerlink" title="Mybatis环境搭建"></a>Mybatis环境搭建</h1><h2 id="创建数据库"><a href="#创建数据库" class="headerlink" title="创建数据库"></a>创建数据库</h2><p>打开Phpstudy_pro, 打开Mysql8.0.12, 然后连接数据库</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">mysql -uroot -p root</span><br><span class="line">create database mybatis;</span><br><span class="line">use mybatis;</span><br><span class="line"></span><br><span class="line">create table &#96;user&#96;(</span><br><span class="line">&#96;id&#96; INT(20) not null primary key,</span><br><span class="line">&#96;name&#96; varchar(30) default null,</span><br><span class="line">&#96;pwd&#96; varchar(30) default null</span><br><span class="line">);</span><br><span class="line"></span><br><span class="line">insert into &#96;user&#96;(&#96;id&#96;, &#96;name&#96;, &#96;pwd&#96;) values (1,&#39;ggy1&#39;,&#39;111&#39;),(2,&#39;ggy2&#39;,&#39;222&#39;),(3,&#39;ggy3&#39;,&#39;333&#39;);</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="创建Maven项目"><a href="#创建Maven项目" class="headerlink" title="创建Maven项目"></a>创建Maven项目</h2><p>新建一个普通的Maven项目（不用勾选），然后把src目录删了</p>
+<p><img src="https://raw.githubusercontent.com/ggyggy666/ggyggy666.github.io/master/img/image-20210607155502529.png" alt="image-20210607155502529"></p>
+<p>之后在Pom.xml中将MySQL、mybatis和junit依赖导入</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">&lt;dependencies&gt;</span><br><span class="line">    &lt;dependency&gt;</span><br><span class="line">        &lt;groupId&gt;mysql&lt;&#x2F;groupId&gt;</span><br><span class="line">        &lt;artifactId&gt;mysql-connector-java&lt;&#x2F;artifactId&gt;</span><br><span class="line">        &lt;version&gt;8.0.12&lt;&#x2F;version&gt;</span><br><span class="line">    &lt;&#x2F;dependency&gt;</span><br><span class="line"></span><br><span class="line">    &lt;dependency&gt;</span><br><span class="line">        &lt;groupId&gt;org.mybatis&lt;&#x2F;groupId&gt;</span><br><span class="line">        &lt;artifactId&gt;mybatis&lt;&#x2F;artifactId&gt;</span><br><span class="line">        &lt;version&gt;3.5.6&lt;&#x2F;version&gt;</span><br><span class="line">    &lt;&#x2F;dependency&gt;</span><br><span class="line"></span><br><span class="line">    &lt;dependency&gt;</span><br><span class="line">        &lt;groupId&gt;junit&lt;&#x2F;groupId&gt;</span><br><span class="line">        &lt;artifactId&gt;junit&lt;&#x2F;artifactId&gt;</span><br><span class="line">        &lt;version&gt;4.12&lt;&#x2F;version&gt;</span><br><span class="line">    &lt;&#x2F;dependency&gt;</span><br><span class="line">&lt;&#x2F;dependencies&gt;</span><br></pre></td></tr></table></figure>
+
+<h2 id="创建一个模块"><a href="#创建一个模块" class="headerlink" title="创建一个模块"></a>创建一个模块</h2><p>在项目下创建一个模块，这样就能保持一个父子依赖关系。只要在父项目中配置了MySQL和mybatis等依赖，其它子模块就不用再重新导入了。</p>
+<p>直接new一个Mybatis_01模块。然后需要Mybatis的配置文件：<a href="https://mybatis.org/mybatis-3/getting-started.html。" target="_blank" rel="noopener">https://mybatis.org/mybatis-3/getting-started.html。</a></p>
+<p>在src的main的resources目录下新建一个Mybatis-config.xml</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">&lt;?xml version&#x3D;&quot;1.0&quot; encoding&#x3D;&quot;UTF-8&quot; ?&gt;</span><br><span class="line">&lt;!DOCTYPE configuration</span><br><span class="line">        PUBLIC &quot;-&#x2F;&#x2F;mybatis.org&#x2F;&#x2F;DTD Config 3.0&#x2F;&#x2F;EN&quot;</span><br><span class="line">        &quot;http:&#x2F;&#x2F;mybatis.org&#x2F;dtd&#x2F;mybatis-3-config.dtd&quot;&gt;</span><br><span class="line">&lt;configuration&gt;</span><br><span class="line">    &lt;environments default&#x3D;&quot;development&quot;&gt;</span><br><span class="line">        &lt;environment id&#x3D;&quot;development&quot;&gt;</span><br><span class="line">            &lt;transactionManager type&#x3D;&quot;JDBC&quot;&#x2F;&gt;</span><br><span class="line">            &lt;dataSource type&#x3D;&quot;POOLED&quot;&gt;</span><br><span class="line">                &lt;property name&#x3D;&quot;driver&quot; value&#x3D;&quot;$&#123;driver&#125;&quot;&#x2F;&gt;</span><br><span class="line">                &lt;property name&#x3D;&quot;url&quot; value&#x3D;&quot;$&#123;url&#125;&quot;&#x2F;&gt;</span><br><span class="line">                &lt;property name&#x3D;&quot;username&quot; value&#x3D;&quot;$&#123;username&#125;&quot;&#x2F;&gt;</span><br><span class="line">                &lt;property name&#x3D;&quot;password&quot; value&#x3D;&quot;$&#123;password&#125;&quot;&#x2F;&gt;</span><br><span class="line">            &lt;&#x2F;dataSource&gt;</span><br><span class="line">        &lt;&#x2F;environment&gt;</span><br><span class="line">    &lt;&#x2F;environments&gt;</span><br><span class="line">&lt;&#x2F;configuration&gt;</span><br></pre></td></tr></table></figure>
+
+<p>但是可以看到有四个property, 需要获得它们的值并覆盖。其中，<strong>driver是com.mysql.jdbc.driver</strong>。而URL就需要连接数据库了。</p>
+<h3 id="IDEA连接MySQL"><a href="#IDEA连接MySQL" class="headerlink" title="IDEA连接MySQL"></a>IDEA连接MySQL</h3><p><img src="https://raw.githubusercontent.com/ggyggy666/ggyggy666.github.io/master/img/image-20210607193445001.png" alt="image-20210607193445001"></p>
+<p>下载好驱动后，输入用户名和密码连接，发现出错了</p>
+<p><img src="https://raw.githubusercontent.com/ggyggy666/ggyggy666.github.io/master/img/image-20210607193928356.png" alt="image-20210607193928356"></p>
+<p>什么时区属性没有设置。按照文章解决：<a href="https://blog.csdn.net/liuqiker/article/details/102455077，Mysql命令行中输入：`set" target="_blank" rel="noopener">https://blog.csdn.net/liuqiker/article/details/102455077，Mysql命令行中输入：`set</a> global time_zone = ‘+8:00’;`即可。</p>
+<p><img src="https://raw.githubusercontent.com/ggyggy666/ggyggy666.github.io/master/img/image-20210607194031741.png" alt="image-20210607194031741"></p>
+<p>连接成功。然后连接Mybatis数据库</p>
+<p><img src="https://raw.githubusercontent.com/ggyggy666/ggyggy666.github.io/master/img/image-20210607194145084.png" alt="image-20210607194145084"></p>
+<p>连接上后，得到url: <code>jdbc:mysql://localhost:3306</code>, 但是这个还不完整。完整如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">jdbc:mysql:&#x2F;&#x2F;localhost:3306&#x2F;mybatis?useSSL&#x3D;true&amp;useUnicode&#x3D;true&amp;characterEncoding&#x3D;UTF-8</span><br></pre></td></tr></table></figure>
+
+<p>这是为了防止有其它错误。再填写上用户名和密码，最终如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">&lt;configuration&gt;</span><br><span class="line">    &lt;environments default&#x3D;&quot;development&quot;&gt;</span><br><span class="line">        &lt;environment id&#x3D;&quot;development&quot;&gt;</span><br><span class="line">            &lt;transactionManager type&#x3D;&quot;JDBC&quot;&#x2F;&gt;</span><br><span class="line">            &lt;dataSource type&#x3D;&quot;POOLED&quot;&gt;</span><br><span class="line">                &lt;property name&#x3D;&quot;driver&quot; value&#x3D;&quot;com.mysql.jdbc.Driver&quot;&#x2F;&gt;</span><br><span class="line">                &lt;property name&#x3D;&quot;url&quot; value&#x3D;&quot;jdbc:mysql:&#x2F;&#x2F;localhost:3306&#x2F;mybatis?useSSL&#x3D;true&amp;useUnicode&#x3D;true&amp;characterEncoding&#x3D;UTF-8&quot;&#x2F;&gt;</span><br><span class="line">                &lt;property name&#x3D;&quot;username&quot; value&#x3D;&quot;root&quot;&#x2F;&gt;</span><br><span class="line">                &lt;property name&#x3D;&quot;password&quot; value&#x3D;&quot;root&quot;&#x2F;&gt;</span><br><span class="line">            &lt;&#x2F;dataSource&gt;</span><br><span class="line">        &lt;&#x2F;environment&gt;</span><br><span class="line">    &lt;&#x2F;environments&gt;</span><br><span class="line">&lt;&#x2F;configuration&gt;</span><br></pre></td></tr></table></figure>
+
+<h2 id="编写连接工具类"><a href="#编写连接工具类" class="headerlink" title="编写连接工具类"></a>编写连接工具类</h2><p>连接上Mysql后，需要一个工具类去操作Mysql，执行SQL语句。</p>
+<h3 id="创建MybatisUtils"><a href="#创建MybatisUtils" class="headerlink" title="创建MybatisUtils"></a>创建MybatisUtils</h3><p>这个类用来返回一个sqlSession。</p>
+<p>在java目录下创建com.ggy包，再创建dao包和utils包，在utils包下创建MybatisUtils类</p>
+<p><img src="https://raw.githubusercontent.com/ggyggy666/ggyggy666.github.io/master/img/image-20210607205823493.png" alt="image-20210607205823493"></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">public class MybatisUtils &#123;</span><br><span class="line">    static &#123;</span><br><span class="line">        try &#123;</span><br><span class="line">            String resource &#x3D; &quot;mybatis-config.xml&quot;;</span><br><span class="line">            InputStream inputStream &#x3D; Resources.getResourceAsStream(resource);</span><br><span class="line">            SqlSessionFactory sqlSessionFactory &#x3D; new SqlSessionFactoryBuilder().build(inputStream);</span><br><span class="line">        &#125; catch (IOException e) &#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>那三句话就是用来创建SqlSessionFactory的。创建这个工厂后就可以通过openSession()返回一个SqlSession对象。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">public static SqlSession getSession()&#123;</span><br><span class="line">    return sqlSessionFactory.openSession();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>它是静态的方法，调用的应该也是静态的sqlSessionFactory才行，因此上面也要改。最终如下：</p>
+<p><img src="https://raw.githubusercontent.com/ggyggy666/ggyggy666.github.io/master/img/image-20210607210331182.png" alt="image-20210607210331182"></p>
+<p>之后就能调用这个类的getSession方法获得一个sqlSession对象了。</p>
+<h3 id="创建实体类pojo"><a href="#创建实体类pojo" class="headerlink" title="创建实体类pojo"></a>创建实体类pojo</h3><p>在com.ggy包下新建一个pojo包，然后创建一个user类</p>
+<p><img src="https://raw.githubusercontent.com/ggyggy666/ggyggy666.github.io/master/img/image-20210607211138183.png" alt="image-20210607211138183"></p>
+<p>这个类包含user表的三个属性，id，name和pwd。然后生成有参和无参的构造函数，生成Getter and Setter，还有toString方法。</p>
+<h3 id="创建userDao接口和userMapper-xml"><a href="#创建userDao接口和userMapper-xml" class="headerlink" title="创建userDao接口和userMapper.xml"></a>创建userDao接口和userMapper.xml</h3><p>在dao包下创建userDao类</p>
+<p><img src="https://raw.githubusercontent.com/ggyggy666/ggyggy666.github.io/master/img/image-20210607211505900.png" alt="image-20210607211505900"></p>
+<p>这个类就是一个接口。之后本应该创建一个实现类，但是，常用的实现类是userDaoImpl，这样写的话最终还是使用JDBC去连接，违背了使用Mybatis的初衷。因此，这里创建的是userMapper.xml文件。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">&lt;?xml version&#x3D;&quot;1.0&quot; encoding&#x3D;&quot;UTF-8&quot; ?&gt;</span><br><span class="line">&lt;!DOCTYPE mapper</span><br><span class="line">        PUBLIC &quot;-&#x2F;&#x2F;mybatis.org&#x2F;&#x2F;DTD Mapper 3.0&#x2F;&#x2F;EN&quot;</span><br><span class="line">        &quot;http:&#x2F;&#x2F;mybatis.org&#x2F;dtd&#x2F;mybatis-3-mapper.dtd&quot;&gt;</span><br><span class="line">&lt;!--与userDao绑定，通过命名空间, 表示实现userDao--&gt;</span><br><span class="line">&lt;mapper namespace&#x3D;&quot;com.ggy.dao.userDao&quot;&gt;</span><br><span class="line"></span><br><span class="line">    &lt;!--SQL语句，id是userDao中的方法名唯一标识，返回类型是userDao中的方法的类型--&gt;</span><br><span class="line">    &lt;select id&#x3D;&quot;getUserList&quot; resultType&#x3D;&quot;com.ggy.pojo.user&quot;&gt;</span><br><span class="line">        select * from mybatis.user;</span><br><span class="line">  &lt;&#x2F;select&gt;</span><br><span class="line">&lt;&#x2F;mapper&gt;</span><br></pre></td></tr></table></figure>
+
+<p>返回一个值就是resultType, 多个就得用resultMap。</p>
+<h3 id="测试"><a href="#测试" class="headerlink" title="测试"></a>测试</h3><p>在test的Java的目录下新建一个com.ggy.dao, 再创建userDaoTest类</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">public class userDaoTest &#123;</span><br><span class="line">    @Test</span><br><span class="line">    public void test()&#123;</span><br><span class="line">        &#x2F;&#x2F;获取sqlSession对象</span><br><span class="line">        SqlSession session &#x3D; MybatisUtils.getSession();</span><br><span class="line"></span><br><span class="line">        &#x2F;&#x2F;方式一：getMapper</span><br><span class="line">        userDao userDao &#x3D; session.getMapper(com.ggy.dao.userDao.class);</span><br><span class="line">        List&lt;user&gt; userList &#x3D; userDao.getUserList();</span><br><span class="line">        </span><br><span class="line">        &#x2F;&#x2F;方式二</span><br><span class="line">        &#x2F;&#x2F;List&lt;user&gt; userList &#x3D; session.selectList(&quot;com.ggy.dao.userDao.getUserList&quot;);</span><br><span class="line">        </span><br><span class="line">        for(user user: userList)&#123;</span><br><span class="line">            System.out.println(user);</span><br><span class="line">        &#125;</span><br><span class="line">        session.close();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>这样运行的话会出错：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">org.apache.ibatis.binding.BindingException: Type interface com.ggy.dao.userDao is not known to the MapperRegistry.</span><br></pre></td></tr></table></figure>
+
+<p>因为每一个Mapper.xml都需要在Mybatis-config.xml中注册</p>
+<p>在Mybatis-config.xml中</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&lt;mappers&gt;</span><br><span class="line">    &lt;mapper resource&#x3D;&quot;com&#x2F;ggy&#x2F;dao&#x2F;userMapper.xml&quot;&#x2F;&gt;</span><br><span class="line">&lt;&#x2F;mappers&gt;</span><br></pre></td></tr></table></figure>
+
+<p>但是还是错了。因为这个Mapper.xml是在src下的，而现在是运行test目录下的程序，因此找不到userMapper.xml。当然，如果直接复制过来也是可以的，只不过显然臃肿。</p>
+<p>Maven中约定大于配置，所以<strong>需要在pom.xml中的build标签下配置resource，来防止资源导出失败的问题。</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">&lt;build&gt;</span><br><span class="line">    &lt;resources&gt;</span><br><span class="line">        &lt;resource&gt;</span><br><span class="line">            &lt;directory&gt;src&#x2F;main&#x2F;resources&lt;&#x2F;directory&gt;</span><br><span class="line">            &lt;includes&gt;</span><br><span class="line">                &lt;include&gt;**&#x2F;*.properties&lt;&#x2F;include&gt;</span><br><span class="line">                &lt;include&gt;**&#x2F;*.xml&lt;&#x2F;include&gt;</span><br><span class="line">            &lt;&#x2F;includes&gt;</span><br><span class="line">        &lt;&#x2F;resource&gt;</span><br><span class="line">        &lt;resource&gt;</span><br><span class="line">            &lt;directory&gt;src&#x2F;main&#x2F;java&lt;&#x2F;directory&gt;</span><br><span class="line">            &lt;includes&gt;</span><br><span class="line">                &lt;include&gt;**&#x2F;*.properties&lt;&#x2F;include&gt;</span><br><span class="line">                &lt;include&gt;**&#x2F;*.xml&lt;&#x2F;include&gt;</span><br><span class="line">            &lt;&#x2F;includes&gt;</span><br><span class="line">            &lt;filtering&gt;true&lt;&#x2F;filtering&gt;</span><br><span class="line">        &lt;&#x2F;resource&gt;</span><br><span class="line">    &lt;&#x2F;resources&gt;</span><br><span class="line">&lt;&#x2F;build&gt;</span><br></pre></td></tr></table></figure>
+
+<p>在Mybatis_study也配置一下。再运行还是报错了</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Loading class &#96;com.mysql.jdbc.Driver&#39;. This is deprecated. The new driver class is &#96;com.mysql.cj.jdbc.Driver&#39;. The driver is automatically registered via the SPI and manual loading of the driver class is generally unnecessary.</span><br></pre></td></tr></table></figure>
+
+<p>驱动被废弃了，因此到Mybatis-config.xml中更改driver。之后运行还是错了</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Error querying database.  Cause: com.mysql.cj.jdbc.exceptions.CommunicationsException: Communications link failure</span><br></pre></td></tr></table></figure>
+
+<p>参考文章：<a href="https://blog.csdn.net/qiushisoftware/article/details/77718634" target="_blank" rel="noopener">https://blog.csdn.net/qiushisoftware/article/details/77718634</a></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">set global wait_timeout&#x3D;2000;</span><br><span class="line">set global interactive_time&#x3D;2000;</span><br></pre></td></tr></table></figure>
+
+<p>成功后，退出MySQL，重新进入即可。但是运行还是错了。。最后发现是使用在mybatis-config.xml中的url中设置了useSSL=true的问题。如果去掉，可以运行，但是连接就不安全了。</p>
+<p>在url中还可以加上设置时区的</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">serverTimezone&#x3D;GMT%2B8</span><br></pre></td></tr></table></figure>
+
+<p>这样运行就可以了</p>
+<p><img src="https://raw.githubusercontent.com/ggyggy666/ggyggy666.github.io/master/img/image-20210607225544069.png" alt="image-20210607225544069"></p>
+
+    </div>
+    
+    <div class="reward" ontouchstart>
+    <div class="reward-wrap">赏
+        <div class="reward-box">
+            
+            <span class="reward-type">
+                <img class="alipay" src="/img/alipay.jpg"><b>支付宝打赏</b>
+            </span>
+            
+            
+            <span class="reward-type">
+                <img class="wechat" src="/img/wechat.jpg"><b>微信打赏</b>
+            </span>
+            
+        </div>
+    </div>
+    <p class="reward-tip">
+        赞赏是不耍流氓的鼓励
+    </p>
+</div>
+    
+    <div class="post-footer">
+        <div>
+            
+            转载声明：
+            商业转载请联系作者获得授权,非商业转载请注明出处 © <a href="ggy.44pp.vip" target="_blank">ggy</a>
+            
+            
+        </div>
+        <div>
+            
+        </div>
+    </div>
+</article>
+<div class="article-nav prev-next-wrap clearfix">
+    
+    
+    <a href="/2021/06/06/Maven%E9%85%8D%E7%BD%AE/" class="next-post btn btn-default" title='Maven配置'>
+        <span class="hidden-lg">下一篇</span>
+        <span class="hidden-xs">
+            Maven配置</span><i class="fa fa-angle-right fa-fw"></i>
+    </a>
+    
+</div>
+
+<div id="comments">
+    
+<div id="lv-container" data-id="city" data-uid="MTAyMC80ODM1Ni8yNDg1MA==">
+    <script type="text/javascript">
+    (function(d, s) {
+        var j, e = d.getElementsByTagName(s)[0];
+        if (typeof LivereTower === 'function') { return; }
+        j = d.createElement(s);
+        j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+        j.async = true;
+        e.parentNode.insertBefore(j, e);
+    })(document, 'script');
+    </script>
+</div>
+
+</div>
+
+                </main>
+                
+                    <aside id="article-toc" role="navigation" class="col-md-4">
+    <div class="widget">
+        <h3 class="title">
+            文章目录
+        </h3>
+        
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Mybatis简介"><span class="toc-text">Mybatis简介</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Mybatis环境搭建"><span class="toc-text">Mybatis环境搭建</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#创建数据库"><span class="toc-text">创建数据库</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#创建Maven项目"><span class="toc-text">创建Maven项目</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#创建一个模块"><span class="toc-text">创建一个模块</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#IDEA连接MySQL"><span class="toc-text">IDEA连接MySQL</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#编写连接工具类"><span class="toc-text">编写连接工具类</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#创建MybatisUtils"><span class="toc-text">创建MybatisUtils</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#创建实体类pojo"><span class="toc-text">创建实体类pojo</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#创建userDao接口和userMapper-xml"><span class="toc-text">创建userDao接口和userMapper.xml</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#测试"><span class="toc-text">测试</span></a></li></ol></li></ol></li></ol>
+        
+    </div>
+</aside>
+                
+            </div>
+        </div>
+    </section>
+    <footer class="main-footer">
+    <div class="container">
+        <div class="row">
+        </div>
+    </div>
+</footer>
+<a id="back-to-top" class="icon-btn hide">
+    <i class="fa fa-chevron-up"></i>
+</a>
+    <div class="copyright">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="busuanzi">
+    
+    访问量:
+    <strong id="busuanzi_value_site_pv">
+        <i class="fa fa-spinner fa-spin"></i>
+    </strong>
+    &nbsp; | &nbsp;
+    访客数:
+    <strong id="busuanzi_value_site_uv">
+        <i class="fa fa-spinner fa-spin"></i>
+    </strong>
+    
+</div>
+            </div>
+            <div class="col-sm-12">
+                <span>Copyright &copy;
+                    2020
+                    
+                </span> |
+                <span>
+                    Powered by <a href="//hexo.io" class="copyright-links" target="_blank" rel="nofollow">Hexo</a>
+                </span> |
+                <span>
+                    Theme by <a href="//github.com/shenliyang/hexo-theme-snippet.git" class="copyright-links" target="_blank" rel="nofollow">Snippet</a>
+                </span>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<script src="/assets/tagcanvas.min.js?rev=2.9.js"></script>
+
+<script>
+var tagOption = {
+    textColour: '#444', // 字体颜色
+    outlineMethod: 'block', // 选中模式
+    outlineColour: '#FFDAB9', // 选中模式的颜色
+    interval: 30 || 30, // 动画帧之间的时间间隔，值越大，转动幅度越大
+    textHeight: 13,
+    outlineRadius: 3,
+    freezeActive: true || '', // 选中的标签是否继续滚动
+    frontSelect: true || '', // 不选标签云后部的标签
+    initial: [0.1, -0.1],
+    depth: 0.5,
+    decel: 0.95,
+    maxSpeed: 0.03,
+    reverse: true || '', // 是否反向触发
+    fadeIn: 500, // 进入动画时间
+    wheelZoom: false || '' // 是否启用鼠标滚轮
+}
+TagCanvas.Start('tag-cloud-3d', '', tagOption);
+</script>
+
+
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+<script src="/js/app.js?rev=@@hash.js"></script>
+
+
+<!-- 雪花特效 -->
+<script type="text/javascript" src="http://libs.baidu.com/jquery/1.8.3/jquery.js"></script>
+<script type="text/javascript" src="http://libs.baidu.com/jquery/1.8.3/jquery.min.js"></script>
+<script type="text/javascript" src="\js\snow.js"></script>
+
+<canvas class="fireworks" style="position: fixed;left: 0;top: 0;z-index: 1; pointer-events: none;" ></canvas> 
+<script type="text/javascript" src="//cdn.bootcss.com/animejs/2.2.0/anime.min.js"></script> 
+<script type="text/javascript" src="/js/fireworks.js"></script>
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"model":{"jsonPath":"live2d-widget-model-haruto"},"display":{"position":"right","width":150,"height":300},"mobile":{"show":false},"log":false,"pluginJsPath":"lib/","pluginModelPath":"assets/","pluginRootPath":"live2dw/","tagMode":false});</script></body>
+</html>

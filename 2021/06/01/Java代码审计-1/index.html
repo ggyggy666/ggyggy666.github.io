@@ -1,0 +1,421 @@
+<head>
+<script src="https://cdn.jsdelivr.net/npm/jquery/dist/jquery.min.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome/css/font-awesome.min.css">
+<script src="https://cdn.jsdelivr.net/gh/stevenjoezhang/live2d-widget/autoload.js"></script>
+</head>
+
+<!DOCTYPE HTML>
+<html lang="zh-CN">
+
+<head>
+    <!--Setting-->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+    <meta http-equiv="Cache-Control" content="no-siteapp">
+    <meta http-equiv="Cache-Control" content="no-transform">
+    <meta name="renderer" content="webkit|ie-comp|ie-stand">
+    <meta name="apple-mobile-web-app-capable" content="ggy的个人博客">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="format-detection" content="telephone=no,email=no,adress=no">
+    <meta name="browsermode" content="application">
+    <meta name="screen-orientation" content="portrait">
+    <meta name="theme-version" content="1.2.3">
+    <meta name="root" content="/">
+    <link rel="dns-prefetch" href="https://ggyggy666.github.io">
+    <!--SEO-->
+
+<meta name="keywords" content="Java代码审计(1)" />
+
+
+<meta name="description" content="学习了JavaWeb，了解到了一些常用的Java Web知识，今天开始入门Java代码审计。
+
+
+前置知识Java内置对象request, response, pageContext, sess..." />
+
+
+<meta name="robots" content="all" />
+<meta name="google" content="all" />
+<meta name="googlebot" content="all" />
+<meta name="verify" content="all" />
+    <!--Title-->
+
+<title>
+    
+    Java代码审计(1) |
+    
+    ggy的个人博客
+</title>
+
+<link rel="alternate" href="/atom.xml" title="ggy的个人博客" type="application/atom+xml">
+
+
+<link rel="icon" href="/favicon.ico">
+
+    
+
+
+<link rel="stylesheet" href="/css/bootstrap.min.css?rev=3.3.7.css">
+<link rel="stylesheet" href="/css/font-awesome.min.css?rev=4.7.0.css">
+<link rel="stylesheet" href="/css/style.css?rev=@@hash.css">
+
+    
+<div class="hide">
+    <script type="text/javascript">
+    var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+    document.write(unescape("%3Cspan class='cnzz_stat_icon_1263868967 hide' %3E%3Cscript%20src%3D%22https%3A%2F%2Fs95.cnzz.com%2Fz_stat.php%3Fweb_id%3D1272564536%22%3E%3C%2Fscript%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s19.cnzz.com/z_stat.php%3Fid%3D1263868967%26show%3Dpic1' type='text/javascript'%3E%3C/script%3E"));
+    </script>
+</div>
+
+
+
+
+    
+
+<meta name="generator" content="Hexo 4.2.0"></head>
+<!--[if lte IE 8]>
+<style>
+    html{ font-size: 1em }
+</style>
+<![endif]-->
+<!--[if lte IE 9]>
+<div style="ie">你使用的浏览器版本过低，为了你更好的阅读体验，请更新浏览器的版本或者使用其他现代浏览器，比如Chrome、Firefox、Safari等。</div>
+<![endif]-->
+<body>
+    <header class="main-header"  style="background-image:url(
+    https://pic.downk.cc/item/5e3816b82fb38b8c3c8791f9.jpg)"
+     >
+    <div class="main-header-box">
+        <a class="header-avatar" href="/" title='ggy'>
+            <img src="/img/avatar.jpg" alt="logo头像" class="img-responsive center-block">
+        </a>
+        <div class="branding">
+            <!--<h2 class="text-hide">Snippet主题,从未如此简单有趣</h2>-->
+            
+            <h2>
+                欢迎来到ggy的个人网站
+            </h2>
+            
+        </div>
+    </div>
+</header>
+    <nav class="main-navigation">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="navbar-header"><span class="nav-toggle-button collapsed pull-right" data-toggle="collapse" data-target="#main-menu" id="mnav">
+                        <span class="sr-only"></span>
+                        <i class="fa fa-bars"></i>
+                    </span>
+                    <a class="navbar-brand" href="https://ggyggy666.github.io">
+                        ggy的个人博客</a>
+                </div>
+                <div class="collapse navbar-collapse" id="main-menu">
+                    <ul class="menu">
+                        
+                        <li role="presentation" class="text-center">
+                            <a href="/"><i class="fa "></i>
+                                首页</a>
+                        </li>
+                        
+                        <li role="presentation" class="text-center">
+                            <a href="/categories/web安全/"><i class="fa "></i>
+                                web安全</a>
+                        </li>
+                        
+                        <li role="presentation" class="text-center">
+                            <a href="/categories/python工具/"><i class="fa "></i>
+                                python工具</a>
+                        </li>
+                        
+                        <li role="presentation" class="text-center">
+                            <a href="/categories/密码学/"><i class="fa "></i>
+                                密码学</a>
+                        </li>
+                        
+                        <li role="presentation" class="text-center">
+                            <a href="/archives/"><i class="fa "></i>
+                                时间轴</a>
+                        </li>
+                        
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</nav>
+    <section class="content-wrap">
+        <div class="container">
+            <div class="row">
+                <main class="col-md-8 main-content m-post">
+                    <p id="process"></p>
+<article class="post">
+    <div class="post-head">
+        <h1 id="Java代码审计(1)">
+            
+            Java代码审计(1)
+            
+        </h1>
+        <div class="post-meta">
+    
+    <span class="categories-meta fa-wrap">
+        <i class="fa fa-folder-open-o"></i>
+        <a class="category-link" href="/categories/Java%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/">Java代码审计</a>
+    </span>
+    
+    
+    <span class="fa-wrap">
+        <i class="fa fa-tags"></i>
+        <span class="tags-meta">
+            
+            <a class="tag-link" href="/tags/Java%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1-1/" rel="tag">Java代码审计(1)</a>
+            
+        </span>
+    </span>
+    
+    
+    
+    <span class="fa-wrap">
+        <i class="fa fa-clock-o"></i>
+        <span class="date-meta">
+            2021/06/01</span>
+    </span>
+    
+    <span class="fa-wrap">
+        <i class="fa fa-eye"></i>
+        <span id="busuanzi_value_page_pv"></span>
+    </span>
+    
+    
+</div>
+        
+        
+    </div>
+    
+    <div class="post-body post-content">
+        <p>学习了JavaWeb，了解到了一些常用的Java Web知识，今天开始入门Java代码审计。</p>
+<a id="more"></a>
+
+<h1 id="前置知识"><a href="#前置知识" class="headerlink" title="前置知识"></a>前置知识</h1><h2 id="Java内置对象"><a href="#Java内置对象" class="headerlink" title="Java内置对象"></a>Java内置对象</h2><p>request, response, pageContext, session, application, out, config, page, exception。</p>
+<p>九大内置对象，无需声明直接使用。</p>
+<h2 id="危险函数"><a href="#危险函数" class="headerlink" title="危险函数"></a>危险函数</h2><ul>
+<li><p>getParameter(): 获取参数的值</p>
+</li>
+<li><p>getcookies(): 获取cookie</p>
+</li>
+<li><p>getQueryString(): 获取查询字符串</p>
+</li>
+<li><p>getheaders(): 获取头部</p>
+</li>
+<li><p>Runtime.exec(): 执行命令</p>
+</li>
+<li><p>logger.info(): 记录日志信息</p>
+<p>危险功能点：</p>
+</li>
+<li><p>password: 密码相关功能</p>
+</li>
+<li><p>upload: 上传功能</p>
+</li>
+<li><p>download: 下载功能</p>
+</li>
+</ul>
+<h1 id="fortify的使用"><a href="#fortify的使用" class="headerlink" title="fortify的使用"></a>fortify的使用</h1><p>安装好后，找到Audit Workbench, 打开后，选择要扫描的Java项目代码，然后等待一会分析时间，最后打开是：</p>
+<p><img src="https://i.loli.net/2021/06/01/HLrscbYuZSPyRQJ.png" alt="image-20210601223742966"></p>
+<p>左边上半部分是扫描出来存在漏洞的类型以及所在的文件位置。左下半部分是该漏洞形成涉及到的代码文件，从上到下一步步形成。中间部分就是代码文件显示了，中下部分有多个功能，details描述了该漏洞形成的可能情况，Recommendations描述了怎么防御该漏洞，Diagram则是漏洞形成的流程图，可以看到漏洞一步步的形成过程。右边是项目的包及其类。可以点击它来查看类的代码。</p>
+<h1 id="第一步"><a href="#第一步" class="headerlink" title="第一步"></a>第一步</h1><p>首先查看web.xml中的配置。看一下Filter标签，看用了什么架构，session的超时机制配置了多长时间不活动session就会过期，还有有没有写自己的过滤器，如果没有，说明前端代码可以直接传到后端。</p>
+<h1 id="第二步"><a href="#第二步" class="headerlink" title="第二步"></a>第二步</h1><p>点击左边上半部分扫描出来的漏洞所在代码文件，可以看到漏洞最终出现的位置，然后在左边下半部分中从下面一直往上，逆推查看漏洞的形成链，必要时，点击中间下半部分的Diagram看漏洞形成流程图，再加上点击右边的类文件查看代码，慢慢跟踪。最后再顺序下来理清漏洞形成过程。</p>
+<h1 id="XSS漏洞审计"><a href="#XSS漏洞审计" class="headerlink" title="XSS漏洞审计"></a>XSS漏洞审计</h1><p>首先扫描出漏洞后，点击其中一个xss漏洞</p>
+<p><img src="https://i.loli.net/2021/06/01/dV4m2bjo98IAWNZ.png" alt="image-20210601224716629"></p>
+<p>可以看到，这里直接使用EL表达式将对象m的getName()函数返回值输出在JSP页面中。然后从下往上跟踪</p>
+<p><img src="https://i.loli.net/2021/06/01/8NxGd9e21ZBIiOS.png" alt="image-20210601224951560"></p>
+<p>发现m是遍历的msginfo列表中的一个对象，而msginfo又是从request域中键为msg的列表获得的。继续往上跟踪一下，看看这个msg键值对是怎么保存在request域中的。</p>
+<p><img src="https://i.loli.net/2021/06/01/xv1DU7o6AMa8fPd.png" alt="image-20210601225301969"></p>
+<p>跳到了ShowServlet.java文件中，可以看到是直接将一个msg列表存储到request域中的。而这个msg列表是调用了msginfo中的MessageInfoShowService函数。这个msginfo是MessageInfoServiceImpl的一个对象。也就是说，这个msg是MessageInfoServiceImpl类中的MessageInfoShowService函数返回的一个列表。继续往上跟踪这个MessageInfoServiceImpl类。</p>
+<p><img src="https://i.loli.net/2021/06/01/KBUpFGPhf92Hbzn.png" alt="image-20210601225629118"></p>
+<p>可以发现，这个返回的msg列表是调用的msginfo中的MessageInfoShowDao函数返回得到的，而这个msginfo又是MessageInfoDaoImpl这个类的对象。因此，这个msg实际上是MessageInfoDaoImpl这个类中的MessageInfoShowDao函数返回得到的。那么跟踪一下MessageInfoDaoImpl类。</p>
+<p><img src="https://i.loli.net/2021/06/01/i1Ddse78lKo4RBr.png" alt="image-20210601225924524"></p>
+<p>这里由于代码太长没显示完全，这个函数最后确实是返回了一个列表。<code>return messageinfo;</code>。那么看一下这个messageinfo是怎么创建的。</p>
+<p><img src="https://i.loli.net/2021/06/01/7tBh82jiZpabVAT.png" alt="image-20210601230134081"></p>
+<p>首先是连接数据库后，对查询message表中数据的SQL语句进行预编译，然后执行。创建一个messageinfo列表，然后rs-&gt;next为查询出来的数据，先通过new 一个MessageInfo对象，将查询出来的数据赋值初始化这个对象，然后将这个对象加入mesageinfo中。因此，messageinfo存储了多个MessageInfo对象，这些对象的初始化值都是直接从数据库中查询得到的。</p>
+<p>因此可以理清一下思路：</p>
+<ol>
+<li>在MessageInfoDaoImpl这个类中的MessageInfoShowDao函数, 查询数据库中的message表的数据，然后用它们去实例化MessageInfo对象，再将这些对象存储进messageinfo中，并将这个列表返回。</li>
+<li>MessageInfoServiceImpl中的MessageInfoShowService调用了第一步的函数，得到其返回值messageinfo列表，赋值给msg。</li>
+<li>ShowServlet中的ShowMessage函数调用第2步中的函数得到其返回值msg列表，然后将这个msg列表存储进request域中。</li>
+<li>JSP页面中直接获取request域中的msg列表，然后遍历该列表获得里面的每个对象，然后获取对象里面的getName函数将name值直接输出。</li>
+</ol>
+<p>因此，整个过程中，对xss都没有进行过滤。只要将恶意代码作为name值存进数据库中，那么在message.jsp页面就会将Name值即恶意代码直接输出，从而造成了XSS。</p>
+<p>还有一个反射型xss</p>
+<p><img src="https://i.loli.net/2021/06/01/lVTDqtWFg96HaQs.png" alt="image-20210601231322244"></p>
+<p>直接获得输入进来的参数，然后直接输出。</p>
+
+    </div>
+    
+    <div class="reward" ontouchstart>
+    <div class="reward-wrap">赏
+        <div class="reward-box">
+            
+            <span class="reward-type">
+                <img class="alipay" src="/img/alipay.jpg"><b>支付宝打赏</b>
+            </span>
+            
+            
+            <span class="reward-type">
+                <img class="wechat" src="/img/wechat.jpg"><b>微信打赏</b>
+            </span>
+            
+        </div>
+    </div>
+    <p class="reward-tip">
+        赞赏是不耍流氓的鼓励
+    </p>
+</div>
+    
+    <div class="post-footer">
+        <div>
+            
+            转载声明：
+            商业转载请联系作者获得授权,非商业转载请注明出处 © <a href="ggy.44pp.vip" target="_blank">ggy</a>
+            
+            
+        </div>
+        <div>
+            
+        </div>
+    </div>
+</article>
+<div class="article-nav prev-next-wrap clearfix">
+    
+    <a href="/2021/06/06/Maven%E9%85%8D%E7%BD%AE/" class="pre-post btn btn-default" title='Maven配置'>
+        <i class="fa fa-angle-left fa-fw"></i><span class="hidden-lg">上一篇</span>
+        <span class="hidden-xs">
+            Maven配置</span>
+    </a>
+    
+    
+    <a href="/2021/05/31/JavaWeb%E5%AD%A6%E4%B9%A0-9/" class="next-post btn btn-default" title='JavaWeb学习(9)'>
+        <span class="hidden-lg">下一篇</span>
+        <span class="hidden-xs">
+            JavaWeb学习(9)</span><i class="fa fa-angle-right fa-fw"></i>
+    </a>
+    
+</div>
+
+<div id="comments">
+    
+<div id="lv-container" data-id="city" data-uid="MTAyMC80ODM1Ni8yNDg1MA==">
+    <script type="text/javascript">
+    (function(d, s) {
+        var j, e = d.getElementsByTagName(s)[0];
+        if (typeof LivereTower === 'function') { return; }
+        j = d.createElement(s);
+        j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+        j.async = true;
+        e.parentNode.insertBefore(j, e);
+    })(document, 'script');
+    </script>
+</div>
+
+</div>
+
+                </main>
+                
+                    <aside id="article-toc" role="navigation" class="col-md-4">
+    <div class="widget">
+        <h3 class="title">
+            文章目录
+        </h3>
+        
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#前置知识"><span class="toc-text">前置知识</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Java内置对象"><span class="toc-text">Java内置对象</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#危险函数"><span class="toc-text">危险函数</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#fortify的使用"><span class="toc-text">fortify的使用</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#第一步"><span class="toc-text">第一步</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#第二步"><span class="toc-text">第二步</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#XSS漏洞审计"><span class="toc-text">XSS漏洞审计</span></a></li></ol>
+        
+    </div>
+</aside>
+                
+            </div>
+        </div>
+    </section>
+    <footer class="main-footer">
+    <div class="container">
+        <div class="row">
+        </div>
+    </div>
+</footer>
+<a id="back-to-top" class="icon-btn hide">
+    <i class="fa fa-chevron-up"></i>
+</a>
+    <div class="copyright">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="busuanzi">
+    
+    访问量:
+    <strong id="busuanzi_value_site_pv">
+        <i class="fa fa-spinner fa-spin"></i>
+    </strong>
+    &nbsp; | &nbsp;
+    访客数:
+    <strong id="busuanzi_value_site_uv">
+        <i class="fa fa-spinner fa-spin"></i>
+    </strong>
+    
+</div>
+            </div>
+            <div class="col-sm-12">
+                <span>Copyright &copy;
+                    2020
+                    
+                </span> |
+                <span>
+                    Powered by <a href="//hexo.io" class="copyright-links" target="_blank" rel="nofollow">Hexo</a>
+                </span> |
+                <span>
+                    Theme by <a href="//github.com/shenliyang/hexo-theme-snippet.git" class="copyright-links" target="_blank" rel="nofollow">Snippet</a>
+                </span>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<script src="/assets/tagcanvas.min.js?rev=2.9.js"></script>
+
+<script>
+var tagOption = {
+    textColour: '#444', // 字体颜色
+    outlineMethod: 'block', // 选中模式
+    outlineColour: '#FFDAB9', // 选中模式的颜色
+    interval: 30 || 30, // 动画帧之间的时间间隔，值越大，转动幅度越大
+    textHeight: 13,
+    outlineRadius: 3,
+    freezeActive: true || '', // 选中的标签是否继续滚动
+    frontSelect: true || '', // 不选标签云后部的标签
+    initial: [0.1, -0.1],
+    depth: 0.5,
+    decel: 0.95,
+    maxSpeed: 0.03,
+    reverse: true || '', // 是否反向触发
+    fadeIn: 500, // 进入动画时间
+    wheelZoom: false || '' // 是否启用鼠标滚轮
+}
+TagCanvas.Start('tag-cloud-3d', '', tagOption);
+</script>
+
+
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+<script src="/js/app.js?rev=@@hash.js"></script>
+
+
+<!-- 雪花特效 -->
+<script type="text/javascript" src="http://libs.baidu.com/jquery/1.8.3/jquery.js"></script>
+<script type="text/javascript" src="http://libs.baidu.com/jquery/1.8.3/jquery.min.js"></script>
+<script type="text/javascript" src="\js\snow.js"></script>
+
+<canvas class="fireworks" style="position: fixed;left: 0;top: 0;z-index: 1; pointer-events: none;" ></canvas> 
+<script type="text/javascript" src="//cdn.bootcss.com/animejs/2.2.0/anime.min.js"></script> 
+<script type="text/javascript" src="/js/fireworks.js"></script>
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"model":{"jsonPath":"live2d-widget-model-haruto"},"display":{"position":"right","width":150,"height":300},"mobile":{"show":false},"log":false,"pluginJsPath":"lib/","pluginModelPath":"assets/","pluginRootPath":"live2dw/","tagMode":false});</script></body>
+</html>

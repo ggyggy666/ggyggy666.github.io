@@ -1,0 +1,540 @@
+<head>
+<script src="https://cdn.jsdelivr.net/npm/jquery/dist/jquery.min.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome/css/font-awesome.min.css">
+<script src="https://cdn.jsdelivr.net/gh/stevenjoezhang/live2d-widget/autoload.js"></script>
+</head>
+
+<!DOCTYPE HTML>
+<html lang="zh-CN">
+
+<head>
+    <!--Setting-->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+    <meta http-equiv="Cache-Control" content="no-siteapp">
+    <meta http-equiv="Cache-Control" content="no-transform">
+    <meta name="renderer" content="webkit|ie-comp|ie-stand">
+    <meta name="apple-mobile-web-app-capable" content="ggy的个人博客">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="format-detection" content="telephone=no,email=no,adress=no">
+    <meta name="browsermode" content="application">
+    <meta name="screen-orientation" content="portrait">
+    <meta name="theme-version" content="1.2.3">
+    <meta name="root" content="/">
+    <link rel="dns-prefetch" href="https://ggyggy666.github.io">
+    <!--SEO-->
+
+<meta name="keywords" content="Mybatis学习2" />
+
+
+<meta name="description" content="今天继续学习Mybatis。
+
+
+通常情况下，Mybatis中连接数据库的类名都用的是mapper而不是dao了。因此首先把昨天写的userDao改成userMapper。之后还需要修改一些相关..." />
+
+
+<meta name="robots" content="all" />
+<meta name="google" content="all" />
+<meta name="googlebot" content="all" />
+<meta name="verify" content="all" />
+    <!--Title-->
+
+<title>
+    
+    Mybatis学习2 |
+    
+    ggy的个人博客
+</title>
+
+<link rel="alternate" href="/atom.xml" title="ggy的个人博客" type="application/atom+xml">
+
+
+<link rel="icon" href="/favicon.ico">
+
+    
+
+
+<link rel="stylesheet" href="/css/bootstrap.min.css?rev=3.3.7.css">
+<link rel="stylesheet" href="/css/font-awesome.min.css?rev=4.7.0.css">
+<link rel="stylesheet" href="/css/style.css?rev=@@hash.css">
+
+    
+<div class="hide">
+    <script type="text/javascript">
+    var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+    document.write(unescape("%3Cspan class='cnzz_stat_icon_1263868967 hide' %3E%3Cscript%20src%3D%22https%3A%2F%2Fs95.cnzz.com%2Fz_stat.php%3Fweb_id%3D1272564536%22%3E%3C%2Fscript%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s19.cnzz.com/z_stat.php%3Fid%3D1263868967%26show%3Dpic1' type='text/javascript'%3E%3C/script%3E"));
+    </script>
+</div>
+
+
+
+
+    
+
+<meta name="generator" content="Hexo 4.2.0"></head>
+<!--[if lte IE 8]>
+<style>
+    html{ font-size: 1em }
+</style>
+<![endif]-->
+<!--[if lte IE 9]>
+<div style="ie">你使用的浏览器版本过低，为了你更好的阅读体验，请更新浏览器的版本或者使用其他现代浏览器，比如Chrome、Firefox、Safari等。</div>
+<![endif]-->
+<body>
+    <header class="main-header"  style="background-image:url(
+    https://pic.downk.cc/item/5e3816b82fb38b8c3c8791f9.jpg)"
+     >
+    <div class="main-header-box">
+        <a class="header-avatar" href="/" title='ggy'>
+            <img src="/img/avatar.jpg" alt="logo头像" class="img-responsive center-block">
+        </a>
+        <div class="branding">
+            <!--<h2 class="text-hide">Snippet主题,从未如此简单有趣</h2>-->
+            
+            <h2>
+                欢迎来到ggy的个人网站
+            </h2>
+            
+        </div>
+    </div>
+</header>
+    <nav class="main-navigation">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="navbar-header"><span class="nav-toggle-button collapsed pull-right" data-toggle="collapse" data-target="#main-menu" id="mnav">
+                        <span class="sr-only"></span>
+                        <i class="fa fa-bars"></i>
+                    </span>
+                    <a class="navbar-brand" href="https://ggyggy666.github.io">
+                        ggy的个人博客</a>
+                </div>
+                <div class="collapse navbar-collapse" id="main-menu">
+                    <ul class="menu">
+                        
+                        <li role="presentation" class="text-center">
+                            <a href="/"><i class="fa "></i>
+                                首页</a>
+                        </li>
+                        
+                        <li role="presentation" class="text-center">
+                            <a href="/categories/web安全/"><i class="fa "></i>
+                                web安全</a>
+                        </li>
+                        
+                        <li role="presentation" class="text-center">
+                            <a href="/categories/python工具/"><i class="fa "></i>
+                                python工具</a>
+                        </li>
+                        
+                        <li role="presentation" class="text-center">
+                            <a href="/categories/密码学/"><i class="fa "></i>
+                                密码学</a>
+                        </li>
+                        
+                        <li role="presentation" class="text-center">
+                            <a href="/archives/"><i class="fa "></i>
+                                时间轴</a>
+                        </li>
+                        
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</nav>
+    <section class="content-wrap">
+        <div class="container">
+            <div class="row">
+                <main class="col-md-8 main-content m-post">
+                    <p id="process"></p>
+<article class="post">
+    <div class="post-head">
+        <h1 id="Mybatis学习2">
+            
+            Mybatis学习2
+            
+        </h1>
+        <div class="post-meta">
+    
+    <span class="categories-meta fa-wrap">
+        <i class="fa fa-folder-open-o"></i>
+        <a class="category-link" href="/categories/ssm%E5%AD%A6%E4%B9%A0/">ssm学习</a>
+    </span>
+    
+    
+    <span class="fa-wrap">
+        <i class="fa fa-tags"></i>
+        <span class="tags-meta">
+            
+            <a class="tag-link" href="/tags/Mybatis%E5%AD%A6%E4%B9%A02/" rel="tag">Mybatis学习2</a>
+            
+        </span>
+    </span>
+    
+    
+    
+    <span class="fa-wrap">
+        <i class="fa fa-clock-o"></i>
+        <span class="date-meta">
+            2021/06/08</span>
+    </span>
+    
+    <span class="fa-wrap">
+        <i class="fa fa-eye"></i>
+        <span id="busuanzi_value_page_pv"></span>
+    </span>
+    
+    
+</div>
+        
+        
+    </div>
+    
+    <div class="post-body post-content">
+        <p>今天继续学习Mybatis。</p>
+<a id="more"></a>
+
+<p>通常情况下，Mybatis中连接数据库的类名都用的是mapper而不是dao了。因此首先把昨天写的userDao改成userMapper。之后还需要修改一些相关联的东西。</p>
+<h1 id="userDao修改成userMapper"><a href="#userDao修改成userMapper" class="headerlink" title="userDao修改成userMapper"></a>userDao修改成userMapper</h1><p>mybatis-config.xml配置文件是配置了连接数据库的，不用改；utils包的MybatisUtils是获取连接数据库的一个sqlSession的，不用改；pojo中的user实体类是对应数据库表的字段值的，也不要改；因此只需要改dao层的接口和xml文件。</p>
+<p>命名空间：在userMapper.xml中，命名空间是绑定接口类userMapper的。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&lt;mapper namespace&#x3D;&quot;com.ggy.dao.userMapper&quot;&gt;</span><br><span class="line"></span><br><span class="line">&lt;!--SQL语句，userDao中的方法名唯一标识，返回类型是userDao中的方法的类型--&gt;</span><br><span class="line">&lt;select id&#x3D;&quot;getUserList&quot; resultType&#x3D;&quot;com.ggy.pojo.user&quot;&gt;</span><br><span class="line">        select * from mybatis.user;</span><br><span class="line">  &lt;&#x2F;select&gt;</span><br><span class="line">&lt;&#x2F;mapper&gt;</span><br></pre></td></tr></table></figure>
+
+<p>select标签代码查询语句，id对应接口类中的getUserList函数，resultType是执行SQL语句后返回的类型，还有之后用到的parameterType是参数类型（Class, Integer, String这些）。</p>
+<p>test目录下的测试类也要改</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">userMapper usermapper &#x3D; session.getMapper(com.ggy.dao.userMapper.class);</span><br><span class="line">List&lt;user&gt; userList &#x3D; usermapper.getUserList();</span><br></pre></td></tr></table></figure>
+
+<h1 id="CRUD"><a href="#CRUD" class="headerlink" title="CRUD"></a>CRUD</h1><p>增删改查操作。</p>
+<h2 id="查询"><a href="#查询" class="headerlink" title="查询"></a>查询</h2><p>1.首先在userMapper接口类中增加一个接口，该接口可以通过传进来一个id值查询出对应的一行数据，返回类型自然是user</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">user getUserById(int id);</span><br></pre></td></tr></table></figure>
+
+<p>2.在userMapper.xml中绑定这个接口，并增加查询语句。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&lt;!--通过id查询用户--&gt;</span><br><span class="line">&lt;select id&#x3D;&quot;getUserById&quot; resultType&#x3D;&quot;com.ggy.pojo.user&quot; parameterType&#x3D;&quot;int&quot;&gt;</span><br><span class="line">    select * from mybatis.user where id &#x3D; #&#123;id&#125;;</span><br><span class="line">&lt;&#x2F;select&gt;</span><br></pre></td></tr></table></figure>
+
+<p>因为先前已经有命名空间绑定了userMapper接口了，这里只需要增加select语句。</p>
+<p>3.在userMapperTest增加一个测试函数。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">@Test</span><br><span class="line">public void getUserByIdTest()&#123;</span><br><span class="line">    SqlSession sqlSession &#x3D; MybatisUtils.getSession();</span><br><span class="line">    userMapper mapper &#x3D; sqlSession.getMapper(userMapper.class);</span><br><span class="line">    user userById &#x3D; mapper.getUserById(1);</span><br><span class="line">    System.out.println(userById);</span><br><span class="line">    sqlSession.close();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>获取sqlSession后，使用getMapper函数获得一个mapper对象，然后再去调用这个对象里面的getUserById接口，并传一个id值1进去获得返回的user，然后输出。<strong>最后记得要使用sqlSession.close关闭！</strong></p>
+<h2 id="插入"><a href="#插入" class="headerlink" title="插入"></a>插入</h2><p>1.首先在userMapper接口类中增加一个接口，该接口可以通过传入一个user类进行插入数据。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">int insertData(user User);</span><br></pre></td></tr></table></figure>
+
+<p>2.在userMapper.xml中绑定这个接口，并增加插入语句。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&lt;!--插入数据--&gt;</span><br><span class="line">&lt;insert id&#x3D;&quot;insertData&quot; parameterType&#x3D;&quot;com.ggy.pojo.user&quot;&gt;</span><br><span class="line">    insert into user(id, name, pwd) values (#&#123;id&#125;, #&#123;name&#125;, #&#123;pwd&#125;);</span><br><span class="line">&lt;&#x2F;insert&gt;</span><br></pre></td></tr></table></figure>
+
+<p>注意，因为要用到预编译，所以#{id},#[name],#{pwd}的名字需要与user类中的三个属性名称一致。</p>
+<p>3.在userMapperTest增加一个测试函数。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">@Test</span><br><span class="line">public void insertData()&#123;</span><br><span class="line">    SqlSession sqlSession &#x3D; MybatisUtils.getSession();</span><br><span class="line">    userMapper mapper &#x3D; sqlSession.getMapper(userMapper.class);</span><br><span class="line">    int res &#x3D; mapper.insertData(new user(4, &quot;ggy4&quot;, &quot;444&quot;));</span><br><span class="line">    if(res&gt;0)&#123;</span><br><span class="line">        System.out.println(&quot;Insert Success!&quot;);</span><br><span class="line">    &#125;</span><br><span class="line">    sqlSession.commit();</span><br><span class="line">    sqlSession.close();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>注意，插入的返回值是一个整数，不为0说明插入成功。而且<strong>增删改操作需要提交事务！</strong>使用</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sqlSession.commit();</span><br></pre></td></tr></table></figure>
+
+<h2 id="更新"><a href="#更新" class="headerlink" title="更新"></a>更新</h2><p>同理插入。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;&#x2F;userMapper.java</span><br><span class="line">int updateUser(user User);</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;&#x2F;userMapper.xml</span><br><span class="line">&lt;!--更新数据--&gt;</span><br><span class="line">&lt;update id&#x3D;&quot;updateUser&quot; parameterType&#x3D;&quot;com.ggy.pojo.user&quot;&gt;</span><br><span class="line">    update mybatis.user set name&#x3D;#&#123;name&#125;, pwd&#x3D;#&#123;pwd&#125; where id&#x3D;#&#123;id&#125;;</span><br><span class="line">&lt;&#x2F;update&gt;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;&#x2F;userMapperTest.java</span><br><span class="line">@Test</span><br><span class="line">public void updateData()&#123;</span><br><span class="line">    SqlSession sqlSession &#x3D; MybatisUtils.getSession();</span><br><span class="line">    userMapper mapper &#x3D; sqlSession.getMapper(userMapper.class);</span><br><span class="line">    int res &#x3D; mapper.updateUser(new user(4, &quot;ggy444&quot;, &quot;44&quot;));</span><br><span class="line">    if(res&gt;0)&#123;</span><br><span class="line">        System.out.println(&quot;Update Success!&quot;);</span><br><span class="line">    &#125;</span><br><span class="line">    sqlSession.commit();</span><br><span class="line">    sqlSession.close();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="删除"><a href="#删除" class="headerlink" title="删除"></a>删除</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;&#x2F;userMapper.java</span><br><span class="line">int deleteUser(int id);</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;&#x2F;userMapper.xml</span><br><span class="line">&lt;!--删除数据--&gt;</span><br><span class="line">&lt;delete id&#x3D;&quot;deleteUser&quot; parameterType&#x3D;&quot;int&quot;&gt;</span><br><span class="line">    delete from mybatis.user where id&#x3D;#&#123;id&#125;;</span><br><span class="line">&lt;&#x2F;delete&gt;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;&#x2F;userMapperTest.java</span><br><span class="line">@Test</span><br><span class="line">public void deleteData()&#123;</span><br><span class="line">    SqlSession session &#x3D; MybatisUtils.getSession();</span><br><span class="line">    userMapper mapper &#x3D; session.getMapper(userMapper.class);</span><br><span class="line">    int i &#x3D; mapper.deleteUser(4);</span><br><span class="line">    if(i&gt;0)System.out.println(&quot;Delete Success!&quot;);</span><br><span class="line">    session.commit();</span><br><span class="line">    session.close();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h1 id="Map使用和模糊查询"><a href="#Map使用和模糊查询" class="headerlink" title="Map使用和模糊查询"></a>Map使用和模糊查询</h1><h2 id="Map使用"><a href="#Map使用" class="headerlink" title="Map使用"></a>Map使用</h2><p>像之前的插入，传入的是user类，在传入类时必须要初始化，而new时又必须知道这个类有多少参数，也就是说需要知道数据库的表的所有字段，并且SQL语句预编译时使用的必须参数名必须跟字段名一致，即：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">insert into user(id, name, pwd) values (#&#123;id&#125;, #&#123;name&#125;, #&#123;pwd&#125;);</span><br></pre></td></tr></table></figure>
+
+<p>如果字段非常多，但是我们又只想插入某几个字段而已，这时候就显得非常累赘麻烦了。如果使用map就不一样了。需要添加什么字段，就可以将其保存到map中，使用键值对的方式，在SQL语句预编译时使用map的键即可。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">int insertData1(Map&lt;String, Object&gt; map);</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&lt;!--使用Map插入数据--&gt;</span><br><span class="line">&lt;insert id&#x3D;&quot;insertData1&quot; parameterType&#x3D;&quot;map&quot;&gt;</span><br><span class="line">    insert into user(id, pwd) values (#&#123;id&#125;, #&#123;password&#125;);</span><br><span class="line">&lt;&#x2F;insert&gt;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">@Test</span><br><span class="line">public void insertData1()&#123;</span><br><span class="line">    SqlSession session &#x3D; MybatisUtils.getSession();</span><br><span class="line">    userMapper mapper &#x3D; session.getMapper(userMapper.class);</span><br><span class="line">    Map&lt;String, Object&gt; map &#x3D; new HashMap&lt;String, Object&gt;();</span><br><span class="line">    map.put(&quot;id&quot;, 5);</span><br><span class="line">    map.put(&quot;password&quot;, &quot;ggy555&quot;);</span><br><span class="line">    int i &#x3D; mapper.insertData1(map);</span><br><span class="line">    if(i&gt;0)System.out.println(&quot;插入成功！&quot;);</span><br><span class="line">    session.commit();</span><br><span class="line">    session.close();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="模糊查询"><a href="#模糊查询" class="headerlink" title="模糊查询"></a>模糊查询</h2><p>使用like查询。可能会返回多个user，因此</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">List&lt;user&gt; getUserByLike(String value);</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&lt;!--通过value模糊查询用户--&gt;</span><br><span class="line">&lt;select id&#x3D;&quot;getUserByLike&quot; resultType&#x3D;&quot;com.ggy.pojo.user&quot;&gt;</span><br><span class="line">    select * from mybatis.user where name like #&#123;value&#125;;</span><br><span class="line">&lt;&#x2F;select&gt;</span><br></pre></td></tr></table></figure>
+
+<p>这个value与接口传进来的参数名是一致的。因为这个xml里的select配置是接口的实现。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">@Test</span><br><span class="line">public void getUserByLike()&#123;</span><br><span class="line">    SqlSession sqlSession &#x3D; MybatisUtils.getSession();</span><br><span class="line">    userMapper mapper &#x3D; sqlSession.getMapper(userMapper.class);</span><br><span class="line">    List&lt;user&gt; userByLike &#x3D; mapper.getUserByLike(&quot;%g%&quot;);</span><br><span class="line">    for(user user1:userByLike)&#123;</span><br><span class="line">        System.out.println(user1);</span><br><span class="line">    &#125;</span><br><span class="line">    sqlSession.close();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>模糊查询需要有%, 如果把%都去掉，就查不到数据了。但是有一种情况，就是SQL语句中有%, 然后传进来的值与%进行拼接（使用的是$)之后再执行，这样会造成SQL注入。</p>
+<p>userMapper.xml中</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&lt;!--通过value模糊查询用户--&gt;</span><br><span class="line">&lt;select id&#x3D;&quot;getUserByLike&quot; resultType&#x3D;&quot;com.ggy.pojo.user&quot;&gt;</span><br><span class="line">    select * from mybatis.user where name like &#39;%$&#123;value&#125;%&#39;;</span><br><span class="line">&lt;&#x2F;select&gt;</span><br></pre></td></tr></table></figure>
+
+<p>userMapperTest.java的getUserByLike函数中</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">List&lt;user&gt; userByLike &#x3D; mapper.getUserByLike(&quot;g&#39; or 1&#x3D;1#&quot;);</span><br></pre></td></tr></table></figure>
+
+<p>这样会造成SQL注入。</p>
+<p>#{id}这样是做了预编译，${id}这样没有做预编译，直接就拼接了。</p>
+<p>防御：<strong><code>&quot;%&quot;#{id}&quot;%&quot;</code></strong>或者<code>concat(&quot;%&quot;, #{id}, &quot;%&quot;)</code></p>
+<h1 id="配置解析"><a href="#配置解析" class="headerlink" title="配置解析"></a>配置解析</h1><p>配置文件mybatis-config.xml中有很多配置，需要掌握的配置如下：</p>
+<p><img src="https://raw.githubusercontent.com/ggyggy666/ggyggy666.github.io/master/img/image-20210608212237449.png" alt="image-20210608212237449"></p>
+<h2 id="环境配置"><a href="#环境配置" class="headerlink" title="环境配置"></a>环境配置</h2><p>environments中可以配置多个环境，但是每个sqlSession只能使用一个环境，使用default属性来配置默认的环境，比如：</p>
+<p><img src="https://raw.githubusercontent.com/ggyggy666/ggyggy666.github.io/master/img/image-20210608214141756.png" alt="image-20210608214141756"></p>
+<p>默认的环境就是test环境了。</p>
+<p>注意transactionManager这个标签，事务管理器，Mybatis有两个事务管理器：JDBC和MANAGED，默认是JDBC。</p>
+<p>dataSource是数据源标签，有三种类型：UNPOOLED, POOLED和JNDI。</p>
+<ul>
+<li>UNPOOLED，非连接池，每一次连接数据库都要请求，用完后就关闭数据库的连接。</li>
+<li>POOLED，连接池，连接数据库后不关闭，可以让web应用快速响应请求。</li>
+<li>JNDI，在其它应用服务器中配置数据源，然后JNDI方式导入。</li>
+</ul>
+<h2 id="属性"><a href="#属性" class="headerlink" title="属性"></a>属性</h2><p>properties配置。在一个db.properties文件中定义好一些配置，然后通过properties标签引入进来，之后的environment环境中的dataSource中的属性就不用写死了，只需要${}就行了。</p>
+<p>新建一个db.properties</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">driver&#x3D;com.mysql.cj.jdbc.Driver</span><br><span class="line">url&#x3D;jdbc:mysql:&#x2F;&#x2F;192.168.1.105:3306&#x2F;mybatis?useSSL&#x3D;false&amp;serverTimezone&#x3D;GMT%2B8&amp;useUnicode&#x3D;true&amp;characterEncoding&#x3D;UTF-8</span><br><span class="line">username&#x3D;root</span><br><span class="line">password&#x3D;root</span><br></pre></td></tr></table></figure>
+
+<p>url中用的是&amp;了，不是<code>&amp;amp;</code>了。</p>
+<p>然后在Mybatis-config.xml中导入，并将属性值换成动态</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">&lt;properties resource&#x3D;&quot;db.properties&quot;&#x2F;&gt;</span><br><span class="line">&lt;environments default&#x3D;&quot;development&quot;&gt;</span><br><span class="line">    &lt;environment id&#x3D;&quot;development&quot;&gt;</span><br><span class="line">        &lt;transactionManager type&#x3D;&quot;JDBC&quot;&#x2F;&gt;</span><br><span class="line">        &lt;dataSource type&#x3D;&quot;POOLED&quot;&gt;</span><br><span class="line">            &lt;property name&#x3D;&quot;driver&quot; value&#x3D;&quot;$&#123;driver&#125;&quot;&#x2F;&gt;</span><br><span class="line">            &lt;property name&#x3D;&quot;url&quot; value&#x3D;&quot;$&#123;url&#125;&quot;&#x2F;&gt;</span><br><span class="line">            &lt;property name&#x3D;&quot;username&quot; value&#x3D;&quot;$&#123;username&#125;&quot;&#x2F;&gt;</span><br><span class="line">            &lt;property name&#x3D;&quot;password&quot; value&#x3D;&quot;$&#123;password&#125;&quot;&#x2F;&gt;</span><br><span class="line">        &lt;&#x2F;dataSource&gt;</span><br><span class="line">    &lt;&#x2F;environment&gt;</span><br></pre></td></tr></table></figure>
+
+<p>注意properties标签必须在最开头。有顺序的。</p>
+<p>还有一种写法，在db.properties中不写username和password，然后在properties标签中加两个property。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&lt;properties resource&#x3D;&quot;db.properties&quot;&gt;</span><br><span class="line">    &lt;property name&#x3D;&quot;username&quot; value&#x3D;&quot;root&quot;&#x2F;&gt;</span><br><span class="line">    &lt;property name&#x3D;&quot;password&quot; value&#x3D;&quot;root&quot;&#x2F;&gt;</span><br><span class="line">&lt;&#x2F;properties&gt;</span><br></pre></td></tr></table></figure>
+
+<p>不过需要注意，这种引入的property优先级低于外部db.properties文件中的属性。即如果这个property标签中的密码是123456，而db.properties中也有一个password，密码是root，这样还是能连接数据库的，因为优先级是获取外部文件中的值。反之就不行了。</p>
+<h2 id="类型别名"><a href="#类型别名" class="headerlink" title="类型别名"></a>类型别名</h2><p>typeAliases, 可以为一个类型设置短的别名，可以减少类完全限定名的冗余。顺序是在配置中的第三个标签。有三种方法设置别名。</p>
+<p>1.使用typeAlias</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&lt;typeAliases&gt;</span><br><span class="line">    &lt;typeAlias type&#x3D;&quot;com.ggy.pojo.user&quot; alias&#x3D;&quot;user&quot;&#x2F;&gt;</span><br><span class="line">&lt;&#x2F;typeAliases&gt;</span><br></pre></td></tr></table></figure>
+
+<p>然后usermapper.xml中，类型就可以直接使用user了。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&lt;select id&#x3D;&quot;getUserList&quot; resultType&#x3D;&quot;user&quot;&gt;</span><br><span class="line">        select * from mybatis.user;</span><br><span class="line">  &lt;&#x2F;select&gt;</span><br></pre></td></tr></table></figure>
+
+<p>2.使用package</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&lt;typeAliases&gt;</span><br><span class="line">    &lt;package name&#x3D;&quot;com.ggy.pojo&quot;&#x2F;&gt;</span><br><span class="line">&lt;&#x2F;typeAliases&gt;</span><br></pre></td></tr></table></figure>
+
+<p>usermapper.xml中类型也是直接使用user，然后会在这个包下扫描得到user类。</p>
+<p>3.使用注解，可以在user这个实体类开头加一句注解</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">@Alias(&quot;user&quot;)</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://raw.githubusercontent.com/ggyggy666/ggyggy666.github.io/master/img/image-20210608224447899.png" alt="image-20210608224447899"></p>
+<h2 id="设置"><a href="#设置" class="headerlink" title="设置"></a>设置</h2><p>设置有很多项，目前需要记住的有：</p>
+<p>日志实现</p>
+<p><img src="https://raw.githubusercontent.com/ggyggy666/ggyggy666.github.io/master/img/image-20210608224844573.png" alt="image-20210608224844573"></p>
+<p>开启缓存和延迟加载</p>
+<p><img src="https://raw.githubusercontent.com/ggyggy666/ggyggy666.github.io/master/img/image-20210608224944577.png" alt="image-20210608224944577"></p>
+<h2 id="其它配置"><a href="#其它配置" class="headerlink" title="其它配置"></a>其它配置</h2><p><img src="https://raw.githubusercontent.com/ggyggy666/ggyggy666.github.io/master/img/image-20210608225135008.png" alt="image-20210608225135008"></p>
+<h2 id="映射器"><a href="#映射器" class="headerlink" title="映射器"></a>映射器</h2><p>mappers，之前就有用到，需要注册userMapper.xml文件资源。</p>
+<p>1.使用resource指定文件</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&lt;mappers&gt;</span><br><span class="line">    &lt;mapper resource&#x3D;&quot;com&#x2F;ggy&#x2F;dao&#x2F;userMapper.xml&quot;&#x2F;&gt;</span><br><span class="line">&lt;&#x2F;mappers&gt;</span><br></pre></td></tr></table></figure>
+
+<p>2.使用class指定xml文件对应的类</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&lt;mappers&gt;</span><br><span class="line">        &lt;mapper class&#x3D;&quot;com.ggy.dao.userMapper&quot;&#x2F;&gt;</span><br><span class="line">&lt;&#x2F;mappers&gt;</span><br></pre></td></tr></table></figure>
+
+<p>需要注意：接口类名称与对应的xml文件名称一致，并且都在同一个包下。</p>
+<p>3.使用package指定包</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&lt;mappers&gt;</span><br><span class="line">    &lt;package name&#x3D;&quot;com.ggy.dao&quot;&#x2F;&gt;</span><br><span class="line">&lt;&#x2F;mappers&gt;</span><br></pre></td></tr></table></figure>
+
+<p>需要注意：接口类名称与对应的xml文件名称一致，并且都在同一个包下。</p>
+<h2 id="生命周期和作用域"><a href="#生命周期和作用域" class="headerlink" title="生命周期和作用域"></a>生命周期和作用域</h2><p>生命周期和作用域是至关重要的，一旦滥用，会导致严重的并发问题。</p>
+<p><img src="https://raw.githubusercontent.com/ggyggy666/ggyggy666.github.io/master/img/image-20210609105842475.png" alt="image-20210609105842475"></p>
+<ul>
+<li>SqlSessionFactoryBuilder, <strong>一旦创建，就不再需要了</strong>，是个局部变量。</li>
+<li>SqlSessionFactory，可以理解为<strong>数据库连接池</strong>，一旦被创建，应用运行期间就一直存在，没有理由丢弃或者创建另一个实例，<strong>全局作用域</strong>。最简单就是使用单例模式或者静态单例模式，即只创建一个SqlSessionFactory即可。</li>
+<li>SqlSession，连接到连接池的一个请求，它的实例不是线程安全的无法被共享，最好是请求域方法作用域，<strong>用完后赶紧关闭。</strong></li>
+</ul>
+<p><img src="https://raw.githubusercontent.com/ggyggy666/ggyggy666.github.io/master/img/image-20210609105653243.png" alt="image-20210609105653243"></p>
+<p>可见，一个SqlSessionFactory可以创建多个SqlSession, 每一个SqlSession又能创建多个Mapper，每一个Mapper代表一种业务。</p>
+<h1 id="resultMap的使用"><a href="#resultMap的使用" class="headerlink" title="resultMap的使用"></a>resultMap的使用</h1><p><strong>解决属性名和字段名不一致的问题</strong></p>
+<h2 id="问题"><a href="#问题" class="headerlink" title="问题"></a>问题</h2><p>首先新建一个项目，将之前的类、资源等全都复制过来。需要注意的是，不能直接将包和类一块复制过来。需要先创建com.ggy包后，只复制dao,pojo,utils包或者资源文件。</p>
+<p>创建完成后，到user类中，将pwd全部替换成password。然后测试</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">@Test</span><br><span class="line">public void test()&#123;</span><br><span class="line">    &#x2F;&#x2F;获取sqlSession对象</span><br><span class="line">    SqlSession session &#x3D; MybatisUtils.getSession();</span><br><span class="line"></span><br><span class="line">    userMapper usermapper &#x3D; session.getMapper(userMapper.class);</span><br><span class="line">    user user &#x3D; usermapper.getUserById(1);</span><br><span class="line">    System.out.println(user);</span><br><span class="line">    session.close();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>结果如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">user&#123;id&#x3D;1, name&#x3D;&#39;ggy1&#39;, password&#x3D;&#39;null&#39;&#125;</span><br></pre></td></tr></table></figure>
+
+<p>可以发现<strong>password是null值</strong>。因为输出的是user类中的id,name,password三个值，而数据库查询不到password，因此返回null值。</p>
+<p>解决方法：</p>
+<p>1.别名：将SQL语句更改为：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">select id,name,pwd as password from mybatis.user where id &#x3D; #&#123;id&#125;;</span><br></pre></td></tr></table></figure>
+
+<p>2.使用resultMap。</p>
+<h2 id="使用resultMap"><a href="#使用resultMap" class="headerlink" title="使用resultMap"></a>使用resultMap</h2><p>数据库中字段是pwd,类的属性是password，那么只需要对它们做一个映射即可。</p>
+<p>SQL语句修改回来</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">select * from mybatis.user where id &#x3D; #&#123;id&#125;;</span><br></pre></td></tr></table></figure>
+
+<p>然后去掉resultType，使用resultMap</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&lt;select id&#x3D;&quot;getUserById&quot; resultMap&#x3D;&quot;map&quot; parameterType&#x3D;&quot;int&quot;&gt;</span><br><span class="line">    select * from mybatis.user where id &#x3D; #&#123;id&#125;;</span><br><span class="line">&lt;&#x2F;select&gt;</span><br></pre></td></tr></table></figure>
+
+<p>然后增加一个resultMap标签，注意顺序，这个标签在select标签上。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&lt;resultMap id&#x3D;&quot;map&quot; type&#x3D;&quot;com.ggy.pojo.user&quot;&gt;</span><br><span class="line">    &lt;result column&#x3D;&quot;pwd&quot; property&#x3D;&quot;password&quot;&#x2F;&gt;</span><br><span class="line">&lt;&#x2F;resultMap&gt;</span><br></pre></td></tr></table></figure>
+
+<p>这个id的值map应与select标签中的resultMap的值map一致。column表示数据库表的字段名，property表示user类的属性。这样映射即可。</p>
+<h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><p>创建一个使用Mybatis的项目，步骤：</p>
+<ol>
+<li>首先建立一个Maven项目，在pom.xml中将mysql, junit, mybatis这些依赖都装上。</li>
+<li>然后新建一个模块，确保连接上数据库。</li>
+<li>接着在resources目录下创建一个mybaits-config.xml配置文件并编写需要的配置。</li>
+<li>编写一个utils工具类，使得可以通过mybatis-config.xml建立一个SqlSessionFactory并创建出返回SqlSession对象。</li>
+<li>编写一个pojo的实体类，其属性对应数据库表的所有字段。</li>
+<li>编写dao层，创建一个类接口，然后创建mapper.xml去实现它。</li>
+<li>最好创建测试类，去测试。</li>
+</ol>
+
+    </div>
+    
+    <div class="reward" ontouchstart>
+    <div class="reward-wrap">赏
+        <div class="reward-box">
+            
+            <span class="reward-type">
+                <img class="alipay" src="/img/alipay.jpg"><b>支付宝打赏</b>
+            </span>
+            
+            
+            <span class="reward-type">
+                <img class="wechat" src="/img/wechat.jpg"><b>微信打赏</b>
+            </span>
+            
+        </div>
+    </div>
+    <p class="reward-tip">
+        赞赏是不耍流氓的鼓励
+    </p>
+</div>
+    
+    <div class="post-footer">
+        <div>
+            
+            转载声明：
+            商业转载请联系作者获得授权,非商业转载请注明出处 © <a href="ggy.44pp.vip" target="_blank">ggy</a>
+            
+            
+        </div>
+        <div>
+            
+        </div>
+    </div>
+</article>
+<div class="article-nav prev-next-wrap clearfix">
+    
+    
+    <a href="/2021/06/07/Mybatis%E5%AD%A6%E4%B9%A01/" class="next-post btn btn-default" title='Mybatis学习1'>
+        <span class="hidden-lg">下一篇</span>
+        <span class="hidden-xs">
+            Mybatis学习1</span><i class="fa fa-angle-right fa-fw"></i>
+    </a>
+    
+</div>
+
+<div id="comments">
+    
+<div id="lv-container" data-id="city" data-uid="MTAyMC80ODM1Ni8yNDg1MA==">
+    <script type="text/javascript">
+    (function(d, s) {
+        var j, e = d.getElementsByTagName(s)[0];
+        if (typeof LivereTower === 'function') { return; }
+        j = d.createElement(s);
+        j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+        j.async = true;
+        e.parentNode.insertBefore(j, e);
+    })(document, 'script');
+    </script>
+</div>
+
+</div>
+
+                </main>
+                
+                    <aside id="article-toc" role="navigation" class="col-md-4">
+    <div class="widget">
+        <h3 class="title">
+            文章目录
+        </h3>
+        
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#userDao修改成userMapper"><span class="toc-text">userDao修改成userMapper</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#CRUD"><span class="toc-text">CRUD</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#查询"><span class="toc-text">查询</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#插入"><span class="toc-text">插入</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#更新"><span class="toc-text">更新</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#删除"><span class="toc-text">删除</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Map使用和模糊查询"><span class="toc-text">Map使用和模糊查询</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Map使用"><span class="toc-text">Map使用</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#模糊查询"><span class="toc-text">模糊查询</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#配置解析"><span class="toc-text">配置解析</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#环境配置"><span class="toc-text">环境配置</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#属性"><span class="toc-text">属性</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#类型别名"><span class="toc-text">类型别名</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#设置"><span class="toc-text">设置</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#其它配置"><span class="toc-text">其它配置</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#映射器"><span class="toc-text">映射器</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#生命周期和作用域"><span class="toc-text">生命周期和作用域</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#resultMap的使用"><span class="toc-text">resultMap的使用</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#问题"><span class="toc-text">问题</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#使用resultMap"><span class="toc-text">使用resultMap</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#总结"><span class="toc-text">总结</span></a></li></ol>
+        
+    </div>
+</aside>
+                
+            </div>
+        </div>
+    </section>
+    <footer class="main-footer">
+    <div class="container">
+        <div class="row">
+        </div>
+    </div>
+</footer>
+<a id="back-to-top" class="icon-btn hide">
+    <i class="fa fa-chevron-up"></i>
+</a>
+    <div class="copyright">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="busuanzi">
+    
+    访问量:
+    <strong id="busuanzi_value_site_pv">
+        <i class="fa fa-spinner fa-spin"></i>
+    </strong>
+    &nbsp; | &nbsp;
+    访客数:
+    <strong id="busuanzi_value_site_uv">
+        <i class="fa fa-spinner fa-spin"></i>
+    </strong>
+    
+</div>
+            </div>
+            <div class="col-sm-12">
+                <span>Copyright &copy;
+                    2020
+                    
+                </span> |
+                <span>
+                    Powered by <a href="//hexo.io" class="copyright-links" target="_blank" rel="nofollow">Hexo</a>
+                </span> |
+                <span>
+                    Theme by <a href="//github.com/shenliyang/hexo-theme-snippet.git" class="copyright-links" target="_blank" rel="nofollow">Snippet</a>
+                </span>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<script src="/assets/tagcanvas.min.js?rev=2.9.js"></script>
+
+<script>
+var tagOption = {
+    textColour: '#444', // 字体颜色
+    outlineMethod: 'block', // 选中模式
+    outlineColour: '#FFDAB9', // 选中模式的颜色
+    interval: 30 || 30, // 动画帧之间的时间间隔，值越大，转动幅度越大
+    textHeight: 13,
+    outlineRadius: 3,
+    freezeActive: true || '', // 选中的标签是否继续滚动
+    frontSelect: true || '', // 不选标签云后部的标签
+    initial: [0.1, -0.1],
+    depth: 0.5,
+    decel: 0.95,
+    maxSpeed: 0.03,
+    reverse: true || '', // 是否反向触发
+    fadeIn: 500, // 进入动画时间
+    wheelZoom: false || '' // 是否启用鼠标滚轮
+}
+TagCanvas.Start('tag-cloud-3d', '', tagOption);
+</script>
+
+
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+<script src="/js/app.js?rev=@@hash.js"></script>
+
+
+<!-- 雪花特效 -->
+<script type="text/javascript" src="http://libs.baidu.com/jquery/1.8.3/jquery.js"></script>
+<script type="text/javascript" src="http://libs.baidu.com/jquery/1.8.3/jquery.min.js"></script>
+<script type="text/javascript" src="\js\snow.js"></script>
+
+<canvas class="fireworks" style="position: fixed;left: 0;top: 0;z-index: 1; pointer-events: none;" ></canvas> 
+<script type="text/javascript" src="//cdn.bootcss.com/animejs/2.2.0/anime.min.js"></script> 
+<script type="text/javascript" src="/js/fireworks.js"></script>
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"model":{"jsonPath":"live2d-widget-model-haruto"},"display":{"position":"right","width":150,"height":300},"mobile":{"show":false},"log":false,"pluginJsPath":"lib/","pluginModelPath":"assets/","pluginRootPath":"live2dw/","tagMode":false});</script></body>
+</html>

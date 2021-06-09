@@ -286,7 +286,7 @@ Mybatis简介用来操作数据库的，原来的JDBC代码太复杂了。
 <p>参考文章：<a href="https://blog.csdn.net/qiushisoftware/article/details/77718634" target="_blank" rel="noopener">https://blog.csdn.net/qiushisoftware/article/details/77718634</a></p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">set global wait_timeout&#x3D;2000;</span><br><span class="line">set global interactive_time&#x3D;2000;</span><br></pre></td></tr></table></figure>
 
-<p>成功后，退出MySQL，重新进入即可。但是运行还是错了。。最后发现是使用在mybatis-config.xml中的url中设置了useSSL=true的问题。如果去掉，可以运行，但是连接就不安全了。</p>
+<p>成功后，退出MySQL，重新进入即可。但是运行还是错了。。最后发现是使用在mybatis-config.xml中的url中设置了useSSL=true的问题。如果<strong>去掉或者选择useSSL=false</strong>，可以运行，但是连接就不安全了。</p>
 <p>在url中还可以加上设置时区的</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">serverTimezone&#x3D;GMT%2B8</span><br></pre></td></tr></table></figure>
 
@@ -329,6 +329,12 @@ Mybatis简介用来操作数据库的，原来的JDBC代码太复杂了。
     </div>
 </article>
 <div class="article-nav prev-next-wrap clearfix">
+    
+    <a href="/2021/06/08/Mybatis%E5%AD%A6%E4%B9%A02/" class="pre-post btn btn-default" title='Mybatis学习2'>
+        <i class="fa fa-angle-left fa-fw"></i><span class="hidden-lg">上一篇</span>
+        <span class="hidden-xs">
+            Mybatis学习2</span>
+    </a>
     
     
     <a href="/2021/06/06/Maven%E9%85%8D%E7%BD%AE/" class="next-post btn btn-default" title='Maven配置'>

@@ -1,0 +1,671 @@
+<head>
+<script src="https://cdn.jsdelivr.net/npm/jquery/dist/jquery.min.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome/css/font-awesome.min.css">
+<script src="https://cdn.jsdelivr.net/gh/stevenjoezhang/live2d-widget/autoload.js"></script>
+</head>
+
+<!DOCTYPE HTML>
+<html lang="zh-CN">
+
+<head>
+    <!--Setting-->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+    <meta http-equiv="Cache-Control" content="no-siteapp">
+    <meta http-equiv="Cache-Control" content="no-transform">
+    <meta name="renderer" content="webkit|ie-comp|ie-stand">
+    <meta name="apple-mobile-web-app-capable" content="ggy的个人博客">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="format-detection" content="telephone=no,email=no,adress=no">
+    <meta name="browsermode" content="application">
+    <meta name="screen-orientation" content="portrait">
+    <meta name="theme-version" content="1.2.3">
+    <meta name="root" content="/">
+    <link rel="dns-prefetch" href="https://ggyggy666.github.io">
+    <!--SEO-->
+
+<meta name="keywords" content="Mybatis学习3" />
+
+
+<meta name="description" content="今天继续学习Mybatis。
+
+
+日志日志可以记录所做的操作，从而快速发现错误。
+Mybatis中可以在Mybatis-config.xml中配置settings, 使用logImpl开启日志，..." />
+
+
+<meta name="robots" content="all" />
+<meta name="google" content="all" />
+<meta name="googlebot" content="all" />
+<meta name="verify" content="all" />
+    <!--Title-->
+
+<title>
+    
+    Mybatis学习3 |
+    
+    ggy的个人博客
+</title>
+
+<link rel="alternate" href="/atom.xml" title="ggy的个人博客" type="application/atom+xml">
+
+
+<link rel="icon" href="/favicon.ico">
+
+    
+
+
+<link rel="stylesheet" href="/css/bootstrap.min.css?rev=3.3.7.css">
+<link rel="stylesheet" href="/css/font-awesome.min.css?rev=4.7.0.css">
+<link rel="stylesheet" href="/css/style.css?rev=@@hash.css">
+
+    
+<div class="hide">
+    <script type="text/javascript">
+    var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+    document.write(unescape("%3Cspan class='cnzz_stat_icon_1263868967 hide' %3E%3Cscript%20src%3D%22https%3A%2F%2Fs95.cnzz.com%2Fz_stat.php%3Fweb_id%3D1272564536%22%3E%3C%2Fscript%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s19.cnzz.com/z_stat.php%3Fid%3D1263868967%26show%3Dpic1' type='text/javascript'%3E%3C/script%3E"));
+    </script>
+</div>
+
+
+
+
+    
+
+<meta name="generator" content="Hexo 4.2.0"></head>
+<!--[if lte IE 8]>
+<style>
+    html{ font-size: 1em }
+</style>
+<![endif]-->
+<!--[if lte IE 9]>
+<div style="ie">你使用的浏览器版本过低，为了你更好的阅读体验，请更新浏览器的版本或者使用其他现代浏览器，比如Chrome、Firefox、Safari等。</div>
+<![endif]-->
+<body>
+    <header class="main-header"  style="background-image:url(
+    https://pic.downk.cc/item/5e3816b82fb38b8c3c8791f9.jpg)"
+     >
+    <div class="main-header-box">
+        <a class="header-avatar" href="/" title='ggy'>
+            <img src="/img/avatar.jpg" alt="logo头像" class="img-responsive center-block">
+        </a>
+        <div class="branding">
+            <!--<h2 class="text-hide">Snippet主题,从未如此简单有趣</h2>-->
+            
+            <h2>
+                欢迎来到ggy的个人网站
+            </h2>
+            
+        </div>
+    </div>
+</header>
+    <nav class="main-navigation">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="navbar-header"><span class="nav-toggle-button collapsed pull-right" data-toggle="collapse" data-target="#main-menu" id="mnav">
+                        <span class="sr-only"></span>
+                        <i class="fa fa-bars"></i>
+                    </span>
+                    <a class="navbar-brand" href="https://ggyggy666.github.io">
+                        ggy的个人博客</a>
+                </div>
+                <div class="collapse navbar-collapse" id="main-menu">
+                    <ul class="menu">
+                        
+                        <li role="presentation" class="text-center">
+                            <a href="/"><i class="fa "></i>
+                                首页</a>
+                        </li>
+                        
+                        <li role="presentation" class="text-center">
+                            <a href="/categories/web安全/"><i class="fa "></i>
+                                web安全</a>
+                        </li>
+                        
+                        <li role="presentation" class="text-center">
+                            <a href="/categories/python工具/"><i class="fa "></i>
+                                python工具</a>
+                        </li>
+                        
+                        <li role="presentation" class="text-center">
+                            <a href="/categories/密码学/"><i class="fa "></i>
+                                密码学</a>
+                        </li>
+                        
+                        <li role="presentation" class="text-center">
+                            <a href="/archives/"><i class="fa "></i>
+                                时间轴</a>
+                        </li>
+                        
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</nav>
+    <section class="content-wrap">
+        <div class="container">
+            <div class="row">
+                <main class="col-md-8 main-content m-post">
+                    <p id="process"></p>
+<article class="post">
+    <div class="post-head">
+        <h1 id="Mybatis学习3">
+            
+            Mybatis学习3
+            
+        </h1>
+        <div class="post-meta">
+    
+    <span class="categories-meta fa-wrap">
+        <i class="fa fa-folder-open-o"></i>
+        <a class="category-link" href="/categories/ssm%E5%AD%A6%E4%B9%A0/">ssm学习</a>
+    </span>
+    
+    
+    <span class="fa-wrap">
+        <i class="fa fa-tags"></i>
+        <span class="tags-meta">
+            
+            <a class="tag-link" href="/tags/Mybatis%E5%AD%A6%E4%B9%A03/" rel="tag">Mybatis学习3</a>
+            
+        </span>
+    </span>
+    
+    
+    
+    <span class="fa-wrap">
+        <i class="fa fa-clock-o"></i>
+        <span class="date-meta">
+            2021/06/09</span>
+    </span>
+    
+    <span class="fa-wrap">
+        <i class="fa fa-eye"></i>
+        <span id="busuanzi_value_page_pv"></span>
+    </span>
+    
+    
+</div>
+        
+        
+    </div>
+    
+    <div class="post-body post-content">
+        <p>今天继续学习Mybatis。</p>
+<a id="more"></a>
+
+<h1 id="日志"><a href="#日志" class="headerlink" title="日志"></a>日志</h1><p>日志可以记录所做的操作，从而快速发现错误。</p>
+<p>Mybatis中可以在Mybatis-config.xml中配置settings, 使用logImpl开启日志，日志也有多种</p>
+<blockquote>
+<p>SLF4J | LOG4J | LOG4J2 | JDK_LOGGING | COMMONS_LOGGING | STDOUT_LOGGING | NO_LOGGING</p>
+</blockquote>
+<p>其中，LOG4J和STDOUT_LOGGING需要掌握。</p>
+<h2 id="STDOUT-LOGGING"><a href="#STDOUT-LOGGING" class="headerlink" title="STDOUT_LOGGING"></a>STDOUT_LOGGING</h2><p>标准输出日志。在mybatis-config.xml中</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&lt;settings&gt;</span><br><span class="line">    &lt;setting name&#x3D;&quot;logImpl&quot; value&#x3D;&quot;STDOUT_LOGGING&quot;&#x2F;&gt;</span><br><span class="line">&lt;&#x2F;settings&gt;</span><br></pre></td></tr></table></figure>
+
+<p>注意，settings标签在properties标签后面。顺序！</p>
+<p>然后测试</p>
+<p><img src="https://raw.githubusercontent.com/ggyggy666/ggyggy666.github.io/master/img/image-20210609114721826.png" alt="image-20210609114721826"></p>
+<p>可以看到输出的日志。</p>
+<h2 id="LOG4J"><a href="#LOG4J" class="headerlink" title="LOG4J"></a>LOG4J</h2><p>apache的一个开源项目，可以控制日志输出的目的是控制台、文件还是GUI组件，也可以控制日志的输出形式，还可以控制日志信息的级别，决定生成的日志是否详细。更重要的是，可以通过一个配置文件灵活配置。</p>
+<p>1.导入log4j的包</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&lt;!-- https:&#x2F;&#x2F;mvnrepository.com&#x2F;artifact&#x2F;log4j&#x2F;log4j --&gt;</span><br><span class="line">&lt;dependency&gt;</span><br><span class="line">    &lt;groupId&gt;log4j&lt;&#x2F;groupId&gt;</span><br><span class="line">    &lt;artifactId&gt;log4j&lt;&#x2F;artifactId&gt;</span><br><span class="line">    &lt;version&gt;1.2.17&lt;&#x2F;version&gt;</span><br><span class="line">&lt;&#x2F;dependency&gt;</span><br></pre></td></tr></table></figure>
+
+<p>2.在resources目录下新建一个log4j.properties</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">#将DEBUG级别的日志信息输出到控制台和文件</span><br><span class="line">log4j.rootLogger&#x3D;DEBUG,console,file</span><br><span class="line"></span><br><span class="line">#控制台输出的相关配置</span><br><span class="line">log4j.appender.console&#x3D;org.apache.log4j.ConsoleAppender</span><br><span class="line">log4j.appender.console.Target &#x3D; System.out</span><br><span class="line">log4j.appender.console.Threshold&#x3D;DEBUG</span><br><span class="line">log4j.appender.console.layout &#x3D; org.apache.log4j.PatternLayout</span><br><span class="line">log4j.appender.console.layout.ConversionPattern &#x3D; [%c]-%m%n</span><br><span class="line"></span><br><span class="line">#文件输出的相关配置</span><br><span class="line">log4j.appender.file &#x3D; org.apache.log4j.RollingFileAppender</span><br><span class="line">log4j.appender.file.File &#x3D; .&#x2F;log&#x2F;Mybatis.log</span><br><span class="line">log4j.appender.file.MaxFileSize &#x3D; 10mb</span><br><span class="line">log4j.appender.file.Threshold &#x3D; DEBUG</span><br><span class="line">log4j.appender.file.layout &#x3D;org.apache.log4j.PatternLayout</span><br><span class="line">log4j.appender.file.layout.ConversionPattern &#x3D;[%p][%d&#123;yy-MM-dd&#125;][%c]%m%n</span><br><span class="line"></span><br><span class="line">#选择输出什么日志，日志输出级别</span><br><span class="line">log4j.logger.org.mybatis&#x3D;DEBUG</span><br><span class="line">log4j.logger.java.sql&#x3D;DEBUG</span><br><span class="line">log4j.logger.java.sql.Statement&#x3D;DEBUG</span><br><span class="line">log4j.logger.java.sql.ResultSet&#x3D;DEBUG</span><br><span class="line">log4j.logger.java.sql.PreparedStatement&#x3D;DEBUG</span><br></pre></td></tr></table></figure>
+
+<p>3.配置Log4J</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&lt;settings&gt;</span><br><span class="line">    &lt;setting name&#x3D;&quot;logImpl&quot; value&#x3D;&quot;LOG4J&quot;&#x2F;&gt;</span><br><span class="line">&lt;&#x2F;settings&gt;</span><br></pre></td></tr></table></figure>
+
+<p>4.直接测试运行</p>
+<p><img src="https://raw.githubusercontent.com/ggyggy666/ggyggy666.github.io/master/img/image-20210609151750252.png" alt="image-20210609151750252"></p>
+<p><strong>log4j的使用</strong></p>
+<p>之前的日志都是系统自己运行生成的，log4j<strong>支持自定义的信息加入到日志中。</strong></p>
+<p>1.在测试类中导入Logger包，注意是需要org.apache.log4j的。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">public void testLog4j()&#123;</span><br><span class="line">    Logger logger &#x3D; Logger.getLogger(userMapperTest.class);</span><br><span class="line">    logger.info(&quot;info: yes&quot;);</span><br><span class="line">    logger.debug(&quot;debug: yes&quot;);</span><br><span class="line">    logger.error(&quot;error: yes&quot;);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>有3个方法，一般情况使用Info，debug模式使用debug，发生错误使用error。</p>
+<p>userMapperTest.class表明这个日志记录这个类里面运行产生的日志信息。</p>
+<p>2.在其它函数也能用，就得把getLogger放在类开头并使用static</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">static Logger logger &#x3D; Logger.getLogger(userMapperTest.class);</span><br></pre></td></tr></table></figure>
+
+<p>然后在一个函数比如test函数中使用</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">@Test</span><br><span class="line">public void test()&#123;</span><br><span class="line">    &#x2F;&#x2F;获取sqlSession对象</span><br><span class="line">    SqlSession session &#x3D; MybatisUtils.getSession();</span><br><span class="line">    userMapper usermapper &#x3D; session.getMapper(userMapper.class);</span><br><span class="line">    user user &#x3D; usermapper.getUserById(1);</span><br><span class="line">    logger.info(&quot;输出查询到的用户信息：&quot;);</span><br><span class="line">    System.out.println(user);</span><br><span class="line">    session.close();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>运行后，查看日志</p>
+<p><img src="https://raw.githubusercontent.com/ggyggy666/ggyggy666.github.io/master/img/image-20210609153115555.png" alt="image-20210609153115555"></p>
+<h1 id="分页"><a href="#分页" class="headerlink" title="分页"></a>分页</h1><p>其实就是查询数据库，只不过SQL语句使用了Limit</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">select * from mybatis.user limit startIndex, pageSize</span><br><span class="line">select * from mybatis.user limit 3;&#x2F;&#x2F;默认从0开始取3个</span><br></pre></td></tr></table></figure>
+
+<p>1.userMapper中</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">List&lt;user&gt; getUserListByLimit(Map&lt;String, Integer&gt; map);</span><br></pre></td></tr></table></figure>
+
+<p>2.userMapper.xml中</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&lt;resultMap id&#x3D;&quot;map&quot; type&#x3D;&quot;com.ggy.pojo.user&quot;&gt;</span><br><span class="line">    &lt;result column&#x3D;&quot;pwd&quot; property&#x3D;&quot;password&quot;&#x2F;&gt;</span><br><span class="line">&lt;&#x2F;resultMap&gt;</span><br><span class="line"></span><br><span class="line">&lt;select id&#x3D;&quot;getUserListByLimit&quot; resultMap&#x3D;&quot;map&quot;&gt;</span><br><span class="line">    select * from mybatis.user limit #&#123;startIndex&#125;,#&#123;pageSize&#125;;</span><br><span class="line">&lt;&#x2F;select&gt;</span><br></pre></td></tr></table></figure>
+
+<p>3.userMapperTest中</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">@Test</span><br><span class="line">public void getUserListByLimit()&#123;</span><br><span class="line">    SqlSession session &#x3D; MybatisUtils.getSession();</span><br><span class="line">    userMapper mapper &#x3D; session.getMapper(userMapper.class);</span><br><span class="line">    HashMap&lt;String, Integer&gt; stringIntegerHashMap &#x3D; new HashMap&lt;String, Integer&gt;();</span><br><span class="line">    stringIntegerHashMap.put(&quot;startIndex&quot;, 0);</span><br><span class="line">    stringIntegerHashMap.put(&quot;pageSize&quot;, 2);</span><br><span class="line">    List&lt;user&gt; userListByLimit &#x3D; mapper.getUserListByLimit(stringIntegerHashMap);</span><br><span class="line">    for(user u:userListByLimit)&#123;</span><br><span class="line">        System.out.println(u);</span><br><span class="line">    &#125;</span><br><span class="line">    session.close();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://raw.githubusercontent.com/ggyggy666/ggyggy666.github.io/master/img/image-20210609154727963.png" alt="image-20210609154727963"></p>
+<h1 id="注解开发"><a href="#注解开发" class="headerlink" title="注解开发"></a>注解开发</h1><p><strong>注解开发记得mapper映射</strong></p>
+<h2 id="不传参数"><a href="#不传参数" class="headerlink" title="不传参数"></a>不传参数</h2><p>不用userMapper.xml文件了，而是直接在接口上写注解的SQL语句。</p>
+<p>新建一个项目后，将之前的东西都复制过来，然后把userMapper.xml删除。在Mybatis-config.xml中换一种<strong>mapper映射资源方式</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&lt;mappers&gt;</span><br><span class="line">    &lt;mapper class&#x3D;&quot;com.ggy.dao.userMapper&quot;&#x2F;&gt;</span><br><span class="line">&lt;&#x2F;mappers&gt;</span><br></pre></td></tr></table></figure>
+
+<p>之后在userMapper中</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">public interface userMapper &#123;</span><br><span class="line">    @Select(&quot;select * from mybatis.user;&quot;)</span><br><span class="line">    List&lt;user&gt; getUserList();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>然后在测试类中</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">@Test</span><br><span class="line">public void test()&#123;</span><br><span class="line">    SqlSession session &#x3D; MybatisUtils.getSession();</span><br><span class="line">    userMapper mapper &#x3D; session.getMapper(userMapper.class);</span><br><span class="line">    List&lt;user&gt; userList &#x3D; mapper.getUserList();</span><br><span class="line">    for(user u:userList)&#123;</span><br><span class="line">        System.out.println(u);</span><br><span class="line">    &#125;</span><br><span class="line">    session.close();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>输出的结果如下</p>
+<p><img src="https://raw.githubusercontent.com/ggyggy666/ggyggy666.github.io/master/img/image-20210609160442387.png" alt="image-20210609160442387"></p>
+<p>可以发现，password为空了，这是因为user类中的password属性与数据库表中的字段pwd不一致，而且没有userMapper.xml做映射了，因此查询为null。</p>
+<p><strong>注解方式可以用于简单的执行SQL语句</strong>，复杂一点就不行了。</p>
+<p><strong>本质：反射机制</strong></p>
+<p><strong>底层：动态代理</strong></p>
+<p><img src="https://raw.githubusercontent.com/ggyggy666/ggyggy666.github.io/master/img/image-20210609161136141.png" alt="image-20210609161136141"></p>
+<h2 id="传参数（不是类）"><a href="#传参数（不是类）" class="headerlink" title="传参数（不是类）"></a>传参数（不是类）</h2><p>传的参数是int,String等，参数前都需要加@param(“xx”)，<strong>注意这个里面的xx与SQL语句中的#{xx}一致。</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">@Select(&quot;select * from mybatis.user where id &#x3D; #&#123;id&#125;;&quot;)</span><br><span class="line">user getUserById(@Param(&quot;id&quot;) int id);</span><br></pre></td></tr></table></figure>
+
+<p>测试</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">@Test</span><br><span class="line">public void testid()&#123;</span><br><span class="line">    SqlSession session &#x3D; MybatisUtils.getSession();</span><br><span class="line">    userMapper mapper &#x3D; session.getMapper(userMapper.class);</span><br><span class="line">    user userById &#x3D; mapper.getUserById(1);</span><br><span class="line">    System.out.println(userById);</span><br><span class="line">    session.close();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>如果是删除、修改、插入操作需要提交事务，每次都提交麻烦，可以在工具类中使用openSession时配置自动提交。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">public static SqlSession getSession()&#123;</span><br><span class="line">    return sqlSessionFactory.openSession(true);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="传参数（类）"><a href="#传参数（类）" class="headerlink" title="传参数（类）"></a>传参数（类）</h2><p>如果传的参数是类，不需要@param注解</p>
+<p>接口类中</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">@Insert(&quot;insert into user(id,name,pwd) values (#&#123;id&#125;,#&#123;name&#125;,#&#123;password&#125;);&quot;)</span><br><span class="line">int insertUser(user u);</span><br></pre></td></tr></table></figure>
+
+<p>测试</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">@Test</span><br><span class="line">public void insertUser()&#123;</span><br><span class="line">    SqlSession session &#x3D; MybatisUtils.getSession();</span><br><span class="line">    userMapper mapper &#x3D; session.getMapper(userMapper.class);</span><br><span class="line">    int res &#x3D; mapper.insertUser(new user(7,&quot;ggy7&quot;,&quot;777&quot;));</span><br><span class="line">    session.close();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>成功插入。</p>
+<h1 id="动态SQL"><a href="#动态SQL" class="headerlink" title="动态SQL"></a>动态SQL</h1><p>动态SQL，就是在不同条件下生成不同的SQL语句。有四种</p>
+<ul>
+<li>if</li>
+<li>choose(when, otherwise)</li>
+<li>trim(where, set)</li>
+<li>foreach</li>
+</ul>
+<h2 id="搭建环境"><a href="#搭建环境" class="headerlink" title="搭建环境"></a>搭建环境</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">create table blog(</span><br><span class="line">	id varchar(50) not null comment &#39;博客id&#39;,</span><br><span class="line">	title varchar(50) not null comment &#39;博客标题&#39;,</span><br><span class="line">	author varchar(30) not null comment &#39;博客作者&#39;,</span><br><span class="line">	create_time datetime not null comment &#39;创建时间&#39;,</span><br><span class="line">	views int(30) not null comment &#39;浏览量&#39;</span><br><span class="line">)engine&#x3D;InnoDB default charset&#x3D;utf8;</span><br></pre></td></tr></table></figure>
+
+<p>创建好表，新建一个项目。</p>
+<ol>
+<li><p>将db.properties和Mybatis-config.xml复制到resources目录。</p>
+</li>
+<li><p>main的java目录下，创建一个com.ggy包，在这个包下创建dao, pojo, utils包。</p>
+</li>
+<li><p>将MybatisUtil.java类复制过来到utils包中。</p>
+</li>
+<li><p>在pojo包下新建一个Blog类，然后生成构造函数（有参和无参），Getter and Setter，还有toString函数。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">private String id;</span><br><span class="line">private String title;</span><br><span class="line">private String author;</span><br><span class="line">private Date create_time;</span><br><span class="line">private int views;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>在dao包下新建一个接口BlogMapper.java类和一个BlogMapper.xml文件。BlogMapper.xml先初始化</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">&lt;?xml version&#x3D;&quot;1.0&quot; encoding&#x3D;&quot;UTF-8&quot; ?&gt;</span><br><span class="line">&lt;!DOCTYPE mapper</span><br><span class="line">        PUBLIC &quot;-&#x2F;&#x2F;mybatis.org&#x2F;&#x2F;DTD Mapper 3.0&#x2F;&#x2F;EN&quot;</span><br><span class="line">        &quot;http:&#x2F;&#x2F;mybatis.org&#x2F;dtd&#x2F;mybatis-3-mapper.dtd&quot;&gt;</span><br><span class="line"></span><br><span class="line">&lt;mapper namespace&#x3D;&quot;com.ggy.dao.BlogMapper&quot;&gt;</span><br><span class="line"></span><br><span class="line">&lt;&#x2F;mapper&gt;</span><br></pre></td></tr></table></figure>
+
+<p>然后在Mybatis-config.xml中更新mappers</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&lt;mappers&gt;</span><br><span class="line">    &lt;mapper class&#x3D;&quot;com.ggy.dao.BlogMapper&quot;&#x2F;&gt;</span><br><span class="line">&lt;&#x2F;mappers&gt;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>在utils包下新建一个IDutils类，因为ID不是从1开始递增了，而是使用UUID随机生成返回。</p>
+<p><img src="https://raw.githubusercontent.com/ggyggy666/ggyggy666.github.io/master/img/image-20210610202105245.png" alt="image-20210610202105245"></p>
+<p>发现类名有下划线，不是红色，因此是警告，使用<code>@SuppressWarnings(&quot;all&quot;)</code>来抑制警告。</p>
+</li>
+<li><p>新建一个randomID函数，返回一个生成的UUID，将函数变成static，之后就可以直接用类名.函数名访问。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">public static String randomID()&#123;</span><br><span class="line">	String s &#x3D; UUID.randomUUID().toString();</span><br><span class="line">	return s;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>测试</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">@Test</span><br><span class="line">public void getID()&#123;</span><br><span class="line">    String s &#x3D; randomID();</span><br><span class="line">    System.out.println(s);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>得到</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">410f5378-b8ab-4afc-b566-4b40a072885c</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>UUID去除掉-，则需要使用replace</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">String s &#x3D; UUID.randomUUID().toString().replace(&quot;-&quot;, &quot;&quot;);</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>在BlogMapper接口类中增加一个插入数据的接口</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">int addBlog(Blog blog);</span><br></pre></td></tr></table></figure>
+
+<p>BlogMapper.xml中</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&lt;insert id&#x3D;&quot;addBlog&quot; parameterType&#x3D;&quot;Blog&quot;&gt;</span><br><span class="line">    insert into Mybatis.Blog(id, title, author, create_time, views) values (#&#123;id&#125;, #&#123;title&#125;, #&#123;author&#125;, #&#123;create_time&#125;, #&#123;views&#125;);</span><br><span class="line">&lt;&#x2F;insert&gt;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>测试类</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">@Test</span><br><span class="line">public void test()&#123;</span><br><span class="line">    SqlSession session &#x3D; MybatisUtils.getSession();</span><br><span class="line">    BlogMapper mapper &#x3D; session.getMapper(BlogMapper.class);</span><br><span class="line">    Blog blog &#x3D; new Blog();</span><br><span class="line">    blog.setId(IDutils.randomID());</span><br><span class="line">    blog.setTitle(&quot;新青年&quot;);</span><br><span class="line">    blog.setAuthor(&quot;ggy&quot;);</span><br><span class="line">    blog.setCreate_time(new Date());</span><br><span class="line">    blog.setViews(1500);</span><br><span class="line">    mapper.addBlog(blog);</span><br><span class="line"></span><br><span class="line">    blog.setId(IDutils.randomID());</span><br><span class="line">    blog.setTitle(&quot;ccg-lenovo.com&quot;);</span><br><span class="line">    blog.setAuthor(&quot;ggy&quot;);</span><br><span class="line">    blog.setCreate_time(new Date());</span><br><span class="line">    blog.setViews(9900);</span><br><span class="line">    mapper.addBlog(blog);</span><br><span class="line">    </span><br><span class="line">    session.close();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>执行后，即可在数据库中成功插入两条数据。</p>
+</li>
+</ol>
+<p><img src="https://raw.githubusercontent.com/ggyggy666/ggyggy666.github.io/master/img/image-20210610205116585.png" alt="image-20210610205116585"></p>
+<h2 id="IF"><a href="#IF" class="headerlink" title="IF"></a>IF</h2><p>如果满足if的条件（test=），则在SQL语句后增加一个条件。</p>
+<p>BlogMapper.java中增加一个接口</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">List&lt;Blog&gt; queryBlogIF(Map&lt;String, String&gt; map);</span><br></pre></td></tr></table></figure>
+
+<p>BlogMapper.xml中实现</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">&lt;select id&#x3D;&quot;queryBlogIF&quot; parameterType&#x3D;&quot;map&quot; resultType&#x3D;&quot;Blog&quot;&gt;</span><br><span class="line">    select * from Mybatis.blog where 1&#x3D;1 </span><br><span class="line">    &lt;if test&#x3D;&quot;title!&#x3D;null&quot;&gt;</span><br><span class="line">        and title&#x3D;#&#123;title&#125;</span><br><span class="line">    &lt;&#x2F;if&gt;</span><br><span class="line">    &lt;if test&#x3D;&quot;author!&#x3D;null&quot;&gt;</span><br><span class="line">        and author&#x3D;#&#123;author&#125;</span><br><span class="line">    &lt;&#x2F;if&gt;</span><br><span class="line">&lt;&#x2F;select&gt;</span><br></pre></td></tr></table></figure>
+
+<p>SQL语句后增加了两个if标签，test=””是条件，如果条件满足，SQL语句后面就拼接上相应的条件。比如这里，title和author都是空时，将blog内容全都查出来，如果title不为空，增加一个条件：<code>where title=#{title}</code>, 如果author也不为空，又拼接一个SQL条件。</p>
+<p>测试</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">@Test</span><br><span class="line">public void query()&#123;</span><br><span class="line">    SqlSession session &#x3D; MybatisUtils.getSession();</span><br><span class="line">    BlogMapper mapper &#x3D; session.getMapper(BlogMapper.class);</span><br><span class="line">    HashMap&lt;String, String&gt; map &#x3D; new HashMap&lt;String, String&gt;();</span><br><span class="line">    mapper.queryBlogIF(map);</span><br><span class="line">    session.close();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>全都查出来了。然后title不为空情况下</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">map.put(&quot;title&quot;, &quot;新青年&quot;);</span><br></pre></td></tr></table></figure>
+
+<p>只查询出新青年这一条，author也不为空</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">map.put(&quot;title&quot;, &quot;新青年&quot;);</span><br><span class="line">map.put(&quot;author&quot;, &quot;ggy&quot;);</span><br></pre></td></tr></table></figure>
+
+<p>两个条件都满足的也只有新青年这一条记录了。</p>
+<h2 id="trim-where-set"><a href="#trim-where-set" class="headerlink" title="trim(where, set)"></a>trim(where, set)</h2><p>使用trim可以等价于where或者set。</p>
+<p><strong>等价于where</strong></p>
+<p>前置即增加WHERE，只满足一个条件时将前面的AND或者OR去掉。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&lt;trim prefix&#x3D;&quot;WHERE&quot; prefixOverrides&#x3D;&quot;AND | OR&quot;&gt;</span><br><span class="line">	...</span><br><span class="line">&lt;&#x2F;trim&gt;</span><br></pre></td></tr></table></figure>
+
+<p><strong>等价于set</strong></p>
+<p>前置即增加SET，只更改一个值时将后面的逗号去掉</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&lt;trim prefix&#x3D;&quot;SET&quot; suffixOverrides&#x3D;&quot;,&quot;&gt;</span><br><span class="line">	...</span><br><span class="line">&lt;&#x2F;trim&gt;</span><br></pre></td></tr></table></figure>
+
+<h3 id="where"><a href="#where" class="headerlink" title="where"></a>where</h3><p>注意到上面的BlogMapper.xml中的SQL语句是用来where 1=1, 后面的if标签用了and xxx才能拼接成功。而如果把这where 1=1去掉，就应该使用where标签了</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">&lt;select id&#x3D;&quot;queryBlogIF&quot; parameterType&#x3D;&quot;map&quot; resultType&#x3D;&quot;Blog&quot;&gt;</span><br><span class="line">    select * from Mybatis.blog</span><br><span class="line">    &lt;where&gt;</span><br><span class="line">        &lt;if test&#x3D;&quot;title!&#x3D;null&quot;&gt;</span><br><span class="line">            title&#x3D;#&#123;title&#125;</span><br><span class="line">        &lt;&#x2F;if&gt;</span><br><span class="line">        &lt;if test&#x3D;&quot;author!&#x3D;null&quot;&gt;</span><br><span class="line">            and author&#x3D;#&#123;author&#125;</span><br><span class="line">        &lt;&#x2F;if&gt;</span><br><span class="line">    &lt;&#x2F;where&gt;</span><br><span class="line">&lt;&#x2F;select&gt;</span><br></pre></td></tr></table></figure>
+
+<p>如果只满足第一个条件，SQL语句就是：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">select * from Mybatis.blog where title&#x3D;#&#123;title&#125;</span><br></pre></td></tr></table></figure>
+
+<p>如果只满足第二个条件，SQL语句就是：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">select * from Mybatis.blog where author&#x3D;#&#123;author&#125;</span><br></pre></td></tr></table></figure>
+
+<p>会自动把and去掉。如果两个条件都满足</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">select * from Mybatis.blog where title&#x3D;#&#123;title&#125; and author&#x3D;#&#123;author&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="set"><a href="#set" class="headerlink" title="set"></a>set</h3><p>SET用于update语句，可以为SQL语句增加一个SET，如果只有一个要更改，可以去掉SQL语句中的逗号。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">&lt;select id&#x3D;&quot;queryBlogIF&quot; parameterType&#x3D;&quot;map&quot; resultType&#x3D;&quot;Blog&quot;&gt;</span><br><span class="line">    update Mybatis.blog</span><br><span class="line">    &lt;set&gt;</span><br><span class="line">        &lt;if test&#x3D;&quot;title!&#x3D;null&quot;&gt;</span><br><span class="line">            title&#x3D;#&#123;title&#125;,</span><br><span class="line">        &lt;&#x2F;if&gt;</span><br><span class="line">        &lt;if test&#x3D;&quot;author!&#x3D;null&quot;&gt;</span><br><span class="line">            author&#x3D;#&#123;author&#125;</span><br><span class="line">        &lt;&#x2F;if&gt;</span><br><span class="line">    &lt;&#x2F;set&gt;</span><br><span class="line">    where id&#x3D;#&#123;id&#125;</span><br><span class="line">&lt;&#x2F;select&gt;</span><br></pre></td></tr></table></figure>
+
+<h2 id="choose-when"><a href="#choose-when" class="headerlink" title="choose when"></a>choose when</h2><p>有IF了，那么就会有多个条件的，类似switch, Choose和when就是这样的东西。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">&lt;select id&#x3D;&quot;queryBlogIF&quot; parameterType&#x3D;&quot;map&quot; resultType&#x3D;&quot;Blog&quot;&gt;</span><br><span class="line">    select * from Mybatis.blog</span><br><span class="line">    &lt;where&gt;</span><br><span class="line">        &lt;choose&gt;</span><br><span class="line">            &lt;when test&#x3D;&quot;title!&#x3D;null&quot;&gt;</span><br><span class="line">                title&#x3D;#&#123;title&#125;</span><br><span class="line">            &lt;&#x2F;when&gt;</span><br><span class="line">            &lt;when test&#x3D;&quot;author!&#x3D;null&quot;&gt;</span><br><span class="line">                and author&#x3D;#&#123;author&#125;</span><br><span class="line">            &lt;&#x2F;when&gt;</span><br><span class="line">            &lt;otherwise&gt;</span><br><span class="line">                and views&#x3D;#&#123;views&#125;</span><br><span class="line">            &lt;&#x2F;otherwise&gt;</span><br><span class="line">        &lt;&#x2F;choose&gt;</span><br><span class="line">    &lt;&#x2F;where&gt;</span><br><span class="line">&lt;&#x2F;select&gt;</span><br></pre></td></tr></table></figure>
+
+<p>如果条件都满足，只用第一个就结束了。类似break。</p>
+<h2 id="SQL片段"><a href="#SQL片段" class="headerlink" title="SQL片段"></a>SQL片段</h2><p>从上面可以知道，如果每一个功能都用到动态SQL，并且它们的IF语句都一样的话，就显得非常臃肿。因此需要采用SQL片段，将重复的条件放在SQL片段里面，然后用到时include即可。</p>
+<p>首先将重复的IF语句放在sql标签里面，随便定义一个ID。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">&lt;sql id&#x3D;&quot;if-title-author&quot;&gt;</span><br><span class="line">    &lt;if test&#x3D;&quot;title!&#x3D;null&quot;&gt;</span><br><span class="line">        title&#x3D;#&#123;title&#125;,</span><br><span class="line">    &lt;&#x2F;if&gt;</span><br><span class="line">    &lt;if test&#x3D;&quot;author!&#x3D;null&quot;&gt;</span><br><span class="line">        author&#x3D;#&#123;author&#125;</span><br><span class="line">    &lt;&#x2F;if&gt;</span><br><span class="line">&lt;&#x2F;sql&gt;</span><br></pre></td></tr></table></figure>
+
+<p>然后使用include, refid是sql中的id。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&lt;select id&#x3D;&quot;queryBlogIF&quot; parameterType&#x3D;&quot;map&quot; resultType&#x3D;&quot;Blog&quot;&gt;</span><br><span class="line">    update Mybatis.blog</span><br><span class="line">    &lt;set&gt;</span><br><span class="line">        &lt;include refid&#x3D;&quot;if-title-author&quot;&gt;&lt;&#x2F;include&gt;</span><br><span class="line">    &lt;&#x2F;set&gt;</span><br><span class="line">    where id&#x3D;#&#123;id&#125;</span><br><span class="line">&lt;&#x2F;select&gt;</span><br></pre></td></tr></table></figure>
+
+<p>注意，不要放太多语句在sql标签里面，也不要放where进去。</p>
+<h2 id="foreach"><a href="#foreach" class="headerlink" title="foreach"></a>foreach</h2><p>适用于条件都在一个集合里面，比如In (1,2,3)。</p>
+<p>SQL语句：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">select * from Mybatis.blog where id in(1,2)</span><br></pre></td></tr></table></figure>
+
+
+
+<p>首先新建一个接口</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">List&lt;Blog&gt; queryBlogForEach(Map&lt;String, String&gt; map);</span><br></pre></td></tr></table></figure>
+
+<p>实现</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">&lt;select id&#x3D;&quot;queryBlogForEach&quot; parameterType&#x3D;&quot;map&quot; resultType&#x3D;&quot;Blog&quot;&gt;</span><br><span class="line">    select * from Mybatis.blog</span><br><span class="line">    &lt;where&gt;</span><br><span class="line">        &lt;foreach collection&#x3D;&quot;ids&quot; index&#x3D;&quot;index&quot; item&#x3D;&quot;id&quot; open&#x3D;&quot;id in (&quot; close&#x3D;&quot;)&quot; separator&#x3D;&quot;,&quot;&gt;</span><br><span class="line">            #&#123;id&#125;</span><br><span class="line">        &lt;&#x2F;foreach&gt;</span><br><span class="line">    &lt;&#x2F;where&gt;</span><br><span class="line">&lt;&#x2F;select&gt;</span><br></pre></td></tr></table></figure>
+
+<p>ids是map里面的一个键，而且这个ids对应的值本身是一个集合，collection=”ids”。</p>
+<p>index=”index“，不用改</p>
+<p>item=”id”, 表示集合里面的每一项值，之后用#{id}取出来</p>
+<p>open=”id in (“ ，表示这个条件是以id in(开头的</p>
+<p>close=”)”，以)结束</p>
+<p>separator=”,”，以逗号为分隔符</p>
+<p>最终效果：id in (1) 或者 id in (1,2,3)…</p>
+<p>测试</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">@Test</span><br><span class="line">public void testFor()&#123;</span><br><span class="line">    SqlSession session &#x3D; MybatisUtils.getSession();</span><br><span class="line">    BlogMapper mapper &#x3D; session.getMapper(BlogMapper.class);</span><br><span class="line">    HashMap map &#x3D; new HashMap();</span><br><span class="line">    ArrayList&lt;String&gt; ids &#x3D; new ArrayList&lt;String&gt;();</span><br><span class="line">    map.put(&quot;ids&quot;, ids);</span><br><span class="line">    List&lt;Blog&gt; list &#x3D; mapper.queryBlogForEach(map);</span><br><span class="line">    for(Blog blog:list)&#123;</span><br><span class="line">        System.out.println(blog);</span><br><span class="line">    &#125;</span><br><span class="line">    session.close();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>由于集合是空集，不满足任何条件，所以可以查出所有数据。往集合里面加1，</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">@Test</span><br><span class="line">public void testFor()&#123;</span><br><span class="line">    SqlSession session &#x3D; MybatisUtils.getSession();</span><br><span class="line">    BlogMapper mapper &#x3D; session.getMapper(BlogMapper.class);</span><br><span class="line">    HashMap map &#x3D; new HashMap();</span><br><span class="line">    ArrayList&lt;String&gt; ids &#x3D; new ArrayList&lt;String&gt;();</span><br><span class="line">    ids.add(&quot;1&quot;);	&#x2F;&#x2F;这里加了一个id为1.</span><br><span class="line">    map.put(&quot;ids&quot;, ids);</span><br><span class="line">    List&lt;Blog&gt; list &#x3D; mapper.queryBlogForEach(map);</span><br><span class="line">    for(Blog blog:list)&#123;</span><br><span class="line">        System.out.println(blog);</span><br><span class="line">    &#125;</span><br><span class="line">    session.close();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>可以看到预编译的SQL语句是</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">select * from Mybatis.blog WHERE id in ( ? )</span><br></pre></td></tr></table></figure>
+
+<p>之后传了一个1进去，即可查询出来。</p>
+<h1 id="Mybatis详细执行流程"><a href="#Mybatis详细执行流程" class="headerlink" title="Mybatis详细执行流程"></a>Mybatis详细执行流程</h1><ol>
+<li>Resources获取加载全局配置文件</li>
+<li>实例化SqlSessionFactoryBuilder构造器</li>
+<li>解析配置文件流XMLConfigBuilder</li>
+<li>Configuration所有的配置信息</li>
+<li>SqlSessionFactory实例化</li>
+<li>transaction事务管理器</li>
+<li>创建executor执行器</li>
+<li>创建sqlSession</li>
+<li>实现CRUD，如果事务出现问题需要回滚，回到6中的事务管理器</li>
+<li>查看是否执行SQL成功，不成功需要回滚则回到6中的事务管理器。</li>
+<li>成功则提交事务。</li>
+<li>关闭sqlSession。</li>
+</ol>
+<h1 id="Mybatis缓存"><a href="#Mybatis缓存" class="headerlink" title="Mybatis缓存"></a>Mybatis缓存</h1><p>缓存就是存储在内存中的数据，当用户经常查询某些数据时，每次查询都需要访问数据库，效率不高；而如果将经常用到的且不轻易改变的数据存在内存中，之后再次查询就可以直接获取，减少与数据库的交互次数，从而减少系统开销，提高效率。</p>
+<h2 id="分类"><a href="#分类" class="headerlink" title="分类"></a>分类</h2><p>一级缓存和二级缓存。</p>
+<ul>
+<li>一级缓存，SqlSession级别的缓存，即本地缓存，默认开启。</li>
+<li>二级缓存，需要手动开启和配置，基于namespace级别，定义了缓存接口Cache，可通过Cache自定义二级缓存。</li>
+</ul>
+<h2 id="一级缓存"><a href="#一级缓存" class="headerlink" title="一级缓存"></a>一级缓存</h2><p>测试SqlSession一级缓存。</p>
+<p>首先userMapper.java中创建一个接口</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">user getUserById(@Param(&quot;id&quot;) int id);</span><br></pre></td></tr></table></figure>
+
+<p>在userMapper.xml中</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&lt;mapper namespace&#x3D;&quot;com.ggy.dao.userMapper&quot;&gt;</span><br><span class="line">    &lt;select id&#x3D;&quot;getUserById&quot; resultType&#x3D;&quot;user&quot;&gt;</span><br><span class="line">        select * from mybatis.user where id&#x3D;#&#123;id&#125;</span><br><span class="line">    &lt;&#x2F;select&gt;</span><br><span class="line">&lt;&#x2F;mapper&gt;</span><br></pre></td></tr></table></figure>
+
+<p>在Mybatis-config.xml中开启日志</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&lt;settings&gt;</span><br><span class="line">    &lt;setting name&#x3D;&quot;logImpl&quot; value&#x3D;&quot;STDOUT_LOGGING&quot;&#x2F;&gt;</span><br><span class="line">&lt;&#x2F;settings&gt;</span><br></pre></td></tr></table></figure>
+
+<p>test</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">@Test</span><br><span class="line">public void test()&#123;</span><br><span class="line">    SqlSession session &#x3D; MybatisUtils.getSession();</span><br><span class="line">    userMapper mapper &#x3D; session.getMapper(userMapper.class);</span><br><span class="line">    user userById &#x3D; mapper.getUserById(1);</span><br><span class="line">    System.out.println(userById);</span><br><span class="line">    user userById1 &#x3D; mapper.getUserById(1);</span><br><span class="line">    System.out.println(userById1);</span><br><span class="line">    session.close();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>在一个SqlSession中查询一个数据两次，结果</p>
+<p><img src="https://raw.githubusercontent.com/ggyggy666/ggyggy666.github.io/master/img/image-20210610152308651.png" alt="image-20210610152308651"></p>
+<p>可见，第二次查询并没有重新打开JDBC连接，而是直接在缓存中查找到的。</p>
+<h2 id="缓存失效"><a href="#缓存失效" class="headerlink" title="缓存失效"></a>缓存失效</h2><p><strong>1.查询不同的数据。</strong></p>
+<p><strong>2.select查询会保存进缓存，insert, update, delete操作会刷新缓存。</strong></p>
+<p>增加接口</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">int updateUser(user u);</span><br></pre></td></tr></table></figure>
+
+<p>实现接口</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&lt;update id&#x3D;&quot;updateUser&quot; parameterType&#x3D;&quot;user&quot;&gt;</span><br><span class="line">    update mybatis.user set name&#x3D;#&#123;id&#125;,pwd&#x3D;#&#123;password&#125; where id&#x3D;#&#123;id&#125;;</span><br><span class="line">&lt;&#x2F;update&gt;</span><br></pre></td></tr></table></figure>
+
+<p>测试</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">@Test</span><br><span class="line">public void test()&#123;</span><br><span class="line">    SqlSession session &#x3D; MybatisUtils.getSession();</span><br><span class="line">    userMapper mapper &#x3D; session.getMapper(userMapper.class);</span><br><span class="line">    user userById &#x3D; mapper.getUserById(1);</span><br><span class="line">    System.out.println(userById);</span><br><span class="line">    </span><br><span class="line">    &#x2F;&#x2F;增加一个更新操作</span><br><span class="line">    mapper.updateUser(new user(2,&quot;ggy222&quot;,&quot;22xx&quot;));</span><br><span class="line">    </span><br><span class="line">    user userById1 &#x3D; mapper.getUserById(1);</span><br><span class="line">    System.out.println(userById1);</span><br><span class="line">    session.close();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>结果</p>
+<p><img src="https://raw.githubusercontent.com/ggyggy666/ggyggy666.github.io/master/img/image-20210610153018256.png" alt="image-20210610153018256"></p>
+<p>可以发现，更新操作刷新了缓存，第二次查询需要重新查询数据库了。</p>
+<p><strong>3.查询不同的userMapper.xml</strong></p>
+<p>4.<strong>手动清除缓存</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">SqlSession session &#x3D; MybatisUtils.getSession();</span><br><span class="line">userMapper mapper &#x3D; session.getMapper(userMapper.class);</span><br><span class="line">user userById &#x3D; mapper.getUserById(1);</span><br><span class="line">System.out.println(userById);</span><br><span class="line"></span><br><span class="line">session.clearCache();</span><br><span class="line"></span><br><span class="line">user userById1 &#x3D; mapper.getUserById(1);</span><br><span class="line">System.out.println(userById1);</span><br><span class="line">session.close();</span><br></pre></td></tr></table></figure>
+
+<p>使用session.clearCache()清除缓存。</p>
+<p><img src="https://raw.githubusercontent.com/ggyggy666/ggyggy666.github.io/master/img/image-20210610153406616.png" alt="image-20210610153406616"></p>
+<h2 id="二级缓存"><a href="#二级缓存" class="headerlink" title="二级缓存"></a>二级缓存</h2><p>即全局缓存，需要手动开启。</p>
+<p>Mybatis-config.xml</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&lt;settings&gt;</span><br><span class="line">    &lt;setting name&#x3D;&quot;logImpl&quot; value&#x3D;&quot;STDOUT_LOGGING&quot;&#x2F;&gt;</span><br><span class="line">    &lt;setting name&#x3D;&quot;cacheEnabled&quot; value&#x3D;&quot;true&quot;&#x2F;&gt;</span><br><span class="line">&lt;&#x2F;settings&gt;</span><br></pre></td></tr></table></figure>
+
+<p>然后在userMapper.xml中，在同一个namespace中。</p>
+<p><img src="https://raw.githubusercontent.com/ggyggy666/ggyggy666.github.io/master/img/image-20210610153931671.png" alt="image-20210610153931671"></p>
+<p>可以直接<code>&lt;cache/&gt;</code>, 也可以配置一些东西</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;cache eviction&#x3D;&quot;FIFO&quot; flushInterval&#x3D;&quot;60000&quot; size&#x3D;&quot;512&quot; readOnly&#x3D;&quot;true&quot;&#x2F;&gt;</span><br></pre></td></tr></table></figure>
+
+<p>缓存刷新方式是FIFO先进先出，每隔60秒刷新，最多只能存512个数据，只读。</p>
+<p><strong>先使用配置了的cache测试</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">@Test</span><br><span class="line">public void test()&#123;</span><br><span class="line">    SqlSession session &#x3D; MybatisUtils.getSession();</span><br><span class="line">    SqlSession session2 &#x3D; MybatisUtils.getSession();</span><br><span class="line">    userMapper mapper &#x3D; session.getMapper(userMapper.class);</span><br><span class="line">    user userById &#x3D; mapper.getUserById(1);</span><br><span class="line">    System.out.println(userById);</span><br><span class="line">    session.close();</span><br><span class="line"></span><br><span class="line">    userMapper mapper2 &#x3D; session2.getMapper(userMapper.class);</span><br><span class="line">    user userById1 &#x3D; mapper2.getUserById(1);</span><br><span class="line">    System.out.println(userById1);</span><br><span class="line">    session2.close();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><strong>工作机制</strong></p>
+<p>查一条数据，存到一级缓存，关闭后，一级缓存没了，但是存到了二级缓存。</p>
+<p>session关闭后，再使用session2查询同样的数据，会在二级缓存查找。</p>
+<p><img src="https://raw.githubusercontent.com/ggyggy666/ggyggy666.github.io/master/img/image-20210610155253816.png" alt="image-20210610155253816"></p>
+<p><strong>只使用<code>&lt;cache/&gt;</code>会报序列化的错误</strong></p>
+<blockquote>
+<p>org.apache.ibatis.cache.CacheException: Error serializing object.  Cause: java.io.NotSerializableException: com.ggy.pojo.user</p>
+</blockquote>
+<p>到user类中</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">public class user implements Serializable&#123;&#125;</span><br></pre></td></tr></table></figure>
+
+<p>实现序列化类即可。</p>
+
+    </div>
+    
+    <div class="reward" ontouchstart>
+    <div class="reward-wrap">赏
+        <div class="reward-box">
+            
+            <span class="reward-type">
+                <img class="alipay" src="/img/alipay.jpg"><b>支付宝打赏</b>
+            </span>
+            
+            
+            <span class="reward-type">
+                <img class="wechat" src="/img/wechat.jpg"><b>微信打赏</b>
+            </span>
+            
+        </div>
+    </div>
+    <p class="reward-tip">
+        赞赏是不耍流氓的鼓励
+    </p>
+</div>
+    
+    <div class="post-footer">
+        <div>
+            
+            转载声明：
+            商业转载请联系作者获得授权,非商业转载请注明出处 © <a href="ggy.44pp.vip" target="_blank">ggy</a>
+            
+            
+        </div>
+        <div>
+            
+        </div>
+    </div>
+</article>
+<div class="article-nav prev-next-wrap clearfix">
+    
+    
+    <a href="/2021/06/08/Mybatis%E5%AD%A6%E4%B9%A02/" class="next-post btn btn-default" title='Mybatis学习2'>
+        <span class="hidden-lg">下一篇</span>
+        <span class="hidden-xs">
+            Mybatis学习2</span><i class="fa fa-angle-right fa-fw"></i>
+    </a>
+    
+</div>
+
+<div id="comments">
+    
+<div id="lv-container" data-id="city" data-uid="MTAyMC80ODM1Ni8yNDg1MA==">
+    <script type="text/javascript">
+    (function(d, s) {
+        var j, e = d.getElementsByTagName(s)[0];
+        if (typeof LivereTower === 'function') { return; }
+        j = d.createElement(s);
+        j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+        j.async = true;
+        e.parentNode.insertBefore(j, e);
+    })(document, 'script');
+    </script>
+</div>
+
+</div>
+
+                </main>
+                
+                    <aside id="article-toc" role="navigation" class="col-md-4">
+    <div class="widget">
+        <h3 class="title">
+            文章目录
+        </h3>
+        
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#日志"><span class="toc-text">日志</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#STDOUT-LOGGING"><span class="toc-text">STDOUT_LOGGING</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#LOG4J"><span class="toc-text">LOG4J</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#分页"><span class="toc-text">分页</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#注解开发"><span class="toc-text">注解开发</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#不传参数"><span class="toc-text">不传参数</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#传参数（不是类）"><span class="toc-text">传参数（不是类）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#传参数（类）"><span class="toc-text">传参数（类）</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#动态SQL"><span class="toc-text">动态SQL</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#搭建环境"><span class="toc-text">搭建环境</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#IF"><span class="toc-text">IF</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#trim-where-set"><span class="toc-text">trim(where, set)</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#where"><span class="toc-text">where</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#set"><span class="toc-text">set</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#choose-when"><span class="toc-text">choose when</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#SQL片段"><span class="toc-text">SQL片段</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#foreach"><span class="toc-text">foreach</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Mybatis详细执行流程"><span class="toc-text">Mybatis详细执行流程</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Mybatis缓存"><span class="toc-text">Mybatis缓存</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#分类"><span class="toc-text">分类</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#一级缓存"><span class="toc-text">一级缓存</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#缓存失效"><span class="toc-text">缓存失效</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#二级缓存"><span class="toc-text">二级缓存</span></a></li></ol></li></ol>
+        
+    </div>
+</aside>
+                
+            </div>
+        </div>
+    </section>
+    <footer class="main-footer">
+    <div class="container">
+        <div class="row">
+        </div>
+    </div>
+</footer>
+<a id="back-to-top" class="icon-btn hide">
+    <i class="fa fa-chevron-up"></i>
+</a>
+    <div class="copyright">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="busuanzi">
+    
+    访问量:
+    <strong id="busuanzi_value_site_pv">
+        <i class="fa fa-spinner fa-spin"></i>
+    </strong>
+    &nbsp; | &nbsp;
+    访客数:
+    <strong id="busuanzi_value_site_uv">
+        <i class="fa fa-spinner fa-spin"></i>
+    </strong>
+    
+</div>
+            </div>
+            <div class="col-sm-12">
+                <span>Copyright &copy;
+                    2020
+                    
+                </span> |
+                <span>
+                    Powered by <a href="//hexo.io" class="copyright-links" target="_blank" rel="nofollow">Hexo</a>
+                </span> |
+                <span>
+                    Theme by <a href="//github.com/shenliyang/hexo-theme-snippet.git" class="copyright-links" target="_blank" rel="nofollow">Snippet</a>
+                </span>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<script src="/assets/tagcanvas.min.js?rev=2.9.js"></script>
+
+<script>
+var tagOption = {
+    textColour: '#444', // 字体颜色
+    outlineMethod: 'block', // 选中模式
+    outlineColour: '#FFDAB9', // 选中模式的颜色
+    interval: 30 || 30, // 动画帧之间的时间间隔，值越大，转动幅度越大
+    textHeight: 13,
+    outlineRadius: 3,
+    freezeActive: true || '', // 选中的标签是否继续滚动
+    frontSelect: true || '', // 不选标签云后部的标签
+    initial: [0.1, -0.1],
+    depth: 0.5,
+    decel: 0.95,
+    maxSpeed: 0.03,
+    reverse: true || '', // 是否反向触发
+    fadeIn: 500, // 进入动画时间
+    wheelZoom: false || '' // 是否启用鼠标滚轮
+}
+TagCanvas.Start('tag-cloud-3d', '', tagOption);
+</script>
+
+
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+<script src="/js/app.js?rev=@@hash.js"></script>
+
+
+<!-- 雪花特效 -->
+<script type="text/javascript" src="http://libs.baidu.com/jquery/1.8.3/jquery.js"></script>
+<script type="text/javascript" src="http://libs.baidu.com/jquery/1.8.3/jquery.min.js"></script>
+<script type="text/javascript" src="\js\snow.js"></script>
+
+<canvas class="fireworks" style="position: fixed;left: 0;top: 0;z-index: 1; pointer-events: none;" ></canvas> 
+<script type="text/javascript" src="//cdn.bootcss.com/animejs/2.2.0/anime.min.js"></script> 
+<script type="text/javascript" src="/js/fireworks.js"></script>
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"model":{"jsonPath":"live2d-widget-model-haruto"},"display":{"position":"right","width":150,"height":300},"mobile":{"show":false},"log":false,"pluginJsPath":"lib/","pluginModelPath":"assets/","pluginRootPath":"live2dw/","tagMode":false});</script></body>
+</html>

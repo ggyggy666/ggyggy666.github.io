@@ -1,0 +1,465 @@
+<head>
+<script src="https://cdn.jsdelivr.net/npm/jquery/dist/jquery.min.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome/css/font-awesome.min.css">
+<script src="https://cdn.jsdelivr.net/gh/stevenjoezhang/live2d-widget/autoload.js"></script>
+</head>
+
+<!DOCTYPE HTML>
+<html lang="zh-CN">
+
+<head>
+    <!--Setting-->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+    <meta http-equiv="Cache-Control" content="no-siteapp">
+    <meta http-equiv="Cache-Control" content="no-transform">
+    <meta name="renderer" content="webkit|ie-comp|ie-stand">
+    <meta name="apple-mobile-web-app-capable" content="ggy的个人博客">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="format-detection" content="telephone=no,email=no,adress=no">
+    <meta name="browsermode" content="application">
+    <meta name="screen-orientation" content="portrait">
+    <meta name="theme-version" content="1.2.3">
+    <meta name="root" content="/">
+    <link rel="dns-prefetch" href="https://ggyggy666.github.io">
+    <!--SEO-->
+
+<meta name="keywords" content="Spring5学习(2)" />
+
+
+<meta name="description" content="今天继续学习Spring。
+
+
+Bean的作用域
+
+singleton单例模式（Spring默认），不管使用getBean获取多少个相同的对象，返回来的对象始终都只指向一个而已，适用于单线程。
+..." />
+
+
+<meta name="robots" content="all" />
+<meta name="google" content="all" />
+<meta name="googlebot" content="all" />
+<meta name="verify" content="all" />
+    <!--Title-->
+
+<title>
+    
+    Spring5学习(2) |
+    
+    ggy的个人博客
+</title>
+
+<link rel="alternate" href="/atom.xml" title="ggy的个人博客" type="application/atom+xml">
+
+
+<link rel="icon" href="/favicon.ico">
+
+    
+
+
+<link rel="stylesheet" href="/css/bootstrap.min.css?rev=3.3.7.css">
+<link rel="stylesheet" href="/css/font-awesome.min.css?rev=4.7.0.css">
+<link rel="stylesheet" href="/css/style.css?rev=@@hash.css">
+
+    
+<div class="hide">
+    <script type="text/javascript">
+    var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+    document.write(unescape("%3Cspan class='cnzz_stat_icon_1263868967 hide' %3E%3Cscript%20src%3D%22https%3A%2F%2Fs95.cnzz.com%2Fz_stat.php%3Fweb_id%3D1272564536%22%3E%3C%2Fscript%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s19.cnzz.com/z_stat.php%3Fid%3D1263868967%26show%3Dpic1' type='text/javascript'%3E%3C/script%3E"));
+    </script>
+</div>
+
+
+
+
+    
+
+<meta name="generator" content="Hexo 4.2.0"></head>
+<!--[if lte IE 8]>
+<style>
+    html{ font-size: 1em }
+</style>
+<![endif]-->
+<!--[if lte IE 9]>
+<div style="ie">你使用的浏览器版本过低，为了你更好的阅读体验，请更新浏览器的版本或者使用其他现代浏览器，比如Chrome、Firefox、Safari等。</div>
+<![endif]-->
+<body>
+    <header class="main-header"  style="background-image:url(
+    https://pic.downk.cc/item/5e3816b82fb38b8c3c8791f9.jpg)"
+     >
+    <div class="main-header-box">
+        <a class="header-avatar" href="/" title='ggy'>
+            <img src="/img/avatar.jpg" alt="logo头像" class="img-responsive center-block">
+        </a>
+        <div class="branding">
+            <!--<h2 class="text-hide">Snippet主题,从未如此简单有趣</h2>-->
+            
+            <h2>
+                欢迎来到ggy的个人网站
+            </h2>
+            
+        </div>
+    </div>
+</header>
+    <nav class="main-navigation">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="navbar-header"><span class="nav-toggle-button collapsed pull-right" data-toggle="collapse" data-target="#main-menu" id="mnav">
+                        <span class="sr-only"></span>
+                        <i class="fa fa-bars"></i>
+                    </span>
+                    <a class="navbar-brand" href="https://ggyggy666.github.io">
+                        ggy的个人博客</a>
+                </div>
+                <div class="collapse navbar-collapse" id="main-menu">
+                    <ul class="menu">
+                        
+                        <li role="presentation" class="text-center">
+                            <a href="/"><i class="fa "></i>
+                                首页</a>
+                        </li>
+                        
+                        <li role="presentation" class="text-center">
+                            <a href="/categories/web安全/"><i class="fa "></i>
+                                web安全</a>
+                        </li>
+                        
+                        <li role="presentation" class="text-center">
+                            <a href="/categories/python工具/"><i class="fa "></i>
+                                python工具</a>
+                        </li>
+                        
+                        <li role="presentation" class="text-center">
+                            <a href="/categories/密码学/"><i class="fa "></i>
+                                密码学</a>
+                        </li>
+                        
+                        <li role="presentation" class="text-center">
+                            <a href="/archives/"><i class="fa "></i>
+                                时间轴</a>
+                        </li>
+                        
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</nav>
+    <section class="content-wrap">
+        <div class="container">
+            <div class="row">
+                <main class="col-md-8 main-content m-post">
+                    <p id="process"></p>
+<article class="post">
+    <div class="post-head">
+        <h1 id="Spring5学习(2)">
+            
+            Spring5学习(2)
+            
+        </h1>
+        <div class="post-meta">
+    
+    <span class="categories-meta fa-wrap">
+        <i class="fa fa-folder-open-o"></i>
+        <a class="category-link" href="/categories/ssm%E5%AD%A6%E4%B9%A0/">ssm学习</a>
+    </span>
+    
+    
+    <span class="fa-wrap">
+        <i class="fa fa-tags"></i>
+        <span class="tags-meta">
+            
+            <a class="tag-link" href="/tags/Spring5%E5%AD%A6%E4%B9%A0-2/" rel="tag">Spring5学习(2)</a>
+            
+        </span>
+    </span>
+    
+    
+    
+    <span class="fa-wrap">
+        <i class="fa fa-clock-o"></i>
+        <span class="date-meta">
+            2021/06/30</span>
+    </span>
+    
+    <span class="fa-wrap">
+        <i class="fa fa-eye"></i>
+        <span id="busuanzi_value_page_pv"></span>
+    </span>
+    
+    
+</div>
+        
+        
+    </div>
+    
+    <div class="post-body post-content">
+        <p>今天继续学习Spring。</p>
+<a id="more"></a>
+
+<h1 id="Bean的作用域"><a href="#Bean的作用域" class="headerlink" title="Bean的作用域"></a>Bean的作用域</h1><p><img src="/2021/06/30/Spring5%E5%AD%A6%E4%B9%A0-2/F:%5C360MoveData%5CUsers%5CASUS%5CDesktop%5C%E4%B8%AA%E4%BA%BABlog%5Csource_posts%5CTyporaImage%5Cimage-20210630222429212-1625063070802.png" alt="image-20210630222429212"></p>
+<ul>
+<li><p>singleton单例模式（Spring默认），不管使用getBean获取多少个相同的对象，返回来的对象始终都只指向一个而已，适用于单线程。</p>
+<p>beans.xml中</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;bean id&#x3D;&quot;student&quot; class&#x3D;&quot;com.ggy.pojo.Student&quot; p:name&#x3D;&quot;ggy&quot; p:address-ref&#x3D;&quot;address&quot; scope&#x3D;&quot;singleton&quot;&#x2F;&gt;</span><br></pre></td></tr></table></figure>
+
+<p>测试类中</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Student name &#x3D; (Student) context.getBean(&quot;student&quot;);</span><br><span class="line">Student name1 &#x3D; (Student) context.getBean(&quot;student&quot;);</span><br></pre></td></tr></table></figure>
+
+<p>name和name1对象是同一个对象。</p>
+</li>
+<li><p>prototype多例模式，获取相同的对象返回来的对象是不同的，适用于多线程。</p>
+<p>beans.xml中</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;bean id&#x3D;&quot;student&quot; class&#x3D;&quot;com.ggy.pojo.Student&quot; p:name&#x3D;&quot;ggy&quot; p:address-ref&#x3D;&quot;address&quot; scope&#x3D;&quot;prototype&quot;&#x2F;&gt;</span><br></pre></td></tr></table></figure>
+
+<p>测试类中，name和name1对象是两个不同的对象。</p>
+</li>
+<li><p>其它模式，request、session等用于web中。</p>
+</li>
+</ul>
+<h1 id="Bean的自动装配"><a href="#Bean的自动装配" class="headerlink" title="Bean的自动装配"></a>Bean的自动装配</h1><p>之前bean标签中，需要用property属性来为类的属性赋值，而如果属性是其它类即使用ref时，可以使用自动装配来寻找到对应的其它类。</p>
+<h2 id="使用autowire"><a href="#使用autowire" class="headerlink" title="使用autowire"></a>使用autowire</h2><h3 id="通过byName自动装配"><a href="#通过byName自动装配" class="headerlink" title="通过byName自动装配"></a>通过byName自动装配</h3><p>需要保证所有bean的id唯一，并且这个bean需要和注入的类的属性对应的set方法后面的值一致，即某个类中的属性cat对应的set方法setCat，id就需要是cat。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&lt;bean id&#x3D;&quot;cat&quot; class&#x3D;&quot;com.ggy.pojo.cat&quot;&#x2F;&gt;</span><br><span class="line">&lt;bean id&#x3D;&quot;dog&quot; class&#x3D;&quot;com.ggy.pojo.dog&quot;&#x2F;&gt;</span><br><span class="line"></span><br><span class="line">&lt;bean id&#x3D;&quot;pepole&quot; class&#x3D;&quot;com.ggy.pojo.People&quot; autowire&#x3D;&quot;byName&quot;&gt;</span><br><span class="line">	&lt;property name&#x3D;&quot;name&quot; value&#x3D;&quot;ggy&quot;&#x2F;&gt;</span><br><span class="line">&lt;&#x2F;bean&gt;</span><br></pre></td></tr></table></figure>
+
+<p>通过使用autowire=”byName”，就能通过id=”cat”和id=”dog”去自动装配那两个类。</p>
+<h3 id="使用byType自动装配"><a href="#使用byType自动装配" class="headerlink" title="使用byType自动装配"></a>使用byType自动装配</h3><p>需要保证所有bean的class唯一，并且这个bean需要和自动注入的属性的类型一致。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&lt;bean class&#x3D;&quot;com.ggy.pojo.cat&quot;&#x2F;&gt;</span><br><span class="line">&lt;bean class&#x3D;&quot;com.ggy.pojo.dog&quot;&#x2F;&gt;</span><br><span class="line"></span><br><span class="line">&lt;bean id&#x3D;&quot;pepole&quot; class&#x3D;&quot;com.ggy.pojo.People&quot; autowire&#x3D;&quot;byType&quot;&gt;</span><br><span class="line">	&lt;property name&#x3D;&quot;name&quot; value&#x3D;&quot;ggy&quot;&#x2F;&gt;</span><br><span class="line">&lt;&#x2F;bean&gt;</span><br></pre></td></tr></table></figure>
+
+<p>cat和dog可以没有id，通过class就能找到对应的类。</p>
+<h2 id="使用注解"><a href="#使用注解" class="headerlink" title="使用注解"></a>使用注解</h2><p>JDK1.5，Spring2.5之后启用，Spring4之后要使用必须保证aop包导入了，不过Spring-webmvc那个maven依赖存在这个包。</p>
+<p>首先需要导入一些xml的约束（context）和配置：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?xml version="1.0" encoding="UTF-8"?&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">beans</span> <span class="attr">xmlns</span>=<span class="string">"http://www.springframework.org/schema/beans"</span></span></span><br><span class="line"><span class="tag">    <span class="attr">xmlns:xsi</span>=<span class="string">"http://www.w3.org/2001/XMLSchema-instance"</span></span></span><br><span class="line"><span class="tag">    <span class="attr">xmlns:context</span>=<span class="string">"http://www.springframework.org/schema/context"</span></span></span><br><span class="line"><span class="tag">    <span class="attr">xsi:schemaLocation</span>=<span class="string">"http://www.springframework.org/schema/beans</span></span></span><br><span class="line"><span class="tag"><span class="string">        https://www.springframework.org/schema/beans/spring-beans.xsd</span></span></span><br><span class="line"><span class="tag"><span class="string">        http://www.springframework.org/schema/context</span></span></span><br><span class="line"><span class="tag"><span class="string">        https://www.springframework.org/schema/context/spring-context.xsd"</span>&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="tag">&lt;<span class="name">context:annotation-config</span>/&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="tag">&lt;<span class="name">bean</span> <span class="attr">id</span>=<span class="string">"cat"</span> <span class="attr">class</span>=<span class="string">"com.ggy.pojo.cat"</span>/&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">bean</span> <span class="attr">id</span>=<span class="string">"dog"</span> <span class="attr">class</span>=<span class="string">"com.ggy.pojo.dog"</span>/&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">bean</span> <span class="attr">id</span>=<span class="string">"pepole"</span> <span class="attr">class</span>=<span class="string">"com.ggy.pojo.pepole"</span>/&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;/<span class="name">beans</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>bean对象只需要定义即可，之后在相应的class类中使用注解。</strong></p>
+<h3 id="通过-Autowired"><a href="#通过-Autowired" class="headerlink" title="通过@Autowired"></a>通过@Autowired</h3><p>直接在类中的属性定义的上一行使用，也可以在属性的Setter方法上使用。使用@Autowired且bean对象在IOC容器中时就可以不写Setter方法了。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Autowired</span></span><br><span class="line"><span class="keyword">private</span> String name;</span><br><span class="line"></span><br><span class="line"><span class="meta">@Nullable</span>	<span class="comment">//在字段前使用，说明这个字段可以为空。</span></span><br><span class="line"><span class="meta">@Autowired</span>(required=<span class="keyword">false</span>)，默认是<span class="keyword">true</span>的，为<span class="keyword">false</span>之后这个自动装配的类对象可以为空了。</span><br></pre></td></tr></table></figure>
+
+<p>@Autowired是通过byType方式来自动装配的，所以id与类对象名不一样也是可以找到的，但是如果有两个bean对象的class都一样，那么没办法定位是哪一个，此时需要使用@Qualifier(value=”xxx”)，使用id名字来定位。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">People</span></span>&#123;</span><br><span class="line">	<span class="meta">@Autowired</span></span><br><span class="line">	<span class="meta">@Qualifier</span>(value=<span class="string">"xxx"</span>)</span><br><span class="line">	<span class="keyword">private</span> Cat cat;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="通过-Resource"><a href="#通过-Resource" class="headerlink" title="通过@Resource"></a>通过@Resource</h3><p>先通过byName, 如果名字找不到，再通过byType方式来自动装配。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">bean对象唯一，直接使用</span><br><span class="line">@Resource</span><br><span class="line">private Cat cat;</span><br><span class="line"></span><br><span class="line">bean对象不唯一</span><br><span class="line">@Resource(name&#x3D;&quot;xxx&quot;)</span><br><span class="line">private Cat cat;</span><br></pre></td></tr></table></figure>
+
+<h1 id="注解开发"><a href="#注解开发" class="headerlink" title="注解开发"></a>注解开发</h1><p>上面的注解中，beans.xml中还是需要创建bean标签来创建对象，可以去掉。</p>
+<p>1.新建一个项目04-Annotation，项目结构如下</p>
+<p><img src="/2021/06/30/Spring5%E5%AD%A6%E4%B9%A0-2/F:%5C360MoveData%5CUsers%5CASUS%5CDesktop%5C%E4%B8%AA%E4%BA%BABlog%5Csource_posts%5CTyporaImage%5Cimage-20210701105542393.png" alt="image-20210701105542393"></p>
+<p>2.创建User类</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">package com.ggy.pojo;</span><br><span class="line"></span><br><span class="line">import org.springframework.stereotype.Component;</span><br><span class="line"></span><br><span class="line">@Component</span><br><span class="line">public class User &#123;</span><br><span class="line">    public String name&#x3D;&quot;ggy&quot;;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>这里使用了注解@Component（组件）方式</p>
+<p>3.新建applicationContext.xml</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">&lt;?xml version&#x3D;&quot;1.0&quot; encoding&#x3D;&quot;UTF-8&quot;?&gt;</span><br><span class="line">&lt;beans xmlns&#x3D;&quot;http:&#x2F;&#x2F;www.springframework.org&#x2F;schema&#x2F;beans&quot;</span><br><span class="line">       xmlns:xsi&#x3D;&quot;http:&#x2F;&#x2F;www.w3.org&#x2F;2001&#x2F;XMLSchema-instance&quot;</span><br><span class="line">       xmlns:context&#x3D;&quot;http:&#x2F;&#x2F;www.springframework.org&#x2F;schema&#x2F;context&quot;</span><br><span class="line">       xsi:schemaLocation&#x3D;&quot;http:&#x2F;&#x2F;www.springframework.org&#x2F;schema&#x2F;beans</span><br><span class="line">        https:&#x2F;&#x2F;www.springframework.org&#x2F;schema&#x2F;beans&#x2F;spring-beans.xsd</span><br><span class="line">        http:&#x2F;&#x2F;www.springframework.org&#x2F;schema&#x2F;context</span><br><span class="line">        https:&#x2F;&#x2F;www.springframework.org&#x2F;schema&#x2F;context&#x2F;spring-context.xsd&quot;&gt;</span><br><span class="line"></span><br><span class="line">    &lt;context:annotation-config&#x2F;&gt;</span><br><span class="line">    &lt;!--注意下面这句，扫描组件--&gt;</span><br><span class="line">    &lt;context:component-scan base-package&#x3D;&quot;com.ggy.pojo&quot;&#x2F;&gt;</span><br><span class="line"></span><br><span class="line">&lt;&#x2F;beans&gt;</span><br></pre></td></tr></table></figure>
+
+<p>通过context:component-scan来扫描包下的注解，这样就能找到pojo包下的User类，从而不需要再去使用bean标签创建对象了。</p>
+<p>3.创建测试类</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">public class Mytest &#123;</span><br><span class="line">    public static void main(String[] args) &#123;</span><br><span class="line">        ApplicationContext context &#x3D; new ClassPathXmlApplicationContext(&quot;applicationContext.xml&quot;);</span><br><span class="line">        User user &#x3D; (User) context.getBean(&quot;user&quot;);</span><br><span class="line">        System.out.println(user.name);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>由于没有bean标签了，也就没有id，那么获取bean对象名就是类小写名字即user。</p>
+<p>4.上面User类中属性值已经被写固定了，要注入的话需要</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">@Component</span><br><span class="line">public class User &#123;</span><br><span class="line">    @Value(&quot;ggy&quot;)</span><br><span class="line">    public String name;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>这种注解适合简单的属性值注入，如果是Map，List这些复杂类型，还是使用XML更清楚。</p>
+<p>5.衍生注解</p>
+<p>@Component还有其它三个衍生注解，在web层中，按照MVC三层架构来标识。</p>
+<ul>
+<li>dao    【@Repository】</li>
+<li>service【@Service】</li>
+<li>controller【@Controller】</li>
+</ul>
+<p>这几个类都是一样的，都是将某个类作为组件注册到Spring中装配Bean。注意这时候component-scan扫的包就得是</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">context:component-scan</span> <span class="attr">base-package</span>=<span class="string">"com.ggy"</span>/&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>6.作用域注解</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Component</span></span><br><span class="line"><span class="meta">@Scope</span>(<span class="string">"singleton"</span>)	<span class="comment">//或者@Scope("prototype")等</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">User</span> </span>&#123;</span><br><span class="line">    <span class="meta">@Value</span>(<span class="string">"ggy"</span>)</span><br><span class="line">    <span class="keyword">public</span> String name;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>7.XML与注解</p>
+<p>XML更加万能，适用于任何场合，维护简单方便。</p>
+<p>注解只能使用在自己那个类，维护相对复杂。</p>
+<p>最佳实践：</p>
+<p>XML用来创建管理bean对象，还是使用bean标签。</p>
+<p>注解用来注入属性值，@Value这些，注意要使用注解必须开启注解支持。</p>
+<h1 id="Java-Config注解开发"><a href="#Java-Config注解开发" class="headerlink" title="Java Config注解开发"></a>Java Config注解开发</h1><p>不使用XML文件，直接使用Java类来config。</p>
+<p>1.创建新项目05-JavaConfig</p>
+<p><img src="/2021/06/30/Spring5%E5%AD%A6%E4%B9%A0-2/F:%5C360MoveData%5CUsers%5CASUS%5CDesktop%5C%E4%B8%AA%E4%BA%BABlog%5Csource_posts%5CTyporaImage%5Cimage-20210701114121276.png" alt="image-20210701114121276"></p>
+<p>2.创建User类</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">package com.ggy.pojo;</span><br><span class="line"></span><br><span class="line">import org.springframework.beans.factory.annotation.Value;</span><br><span class="line">import org.springframework.stereotype.Component;</span><br><span class="line"></span><br><span class="line">@Component</span><br><span class="line">public class User &#123;</span><br><span class="line">    @Value(&quot;ggy&quot;)</span><br><span class="line">    private String name;</span><br><span class="line"></span><br><span class="line">    public String getName() &#123;</span><br><span class="line">        return name;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    @Override</span><br><span class="line">    public String toString() &#123;</span><br><span class="line">        return &quot;User&#123;&quot; +</span><br><span class="line">                &quot;name&#x3D;&#39;&quot; + name + &#39;\&#39;&#39; +</span><br><span class="line">                &#39;&#125;&#39;;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>还是一样使用@Component，将User类交给Spring管理，@Value注入属性值。</p>
+<p>3.创建JavaConfig类</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">@Configuration</span><br><span class="line">@ComponentScan(&quot;com.ggy.pojo&quot;)</span><br><span class="line">@Import(JavaConfig1.class)</span><br><span class="line">public class JavaConfig &#123;</span><br><span class="line">    @Bean</span><br><span class="line">    public User user()&#123;</span><br><span class="line">        return new User();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>这里开头就是@Configuration表示配置类，取代XML，一样有@ComponentScan扫描包，@Import是导入其它的配置文件与这个文件合成一个，我另外创建了一个JavaConfig1类</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">@Component</span><br><span class="line">public class JavaConfig1 &#123;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>之前XML创建bean对象是使用bean标签，现在则是使用@Bean然后创建一个方法，方法名就是对象名user，返回一个新建的User类对象即可。</p>
+<p>4.创建测试类</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">public class test &#123;</span><br><span class="line">    public static void main(String[] args) &#123;</span><br><span class="line">        ApplicationContext context &#x3D; new AnnotationConfigApplicationContext(JavaConfig.class);</span><br><span class="line">        User user &#x3D; (User) context.getBean(&quot;user&quot;);</span><br><span class="line">        System.out.println(user.toString());</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>使用的是AnnotationConfigApplicationContext方法，读取JavaConfig.class类。</p>
+
+    </div>
+    
+    <div class="reward" ontouchstart>
+    <div class="reward-wrap">赏
+        <div class="reward-box">
+            
+            <span class="reward-type">
+                <img class="alipay" src="/img/alipay.jpg"><b>支付宝打赏</b>
+            </span>
+            
+            
+            <span class="reward-type">
+                <img class="wechat" src="/img/wechat.jpg"><b>微信打赏</b>
+            </span>
+            
+        </div>
+    </div>
+    <p class="reward-tip">
+        赞赏是不耍流氓的鼓励
+    </p>
+</div>
+    
+    <div class="post-footer">
+        <div>
+            
+            转载声明：
+            商业转载请联系作者获得授权,非商业转载请注明出处 © <a href="ggy.44pp.vip" target="_blank">ggy</a>
+            
+            
+        </div>
+        <div>
+            
+        </div>
+    </div>
+</article>
+<div class="article-nav prev-next-wrap clearfix">
+    
+    
+    <a href="/2021/06/30/Spring5%E5%AD%A6%E4%B9%A0-1/" class="next-post btn btn-default" title='Spring5学习(1)'>
+        <span class="hidden-lg">下一篇</span>
+        <span class="hidden-xs">
+            Spring5学习(1)</span><i class="fa fa-angle-right fa-fw"></i>
+    </a>
+    
+</div>
+
+<div id="comments">
+    
+<div id="lv-container" data-id="city" data-uid="MTAyMC80ODM1Ni8yNDg1MA==">
+    <script type="text/javascript">
+    (function(d, s) {
+        var j, e = d.getElementsByTagName(s)[0];
+        if (typeof LivereTower === 'function') { return; }
+        j = d.createElement(s);
+        j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+        j.async = true;
+        e.parentNode.insertBefore(j, e);
+    })(document, 'script');
+    </script>
+</div>
+
+</div>
+
+                </main>
+                
+                    <aside id="article-toc" role="navigation" class="col-md-4">
+    <div class="widget">
+        <h3 class="title">
+            文章目录
+        </h3>
+        
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Bean的作用域"><span class="toc-text">Bean的作用域</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Bean的自动装配"><span class="toc-text">Bean的自动装配</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#使用autowire"><span class="toc-text">使用autowire</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#通过byName自动装配"><span class="toc-text">通过byName自动装配</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#使用byType自动装配"><span class="toc-text">使用byType自动装配</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#使用注解"><span class="toc-text">使用注解</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#通过-Autowired"><span class="toc-text">通过@Autowired</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#通过-Resource"><span class="toc-text">通过@Resource</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#注解开发"><span class="toc-text">注解开发</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Java-Config注解开发"><span class="toc-text">Java Config注解开发</span></a></li></ol>
+        
+    </div>
+</aside>
+                
+            </div>
+        </div>
+    </section>
+    <footer class="main-footer">
+    <div class="container">
+        <div class="row">
+        </div>
+    </div>
+</footer>
+<a id="back-to-top" class="icon-btn hide">
+    <i class="fa fa-chevron-up"></i>
+</a>
+    <div class="copyright">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="busuanzi">
+    
+    访问量:
+    <strong id="busuanzi_value_site_pv">
+        <i class="fa fa-spinner fa-spin"></i>
+    </strong>
+    &nbsp; | &nbsp;
+    访客数:
+    <strong id="busuanzi_value_site_uv">
+        <i class="fa fa-spinner fa-spin"></i>
+    </strong>
+    
+</div>
+            </div>
+            <div class="col-sm-12">
+                <span>Copyright &copy;
+                    2020
+                    
+                </span> |
+                <span>
+                    Powered by <a href="//hexo.io" class="copyright-links" target="_blank" rel="nofollow">Hexo</a>
+                </span> |
+                <span>
+                    Theme by <a href="//github.com/shenliyang/hexo-theme-snippet.git" class="copyright-links" target="_blank" rel="nofollow">Snippet</a>
+                </span>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<script src="/assets/tagcanvas.min.js?rev=2.9.js"></script>
+
+<script>
+var tagOption = {
+    textColour: '#444', // 字体颜色
+    outlineMethod: 'block', // 选中模式
+    outlineColour: '#FFDAB9', // 选中模式的颜色
+    interval: 30 || 30, // 动画帧之间的时间间隔，值越大，转动幅度越大
+    textHeight: 13,
+    outlineRadius: 3,
+    freezeActive: true || '', // 选中的标签是否继续滚动
+    frontSelect: true || '', // 不选标签云后部的标签
+    initial: [0.1, -0.1],
+    depth: 0.5,
+    decel: 0.95,
+    maxSpeed: 0.03,
+    reverse: true || '', // 是否反向触发
+    fadeIn: 500, // 进入动画时间
+    wheelZoom: false || '' // 是否启用鼠标滚轮
+}
+TagCanvas.Start('tag-cloud-3d', '', tagOption);
+</script>
+
+
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+<script src="/js/app.js?rev=@@hash.js"></script>
+
+
+<!-- 雪花特效 -->
+<script type="text/javascript" src="http://libs.baidu.com/jquery/1.8.3/jquery.js"></script>
+<script type="text/javascript" src="http://libs.baidu.com/jquery/1.8.3/jquery.min.js"></script>
+<script type="text/javascript" src="\js\snow.js"></script>
+
+<canvas class="fireworks" style="position: fixed;left: 0;top: 0;z-index: 1; pointer-events: none;" ></canvas> 
+<script type="text/javascript" src="//cdn.bootcss.com/animejs/2.2.0/anime.min.js"></script> 
+<script type="text/javascript" src="/js/fireworks.js"></script>
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"model":{"jsonPath":"live2d-widget-model-haruto"},"display":{"position":"right","width":150,"height":300},"mobile":{"show":false},"log":false,"pluginJsPath":"lib/","pluginModelPath":"assets/","pluginRootPath":"live2dw/","tagMode":false});</script></body>
+</html>

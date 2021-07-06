@@ -1,0 +1,507 @@
+<head>
+<script src="https://cdn.jsdelivr.net/npm/jquery/dist/jquery.min.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome/css/font-awesome.min.css">
+<script src="https://cdn.jsdelivr.net/gh/stevenjoezhang/live2d-widget/autoload.js"></script>
+</head>
+
+<!DOCTYPE HTML>
+<html lang="zh-CN">
+
+<head>
+    <!--Setting-->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+    <meta http-equiv="Cache-Control" content="no-siteapp">
+    <meta http-equiv="Cache-Control" content="no-transform">
+    <meta name="renderer" content="webkit|ie-comp|ie-stand">
+    <meta name="apple-mobile-web-app-capable" content="ggy的个人博客">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="format-detection" content="telephone=no,email=no,adress=no">
+    <meta name="browsermode" content="application">
+    <meta name="screen-orientation" content="portrait">
+    <meta name="theme-version" content="1.2.3">
+    <meta name="root" content="/">
+    <link rel="dns-prefetch" href="https://ggyggy666.github.io">
+    <!--SEO-->
+
+<meta name="keywords" content="Spring5学习(3)" />
+
+
+<meta name="description" content="今天继续学习Spring5。
+
+
+代理模式静态代理类似租房一样，有客户、中介和房东，中介起到的就是代理作用。
+角色分析：
+
+抽象角色：一般会使用接口或者抽象类。
+真实角色：被代理的角色。
+代理角..." />
+
+
+<meta name="robots" content="all" />
+<meta name="google" content="all" />
+<meta name="googlebot" content="all" />
+<meta name="verify" content="all" />
+    <!--Title-->
+
+<title>
+    
+    Spring5学习(3) |
+    
+    ggy的个人博客
+</title>
+
+<link rel="alternate" href="/atom.xml" title="ggy的个人博客" type="application/atom+xml">
+
+
+<link rel="icon" href="/favicon.ico">
+
+    
+
+
+<link rel="stylesheet" href="/css/bootstrap.min.css?rev=3.3.7.css">
+<link rel="stylesheet" href="/css/font-awesome.min.css?rev=4.7.0.css">
+<link rel="stylesheet" href="/css/style.css?rev=@@hash.css">
+
+    
+<div class="hide">
+    <script type="text/javascript">
+    var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+    document.write(unescape("%3Cspan class='cnzz_stat_icon_1263868967 hide' %3E%3Cscript%20src%3D%22https%3A%2F%2Fs95.cnzz.com%2Fz_stat.php%3Fweb_id%3D1272564536%22%3E%3C%2Fscript%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s19.cnzz.com/z_stat.php%3Fid%3D1263868967%26show%3Dpic1' type='text/javascript'%3E%3C/script%3E"));
+    </script>
+</div>
+
+
+
+
+    
+
+<meta name="generator" content="Hexo 4.2.0"></head>
+<!--[if lte IE 8]>
+<style>
+    html{ font-size: 1em }
+</style>
+<![endif]-->
+<!--[if lte IE 9]>
+<div style="ie">你使用的浏览器版本过低，为了你更好的阅读体验，请更新浏览器的版本或者使用其他现代浏览器，比如Chrome、Firefox、Safari等。</div>
+<![endif]-->
+<body>
+    <header class="main-header"  style="background-image:url(
+    https://pic.downk.cc/item/5e3816b82fb38b8c3c8791f9.jpg)"
+     >
+    <div class="main-header-box">
+        <a class="header-avatar" href="/" title='ggy'>
+            <img src="/img/avatar.jpg" alt="logo头像" class="img-responsive center-block">
+        </a>
+        <div class="branding">
+            <!--<h2 class="text-hide">Snippet主题,从未如此简单有趣</h2>-->
+            
+            <h2>
+                欢迎来到ggy的个人网站
+            </h2>
+            
+        </div>
+    </div>
+</header>
+    <nav class="main-navigation">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="navbar-header"><span class="nav-toggle-button collapsed pull-right" data-toggle="collapse" data-target="#main-menu" id="mnav">
+                        <span class="sr-only"></span>
+                        <i class="fa fa-bars"></i>
+                    </span>
+                    <a class="navbar-brand" href="https://ggyggy666.github.io">
+                        ggy的个人博客</a>
+                </div>
+                <div class="collapse navbar-collapse" id="main-menu">
+                    <ul class="menu">
+                        
+                        <li role="presentation" class="text-center">
+                            <a href="/"><i class="fa "></i>
+                                首页</a>
+                        </li>
+                        
+                        <li role="presentation" class="text-center">
+                            <a href="/categories/web安全/"><i class="fa "></i>
+                                web安全</a>
+                        </li>
+                        
+                        <li role="presentation" class="text-center">
+                            <a href="/categories/python工具/"><i class="fa "></i>
+                                python工具</a>
+                        </li>
+                        
+                        <li role="presentation" class="text-center">
+                            <a href="/categories/密码学/"><i class="fa "></i>
+                                密码学</a>
+                        </li>
+                        
+                        <li role="presentation" class="text-center">
+                            <a href="/archives/"><i class="fa "></i>
+                                时间轴</a>
+                        </li>
+                        
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</nav>
+    <section class="content-wrap">
+        <div class="container">
+            <div class="row">
+                <main class="col-md-8 main-content m-post">
+                    <p id="process"></p>
+<article class="post">
+    <div class="post-head">
+        <h1 id="Spring5学习(3)">
+            
+            Spring5学习(3)
+            
+        </h1>
+        <div class="post-meta">
+    
+    <span class="categories-meta fa-wrap">
+        <i class="fa fa-folder-open-o"></i>
+        <a class="category-link" href="/categories/ssm%E5%AD%A6%E4%B9%A0/">ssm学习</a>
+    </span>
+    
+    
+    <span class="fa-wrap">
+        <i class="fa fa-tags"></i>
+        <span class="tags-meta">
+            
+            <a class="tag-link" href="/tags/Spring5%E5%AD%A6%E4%B9%A0-3/" rel="tag">Spring5学习(3)</a>
+            
+        </span>
+    </span>
+    
+    
+    
+    <span class="fa-wrap">
+        <i class="fa fa-clock-o"></i>
+        <span class="date-meta">
+            2021/07/01</span>
+    </span>
+    
+    <span class="fa-wrap">
+        <i class="fa fa-eye"></i>
+        <span id="busuanzi_value_page_pv"></span>
+    </span>
+    
+    
+</div>
+        
+        
+    </div>
+    
+    <div class="post-body post-content">
+        <p>今天继续学习Spring5。</p>
+<a id="more"></a>
+
+<h1 id="代理模式"><a href="#代理模式" class="headerlink" title="代理模式"></a>代理模式</h1><h2 id="静态代理"><a href="#静态代理" class="headerlink" title="静态代理"></a>静态代理</h2><p>类似租房一样，有客户、中介和房东，中介起到的就是代理作用。</p>
+<p>角色分析：</p>
+<ul>
+<li>抽象角色：一般会使用接口或者抽象类。</li>
+<li>真实角色：被代理的角色。</li>
+<li>代理角色：代理真实角色，还可以有额外的操作。</li>
+<li>客户：访问代理角色</li>
+</ul>
+<p>好处：</p>
+<ul>
+<li>可以使真实角色的操作更加纯粹。</li>
+<li>公共业务交给代理角色，实现业务的分工。</li>
+<li>公共业务发生扩展的时候方便集中管理。</li>
+</ul>
+<p>缺点：</p>
+<ul>
+<li>一个角色会产生一个代理角色，代码翻倍，效率低。</li>
+</ul>
+<p><strong>真实角色</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">public class Host&#123;</span><br><span class="line">	xxx</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><strong>代理角色</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">public class Proxy&#123;</span><br><span class="line">	private Host host;</span><br><span class="line">	生成host的Setter方法</span><br><span class="line">	可以生成代理方法，内容是使用host对象调用Host类中的方法</span><br><span class="line">	可以有代理自己的其它方法</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><strong>客户</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">main函数中&#123;</span><br><span class="line">	Host host &#x3D; new Host();	&#x2F;&#x2F;new真实角色</span><br><span class="line">	Proxy proxy &#x3D; new Proxy();	&#x2F;&#x2F;new代理角色</span><br><span class="line">	proxy.Setter方法（host)	&#x2F;&#x2F;传真实角色进去</span><br><span class="line">	proxy.代理方法</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>说白了就是在原来的类上套一层类。</p>
+<h2 id="动态代理"><a href="#动态代理" class="headerlink" title="动态代理"></a>动态代理</h2><p>角色与静态代理一样。</p>
+<p>给真实角色生成一个动态代理，利用的是Java的反射机制。</p>
+<p>1.新建项目06-Proxy，项目结构如下</p>
+<p><img src="/2021/07/01/Spring5%E5%AD%A6%E4%B9%A0-3/F:%5C360MoveData%5CUsers%5CASUS%5CDesktop%5C%E4%B8%AA%E4%BA%BABlog%5Csource_posts%5CTyporaImage%5Cimage-20210701201908364.png" alt="image-20210701201908364"></p>
+<p>2.实现抽象角色Rent接口</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">package com.ggy.demo;</span><br><span class="line"></span><br><span class="line">public interface Rent &#123;</span><br><span class="line">    void rent();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>3.实现真实角色Host类</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">package com.ggy.demo;</span><br><span class="line"></span><br><span class="line">public class Host implements Rent&#123;</span><br><span class="line">    public void rent() &#123;</span><br><span class="line">        System.out.println(&quot;我是房东，我要出租房子&quot;);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>4.实现代理处理程序</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.ggy.demo;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.lang.reflect.InvocationHandler;</span><br><span class="line"><span class="keyword">import</span> java.lang.reflect.Method;</span><br><span class="line"><span class="keyword">import</span> java.lang.reflect.Proxy;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ProxyInvocationHandler</span> <span class="keyword">implements</span> <span class="title">InvocationHandler</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> Object target;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setTarget</span><span class="params">(Object target)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.target = target;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> Object <span class="title">getProxy</span><span class="params">()</span></span>&#123;</span><br><span class="line">        <span class="keyword">return</span> Proxy.newProxyInstance(<span class="keyword">this</span>.getClass().getClassLoader(), target.getClass().getInterfaces(), <span class="keyword">this</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> Object <span class="title">invoke</span><span class="params">(Object proxy, Method method, Object[] args)</span> <span class="keyword">throws</span> Throwable </span>&#123;</span><br><span class="line">        Object invoke = method.invoke(target, args);</span><br><span class="line">        <span class="keyword">return</span> invoke;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>这里使用到两个类InvocationHandler和Proxy。Proxy负责返回代理角色，InvocationHandler负责利用反射机制调用代理角色中的方法。setTarget就是设置要代理的真实角色，getProxy返回代理角色，invoke中method调用invoke方法来执行target真实角色中的方法。</p>
+<p>5.客户</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">import com.ggy.demo.Host;</span><br><span class="line">import com.ggy.demo.ProxyInvocationHandler;</span><br><span class="line">import com.ggy.demo.Rent;</span><br><span class="line"></span><br><span class="line">public class test &#123;</span><br><span class="line">    public static void main(String[] args) &#123;</span><br><span class="line">        Host host &#x3D; new Host();</span><br><span class="line">        ProxyInvocationHandler pih &#x3D; new ProxyInvocationHandler();</span><br><span class="line">        pih.setTarget(host);</span><br><span class="line">        Rent proxy &#x3D; (Rent) pih.getProxy();</span><br><span class="line">        proxy.rent();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>首先生成真实角色host</li>
+<li>然后实例化ProxyInvocationHandler代理处理程序</li>
+<li>通过调用setTarget方法来设置要代理的真实角色</li>
+<li>getProxy方法返回代理角色，注意这个代理角色的类型必须是虚拟角色即接口Rent类</li>
+<li>代理角色调用真实角色中的方法</li>
+</ul>
+<h1 id="AOP"><a href="#AOP" class="headerlink" title="AOP"></a>AOP</h1><h2 id="基本概念"><a href="#基本概念" class="headerlink" title="基本概念"></a>基本概念</h2><p><img src="/2021/07/01/Spring5%E5%AD%A6%E4%B9%A0-3/F:%5C360MoveData%5CUsers%5CASUS%5CDesktop%5C%E4%B8%AA%E4%BA%BABlog%5Csource_posts%5CTyporaImage%5Cimage-20210701194006756.png" alt="image-20210701194006756"></p>
+<p>所谓AOP就是面向切面编程，有一个业务的基础上，想要增加其它业务，比如在这个业务的前后都增加一些功能，那么就可以使用AOP切入这个业务，然后在其前后调用功能相对的类即可。</p>
+<p><img src="/2021/07/01/Spring5%E5%AD%A6%E4%B9%A0-3/F:%5C360MoveData%5CUsers%5CASUS%5CDesktop%5C%E4%B8%AA%E4%BA%BABlog%5Csource_posts%5CTyporaImage%5Cimage-20210706152946812.png" alt="image-20210706152946812"></p>
+<p>比如add业务，需要在其前后都添加多一些功能。先前就是使用动态代理，再add类的继承上再套一层类，但是如果是使用AOP的话，就是切入add这个业务，然后在其前后添加。</p>
+<h2 id="在Spring中的作用"><a href="#在Spring中的作用" class="headerlink" title="在Spring中的作用"></a>在Spring中的作用</h2><p>提供声明式事务，允许用户自定义切面。</p>
+<ul>
+<li>横切关注点：跨越应用程序多个模块的方法或功能。与我们业务逻辑无关的但是需要我们关注的部分。如日志、安全、缓存和事务等。</li>
+<li>切面（ASPECT）：横切关注点被模块化的特殊对象即类。</li>
+<li>通知（Advice）：切面必须要完成的工作，即切面类中的方法。</li>
+<li>目标（Target）：被通知对象。</li>
+<li>代理（Proxy）：向目标对象应用通知之后创建的对象。</li>
+<li>切入点（Point Cut）：切面通知执行的“地点”的定义。</li>
+<li>连接点（Join Point）：与切入点匹配的执行点。</li>
+</ul>
+<p><img src="/2021/07/01/Spring5%E5%AD%A6%E4%B9%A0-3/F:%5C360MoveData%5CUsers%5CASUS%5CDesktop%5C%E4%B8%AA%E4%BA%BABlog%5Csource_posts%5CTyporaImage%5Cimage-20210706153830262.png" alt="image-20210706153830262"></p>
+<h2 id="实现方法一"><a href="#实现方法一" class="headerlink" title="实现方法一"></a>实现方法一</h2><p><strong>使用了Spring的接口</strong></p>
+<p>1.新建一个模块，目录结构如下：</p>
+<p><img src="/2021/07/01/Spring5%E5%AD%A6%E4%B9%A0-3/F:%5C360MoveData%5CUsers%5CASUS%5CDesktop%5C%E4%B8%AA%E4%BA%BABlog%5Csource_posts%5CTyporaImage%5Cimage-20210706162322353.png" alt="image-20210706162322353"></p>
+<p>在pom.xml中增加对AOP支持的依赖</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&lt;dependencies&gt;</span><br><span class="line">    &lt;dependency&gt;</span><br><span class="line">        &lt;groupId&gt;org.aspectj&lt;&#x2F;groupId&gt;</span><br><span class="line">        &lt;artifactId&gt;aspectjweaver&lt;&#x2F;artifactId&gt;</span><br><span class="line">        &lt;version&gt;1.9.7&lt;&#x2F;version&gt;</span><br><span class="line">    &lt;&#x2F;dependency&gt;</span><br><span class="line">&lt;&#x2F;dependencies&gt;</span><br></pre></td></tr></table></figure>
+
+<p>2.填写接口类userService和实现类userServiceImpl</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">package com.ggy.service;</span><br><span class="line"></span><br><span class="line">public interface userService &#123;</span><br><span class="line">    public void add();</span><br><span class="line">    public void delete();</span><br><span class="line">    public void alter();</span><br><span class="line">    public void select();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">package com.ggy.service;</span><br><span class="line"></span><br><span class="line">public class userServiceImpl implements userService &#123;</span><br><span class="line">    public void add() &#123;</span><br><span class="line">        System.out.println(&quot;add...&quot;);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public void delete() &#123;</span><br><span class="line">        System.out.println(&quot;delete...&quot;);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public void alter() &#123;</span><br><span class="line">        System.out.println(&quot;alter...&quot;);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public void select() &#123;</span><br><span class="line">        System.out.println(&quot;select...&quot;);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>3.需要使用AOP去切入这个实现类的每一个方法，在方法前后输出一些日志信息，因此先生成Log类</p>
+<p>log</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">package com.ggy.log;</span><br><span class="line"></span><br><span class="line">import org.springframework.aop.MethodBeforeAdvice;</span><br><span class="line"></span><br><span class="line">import java.lang.reflect.Method;</span><br><span class="line"></span><br><span class="line">public class Log implements MethodBeforeAdvice &#123;</span><br><span class="line">    public void before(Method method, Object[] objects, Object o) throws Throwable &#123;</span><br><span class="line">        System.out.println(o.getClass().getName()+&quot;类的&quot;+method.getName()+&quot;方法被调用了。&quot;);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>需要实现aop包中的MethodBeforeAdvice类的before，代表着在切入面之前调用该函数。method就是切入点的类的方法，Object o就是切入点的类。</p>
+<p>afterLog</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">package com.ggy.log;</span><br><span class="line"></span><br><span class="line">import org.springframework.aop.AfterReturningAdvice;</span><br><span class="line"></span><br><span class="line">import java.lang.reflect.Method;</span><br><span class="line"></span><br><span class="line">public class afterLog implements AfterReturningAdvice &#123;</span><br><span class="line">    public void afterReturning(Object o, Method method, Object[] objects, Object o1) throws Throwable &#123;</span><br><span class="line">        System.out.println(&quot;执行的方法是：&quot;+method.getName()+&quot;，返回结果是：&quot;+o+&quot;, &quot;+o1.getClass().getName());</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>同理，在切入点的类的函数调用完成返回之后再调用afterReturning, Object o应该是返回的类，o1才是切入点的类</p>
+<p>4.配置applicationContext.xml</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">&lt;?xml version&#x3D;&quot;1.0&quot; encoding&#x3D;&quot;UTF-8&quot;?&gt;</span><br><span class="line">&lt;beans xmlns&#x3D;&quot;http:&#x2F;&#x2F;www.springframework.org&#x2F;schema&#x2F;beans&quot;</span><br><span class="line">       xmlns:xsi&#x3D;&quot;http:&#x2F;&#x2F;www.w3.org&#x2F;2001&#x2F;XMLSchema-instance&quot; xmlns:aop&#x3D;&quot;http:&#x2F;&#x2F;www.springframework.org&#x2F;schema&#x2F;aop&quot;</span><br><span class="line">       xsi:schemaLocation&#x3D;&quot;http:&#x2F;&#x2F;www.springframework.org&#x2F;schema&#x2F;beans</span><br><span class="line">        https:&#x2F;&#x2F;www.springframework.org&#x2F;schema&#x2F;beans&#x2F;spring-beans.xsd http:&#x2F;&#x2F;www.springframework.org&#x2F;schema&#x2F;aop https:&#x2F;&#x2F;www.springframework.org&#x2F;schema&#x2F;aop&#x2F;spring-aop.xsd&quot;&gt;</span><br><span class="line"></span><br><span class="line">    &lt;bean id&#x3D;&quot;userService&quot; class&#x3D;&quot;com.ggy.service.userServiceImpl&quot;&#x2F;&gt;</span><br><span class="line">    &lt;bean id&#x3D;&quot;log&quot; class&#x3D;&quot;com.ggy.log.Log&quot;&#x2F;&gt;</span><br><span class="line">    &lt;bean id&#x3D;&quot;afterLog&quot; class&#x3D;&quot;com.ggy.log.afterLog&quot;&#x2F;&gt;</span><br><span class="line"></span><br><span class="line">    &lt;aop:config&gt;</span><br><span class="line">        &lt;aop:pointcut id&#x3D;&quot;pointcut&quot; expression&#x3D;&quot;execution(* com.ggy.service.userServiceImpl.*(..));&quot;&#x2F;&gt;</span><br><span class="line">        &lt;aop:advisor advice-ref&#x3D;&quot;log&quot; pointcut-ref&#x3D;&quot;pointcut&quot;&#x2F;&gt;</span><br><span class="line">        &lt;aop:advisor advice-ref&#x3D;&quot;afterLog&quot; pointcut-ref&#x3D;&quot;pointcut&quot;&#x2F;&gt;</span><br><span class="line">    &lt;&#x2F;aop:config&gt;</span><br><span class="line"></span><br><span class="line">&lt;&#x2F;beans&gt;</span><br></pre></td></tr></table></figure>
+
+<p>首先注册三个bean对象，然后配置aop。aop:pointcut就是切入点，expression中的是表达式，第一个*是返回所有类型，第二个则代表匹配到userServiceImpl类中的所有函数，(..)表示参数的抽象化。之后使用aop:advisor，advice-ref就是要执行的那个bean对象，pointcut-ref就是切入点。</p>
+<p>5.编写测试类</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">public class Mytest &#123;</span><br><span class="line">    public static void main(String[] args) &#123;</span><br><span class="line">        ApplicationContext context &#x3D; new ClassPathXmlApplicationContext(&quot;applicationContext.xml&quot;);</span><br><span class="line">        userService userservice &#x3D; (userService) context.getBean(&quot;userService&quot;);</span><br><span class="line">        userservice.add();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>输出结果：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">com.ggy.service.userServiceImpl类的add方法被调用了。</span><br><span class="line">add...</span><br><span class="line">执行的方法是：add，返回结果是：null, com.ggy.service.userServiceImpl</span><br></pre></td></tr></table></figure>
+
+<p>成功插入。</p>
+<h2 id="实现方法二"><a href="#实现方法二" class="headerlink" title="实现方法二"></a>实现方法二</h2><p>一是使用了Spring的接口，每个方法就有一个实现接口类，before和after这种。<strong>二则是使用自定义的类</strong>。</p>
+<p>1.新增一个addLog类</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">package com.ggy.log;</span><br><span class="line"></span><br><span class="line">public class addLog &#123;</span><br><span class="line">    public void before()&#123;</span><br><span class="line">        System.out.println(&quot;before...&quot;);</span><br><span class="line">    &#125;</span><br><span class="line">    public void after()&#123;</span><br><span class="line">        System.out.println(&quot;after...&quot;);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>两个方法都在同一个类里了。</p>
+<p>2.配置applicationContext.xml</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&lt;bean id&#x3D;&quot;userService&quot; class&#x3D;&quot;com.ggy.service.userServiceImpl&quot;&#x2F;&gt;</span><br><span class="line">&lt;bean id&#x3D;&quot;addLog&quot; class&#x3D;&quot;com.ggy.log.addLog&quot;&#x2F;&gt;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&lt;aop:config&gt;</span><br><span class="line">    &lt;aop:aspect ref&#x3D;&quot;addLog&quot;&gt;</span><br><span class="line">        &lt;aop:pointcut id&#x3D;&quot;pointcut&quot; expression&#x3D;&quot;execution(* com.ggy.service.userServiceImpl.*(..));&quot;&#x2F;&gt;</span><br><span class="line">        &lt;aop:before method&#x3D;&quot;before&quot; pointcut-ref&#x3D;&quot;pointcut&quot;&#x2F;&gt;</span><br><span class="line">        &lt;aop:after method&#x3D;&quot;after&quot; pointcut-ref&#x3D;&quot;pointcut&quot;&#x2F;&gt;</span><br><span class="line">    &lt;&#x2F;aop:aspect&gt;</span><br><span class="line">&lt;&#x2F;aop:config&gt;</span><br></pre></td></tr></table></figure>
+
+<p>当然还是要先注册好用到的bean对象，然后在aop:config中使用aop:aspect切面，ref就是要连接到增加的业务的类addLog。然后还是aop:pointcut切入点，之后使用aop:before，方法是addLog类中的before名称；再使用aop:after即可。</p>
+<p>测试结果：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">before...</span><br><span class="line">add...</span><br><span class="line">after...</span><br></pre></td></tr></table></figure>
+
+<p>但是这种方式只能执行自己定义的方法，可操作性不强，没有方法一那么多功能可以获取执行的类和方法名，获取返回值等。</p>
+<h2 id="实现方法三"><a href="#实现方法三" class="headerlink" title="实现方法三"></a>实现方法三</h2><p>使用注解方式。</p>
+<p>1.直接在addLog上增加注解</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">@Aspect</span><br><span class="line">public class addLog &#123;</span><br><span class="line">    @Before(&quot;execution(* com.ggy.service.userServiceImpl.*(..));&quot;)</span><br><span class="line">    public void before()&#123;</span><br><span class="line">        System.out.println(&quot;before...&quot;);</span><br><span class="line">    &#125;</span><br><span class="line">    @After(&quot;execution(* com.ggy.service.userServiceImpl.*(..));&quot;)</span><br><span class="line">    public void after()&#123;</span><br><span class="line">        System.out.println(&quot;after...&quot;);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>使用@Aspect表明这是一个切面类，@Before是切入点之前执行，<code>execution(* com.ggy.service.userServiceImpl.*(..));</code>则是匹配切入点。</p>
+<p>2.在applicationContext.xml中</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&lt;bean id&#x3D;&quot;userService&quot; class&#x3D;&quot;com.ggy.service.userServiceImpl&quot;&#x2F;&gt;</span><br><span class="line">&lt;bean id&#x3D;&quot;addLog&quot; class&#x3D;&quot;com.ggy.log.addLog&quot;&#x2F;&gt;</span><br><span class="line">&lt;aop:aspectj-autoproxy proxy-target-class&#x3D;&quot;false&quot;&#x2F;&gt;</span><br></pre></td></tr></table></figure>
+
+<p>只需要注入切面类为bean对象，然后开启aop的注解支持即可。proxy-target-class=”false”可以不要的，表示使用JDK方式进行代理，如果为true就是使用cglib代理，二者效果一样的。</p>
+<p>测试结果：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">before...</span><br><span class="line">add...</span><br><span class="line">after...</span><br></pre></td></tr></table></figure>
+
+<p>3.在addLog类中增加一个around方法</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">@Around(&quot;execution(* com.ggy.service.userServiceImpl.*(..));&quot;)</span><br><span class="line">public void around(ProceedingJoinPoint jp) throws Throwable &#123;</span><br><span class="line">    System.out.println(&quot;环绕前&quot;);</span><br><span class="line">    Object proceed &#x3D; jp.proceed();</span><br><span class="line">    System.out.println(&quot;环绕后&quot;);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>使用@Around注解，该方法有参数ProceedingJoinPoint jp，jp.proceed表示执行切面类的方法。</p>
+<p>测试结果：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">环绕前</span><br><span class="line">before...</span><br><span class="line">add...</span><br><span class="line">环绕后</span><br><span class="line">after...</span><br></pre></td></tr></table></figure>
+
+<p>先是环绕前，然后proceed执行，before接着是add，而after是等到返回时才执行的，因此先输出了环绕后。</p>
+<p>jp对象还有其它的一些方法，比如获取签名即调用的切入点的函数</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">System.out.println(jp.getSignature());</span><br></pre></td></tr></table></figure>
+
+<p>结果：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">void com.ggy.service.userService.add()</span><br></pre></td></tr></table></figure>
+
+
+    </div>
+    
+    <div class="reward" ontouchstart>
+    <div class="reward-wrap">赏
+        <div class="reward-box">
+            
+            <span class="reward-type">
+                <img class="alipay" src="/img/alipay.jpg"><b>支付宝打赏</b>
+            </span>
+            
+            
+            <span class="reward-type">
+                <img class="wechat" src="/img/wechat.jpg"><b>微信打赏</b>
+            </span>
+            
+        </div>
+    </div>
+    <p class="reward-tip">
+        赞赏是不耍流氓的鼓励
+    </p>
+</div>
+    
+    <div class="post-footer">
+        <div>
+            
+            转载声明：
+            商业转载请联系作者获得授权,非商业转载请注明出处 © <a href="ggy.44pp.vip" target="_blank">ggy</a>
+            
+            
+        </div>
+        <div>
+            
+        </div>
+    </div>
+</article>
+<div class="article-nav prev-next-wrap clearfix">
+    
+    
+    <a href="/2021/06/30/Spring5%E5%AD%A6%E4%B9%A0-2/" class="next-post btn btn-default" title='Spring5学习(2)'>
+        <span class="hidden-lg">下一篇</span>
+        <span class="hidden-xs">
+            Spring5学习(2)</span><i class="fa fa-angle-right fa-fw"></i>
+    </a>
+    
+</div>
+
+<div id="comments">
+    
+<div id="lv-container" data-id="city" data-uid="MTAyMC80ODM1Ni8yNDg1MA==">
+    <script type="text/javascript">
+    (function(d, s) {
+        var j, e = d.getElementsByTagName(s)[0];
+        if (typeof LivereTower === 'function') { return; }
+        j = d.createElement(s);
+        j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+        j.async = true;
+        e.parentNode.insertBefore(j, e);
+    })(document, 'script');
+    </script>
+</div>
+
+</div>
+
+                </main>
+                
+                    <aside id="article-toc" role="navigation" class="col-md-4">
+    <div class="widget">
+        <h3 class="title">
+            文章目录
+        </h3>
+        
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#代理模式"><span class="toc-text">代理模式</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#静态代理"><span class="toc-text">静态代理</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#动态代理"><span class="toc-text">动态代理</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#AOP"><span class="toc-text">AOP</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#基本概念"><span class="toc-text">基本概念</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#在Spring中的作用"><span class="toc-text">在Spring中的作用</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#实现方法一"><span class="toc-text">实现方法一</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#实现方法二"><span class="toc-text">实现方法二</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#实现方法三"><span class="toc-text">实现方法三</span></a></li></ol></li></ol>
+        
+    </div>
+</aside>
+                
+            </div>
+        </div>
+    </section>
+    <footer class="main-footer">
+    <div class="container">
+        <div class="row">
+        </div>
+    </div>
+</footer>
+<a id="back-to-top" class="icon-btn hide">
+    <i class="fa fa-chevron-up"></i>
+</a>
+    <div class="copyright">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="busuanzi">
+    
+    访问量:
+    <strong id="busuanzi_value_site_pv">
+        <i class="fa fa-spinner fa-spin"></i>
+    </strong>
+    &nbsp; | &nbsp;
+    访客数:
+    <strong id="busuanzi_value_site_uv">
+        <i class="fa fa-spinner fa-spin"></i>
+    </strong>
+    
+</div>
+            </div>
+            <div class="col-sm-12">
+                <span>Copyright &copy;
+                    2020
+                    
+                </span> |
+                <span>
+                    Powered by <a href="//hexo.io" class="copyright-links" target="_blank" rel="nofollow">Hexo</a>
+                </span> |
+                <span>
+                    Theme by <a href="//github.com/shenliyang/hexo-theme-snippet.git" class="copyright-links" target="_blank" rel="nofollow">Snippet</a>
+                </span>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<script src="/assets/tagcanvas.min.js?rev=2.9.js"></script>
+
+<script>
+var tagOption = {
+    textColour: '#444', // 字体颜色
+    outlineMethod: 'block', // 选中模式
+    outlineColour: '#FFDAB9', // 选中模式的颜色
+    interval: 30 || 30, // 动画帧之间的时间间隔，值越大，转动幅度越大
+    textHeight: 13,
+    outlineRadius: 3,
+    freezeActive: true || '', // 选中的标签是否继续滚动
+    frontSelect: true || '', // 不选标签云后部的标签
+    initial: [0.1, -0.1],
+    depth: 0.5,
+    decel: 0.95,
+    maxSpeed: 0.03,
+    reverse: true || '', // 是否反向触发
+    fadeIn: 500, // 进入动画时间
+    wheelZoom: false || '' // 是否启用鼠标滚轮
+}
+TagCanvas.Start('tag-cloud-3d', '', tagOption);
+</script>
+
+
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+<script src="/js/app.js?rev=@@hash.js"></script>
+
+
+<!-- 雪花特效 -->
+<script type="text/javascript" src="http://libs.baidu.com/jquery/1.8.3/jquery.js"></script>
+<script type="text/javascript" src="http://libs.baidu.com/jquery/1.8.3/jquery.min.js"></script>
+<script type="text/javascript" src="\js\snow.js"></script>
+
+<canvas class="fireworks" style="position: fixed;left: 0;top: 0;z-index: 1; pointer-events: none;" ></canvas> 
+<script type="text/javascript" src="//cdn.bootcss.com/animejs/2.2.0/anime.min.js"></script> 
+<script type="text/javascript" src="/js/fireworks.js"></script>
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"model":{"jsonPath":"live2d-widget-model-haruto"},"display":{"position":"right","width":150,"height":300},"mobile":{"show":false},"log":false,"pluginJsPath":"lib/","pluginModelPath":"assets/","pluginRootPath":"live2dw/","tagMode":false});</script></body>
+</html>

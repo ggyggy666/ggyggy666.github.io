@@ -1,0 +1,469 @@
+<head>
+<script src="https://cdn.jsdelivr.net/npm/jquery/dist/jquery.min.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome/css/font-awesome.min.css">
+<script src="https://cdn.jsdelivr.net/gh/stevenjoezhang/live2d-widget/autoload.js"></script>
+</head>
+
+<!DOCTYPE HTML>
+<html lang="zh-CN">
+
+<head>
+    <!--Setting-->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+    <meta http-equiv="Cache-Control" content="no-siteapp">
+    <meta http-equiv="Cache-Control" content="no-transform">
+    <meta name="renderer" content="webkit|ie-comp|ie-stand">
+    <meta name="apple-mobile-web-app-capable" content="ggy的个人博客">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="format-detection" content="telephone=no,email=no,adress=no">
+    <meta name="browsermode" content="application">
+    <meta name="screen-orientation" content="portrait">
+    <meta name="theme-version" content="1.2.3">
+    <meta name="root" content="/">
+    <link rel="dns-prefetch" href="https://ggyggy666.github.io">
+    <!--SEO-->
+
+<meta name="keywords" content="SpringMVC学习(1)" />
+
+
+<meta name="description" content="大概学完Spring5了，虽然运用还不熟练，但由于时间紧迫，还是先把SpringMVC学了。
+
+
+参考文章：
+https://blog.csdn.net/qq_34473348/article/..." />
+
+
+<meta name="robots" content="all" />
+<meta name="google" content="all" />
+<meta name="googlebot" content="all" />
+<meta name="verify" content="all" />
+    <!--Title-->
+
+<title>
+    
+    SpringMVC学习(1) |
+    
+    ggy的个人博客
+</title>
+
+<link rel="alternate" href="/atom.xml" title="ggy的个人博客" type="application/atom+xml">
+
+
+<link rel="icon" href="/favicon.ico">
+
+    
+
+
+<link rel="stylesheet" href="/css/bootstrap.min.css?rev=3.3.7.css">
+<link rel="stylesheet" href="/css/font-awesome.min.css?rev=4.7.0.css">
+<link rel="stylesheet" href="/css/style.css?rev=@@hash.css">
+
+    
+<div class="hide">
+    <script type="text/javascript">
+    var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+    document.write(unescape("%3Cspan class='cnzz_stat_icon_1263868967 hide' %3E%3Cscript%20src%3D%22https%3A%2F%2Fs95.cnzz.com%2Fz_stat.php%3Fweb_id%3D1272564536%22%3E%3C%2Fscript%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s19.cnzz.com/z_stat.php%3Fid%3D1263868967%26show%3Dpic1' type='text/javascript'%3E%3C/script%3E"));
+    </script>
+</div>
+
+
+
+
+    
+
+<meta name="generator" content="Hexo 4.2.0"></head>
+<!--[if lte IE 8]>
+<style>
+    html{ font-size: 1em }
+</style>
+<![endif]-->
+<!--[if lte IE 9]>
+<div style="ie">你使用的浏览器版本过低，为了你更好的阅读体验，请更新浏览器的版本或者使用其他现代浏览器，比如Chrome、Firefox、Safari等。</div>
+<![endif]-->
+<body>
+    <header class="main-header"  style="background-image:url(
+    https://pic.downk.cc/item/5e3816b82fb38b8c3c8791f9.jpg)"
+     >
+    <div class="main-header-box">
+        <a class="header-avatar" href="/" title='ggy'>
+            <img src="/img/avatar.jpg" alt="logo头像" class="img-responsive center-block">
+        </a>
+        <div class="branding">
+            <!--<h2 class="text-hide">Snippet主题,从未如此简单有趣</h2>-->
+            
+            <h2>
+                欢迎来到ggy的个人网站
+            </h2>
+            
+        </div>
+    </div>
+</header>
+    <nav class="main-navigation">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="navbar-header"><span class="nav-toggle-button collapsed pull-right" data-toggle="collapse" data-target="#main-menu" id="mnav">
+                        <span class="sr-only"></span>
+                        <i class="fa fa-bars"></i>
+                    </span>
+                    <a class="navbar-brand" href="https://ggyggy666.github.io">
+                        ggy的个人博客</a>
+                </div>
+                <div class="collapse navbar-collapse" id="main-menu">
+                    <ul class="menu">
+                        
+                        <li role="presentation" class="text-center">
+                            <a href="/"><i class="fa "></i>
+                                首页</a>
+                        </li>
+                        
+                        <li role="presentation" class="text-center">
+                            <a href="/categories/web安全/"><i class="fa "></i>
+                                web安全</a>
+                        </li>
+                        
+                        <li role="presentation" class="text-center">
+                            <a href="/categories/python工具/"><i class="fa "></i>
+                                python工具</a>
+                        </li>
+                        
+                        <li role="presentation" class="text-center">
+                            <a href="/categories/密码学/"><i class="fa "></i>
+                                密码学</a>
+                        </li>
+                        
+                        <li role="presentation" class="text-center">
+                            <a href="/archives/"><i class="fa "></i>
+                                时间轴</a>
+                        </li>
+                        
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</nav>
+    <section class="content-wrap">
+        <div class="container">
+            <div class="row">
+                <main class="col-md-8 main-content m-post">
+                    <p id="process"></p>
+<article class="post">
+    <div class="post-head">
+        <h1 id="SpringMVC学习(1)">
+            
+            SpringMVC学习(1)
+            
+        </h1>
+        <div class="post-meta">
+    
+    <span class="categories-meta fa-wrap">
+        <i class="fa fa-folder-open-o"></i>
+        <a class="category-link" href="/categories/ssm%E5%AD%A6%E4%B9%A0/">ssm学习</a>
+    </span>
+    
+    
+    <span class="fa-wrap">
+        <i class="fa fa-tags"></i>
+        <span class="tags-meta">
+            
+            <a class="tag-link" href="/tags/SpringMVC%E5%AD%A6%E4%B9%A0-1/" rel="tag">SpringMVC学习(1)</a>
+            
+        </span>
+    </span>
+    
+    
+    
+    <span class="fa-wrap">
+        <i class="fa fa-clock-o"></i>
+        <span class="date-meta">
+            2021/07/07</span>
+    </span>
+    
+    <span class="fa-wrap">
+        <i class="fa fa-eye"></i>
+        <span id="busuanzi_value_page_pv"></span>
+    </span>
+    
+    
+</div>
+        
+        
+    </div>
+    
+    <div class="post-body post-content">
+        <p>大概学完Spring5了，虽然运用还不熟练，但由于时间紧迫，还是先把SpringMVC学了。</p>
+<a id="more"></a>
+
+<p>参考文章：</p>
+<p><a href="https://blog.csdn.net/qq_34473348/article/details/107758882" target="_blank" rel="noopener">https://blog.csdn.net/qq_34473348/article/details/107758882</a></p>
+<p><a href="https://github.com/lzh66666/SpringMVC-kuang-/tree/master" target="_blank" rel="noopener">https://github.com/lzh66666/SpringMVC-kuang-/tree/master</a></p>
+<p>这些文章讲得挺清楚了，我就简单讲一下自己的理解并实践。</p>
+<h1 id="MVC架构"><a href="#MVC架构" class="headerlink" title="MVC架构"></a>MVC架构</h1><p>模型，视图，控制器。</p>
+<ul>
+<li>Model，处理业务逻辑，与数据库进行交互，一般是Service层和Dao层。</li>
+<li>View，页面显示。一般是JSP页面。</li>
+<li>Controller，负责接收用户请求，将请求转发，调用相应的业务层，然后获得的数据返回给页面展示。一般是Servlet。</li>
+</ul>
+<p>整个流程：</p>
+<ol>
+<li>用户通过视图发起请求。</li>
+<li>控制器Servlet接收到请求，将请求转发调用相应的业务逻辑层。</li>
+<li>业务处理完毕，返回数据给控制器Servlet。</li>
+<li>控制器Servlet将数据转给视图JSP页面，让JSP进行渲染。</li>
+<li>响应到前端。</li>
+</ol>
+<p>有一点注意的，通常实体类比如User，会写在pojo包里，这个User类拥有用户名、密码、生日、邮箱和个性签名等等属性，而用户请求登陆的时候一般只需要用户名和密码，这个时候可能会把这个实体类User拆分，即创建一个vo包，vo也是实体类的包名，对应的实体类是userVo（它只有用户名和密码），而pojo是实体类User的包名，拥有全部属性或者除用户名和密码之外的属性。<strong>总之，见到vo包等这种实体类的包名就不用迷茫了！</strong></p>
+<h1 id="回顾Servlet"><a href="#回顾Servlet" class="headerlink" title="回顾Servlet"></a>回顾Servlet</h1><p>1.新建一个Maven项目，名称是SpringMVC，作为父工程。在pom.xml下导入依赖</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line">&lt;dependencies&gt;</span><br><span class="line">    &lt;dependency&gt;</span><br><span class="line">        &lt;groupId&gt;junit&lt;&#x2F;groupId&gt;</span><br><span class="line">        &lt;artifactId&gt;junit&lt;&#x2F;artifactId&gt;</span><br><span class="line">        &lt;version&gt;4.12&lt;&#x2F;version&gt;</span><br><span class="line">    &lt;&#x2F;dependency&gt;</span><br><span class="line">    &lt;dependency&gt;</span><br><span class="line">        &lt;groupId&gt;org.springframework&lt;&#x2F;groupId&gt;</span><br><span class="line">        &lt;artifactId&gt;spring-webmvc&lt;&#x2F;artifactId&gt;</span><br><span class="line">        &lt;version&gt;5.1.9.RELEASE&lt;&#x2F;version&gt;</span><br><span class="line">    &lt;&#x2F;dependency&gt;</span><br><span class="line">    &lt;dependency&gt;</span><br><span class="line">        &lt;groupId&gt;javax.servlet&lt;&#x2F;groupId&gt;</span><br><span class="line">        &lt;artifactId&gt;servlet-api&lt;&#x2F;artifactId&gt;</span><br><span class="line">        &lt;version&gt;2.5&lt;&#x2F;version&gt;</span><br><span class="line">    &lt;&#x2F;dependency&gt;</span><br><span class="line">    &lt;dependency&gt;</span><br><span class="line">        &lt;groupId&gt;javax.servlet.jsp&lt;&#x2F;groupId&gt;</span><br><span class="line">        &lt;artifactId&gt;jsp-api&lt;&#x2F;artifactId&gt;</span><br><span class="line">        &lt;version&gt;2.2&lt;&#x2F;version&gt;</span><br><span class="line">    &lt;&#x2F;dependency&gt;</span><br><span class="line">    &lt;dependency&gt;</span><br><span class="line">        &lt;groupId&gt;javax.servlet&lt;&#x2F;groupId&gt;</span><br><span class="line">        &lt;artifactId&gt;jstl&lt;&#x2F;artifactId&gt;</span><br><span class="line">        &lt;version&gt;1.2&lt;&#x2F;version&gt;</span><br><span class="line">    &lt;&#x2F;dependency&gt;</span><br><span class="line">&lt;&#x2F;dependencies&gt;</span><br></pre></td></tr></table></figure>
+
+<p>2.新建一个模块01-Servlet，然后在pom.xml中导入依赖</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">&lt;dependencies&gt;</span><br><span class="line">    &lt;dependency&gt;</span><br><span class="line">        &lt;groupId&gt;javax.servlet&lt;&#x2F;groupId&gt;</span><br><span class="line">        &lt;artifactId&gt;servlet-api&lt;&#x2F;artifactId&gt;</span><br><span class="line">        &lt;version&gt;2.5&lt;&#x2F;version&gt;</span><br><span class="line">    &lt;&#x2F;dependency&gt;</span><br><span class="line">    &lt;dependency&gt;</span><br><span class="line">        &lt;groupId&gt;javax.servlet.jsp&lt;&#x2F;groupId&gt;</span><br><span class="line">        &lt;artifactId&gt;jsp-api&lt;&#x2F;artifactId&gt;</span><br><span class="line">        &lt;version&gt;2.2&lt;&#x2F;version&gt;</span><br><span class="line">    &lt;&#x2F;dependency&gt;</span><br><span class="line">&lt;&#x2F;dependencies&gt;</span><br></pre></td></tr></table></figure>
+
+<p>3.因为新建的模块都是普通类型的项目，在创建时并没有选择webapp，因此需要在模块上右键</p>
+<p><img src="/2021/07/07/SpringMVC%E5%AD%A6%E4%B9%A0-1/F:%5C360MoveData%5CUsers%5CASUS%5CDesktop%5C%E4%B8%AA%E4%BA%BABlog%5Csource_posts%5CTyporaImage%5Cimage-20210707202042879-1625660444943.png" alt="image-20210707202042879"></p>
+<p>点击添加框架支持，进入后</p>
+<p><img src="/2021/07/07/SpringMVC%E5%AD%A6%E4%B9%A0-1/F:%5C360MoveData%5CUsers%5CASUS%5CDesktop%5C%E4%B8%AA%E4%BA%BABlog%5Csource_posts%5CTyporaImage%5Cimage-20210707202138269-1625660499602.png" alt="image-20210707202138269"></p>
+<p>勾选上，确认即可出现web目录。</p>
+<p>4.新建com.ggy.servlet包，创建helloServlet类</p>
+<p><img src="/2021/07/07/SpringMVC%E5%AD%A6%E4%B9%A0-1/F:%5C360MoveData%5CUsers%5CASUS%5CDesktop%5C%E4%B8%AA%E4%BA%BABlog%5Csource_posts%5CTyporaImage%5Cimage-20210707202332321.png" alt="image-20210707202332321"></p>
+<p>内容如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">package com.ggy.servlet;</span><br><span class="line"></span><br><span class="line">import javax.servlet.ServletException;</span><br><span class="line">import javax.servlet.http.HttpServlet;</span><br><span class="line">import javax.servlet.http.HttpServletRequest;</span><br><span class="line">import javax.servlet.http.HttpServletResponse;</span><br><span class="line">import java.io.IOException;</span><br><span class="line"></span><br><span class="line">public class helloServlet extends HttpServlet &#123;</span><br><span class="line">    @Override</span><br><span class="line">    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException &#123;</span><br><span class="line">        String method&#x3D;req.getParameter(&quot;method&quot;);</span><br><span class="line">        if(method.equals(&quot;add&quot;))&#123;</span><br><span class="line">            req.getSession().setAttribute(&quot;msg&quot;, &quot;add...&quot;);</span><br><span class="line">        &#125;</span><br><span class="line">        if(method.equals(&quot;delete&quot;))&#123;</span><br><span class="line">            req.getSession().setAttribute(&quot;msg&quot;, &quot;delete...&quot;);</span><br><span class="line">        &#125;</span><br><span class="line">        req.getRequestDispatcher(&quot;&#x2F;WEB-INF&#x2F;jsp&#x2F;test.jsp&quot;).forward(req,resp);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    @Override</span><br><span class="line">    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException &#123;</span><br><span class="line">        doGet(req,resp);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>5.有了Servlet就需要将其配置在web.xml中</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">&lt;servlet&gt;</span><br><span class="line">    &lt;servlet-name&gt;helloServlet&lt;&#x2F;servlet-name&gt;</span><br><span class="line">    &lt;servlet-class&gt;com.ggy.servlet.helloServlet&lt;&#x2F;servlet-class&gt;</span><br><span class="line">&lt;&#x2F;servlet&gt;</span><br><span class="line">&lt;servlet-mapping&gt;</span><br><span class="line">    &lt;servlet-name&gt;helloServlet&lt;&#x2F;servlet-name&gt;</span><br><span class="line">    &lt;url-pattern&gt;&#x2F;hello&lt;&#x2F;url-pattern&gt;</span><br><span class="line">&lt;&#x2F;servlet-mapping&gt;</span><br></pre></td></tr></table></figure>
+
+<p>6.helloServlet会将请求转发给/WEB-INF/jsp/test.jsp，因此需要创建目录和test.jsp</p>
+<p><img src="/2021/07/07/SpringMVC%E5%AD%A6%E4%B9%A0-1/F:%5C360MoveData%5CUsers%5CASUS%5CDesktop%5C%E4%B8%AA%E4%BA%BABlog%5Csource_posts%5CTyporaImage%5Cimage-20210707202521708.png" alt="image-20210707202521708"></p>
+<p>7.最后还需要创建一个JSP页面，内容是form表单登陆。</p>
+<p><img src="/2021/07/07/SpringMVC%E5%AD%A6%E4%B9%A0-1/F:%5C360MoveData%5CUsers%5CASUS%5CDesktop%5C%E4%B8%AA%E4%BA%BABlog%5Csource_posts%5CTyporaImage%5Cimage-20210707202604527.png" alt="image-20210707202604527"></p>
+<p>8.之后添加tomcat配置</p>
+<p><img src="/2021/07/07/SpringMVC%E5%AD%A6%E4%B9%A0-1/F:%5C360MoveData%5CUsers%5CASUS%5CDesktop%5C%E4%B8%AA%E4%BA%BABlog%5Csource_posts%5CTyporaImage%5Cimage-20210707202653487.png" alt="image-20210707202653487"></p>
+<p>点击左上角+添加Tomcat，然后右下角点击FIx</p>
+<p><img src="/2021/07/07/SpringMVC%E5%AD%A6%E4%B9%A0-1/F:%5C360MoveData%5CUsers%5CASUS%5CDesktop%5C%E4%B8%AA%E4%BA%BABlog%5Csource_posts%5CTyporaImage%5Cimage-20210707202735967.png" alt="image-20210707202735967"></p>
+<p>选择后</p>
+<p><img src="/2021/07/07/SpringMVC%E5%AD%A6%E4%B9%A0-1/F:%5C360MoveData%5CUsers%5CASUS%5CDesktop%5C%E4%B8%AA%E4%BA%BABlog%5Csource_posts%5CTyporaImage%5Cimage-20210707202758812.png" alt="image-20210707202758812"></p>
+<p>之后就可以修改路径并且应用了。点击启动后</p>
+<p>访问：<a href="http://localhost:8080/01_Servlet_war_exploded/hello?method=add即可。" target="_blank" rel="noopener">http://localhost:8080/01_Servlet_war_exploded/hello?method=add即可。</a></p>
+<h1 id="HelloSpringMVC"><a href="#HelloSpringMVC" class="headerlink" title="HelloSpringMVC"></a>HelloSpringMVC</h1><p>在上面的Servlet中，需要编写Servlet并在web.xml中，而如果是多个Servlet就需要配置多个，显然很麻烦。SpringMVC则是提供了一个Front Controller，接收到请求时，决定将其发送给对应的Servlet，这样就不用在web.xml配置那么麻烦了。</p>
+<p><img src="/2021/07/07/SpringMVC%E5%AD%A6%E4%B9%A0-1/F:%5C360MoveData%5CUsers%5CASUS%5CDesktop%5C%E4%B8%AA%E4%BA%BABlog%5Csource_posts%5CTyporaImage%5Cimage-20210707205358538.png" alt="image-20210707205358538"></p>
+<p>1.新建模块02-HelloSpringMVC，右键添加框架支持</p>
+<p><img src="/2021/07/07/SpringMVC%E5%AD%A6%E4%B9%A0-1/F:%5C360MoveData%5CUsers%5CASUS%5CDesktop%5C%E4%B8%AA%E4%BA%BABlog%5Csource_posts%5CTyporaImage%5Cimage-20210707205617626.png" alt="image-20210707205617626"></p>
+<p>2.在web.xml中导入SpringMVC需要的东西</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">&lt;!--1.注册DispatcherServlet--&gt;</span><br><span class="line">&lt;servlet&gt;</span><br><span class="line">    &lt;servlet-name&gt;springmvc&lt;&#x2F;servlet-name&gt;</span><br><span class="line">    &lt;servlet-class&gt;org.springframework.web.servlet.DispatcherServlet&lt;&#x2F;servlet-class&gt;</span><br><span class="line">    &lt;!--关联一个springmvc的配置文件:【servlet-name】-servlet.xml--&gt;</span><br><span class="line">       &lt;init-param&gt;</span><br><span class="line">           &lt;param-name&gt;contextConfigLocation&lt;&#x2F;param-name&gt;</span><br><span class="line">           &lt;param-value&gt;classpath:springmvc-servlet.xml&lt;&#x2F;param-value&gt;</span><br><span class="line">       &lt;&#x2F;init-param&gt;</span><br><span class="line">       &lt;!--启动级别-1--&gt;</span><br><span class="line">       &lt;load-on-startup&gt;1&lt;&#x2F;load-on-startup&gt;</span><br><span class="line">&lt;&#x2F;servlet&gt;</span><br><span class="line"></span><br><span class="line">&lt;!--&#x2F; 匹配所有的请求；（不包括.jsp）--&gt;</span><br><span class="line">&lt;!--&#x2F;* 匹配所有的请求；（包括.jsp）--&gt;</span><br><span class="line">&lt;servlet-mapping&gt;</span><br><span class="line">    &lt;servlet-name&gt;springmvc&lt;&#x2F;servlet-name&gt;</span><br><span class="line">    &lt;url-pattern&gt;&#x2F;&lt;&#x2F;url-pattern&gt;</span><br><span class="line">&lt;&#x2F;servlet-mapping&gt;</span><br></pre></td></tr></table></figure>
+
+<p>这个Front Controller实质就是一个Servlet，不过是Spring框架中自己写好的，我们只需要在web.xml中配置就能用了。</p>
+<p>3.因为是Spring项目，所以需要在src的main目录下的resources资源目录下添加springmvc-servlet.xml文件</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&lt;?xml version&#x3D;&quot;1.0&quot; encoding&#x3D;&quot;UTF-8&quot;?&gt;</span><br><span class="line">&lt;beans xmlns&#x3D;&quot;http:&#x2F;&#x2F;www.springframework.org&#x2F;schema&#x2F;beans&quot;</span><br><span class="line">      xmlns:xsi&#x3D;&quot;http:&#x2F;&#x2F;www.w3.org&#x2F;2001&#x2F;XMLSchema-instance&quot;</span><br><span class="line">      xsi:schemaLocation&#x3D;&quot;http:&#x2F;&#x2F;www.springframework.org&#x2F;schema&#x2F;beans</span><br><span class="line">       http:&#x2F;&#x2F;www.springframework.org&#x2F;schema&#x2F;beans&#x2F;spring-beans.xsd&quot;&gt;</span><br><span class="line"></span><br><span class="line">&lt;&#x2F;beans&gt;</span><br></pre></td></tr></table></figure>
+
+<p>4.这里需要增加几个Spring的bean对象</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">&lt;bean class&#x3D;&quot;org.springframework.web.servlet.handler.BeanNameUrlHandlerMapping&quot;&#x2F;&gt;</span><br><span class="line"></span><br><span class="line">&lt;bean class&#x3D;&quot;org.springframework.web.servlet.mvc.SimpleControllerHandlerAdapter&quot;&#x2F;&gt;</span><br><span class="line"></span><br><span class="line">&lt;!--视图解析器:DispatcherServlet给他的ModelAndView--&gt;</span><br><span class="line">&lt;bean class&#x3D;&quot;org.springframework.web.servlet.view.InternalResourceViewResolver&quot; id&#x3D;&quot;InternalResourceViewResolver&quot;&gt;</span><br><span class="line">    &lt;!--前缀--&gt;</span><br><span class="line">    &lt;property name&#x3D;&quot;prefix&quot; value&#x3D;&quot;&#x2F;WEB-INF&#x2F;jsp&#x2F;&quot;&#x2F;&gt;</span><br><span class="line">    &lt;!--后缀--&gt;</span><br><span class="line">    &lt;property name&#x3D;&quot;suffix&quot; value&#x3D;&quot;.jsp&quot;&#x2F;&gt;</span><br><span class="line">&lt;&#x2F;bean&gt;</span><br></pre></td></tr></table></figure>
+
+<p>这里<strong>处理器和适配器其实是可以不写的。</strong></p>
+<p>视图解析器DispatcherServlet是当Front Controller接收到处理业务后的数据时转发给JSP页面，定义了前缀和后缀，之后会与转发时的那个文件名一起拼接的。</p>
+<p>5.在src/main/java下新建包com.ggy.controller，新建HelloController类</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;&#x2F;注意：这里我们先导入Controller接口</span><br><span class="line">public class HelloController implements Controller &#123;</span><br><span class="line"></span><br><span class="line">   public ModelAndView handleRequest(HttpServletRequest request, HttpServletResponse response) throws Exception &#123;</span><br><span class="line">       &#x2F;&#x2F;ModelAndView 模型和视图</span><br><span class="line">       ModelAndView mv &#x3D; new ModelAndView();</span><br><span class="line"></span><br><span class="line">       &#x2F;&#x2F;封装对象，放在ModelAndView中。Model</span><br><span class="line">       mv.addObject(&quot;msg&quot;,&quot;HelloSpringMVC!&quot;);</span><br><span class="line">       &#x2F;&#x2F;封装要跳转的视图，放在ModelAndView中</span><br><span class="line">       mv.setViewName(&quot;hello&quot;); &#x2F;&#x2F;: &#x2F;WEB-INF&#x2F;jsp&#x2F;hello.jsp</span><br><span class="line">       return mv;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>setViewName就是转发，hello是要转发的文件名称，与先前的springmvc-servlet.xml中配置的前缀和后缀一起拼接得到：/WEB-INF/jsp/hello.jsp</p>
+<p>6.因此需要创建/WEB-INF/jsp/hello.jsp</p>
+<p><img src="/2021/07/07/SpringMVC%E5%AD%A6%E4%B9%A0-1/F:%5C360MoveData%5CUsers%5CASUS%5CDesktop%5C%E4%B8%AA%E4%BA%BABlog%5Csource_posts%5CTyporaImage%5Cimage-20210707210841868.png" alt="image-20210707210841868"></p>
+<p>7.将那个HelloController配置到Spring中作为Bean对象</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">bean</span> <span class="attr">id</span>=<span class="string">"/hello"</span> <span class="attr">class</span>=<span class="string">"com.ggy.controller.HelloController"</span>/&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>8.配置Tomcat启动，发现404。点击File-&gt;ProjectStruct</p>
+<p><img src="/2021/07/07/SpringMVC%E5%AD%A6%E4%B9%A0-1/F:%5C360MoveData%5CUsers%5CASUS%5CDesktop%5C%E4%B8%AA%E4%BA%BABlog%5Csource_posts%5CTyporaImage%5Cimage-20210707211848911.png" alt="image-20210707211848911"></p>
+<p>如图，在WEB-INF目录下新建lib目录，然后点击+，将库文件都添加进来。<strong>注意要点击一下切换到02-HelloSpringMVC.war那个先！</strong></p>
+<p>9.重新部署，启动即可看到HelloSpringMVC。</p>
+<p>简单流程：</p>
+<p>1./hello请求经过<strong>DispatcherServlet</strong>，然后寻找<strong>处理器</strong>去匹配到请求对应的bean对象<strong>/hello</strong>。</p>
+<p>2.<strong>适配器</strong>会通过/hello这个Bean对象对应的<strong>Class</strong>进入指向的类。</p>
+<p>3.在类中<strong>处理了业务逻辑</strong>后，得到的数据可以通过AddObject方法存储，并且<strong>返回</strong>一个ModelAndView对象，使用setViewName(“JSP文件名”)<strong>转发</strong>到某个JSP页面。</p>
+<p>4.视图解析器就能<strong>获取</strong>到这个对象，还有转发过来的<strong>文件名</strong>，与前缀、后缀一起<strong>拼接</strong>，然后访问到对应目录下的JSP文件。</p>
+<p>5.JSP从对象中取出数据<strong>展示</strong>。</p>
+<h1 id="注解开发"><a href="#注解开发" class="headerlink" title="注解开发"></a>注解开发</h1><p>1.新建模块04-Annotation，目录结构如下：</p>
+<p><img src="/2021/07/07/SpringMVC%E5%AD%A6%E4%B9%A0-1/F:%5C360MoveData%5CUsers%5CASUS%5CDesktop%5C%E4%B8%AA%E4%BA%BABlog%5Csource_posts%5CTyporaImage%5Cimage-20210708104935703.png" alt="image-20210708104935703"></p>
+<p>注意需要右键添加框架支持，项目结构中新建lib目录将库文件全都添加进来。</p>
+<p>2.在pom.xml中先配置好build标签，防止出错</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">&lt;build&gt;</span><br><span class="line">    &lt;resources&gt;</span><br><span class="line">        &lt;resource&gt;</span><br><span class="line">            &lt;directory&gt;src&#x2F;main&#x2F;java&lt;&#x2F;directory&gt;</span><br><span class="line">            &lt;includes&gt;</span><br><span class="line">                &lt;include&gt;**&#x2F;*.properties&lt;&#x2F;include&gt;</span><br><span class="line">                &lt;include&gt;**&#x2F;*.xml&lt;&#x2F;include&gt;</span><br><span class="line">            &lt;&#x2F;includes&gt;</span><br><span class="line">            &lt;filtering&gt;false&lt;&#x2F;filtering&gt;</span><br><span class="line">        &lt;&#x2F;resource&gt;</span><br><span class="line">        &lt;resource&gt;</span><br><span class="line">            &lt;directory&gt;src&#x2F;main&#x2F;resources&lt;&#x2F;directory&gt;</span><br><span class="line">            &lt;includes&gt;</span><br><span class="line">                &lt;include&gt;**&#x2F;*.properties&lt;&#x2F;include&gt;</span><br><span class="line">                &lt;include&gt;**&#x2F;*.xml&lt;&#x2F;include&gt;</span><br><span class="line">            &lt;&#x2F;includes&gt;</span><br><span class="line">            &lt;filtering&gt;false&lt;&#x2F;filtering&gt;</span><br><span class="line">        &lt;&#x2F;resource&gt;</span><br><span class="line">    &lt;&#x2F;resources&gt;</span><br><span class="line">&lt;&#x2F;build&gt;</span><br></pre></td></tr></table></figure>
+
+<p>3.同样在web.xml中配置DispatcherServlet。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">&lt;?xml version&#x3D;&quot;1.0&quot; encoding&#x3D;&quot;UTF-8&quot;?&gt;</span><br><span class="line">&lt;web-app xmlns&#x3D;&quot;http:&#x2F;&#x2F;xmlns.jcp.org&#x2F;xml&#x2F;ns&#x2F;javaee&quot;</span><br><span class="line">         xmlns:xsi&#x3D;&quot;http:&#x2F;&#x2F;www.w3.org&#x2F;2001&#x2F;XMLSchema-instance&quot;</span><br><span class="line">         xsi:schemaLocation&#x3D;&quot;http:&#x2F;&#x2F;xmlns.jcp.org&#x2F;xml&#x2F;ns&#x2F;javaee http:&#x2F;&#x2F;xmlns.jcp.org&#x2F;xml&#x2F;ns&#x2F;javaee&#x2F;web-app_4_0.xsd&quot;</span><br><span class="line">         version&#x3D;&quot;4.0&quot;&gt;</span><br><span class="line"></span><br><span class="line">    &lt;servlet&gt;</span><br><span class="line">        &lt;servlet-name&gt;springmvc&lt;&#x2F;servlet-name&gt;</span><br><span class="line">        &lt;servlet-class&gt;org.springframework.web.servlet.DispatcherServlet&lt;&#x2F;servlet-class&gt;</span><br><span class="line">        &lt;init-param&gt;</span><br><span class="line">            &lt;param-name&gt;contextConfigLocation&lt;&#x2F;param-name&gt;</span><br><span class="line">            &lt;param-value&gt;classpath:springmvc-servlet.xml&lt;&#x2F;param-value&gt;</span><br><span class="line">        &lt;&#x2F;init-param&gt;</span><br><span class="line">        &lt;load-on-startup&gt;1&lt;&#x2F;load-on-startup&gt;</span><br><span class="line">    &lt;&#x2F;servlet&gt;</span><br><span class="line">    &lt;servlet-mapping&gt;</span><br><span class="line">        &lt;servlet-name&gt;springmvc&lt;&#x2F;servlet-name&gt;</span><br><span class="line">        &lt;url-pattern&gt;&#x2F;&lt;&#x2F;url-pattern&gt;</span><br><span class="line">    &lt;&#x2F;servlet-mapping&gt;</span><br><span class="line">&lt;&#x2F;web-app&gt;</span><br></pre></td></tr></table></figure>
+
+<p>4.在springmvc-servlet.xml中，这次不用bean对象来配置处理器和适配器了，而是使用注解开发，因此需要默认的Servlet处理器，开启注解驱动，扫描某个包的注解</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&lt;context:component-scan base-package&#x3D;&quot;com.ggy.controller&quot;&#x2F;&gt;</span><br><span class="line">&lt;mvc:default-servlet-handler&#x2F;&gt;</span><br><span class="line">&lt;mvc:annotation-driven&#x2F;&gt;</span><br></pre></td></tr></table></figure>
+
+<p>然后配置视图解析器</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&lt;bean class&#x3D;&quot;org.springframework.web.servlet.view.InternalResourceViewResolver&quot; id&#x3D;&quot;internalResourceViewResolver&quot;&gt;</span><br><span class="line">    &lt;property name&#x3D;&quot;prefix&quot; value&#x3D;&quot;&#x2F;WEB-INF&#x2F;jsp&#x2F;&quot;&#x2F;&gt;</span><br><span class="line">    &lt;property name&#x3D;&quot;suffix&quot; value&#x3D;&quot;.jsp&quot;&#x2F;&gt;</span><br><span class="line">&lt;&#x2F;bean&gt;</span><br></pre></td></tr></table></figure>
+
+<p>5.Controller类中</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">@org.springframework.stereotype.Controller</span><br><span class="line">public class Controller &#123;</span><br><span class="line"></span><br><span class="line">    @RequestMapping(&quot;&#x2F;hello&quot;)</span><br><span class="line">    public String sayHello(Model model)&#123;</span><br><span class="line">        model.addAttribute(&quot;msg&quot;, &quot;hello,ggy111&quot;);</span><br><span class="line">        return &quot;hello&quot;;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>使用@Controller（这里包名都显示出来了），注明这是一个控制器。类里面可以有许多方法，每一个方法可以使用@RequestMapping来配置成一个Servlet，处理业务逻辑。即访问/hello就可以进入这个sayHello中处理。有一个参数Model，调用addAttribute可以添加键值对对象，返回”hello”，这个就是JSP的文件名，之后会与视图解析器一起拼接。</p>
+<p>6.运行Tomcat即可。</p>
+
+    </div>
+    
+    <div class="reward" ontouchstart>
+    <div class="reward-wrap">赏
+        <div class="reward-box">
+            
+            <span class="reward-type">
+                <img class="alipay" src="/img/alipay.jpg"><b>支付宝打赏</b>
+            </span>
+            
+            
+            <span class="reward-type">
+                <img class="wechat" src="/img/wechat.jpg"><b>微信打赏</b>
+            </span>
+            
+        </div>
+    </div>
+    <p class="reward-tip">
+        赞赏是不耍流氓的鼓励
+    </p>
+</div>
+    
+    <div class="post-footer">
+        <div>
+            
+            转载声明：
+            商业转载请联系作者获得授权,非商业转载请注明出处 © <a href="ggy.44pp.vip" target="_blank">ggy</a>
+            
+            
+        </div>
+        <div>
+            
+        </div>
+    </div>
+</article>
+<div class="article-nav prev-next-wrap clearfix">
+    
+    
+    <a href="/2021/07/01/Spring5%E5%AD%A6%E4%B9%A0-3/" class="next-post btn btn-default" title='Spring5学习(3)'>
+        <span class="hidden-lg">下一篇</span>
+        <span class="hidden-xs">
+            Spring5学习(3)</span><i class="fa fa-angle-right fa-fw"></i>
+    </a>
+    
+</div>
+
+<div id="comments">
+    
+<div id="lv-container" data-id="city" data-uid="MTAyMC80ODM1Ni8yNDg1MA==">
+    <script type="text/javascript">
+    (function(d, s) {
+        var j, e = d.getElementsByTagName(s)[0];
+        if (typeof LivereTower === 'function') { return; }
+        j = d.createElement(s);
+        j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+        j.async = true;
+        e.parentNode.insertBefore(j, e);
+    })(document, 'script');
+    </script>
+</div>
+
+</div>
+
+                </main>
+                
+                    <aside id="article-toc" role="navigation" class="col-md-4">
+    <div class="widget">
+        <h3 class="title">
+            文章目录
+        </h3>
+        
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#MVC架构"><span class="toc-text">MVC架构</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#回顾Servlet"><span class="toc-text">回顾Servlet</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#HelloSpringMVC"><span class="toc-text">HelloSpringMVC</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#注解开发"><span class="toc-text">注解开发</span></a></li></ol>
+        
+    </div>
+</aside>
+                
+            </div>
+        </div>
+    </section>
+    <footer class="main-footer">
+    <div class="container">
+        <div class="row">
+        </div>
+    </div>
+</footer>
+<a id="back-to-top" class="icon-btn hide">
+    <i class="fa fa-chevron-up"></i>
+</a>
+    <div class="copyright">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="busuanzi">
+    
+    访问量:
+    <strong id="busuanzi_value_site_pv">
+        <i class="fa fa-spinner fa-spin"></i>
+    </strong>
+    &nbsp; | &nbsp;
+    访客数:
+    <strong id="busuanzi_value_site_uv">
+        <i class="fa fa-spinner fa-spin"></i>
+    </strong>
+    
+</div>
+            </div>
+            <div class="col-sm-12">
+                <span>Copyright &copy;
+                    2020
+                    
+                </span> |
+                <span>
+                    Powered by <a href="//hexo.io" class="copyright-links" target="_blank" rel="nofollow">Hexo</a>
+                </span> |
+                <span>
+                    Theme by <a href="//github.com/shenliyang/hexo-theme-snippet.git" class="copyright-links" target="_blank" rel="nofollow">Snippet</a>
+                </span>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<script src="/assets/tagcanvas.min.js?rev=2.9.js"></script>
+
+<script>
+var tagOption = {
+    textColour: '#444', // 字体颜色
+    outlineMethod: 'block', // 选中模式
+    outlineColour: '#FFDAB9', // 选中模式的颜色
+    interval: 30 || 30, // 动画帧之间的时间间隔，值越大，转动幅度越大
+    textHeight: 13,
+    outlineRadius: 3,
+    freezeActive: true || '', // 选中的标签是否继续滚动
+    frontSelect: true || '', // 不选标签云后部的标签
+    initial: [0.1, -0.1],
+    depth: 0.5,
+    decel: 0.95,
+    maxSpeed: 0.03,
+    reverse: true || '', // 是否反向触发
+    fadeIn: 500, // 进入动画时间
+    wheelZoom: false || '' // 是否启用鼠标滚轮
+}
+TagCanvas.Start('tag-cloud-3d', '', tagOption);
+</script>
+
+
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+<script src="/js/app.js?rev=@@hash.js"></script>
+
+
+<!-- 雪花特效 -->
+<script type="text/javascript" src="http://libs.baidu.com/jquery/1.8.3/jquery.js"></script>
+<script type="text/javascript" src="http://libs.baidu.com/jquery/1.8.3/jquery.min.js"></script>
+<script type="text/javascript" src="\js\snow.js"></script>
+
+<canvas class="fireworks" style="position: fixed;left: 0;top: 0;z-index: 1; pointer-events: none;" ></canvas> 
+<script type="text/javascript" src="//cdn.bootcss.com/animejs/2.2.0/anime.min.js"></script> 
+<script type="text/javascript" src="/js/fireworks.js"></script>
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"model":{"jsonPath":"live2d-widget-model-haruto"},"display":{"position":"right","width":150,"height":300},"mobile":{"show":false},"log":false,"pluginJsPath":"lib/","pluginModelPath":"assets/","pluginRootPath":"live2dw/","tagMode":false});</script></body>
+</html>
